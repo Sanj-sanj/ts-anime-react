@@ -1,0 +1,8 @@
+after mucking with eslint it would'nt work on sve, turns out each indiviual workplace needs its settings.json.
+ ctrl+shift+ > Preferences: Open Workspace Settings (JSON). Paste:
+{
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "eslint.validate": ["javascript"]
+}

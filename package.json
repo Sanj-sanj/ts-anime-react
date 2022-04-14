@@ -1,0 +1,36 @@
+{
+  "name": "ts-react-anime",
+  "version": "1.0.0",
+  "description": "",
+  "browserslist": [
+    "last 2 Chrome versions",
+    "last 2 Firefox versions"
+  ],
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --quiet"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^17.0.40",
+    "@types/react-dom": "^17.0.13",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "autoprefixer": "^10.4.4",
+    "eslint": "^8.11.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.4",
+    "parcel": "^2.3.2",
+    "postcss": "^8.4.12",
+    "prettier": "^2.5.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "tailwindcss": "^3.0.23",
+    "typescript": "^4.6.2"
+  }
+}
