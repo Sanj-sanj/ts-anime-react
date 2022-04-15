@@ -19,16 +19,33 @@ interface StudioNode {
   favourites: number;
 }
 
+interface NextAiringEpisode {
+  airingAt: number;
+  episode: number;
+  timeUntilAiring: number;
+}
+
+export type Titles = {
+  romaji: string | null;
+  english: string | null;
+  native: string | null;
+};
+
 export interface mainCard {
-  meanScore: number;
+  meanScore: number | null;
+  nextAiringEpisode: NextAiringEpisode | null;
   genres: string[];
-  id: number;
-  status: string;
-  season: string;
-  type: string;
-  trending: number;
-  seasonYear: number;
-  coverImage: { large: string; medium: string; color: string };
-  title: { romaji: string; english: string; native: string };
-  studios: { nodes: StudioNode[] };
+  id: number | null;
+  status: string | null;
+  season: string | null;
+  type: string | null;
+  trending: number | null;
+  seasonYear: number | null;
+  coverImage: {
+    large: string | null;
+    medium: string | null;
+    color: string | null;
+  };
+  title: Titles;
+  studios: { nodes: StudioNode[] | null };
 }

@@ -1,0 +1,3315 @@
+[
+  {
+    "id": 101705,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Chikyuugai Shounen Shoujo",
+      "english": "The Orbital Children",
+      "native": "地球外少年少女"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Production +h", "isAnimationStudio": true, "favourites": 7 },
+        { "name": "Netflix", "isAnimationStudio": false, "favourites": 53 },
+        { "name": "Avex Pictures", "isAnimationStudio": false, "favourites": 3 }
+      ]
+    },
+    "genres": ["Adventure", "Sci-Fi"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx101705-bpXMRKKyzqg5.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx101705-bpXMRKKyzqg5.jpg",
+      "color": "#e4a15d"
+    },
+    "status": "FINISHED",
+    "averageScore": 69,
+    "meanScore": 70,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 102891,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Shika no Ou: Yuna to Yakusoku no Tabi",
+      "english": "The Deer King",
+      "native": "鹿の王 ユナと約束の旅"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Production I.G",
+          "isAnimationStudio": true,
+          "favourites": 4280
+        }
+      ]
+    },
+    "genres": ["Adventure", "Drama", "Fantasy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx102891-lVsBWszCtTxd.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx102891-lVsBWszCtTxd.jpg",
+      "color": "#78bbe4"
+    },
+    "status": "FINISHED",
+    "averageScore": 58,
+    "meanScore": 70,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 109820,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Sabiiro no Armor: Reimei",
+      "english": "Rusted Armors",
+      "native": "錆色のアーマ-黎明-"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Kigumi", "isAnimationStudio": true, "favourites": 0 }
+      ]
+    },
+    "genres": ["Action"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx109820-Jqi84mtDWyAi.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx109820-Jqi84mtDWyAi.png",
+      "color": "#ff5000"
+    },
+    "status": "FINISHED",
+    "averageScore": 29,
+    "meanScore": 27,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 112323,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Arifureta Shokugyou de Sekai Saikyou 2nd season",
+      "english": "Arifureta: From Commonplace to World's Strongest Season 2",
+      "native": "ありふれた職業で世界最強 2nd season"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Asread", "isAnimationStudio": true, "favourites": 62 },
+        { "name": "studio MOTHER", "isAnimationStudio": true, "favourites": 3 },
+        { "name": "OVERLAP", "isAnimationStudio": false, "favourites": 0 },
+        {
+          "name": "Hakuhodo DY Music & Pictures",
+          "isAnimationStudio": false,
+          "favourites": 4
+        },
+        { "name": "FuRyu", "isAnimationStudio": false, "favourites": 1 },
+        { "name": "AT-X", "isAnimationStudio": false, "favourites": 21 },
+        {
+          "name": "Sony Music Solutions",
+          "isAnimationStudio": false,
+          "favourites": 0
+        },
+        { "name": "Toranoana", "isAnimationStudio": false, "favourites": 3 },
+        {
+          "name": "Bandai Namco Arts",
+          "isAnimationStudio": false,
+          "favourites": 17
+        },
+        { "name": "Bushiroad", "isAnimationStudio": false, "favourites": 15 }
+      ]
+    },
+    "genres": ["Action", "Adventure", "Fantasy", "Psychological"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx112323-C6nlP84x8jH8.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx112323-C6nlP84x8jH8.png",
+      "color": "#f1d693"
+    },
+    "status": "FINISHED",
+    "averageScore": 72,
+    "meanScore": 72,
+    "trending": 18,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 112719,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Futsal Boys!!!!!",
+      "english": "Futsal Boys!!!!!",
+      "native": "フットサルボーイズ!!!!!"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "diomedéa", "isAnimationStudio": true, "favourites": 115 },
+        {
+          "name": "Bandai Namco Arts",
+          "isAnimationStudio": false,
+          "favourites": 17
+        },
+        {
+          "name": "Bandai Namco Entertainment",
+          "isAnimationStudio": false,
+          "favourites": 0
+        },
+        {
+          "name": "Live Viewing Japan",
+          "isAnimationStudio": false,
+          "favourites": 0
+        },
+        {
+          "name": "Good Smile Company",
+          "isAnimationStudio": false,
+          "favourites": 1
+        }
+      ]
+    },
+    "genres": ["Sports"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx112719-DZk18Cu69HcD.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx112719-DZk18Cu69HcD.png",
+      "color": "#50fefe"
+    },
+    "status": "FINISHED",
+    "averageScore": 49,
+    "meanScore": 50,
+    "trending": 2,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 113345,
+    "type": "ANIME",
+    "title": {
+      "romaji": "DEEMO: Sakura no Oto - Anata no Kanadeta Oto ga, Ima mo Hibiku",
+      "english": "DEEMO: Memorial Keys",
+      "native": "DEEMO サクラノオト -あなたの奏でた音が、今も響く-"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Production I.G",
+          "isAnimationStudio": true,
+          "favourites": 4280
+        },
+        { "name": "Signal.MD", "isAnimationStudio": true, "favourites": 25 },
+        { "name": "Pony Canyon", "isAnimationStudio": false, "favourites": 76 }
+      ]
+    },
+    "genres": ["Music"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx113345-areSHCAAOv5J.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx113345-areSHCAAOv5J.jpg",
+      "color": "#d6aee4"
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 63,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 113363,
+    "type": "ANIME",
+    "title": {
+      "romaji": "KAIJU DECODE",
+      "english": null,
+      "native": "KAIJU DECODE"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Toei Animation",
+          "isAnimationStudio": true,
+          "favourites": 1952
+        },
+        {
+          "name": "Tsuburaya Productions",
+          "isAnimationStudio": true,
+          "favourites": 7
+        },
+        { "name": "Arect", "isAnimationStudio": true, "favourites": 1 }
+      ]
+    },
+    "genres": [],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx113363-LjhLGYgUaoqL.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx113363-LjhLGYgUaoqL.jpg",
+      "color": "#bb43ff"
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 59,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 117765,
+    "type": "ANIME",
+    "title": {
+      "romaji": "BanG Dream! Poppin' Dream!",
+      "english": null,
+      "native": "BanG Dream! ぽっぴん'どりーむ!"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "SANZIGEN", "isAnimationStudio": true, "favourites": 60 },
+        { "name": "Bushiroad", "isAnimationStudio": false, "favourites": 15 }
+      ]
+    },
+    "genres": ["Music"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx117765-R9vazugUMUE0.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx117765-R9vazugUMUE0.jpg",
+      "color": "#d6861a"
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 78,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 118465,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Shuumatsu no Harem",
+      "english": "World's End Harem",
+      "native": "終末のハーレム"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "AXsiZ", "isAnimationStudio": true, "favourites": 6 },
+        {
+          "name": "Studio Gokumi",
+          "isAnimationStudio": true,
+          "favourites": 87
+        },
+        {
+          "name": "NBCUniversal Entertainment Japan",
+          "isAnimationStudio": false,
+          "favourites": 26
+        }
+      ]
+    },
+    "genres": ["Ecchi", "Sci-Fi"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx118465-EGB0OajA5rei.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx118465-EGB0OajA5rei.jpg",
+      "color": "#502886"
+    },
+    "status": "FINISHED",
+    "averageScore": 57,
+    "meanScore": 57,
+    "trending": 12,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 119056,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Kenja no Deshi wo Nanoru Kenja",
+      "english": "She Professed Herself Pupil of the Wise Man",
+      "native": "賢者の弟子を名乗る賢者"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Funimation", "isAnimationStudio": false, "favourites": 790 },
+        { "name": "KADOKAWA", "isAnimationStudio": false, "favourites": 131 },
+        { "name": "studio A-CAT", "isAnimationStudio": false, "favourites": 4 },
+        {
+          "name": "DAX Production",
+          "isAnimationStudio": false,
+          "favourites": 14
+        },
+        { "name": "MAGES.", "isAnimationStudio": false, "favourites": 18 },
+        { "name": "MAGNET", "isAnimationStudio": false, "favourites": 0 },
+        {
+          "name": "Micro Magazine Sha",
+          "isAnimationStudio": false,
+          "favourites": 0
+        },
+        { "name": "Micro House", "isAnimationStudio": false, "favourites": 0 }
+      ]
+    },
+    "genres": ["Adventure", "Fantasy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx119056-v9Ls3eKyf0Nf.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx119056-v9Ls3eKyf0Nf.png",
+      "color": "#28e4fe"
+    },
+    "status": "FINISHED",
+    "averageScore": 58,
+    "meanScore": 58,
+    "trending": 8,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 122808,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Princess Connect! Re:Dive Season 2",
+      "english": "Princess Connect! Re:Dive Season 2",
+      "native": "プリンセスコネクト！Re:Dive Season 2"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "CygamesPictures",
+          "isAnimationStudio": true,
+          "favourites": 60
+        },
+        { "name": "Cygames", "isAnimationStudio": false, "favourites": 15 },
+        { "name": "WOWOW", "isAnimationStudio": false, "favourites": 0 },
+        { "name": "TOKYO MX", "isAnimationStudio": false, "favourites": 4 },
+        { "name": "BS11", "isAnimationStudio": false, "favourites": 3 },
+        {
+          "name": "Nippon Columbia",
+          "isAnimationStudio": false,
+          "favourites": 5
+        }
+      ]
+    },
+    "genres": ["Action", "Adventure", "Comedy", "Fantasy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx122808-TUKyfYWKmOX3.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx122808-TUKyfYWKmOX3.jpg",
+      "color": "#5d86e4"
+    },
+    "status": "FINISHED",
+    "averageScore": 78,
+    "meanScore": 78,
+    "trending": 7,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 123752,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Shenmue the Animation",
+      "english": "Shenmue the Animation",
+      "native": "Shenmue the Animation"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Telecom Animation Film",
+          "isAnimationStudio": true,
+          "favourites": 86
+        },
+        { "name": "Adult Swim", "isAnimationStudio": false, "favourites": 13 },
+        {
+          "name": "Crunchyroll",
+          "isAnimationStudio": false,
+          "favourites": 202
+        },
+        { "name": "SEGA", "isAnimationStudio": false, "favourites": 6 },
+        {
+          "name": "TMS Entertainment",
+          "isAnimationStudio": true,
+          "favourites": 875
+        }
+      ]
+    },
+    "genres": ["Action", "Adventure", "Drama"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx123752-T6yktnBk8AeY.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx123752-T6yktnBk8AeY.jpg",
+      "color": "#f1bb86"
+    },
+    "status": "RELEASING",
+    "averageScore": 62,
+    "meanScore": 66,
+    "trending": 1,
+    "nextAiringEpisode": {
+      "airingAt": 1650173400,
+      "episode": 11,
+      "timeUntilAiring": 203124
+    }
+  },
+  {
+    "id": 124060,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Baraou no Souretsu",
+      "english": "Requiem of the Rose King",
+      "native": "薔薇王の葬列"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "J.C. Staff", "isAnimationStudio": true, "favourites": 2889 },
+        {
+          "name": "Bandai Namco Arts",
+          "isAnimationStudio": false,
+          "favourites": 17
+        },
+        {
+          "name": "Hakuhodo DY Music & Pictures",
+          "isAnimationStudio": false,
+          "favourites": 4
+        },
+        { "name": "Akita Shoten", "isAnimationStudio": false, "favourites": 0 },
+        {
+          "name": "Bandai Namco Live Creative",
+          "isAnimationStudio": false,
+          "favourites": 3
+        }
+      ]
+    },
+    "genres": ["Action", "Drama", "Supernatural"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx124060-gPb5UWbdQgj9.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx124060-gPb5UWbdQgj9.jpg",
+      "color": "#35aee4"
+    },
+    "status": "RELEASING",
+    "averageScore": 52,
+    "meanScore": 52,
+    "trending": 8,
+    "nextAiringEpisode": {
+      "airingAt": 1650202200,
+      "episode": 14,
+      "timeUntilAiring": 231924
+    }
+  },
+  {
+    "id": 125682,
+    "type": "ANIME",
+    "title": { "romaji": "CUE!", "english": "CUE!", "native": "CUE!" },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Graphinica", "isAnimationStudio": true, "favourites": 35 },
+        {
+          "name": "Yumeta Company",
+          "isAnimationStudio": true,
+          "favourites": 5
+        },
+        { "name": "APDREAM", "isAnimationStudio": false, "favourites": 0 },
+        { "name": "Pony Canyon", "isAnimationStudio": false, "favourites": 76 }
+      ]
+    },
+    "genres": ["Music"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx125682-aJ1KNMq8wPvz.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx125682-aJ1KNMq8wPvz.jpg",
+      "color": "#f1a143"
+    },
+    "status": "RELEASING",
+    "averageScore": 61,
+    "meanScore": 62,
+    "trending": 1,
+    "nextAiringEpisode": {
+      "airingAt": 1650041700,
+      "episode": 14,
+      "timeUntilAiring": 71424
+    }
+  },
+  {
+    "id": 126288,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Sasaki to Miyano",
+      "english": "Sasaki and Miyano",
+      "native": "佐々木と宮野"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Studio DEEN", "isAnimationStudio": true, "favourites": 711 },
+        { "name": "KADOKAWA", "isAnimationStudio": false, "favourites": 131 },
+        {
+          "name": "Nippon Columbia",
+          "isAnimationStudio": false,
+          "favourites": 5
+        },
+        { "name": "Movic", "isAnimationStudio": false, "favourites": 19 },
+        { "name": "BS Nippon", "isAnimationStudio": false, "favourites": 0 },
+        { "name": "U-NEXT", "isAnimationStudio": false, "favourites": 0 },
+        {
+          "name": "Frontier Works",
+          "isAnimationStudio": false,
+          "favourites": 17
+        },
+        {
+          "name": "Kadokawa Media House",
+          "isAnimationStudio": false,
+          "favourites": 17
+        },
+        { "name": "TV Aichi", "isAnimationStudio": false, "favourites": 0 }
+      ]
+    },
+    "genres": ["Comedy", "Romance", "Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx126288-LDuOrj9RFv3E.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx126288-LDuOrj9RFv3E.jpg",
+      "color": "#f1bb86"
+    },
+    "status": "FINISHED",
+    "averageScore": 82,
+    "meanScore": 82,
+    "trending": 13,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 127050,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Koroshi Ai",
+      "english": "Love of Kill",
+      "native": "殺し愛"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Platinum Vision",
+          "isAnimationStudio": true,
+          "favourites": 27
+        },
+        { "name": "KADOKAWA", "isAnimationStudio": false, "favourites": 131 },
+        {
+          "name": "Crunchyroll",
+          "isAnimationStudio": false,
+          "favourites": 202
+        },
+        {
+          "name": "Kadokawa Media House",
+          "isAnimationStudio": false,
+          "favourites": 17
+        },
+        {
+          "name": "Toy's Factory",
+          "isAnimationStudio": false,
+          "favourites": 1
+        },
+        { "name": "A3", "isAnimationStudio": false, "favourites": 0 },
+        {
+          "name": "Bit Grooove Promotion",
+          "isAnimationStudio": false,
+          "favourites": 1
+        }
+      ]
+    },
+    "genres": ["Action", "Psychological", "Romance"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx127050-kJ3pIbJzLDYT.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx127050-kJ3pIbJzLDYT.png",
+      "color": "#50a1e4"
+    },
+    "status": "FINISHED",
+    "averageScore": 67,
+    "meanScore": 68,
+    "trending": 12,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 127549,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Slow Loop",
+      "english": "Slow Loop",
+      "native": "スローループ"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "CONNECT", "isAnimationStudio": true, "favourites": 43 },
+        { "name": "KADOKAWA", "isAnimationStudio": false, "favourites": 131 },
+        { "name": "Houbunsha", "isAnimationStudio": false, "favourites": 0 },
+        { "name": "flying DOG", "isAnimationStudio": false, "favourites": 23 },
+        {
+          "name": "Kadokawa Media House",
+          "isAnimationStudio": false,
+          "favourites": 17
+        },
+        { "name": "eStream", "isAnimationStudio": false, "favourites": 0 },
+        { "name": "AT-X", "isAnimationStudio": false, "favourites": 21 }
+      ]
+    },
+    "genres": ["Slice of Life", "Sports"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx127549-fr324YPdXb3D.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx127549-fr324YPdXb3D.jpg",
+      "color": "#d66b1a"
+    },
+    "status": "FINISHED",
+    "averageScore": 71,
+    "meanScore": 71,
+    "trending": 3,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 128034,
+    "type": "ANIME",
+    "title": {
+      "romaji": "ORIENT",
+      "english": "ORIENT",
+      "native": "オリエント"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "A.C.G.T.", "isAnimationStudio": true, "favourites": 17 },
+        {
+          "name": "Avex Pictures",
+          "isAnimationStudio": false,
+          "favourites": 3
+        },
+        { "name": "TV Tokyo", "isAnimationStudio": false, "favourites": 204 },
+        {
+          "name": "Crunchyroll",
+          "isAnimationStudio": false,
+          "favourites": 202
+        },
+        { "name": "Kodansha", "isAnimationStudio": false, "favourites": 98 },
+        { "name": "bilibili", "isAnimationStudio": false, "favourites": 96 },
+        { "name": "AT-X", "isAnimationStudio": false, "favourites": 21 }
+      ]
+    },
+    "genres": ["Action", "Adventure", "Comedy", "Fantasy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx128034-PHcAWDtmPuAK.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx128034-PHcAWDtmPuAK.jpg",
+      "color": "#ff5d1a"
+    },
+    "status": "FINISHED",
+    "averageScore": 60,
+    "meanScore": 60,
+    "trending": 6,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 128400,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Saiyuuki RELOAD: ZEROIN",
+      "english": "Saiyuki RELOAD: ZEROIN",
+      "native": "最遊記RELOAD -ZEROIN-"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "LIDENFILMS", "isAnimationStudio": true, "favourites": 196 },
+        {
+          "name": "Frontier Works",
+          "isAnimationStudio": false,
+          "favourites": 17
+        },
+        { "name": "Lantis", "isAnimationStudio": false, "favourites": 79 }
+      ]
+    },
+    "genres": ["Action", "Adventure", "Supernatural"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx128400-wTWF3QtiVMg2.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx128400-wTWF3QtiVMg2.jpg",
+      "color": "#f1c95d"
+    },
+    "status": "FINISHED",
+    "averageScore": 56,
+    "meanScore": 59,
+    "trending": 1,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 128828,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Dolls' Frontline",
+      "english": "Girls’ Frontline",
+      "native": "ドールズフロントライン"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Asahi Production",
+          "isAnimationStudio": true,
+          "favourites": 15
+        },
+        {
+          "name": "Warner Bros. Japan",
+          "isAnimationStudio": false,
+          "favourites": 30
+        },
+        {
+          "name": "SUNBORN Network Technology",
+          "isAnimationStudio": false,
+          "favourites": 0
+        },
+        {
+          "name": "GRIFFIN & KRYUGER",
+          "isAnimationStudio": false,
+          "favourites": 1
+        },
+        { "name": "Ai Addiction", "isAnimationStudio": false, "favourites": 0 }
+      ]
+    },
+    "genres": ["Action", "Drama"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx128828-Lhulr8Niitey.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx128828-Lhulr8Niitey.png",
+      "color": "#d61a1a"
+    },
+    "status": "FINISHED",
+    "averageScore": 53,
+    "meanScore": 54,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 129190,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Tensai Ouji no Akaji Kokka Saisei Jutsu",
+      "english": "The Genius Prince's Guide to Raising a Nation Out of Debt",
+      "native": "天才王子の赤字国家再生術"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Yokohama Animation Lab",
+          "isAnimationStudio": false,
+          "favourites": 20
+        },
+        {
+          "name": "NBCUniversal Entertainment Japan",
+          "isAnimationStudio": false,
+          "favourites": 26
+        },
+        { "name": "SB Creative", "isAnimationStudio": false, "favourites": 1 },
+        { "name": "DMM pictures", "isAnimationStudio": false, "favourites": 8 },
+        { "name": "TOKYO MX", "isAnimationStudio": false, "favourites": 4 },
+        { "name": "BS Nippon", "isAnimationStudio": false, "favourites": 0 },
+        { "name": "AT-X", "isAnimationStudio": false, "favourites": 21 }
+      ]
+    },
+    "genres": ["Comedy", "Fantasy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx129190-UnaPbNhTCTOR.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx129190-UnaPbNhTCTOR.jpg",
+      "color": "#e4ae5d"
+    },
+    "status": "FINISHED",
+    "averageScore": 72,
+    "meanScore": 73,
+    "trending": 13,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 129191,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Shikkakumon no Saikyou Kenja",
+      "english": "The Strongest Sage with the Weakest Crest",
+      "native": "失格紋の最強賢者"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "J.C. Staff", "isAnimationStudio": true, "favourites": 2889 },
+        {
+          "name": "NBCUniversal Entertainment Japan",
+          "isAnimationStudio": false,
+          "favourites": 26
+        },
+        { "name": "SB Creative", "isAnimationStudio": false, "favourites": 1 },
+        { "name": "GREE", "isAnimationStudio": false, "favourites": 1 },
+        {
+          "name": "Square Enix",
+          "isAnimationStudio": false,
+          "favourites": 180
+        },
+        { "name": "Sammy", "isAnimationStudio": false, "favourites": 0 },
+        {
+          "name": "Medicos Entertainment",
+          "isAnimationStudio": false,
+          "favourites": 0
+        },
+        {
+          "name": "Good Smile Film",
+          "isAnimationStudio": false,
+          "favourites": 0
+        }
+      ]
+    },
+    "genres": [
+      "Action",
+      "Adventure",
+      "Comedy",
+      "Fantasy",
+      "Romance",
+      "Slice of Life"
+    ],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx129191-F80AgCUP79yE.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx129191-F80AgCUP79yE.jpg",
+      "color": "#5daef1"
+    },
+    "status": "FINISHED",
+    "averageScore": 61,
+    "meanScore": 61,
+    "trending": 11,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 130166,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Leadale no Daichi nite",
+      "english": "In the Land of Leadale",
+      "native": "リアデイルの大地にて"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Maho Film", "isAnimationStudio": true, "favourites": 35 },
+        { "name": "KADOKAWA", "isAnimationStudio": false, "favourites": 131 },
+        {
+          "name": "Kadokawa Media House",
+          "isAnimationStudio": false,
+          "favourites": 17
+        },
+        {
+          "name": "Crunchyroll",
+          "isAnimationStudio": false,
+          "favourites": 202
+        },
+        {
+          "name": "Bandai Namco Arts",
+          "isAnimationStudio": false,
+          "favourites": 17
+        },
+        {
+          "name": "Sun Television",
+          "isAnimationStudio": false,
+          "favourites": 0
+        },
+        { "name": "Simplicity", "isAnimationStudio": false, "favourites": 0 }
+      ]
+    },
+    "genres": ["Adventure", "Fantasy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx130166-YVHrYg4wNA68.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx130166-YVHrYg4wNA68.jpg",
+      "color": "#f19328"
+    },
+    "status": "FINISHED",
+    "averageScore": 68,
+    "meanScore": 68,
+    "trending": 8,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 130389,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Mahouka Koukou no Rettousei: Tsuioku-hen",
+      "english": "The Irregular at Magic High School: Reminiscence Arc",
+      "native": "魔法科高校の劣等生 追憶編"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "8-bit", "isAnimationStudio": true, "favourites": 566 },
+        { "name": "Aniplex", "isAnimationStudio": false, "favourites": 1268 },
+        { "name": "KADOKAWA", "isAnimationStudio": false, "favourites": 131 },
+        {
+          "name": "Square Enix",
+          "isAnimationStudio": false,
+          "favourites": 180
+        },
+        {
+          "name": "Straight Edge",
+          "isAnimationStudio": false,
+          "favourites": 0
+        },
+        { "name": "Movic", "isAnimationStudio": false, "favourites": 19 }
+      ]
+    },
+    "genres": ["Action", "Romance", "Sci-Fi", "Supernatural"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx130389-FVlthC6vlJOV.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx130389-FVlthC6vlJOV.png",
+      "color": null
+    },
+    "status": "FINISHED",
+    "averageScore": 75,
+    "meanScore": 76,
+    "trending": 2,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 130550,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Totsukuni no Shoujo",
+      "english": "The Girl from the Other Side",
+      "native": "とつくにの少女"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Wit Studio", "isAnimationStudio": true, "favourites": 7717 },
+        { "name": "Twin Engine", "isAnimationStudio": false, "favourites": 35 }
+      ]
+    },
+    "genres": ["Drama", "Fantasy", "Mystery"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx130550-TNuuHlL1BIMZ.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx130550-TNuuHlL1BIMZ.jpg",
+      "color": null
+    },
+    "status": "FINISHED",
+    "averageScore": 73,
+    "meanScore": 77,
+    "trending": 4,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 130591,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Sabikui Bisco",
+      "english": "Sabikui Bisco",
+      "native": "錆喰いビスコ"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "OZ", "isAnimationStudio": true, "favourites": 22 },
+        {
+          "name": "Hakuhodo DY Music & Pictures",
+          "isAnimationStudio": false,
+          "favourites": 4
+        },
+        { "name": "KADOKAWA", "isAnimationStudio": false, "favourites": 131 },
+        { "name": "flying DOG", "isAnimationStudio": false, "favourites": 23 },
+        { "name": "Yomiuri TV", "isAnimationStudio": false, "favourites": 1 },
+        {
+          "name": "Frontier Works",
+          "isAnimationStudio": false,
+          "favourites": 17
+        },
+        { "name": "BS11", "isAnimationStudio": false, "favourites": 3 },
+        { "name": "Klock Worx", "isAnimationStudio": false, "favourites": 6 },
+        {
+          "name": "Bit Grooove Promotion",
+          "isAnimationStudio": false,
+          "favourites": 1
+        },
+        { "name": "NAZ", "isAnimationStudio": true, "favourites": 30 }
+      ]
+    },
+    "genres": ["Action", "Adventure", "Fantasy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx130591-9O1cf7u6SfYa.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx130591-9O1cf7u6SfYa.jpg",
+      "color": "#fe3528"
+    },
+    "status": "FINISHED",
+    "averageScore": 72,
+    "meanScore": 72,
+    "trending": 14,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 131548,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Akebi-chan no Sailor Fuku",
+      "english": "Akebi’s Sailor Uniform",
+      "native": "明日ちゃんのセーラー服"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "CloverWorks",
+          "isAnimationStudio": true,
+          "favourites": 3563
+        },
+        { "name": "Aniplex", "isAnimationStudio": false, "favourites": 1268 },
+        { "name": "Shueisha", "isAnimationStudio": false, "favourites": 40 },
+        { "name": "BS Asahi", "isAnimationStudio": false, "favourites": 0 }
+      ]
+    },
+    "genres": ["Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx131548-4OXik3SWOaee.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx131548-4OXik3SWOaee.jpg",
+      "color": "#e4d6ae"
+    },
+    "status": "FINISHED",
+    "averageScore": 76,
+    "meanScore": 77,
+    "trending": 14,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 131681,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Shingeki no Kyojin: The Final Season Part 2",
+      "english": "Attack on Titan Final Season Part 2",
+      "native": "進撃の巨人 The Final Season Part 2"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "MAPPA", "isAnimationStudio": true, "favourites": 11246 },
+        { "name": "Pony Canyon", "isAnimationStudio": false, "favourites": 76 },
+        { "name": "Kodansha", "isAnimationStudio": false, "favourites": 98 },
+        {
+          "name": "Production I.G",
+          "isAnimationStudio": true,
+          "favourites": 4280
+        },
+        { "name": "Dentsu", "isAnimationStudio": false, "favourites": 39 },
+        {
+          "name": "Mainichi Broadcasting System",
+          "isAnimationStudio": false,
+          "favourites": 26
+        },
+        {
+          "name": "Pony Canyon Enterprise",
+          "isAnimationStudio": false,
+          "favourites": 2
+        }
+      ]
+    },
+    "genres": ["Action", "Drama", "Fantasy", "Mystery", "Psychological"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx131681-ODIRpBIbR5Eu.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx131681-ODIRpBIbR5Eu.jpg",
+      "color": "#50bbf1"
+    },
+    "status": "FINISHED",
+    "averageScore": 88,
+    "meanScore": 88,
+    "trending": 84,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 132405,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Sono Bisque Doll wa Koi wo Suru",
+      "english": "My Dress-Up Darling",
+      "native": "その着せ替え人形は恋をする"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "CloverWorks",
+          "isAnimationStudio": true,
+          "favourites": 3563
+        },
+        { "name": "Aniplex", "isAnimationStudio": false, "favourites": 1268 },
+        {
+          "name": "Square Enix",
+          "isAnimationStudio": false,
+          "favourites": 180
+        },
+        { "name": "Movic", "isAnimationStudio": false, "favourites": 19 },
+        { "name": "TOKYO MX", "isAnimationStudio": false, "favourites": 4 },
+        { "name": "BS11", "isAnimationStudio": false, "favourites": 3 },
+        { "name": "Studio Mausu", "isAnimationStudio": false, "favourites": 2 }
+      ]
+    },
+    "genres": ["Comedy", "Ecchi", "Romance", "Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx132405-qP7FQYGmNI3d.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx132405-qP7FQYGmNI3d.jpg",
+      "color": "#e46b5d"
+    },
+    "status": "FINISHED",
+    "averageScore": 83,
+    "meanScore": 83,
+    "trending": 67,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 134070,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Hairpin Double",
+      "english": null,
+      "native": "ヘアピンダブル"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Felix Film", "isAnimationStudio": true, "favourites": 14 },
+        { "name": "Ai Addiction", "isAnimationStudio": false, "favourites": 0 }
+      ]
+    },
+    "genres": ["Mecha"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx134070-E8rnAwGZTdN3.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx134070-E8rnAwGZTdN3.jpg",
+      "color": null
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 42,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 134252,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Fantasy Bishoujo Juniku Ojisan to",
+      "english": "Life With an Ordinary Guy Who Reincarnated Into a Total Fantasy Knockout",
+      "native": "異世界美少女受肉おじさんと"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "OLM", "isAnimationStudio": true, "favourites": 273 },
+        { "name": "Bushiroad", "isAnimationStudio": false, "favourites": 15 },
+        { "name": "Cygames", "isAnimationStudio": false, "favourites": 15 },
+        {
+          "name": "Bit Grooove Promotion",
+          "isAnimationStudio": false,
+          "favourites": 1
+        },
+        { "name": "bilibili", "isAnimationStudio": false, "favourites": 96 },
+        { "name": "TV Tokyo", "isAnimationStudio": false, "favourites": 204 }
+      ]
+    },
+    "genres": ["Adventure", "Comedy", "Fantasy", "Romance"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx134252-6pwG0YdI20aQ.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx134252-6pwG0YdI20aQ.jpg",
+      "color": "#f1c90d"
+    },
+    "status": "FINISHED",
+    "averageScore": 71,
+    "meanScore": 71,
+    "trending": 9,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 135136,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Vanitas no Carte Part 2",
+      "english": "The Case Study of Vanitas Part 2",
+      "native": "ヴァニタスの手記 2クール"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "bones", "isAnimationStudio": true, "favourites": 10438 },
+        { "name": "Aniplex", "isAnimationStudio": false, "favourites": 1268 },
+        {
+          "name": "Hakuhodo DY Music & Pictures",
+          "isAnimationStudio": false,
+          "favourites": 4
+        },
+        {
+          "name": "Square Enix",
+          "isAnimationStudio": false,
+          "favourites": 180
+        },
+        { "name": "Contents Seed", "isAnimationStudio": false, "favourites": 0 }
+      ]
+    },
+    "genres": ["Action", "Drama", "Fantasy", "Mystery", "Supernatural"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx135136-wVMApb1FEmkz.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx135136-wVMApb1FEmkz.jpg",
+      "color": "#f1e493"
+    },
+    "status": "FINISHED",
+    "averageScore": 81,
+    "meanScore": 81,
+    "trending": 24,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 135848,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Ouji no Honmei wa Akuyaku Reijou",
+      "english": null,
+      "native": "王子の本命は悪役令嬢"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Studio Houkiboshi",
+          "isAnimationStudio": true,
+          "favourites": 20
+        },
+        { "name": "Studio Mausu", "isAnimationStudio": false, "favourites": 2 },
+        { "name": "Suiseisha", "isAnimationStudio": false, "favourites": 4 }
+      ]
+    },
+    "genres": ["Fantasy", "Hentai", "Romance"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx135848-NokJPvqur7Tz.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx135848-NokJPvqur7Tz.jpg",
+      "color": "#e43550"
+    },
+    "status": "FINISHED",
+    "averageScore": 55,
+    "meanScore": 60,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 136192,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Fruits Basket: prelude",
+      "english": null,
+      "native": "フルーツバスケット -prelude-"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "TMS Entertainment",
+          "isAnimationStudio": true,
+          "favourites": 875
+        },
+        { "name": "TMS Music", "isAnimationStudio": false, "favourites": 1 },
+        { "name": "Avex Pictures", "isAnimationStudio": false, "favourites": 3 }
+      ]
+    },
+    "genres": ["Drama", "Romance"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx136192-k8EXMXTWTJC0.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx136192-k8EXMXTWTJC0.jpg",
+      "color": "#e45d6b"
+    },
+    "status": "FINISHED",
+    "averageScore": 72,
+    "meanScore": 84,
+    "trending": 1,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 136302,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Goodbye, DonGlees!",
+      "english": null,
+      "native": "グッバイ、ドン・グリーズ！"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "MADHOUSE", "isAnimationStudio": true, "favourites": 12344 },
+        { "name": "KADOKAWA", "isAnimationStudio": false, "favourites": 131 }
+      ]
+    },
+    "genres": ["Adventure"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx136302-4R03xBOGWrcq.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx136302-4R03xBOGWrcq.jpg",
+      "color": "#d6861a"
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 71,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 136428,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Kaijin Kaihatsubu no Kuroitsu-san",
+      "english": "Miss KUROITSU from the Monster Development Department",
+      "native": "怪人開発部の黒井津さん"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Quad", "isAnimationStudio": true, "favourites": 1 },
+        {
+          "name": "ABC Animation",
+          "isAnimationStudio": false,
+          "favourites": 12
+        },
+        { "name": "CREST", "isAnimationStudio": false, "favourites": 0 }
+      ]
+    },
+    "genres": ["Comedy", "Fantasy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx136428-DYv9Q1IPg5cp.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx136428-DYv9Q1IPg5cp.png",
+      "color": "#f19350"
+    },
+    "status": "FINISHED",
+    "averageScore": 64,
+    "meanScore": 65,
+    "trending": 4,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 136436,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Kobayashi-san Chi no Maidragon S: Nippon no Omotenashi (Attend wa Dragon Desu)",
+      "english": null,
+      "native": "小林さんちのメイドラゴンＳ ニッポンのおもてなし（アテンドはドラゴンです）"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Kyoto Animation",
+          "isAnimationStudio": true,
+          "favourites": 16076
+        },
+        { "name": "Pony Canyon", "isAnimationStudio": false, "favourites": 76 },
+        {
+          "name": "Bandai Namco Arts",
+          "isAnimationStudio": false,
+          "favourites": 17
+        },
+        {
+          "name": "ABC Animation",
+          "isAnimationStudio": false,
+          "favourites": 12
+        }
+      ]
+    },
+    "genres": ["Comedy", "Fantasy", "Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx136436-Pirva3Ad2uWc.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx136436-Pirva3Ad2uWc.jpg",
+      "color": "#e45086"
+    },
+    "status": "FINISHED",
+    "averageScore": 78,
+    "meanScore": 79,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 137247,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Gensou Sangokushi: Tengen Reishinki",
+      "english": "Fantasia Sango - Realm of Legends",
+      "native": "幻想三國誌 -天元霊心記"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Geek Toys", "isAnimationStudio": true, "favourites": 35 },
+        {
+          "name": "Tohokushinsha Film Corporation",
+          "isAnimationStudio": false,
+          "favourites": 2
+        }
+      ]
+    },
+    "genres": ["Fantasy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx137247-JAj22GZfrbUk.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx137247-JAj22GZfrbUk.png",
+      "color": "#c935e4"
+    },
+    "status": "FINISHED",
+    "averageScore": 45,
+    "meanScore": 45,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 137312,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Hakozume: Kouban Joshi no Gyakushuu",
+      "english": "Police in a Pod",
+      "native": "ハコヅメ～交番女子の逆襲～"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "MADHOUSE", "isAnimationStudio": true, "favourites": 12344 },
+        { "name": "KADOKAWA", "isAnimationStudio": false, "favourites": 131 },
+        {
+          "name": "Docomo Anime Store",
+          "isAnimationStudio": false,
+          "favourites": 0
+        },
+        { "name": "AT-X", "isAnimationStudio": false, "favourites": 21 },
+        { "name": "BS Nippon", "isAnimationStudio": false, "favourites": 0 },
+        {
+          "name": "Kadokawa Media House",
+          "isAnimationStudio": false,
+          "favourites": 17
+        }
+      ]
+    },
+    "genres": ["Comedy", "Drama", "Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx137312-hlWRtCt25oMg.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx137312-hlWRtCt25oMg.jpg",
+      "color": "#e41a6b"
+    },
+    "status": "FINISHED",
+    "averageScore": 68,
+    "meanScore": 69,
+    "trending": 2,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 137337,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Non Non Biyori: Nonstop - Bukatsu wo Ganbatta",
+      "english": null,
+      "native": "のんのんびより のんすとっぷ 部活をがんばった"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "SILVER LINK.",
+          "isAnimationStudio": true,
+          "favourites": 1066
+        }
+      ]
+    },
+    "genres": ["Comedy", "Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx137337-5iTk3YEYoZyS.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx137337-5iTk3YEYoZyS.png",
+      "color": "#28c9fe"
+    },
+    "status": "FINISHED",
+    "averageScore": 80,
+    "meanScore": 82,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 137378,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Eien no 831",
+      "english": null,
+      "native": "永遠の831"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Craftar", "isAnimationStudio": false, "favourites": 4 },
+        { "name": "WOWOW", "isAnimationStudio": false, "favourites": 0 }
+      ]
+    },
+    "genres": ["Supernatural"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx137378-FPIl0mzWSFRL.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx137378-FPIl0mzWSFRL.jpg",
+      "color": "#c9d6f1"
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 53,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 138379,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Blue Thermal",
+      "english": null,
+      "native": "ブルーサーマル"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Telecom Animation Film",
+          "isAnimationStudio": true,
+          "favourites": 86
+        }
+      ]
+    },
+    "genres": ["Drama"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx138379-9oCYnGuO5bud.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx138379-9oCYnGuO5bud.jpg",
+      "color": "#e4a143"
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 71,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 138424,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Karakai Jouzu no Takagi-san 3",
+      "english": "Teasing Master Takagi-san Season 3",
+      "native": "からかい上手の高木さん３"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Shin-Ei Animation",
+          "isAnimationStudio": true,
+          "favourites": 88
+        },
+        {
+          "name": "Toho Company",
+          "isAnimationStudio": false,
+          "favourites": 129
+        },
+        { "name": "Asmik Ace", "isAnimationStudio": false, "favourites": 3 },
+        { "name": "Shogakukan", "isAnimationStudio": false, "favourites": 1 },
+        {
+          "name": "Shogakukan-Shueisha Productions",
+          "isAnimationStudio": false,
+          "favourites": 5
+        }
+      ]
+    },
+    "genres": ["Comedy", "Romance", "Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx138424-97Nz1P7M3O2d.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx138424-97Nz1P7M3O2d.png",
+      "color": "#e4bb43"
+    },
+    "status": "FINISHED",
+    "averageScore": 83,
+    "meanScore": 84,
+    "trending": 8,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 138717,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Otome wa Boku ni Koishiteru: Mittsu no Kiraboshi - The Animation",
+      "english": null,
+      "native": "乙女はお姉さまに恋してる 3つのきら星 The Animation"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Brave Hearts", "isAnimationStudio": false, "favourites": 0 },
+        { "name": "EXNOA", "isAnimationStudio": true, "favourites": 0 }
+      ]
+    },
+    "genres": ["Drama", "Romance"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx138717-IaOFyco2qnhP.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx138717-IaOFyco2qnhP.png",
+      "color": "#bbfff1"
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 52,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 138833,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Abandon: 100 Nukishinai to Derarenai Fushigi na Kyoushitsu",
+      "english": null,
+      "native": "Abandon‐100ヌキしないと出られない不思議な教室‐"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Mary Jane", "isAnimationStudio": true, "favourites": 170 },
+        { "name": "Rabbit Gate", "isAnimationStudio": true, "favourites": 3 }
+      ]
+    },
+    "genres": ["Hentai"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx138833-dbVBbljTEjTl.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx138833-dbVBbljTEjTl.jpg",
+      "color": "#355de4"
+    },
+    "status": "RELEASING",
+    "averageScore": null,
+    "meanScore": 57,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 138912,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Atasha Kawashiri Kodama da yo: Dangerous Lifehacker no Tadareta Seikatsu",
+      "english": "I'M KODAMA KAWASHIRI",
+      "native": "あたしゃ川尻こだまだよ～デンジャラスライフハッカーのただれた生活～"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Lapin Track", "isAnimationStudio": false, "favourites": 9 }
+      ]
+    },
+    "genres": ["Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/b138912-J10LnAzZJOUR.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/b138912-J10LnAzZJOUR.jpg",
+      "color": "#f1a10d"
+    },
+    "status": "RELEASING",
+    "averageScore": 52,
+    "meanScore": 54,
+    "trending": 36,
+    "nextAiringEpisode": {
+      "airingAt": 1650558900,
+      "episode": 12,
+      "timeUntilAiring": 588624
+    }
+  },
+  {
+    "id": 139589,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Kotarou wa Hitorigurashi",
+      "english": "Kotaro Lives Alone",
+      "native": "コタローは１人暮らし"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Netflix", "isAnimationStudio": false, "favourites": 53 },
+        { "name": "LIDENFILMS", "isAnimationStudio": true, "favourites": 196 }
+      ]
+    },
+    "genres": ["Comedy", "Drama", "Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx139589-GEQZq9bYvJEI.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx139589-GEQZq9bYvJEI.jpg",
+      "color": "#e45050"
+    },
+    "status": "FINISHED",
+    "averageScore": 84,
+    "meanScore": 85,
+    "trending": 19,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 139592,
+    "type": "ANIME",
+    "title": {
+      "romaji": "TALES OF LUMINARIA: The Fateful Crossroad",
+      "english": "Tales of Luminaria the Fateful Crossroad",
+      "native": "TALES OF LUMINARIA The Fateful Crossroad"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Kamikaze Douga",
+          "isAnimationStudio": true,
+          "favourites": 48
+        },
+        {
+          "name": "Bandai Namco Entertainment",
+          "isAnimationStudio": false,
+          "favourites": 0
+        }
+      ]
+    },
+    "genres": ["Adventure", "Fantasy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx139592-b0NguDFqSsfZ.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx139592-b0NguDFqSsfZ.jpg",
+      "color": "#f1286b"
+    },
+    "status": "FINISHED",
+    "averageScore": 57,
+    "meanScore": 61,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 139648,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Genjitsu Shugi Yuusha no Oukoku Saikenki Part 2",
+      "english": "How a Realist Hero Rebuilt the Kingdom Part 2",
+      "native": "現実主義勇者の王国再建記 第二部"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "J.C. Staff", "isAnimationStudio": true, "favourites": 2889 },
+        { "name": "King Records", "isAnimationStudio": false, "favourites": 7 },
+        { "name": "MIGHTY MEDIA", "isAnimationStudio": false, "favourites": 0 },
+        { "name": "OVERLAP", "isAnimationStudio": false, "favourites": 0 },
+        { "name": "WOWMAX", "isAnimationStudio": false, "favourites": 0 },
+        { "name": "Klock Worx", "isAnimationStudio": false, "favourites": 6 }
+      ]
+    },
+    "genres": ["Action", "Adventure", "Fantasy", "Romance"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx139648-Gc88ZbCFeKCQ.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx139648-Gc88ZbCFeKCQ.jpg",
+      "color": "#1a5da1"
+    },
+    "status": "FINISHED",
+    "averageScore": 74,
+    "meanScore": 74,
+    "trending": 10,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 139675,
+    "type": "ANIME",
+    "title": { "romaji": "Puchi Seka", "english": null, "native": "ぷちセカ" },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Scooter Films", "isAnimationStudio": true, "favourites": 0 }
+      ]
+    },
+    "genres": ["Comedy", "Music", "Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/b139675-ZTbAxBvRNF7G.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/b139675-ZTbAxBvRNF7G.png",
+      "color": "#1ad6c9"
+    },
+    "status": "FINISHED",
+    "averageScore": 61,
+    "meanScore": 65,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 139804,
+    "type": "ANIME",
+    "title": {
+      "romaji": "TRIBE NINE",
+      "english": "Tribe Nine",
+      "native": "トライブナイン"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "LIDENFILMS", "isAnimationStudio": true, "favourites": 196 },
+        { "name": "Akatsuki", "isAnimationStudio": true, "favourites": 0 },
+        {
+          "name": "Bandai Namco Arts",
+          "isAnimationStudio": false,
+          "favourites": 17
+        },
+        {
+          "name": "Docomo Anime Store",
+          "isAnimationStudio": false,
+          "favourites": 0
+        },
+        { "name": "Funimation", "isAnimationStudio": false, "favourites": 790 },
+        {
+          "name": "East Japan Marketing & Communications",
+          "isAnimationStudio": false,
+          "favourites": 2
+        }
+      ]
+    },
+    "genres": ["Action", "Sci-Fi", "Sports"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx139804-kpZVaUQvisjl.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx139804-kpZVaUQvisjl.jpg",
+      "color": "#5093f1"
+    },
+    "status": "FINISHED",
+    "averageScore": 57,
+    "meanScore": 57,
+    "trending": 3,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 140320,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Himitsu no Kichi",
+      "english": null,
+      "native": "ひみつのきち"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Queen Bee", "isAnimationStudio": true, "favourites": 87 }
+      ]
+    },
+    "genres": ["Hentai"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx140320-MKsR9xXbodib.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx140320-MKsR9xXbodib.jpg",
+      "color": "#e45078"
+    },
+    "status": "FINISHED",
+    "averageScore": 55,
+    "meanScore": 60,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 140321,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Sei Dorei Gakuen 2",
+      "english": null,
+      "native": "聖奴隷学園２"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "GOLD BEAR", "isAnimationStudio": true, "favourites": 21 }
+      ]
+    },
+    "genres": ["Hentai"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx140321-9BPeBwTbsS7e.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx140321-9BPeBwTbsS7e.jpg",
+      "color": "#e4a15d"
+    },
+    "status": "RELEASING",
+    "averageScore": 53,
+    "meanScore": 63,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 140376,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Uchuu Senkan Yamato 2205: Aratanaru Tabidachi - Koushou -STASHA-",
+      "english": null,
+      "native": "宇宙戦艦ヤマト2205 新たなる旅立ち 後章 -STASHA-"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Satelight", "isAnimationStudio": true, "favourites": 226 }
+      ]
+    },
+    "genres": ["Action", "Sci-Fi"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx140376-Ei0VRt4ZZxqP.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx140376-Ei0VRt4ZZxqP.jpg",
+      "color": "#5de493"
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 70,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 140430,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Kyonyuu Elf Oyako Saimin",
+      "english": null,
+      "native": "巨乳エルフ母娘催眠"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Bunny Walker", "isAnimationStudio": true, "favourites": 375 }
+      ]
+    },
+    "genres": ["Hentai"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx140430-3G87IXikxA7r.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx140430-3G87IXikxA7r.jpg",
+      "color": "#e49328"
+    },
+    "status": "FINISHED",
+    "averageScore": 64,
+    "meanScore": 68,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 140431,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Akane wa Tsumare Somerareru",
+      "english": null,
+      "native": "茜ハ摘マレ染メラレル"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "An♥Tekinus", "isAnimationStudio": false, "favourites": 61 }
+      ]
+    },
+    "genres": ["Hentai"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx140431-P6w1gtG4jLXz.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx140431-P6w1gtG4jLXz.jpg",
+      "color": "#f1a15d"
+    },
+    "status": "FINISHED",
+    "averageScore": 59,
+    "meanScore": 62,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 140502,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Ryman's Club",
+      "english": "Salaryman's Club",
+      "native": "リーマンズクラブ"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "LIDENFILMS", "isAnimationStudio": true, "favourites": 196 },
+        { "name": "TV Asahi", "isAnimationStudio": false, "favourites": 6 },
+        {
+          "name": "TV Asahi Music",
+          "isAnimationStudio": false,
+          "favourites": 0
+        },
+        { "name": "DMM pictures", "isAnimationStudio": false, "favourites": 8 },
+        { "name": "BS Asahi", "isAnimationStudio": false, "favourites": 0 },
+        {
+          "name": "Universal Music",
+          "isAnimationStudio": false,
+          "favourites": 0
+        },
+        { "name": "A-Sketch", "isAnimationStudio": false, "favourites": 1 },
+        { "name": "Movic", "isAnimationStudio": false, "favourites": 19 },
+        { "name": "Klock Worx", "isAnimationStudio": false, "favourites": 6 },
+        {
+          "name": "Bushiroad Creative",
+          "isAnimationStudio": false,
+          "favourites": 3
+        },
+        {
+          "name": "Ultra Super Pictures",
+          "isAnimationStudio": false,
+          "favourites": 3
+        }
+      ]
+    },
+    "genres": ["Sports"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx140502-bWPNRDMlClxu.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx140502-bWPNRDMlClxu.jpg",
+      "color": "#5dbbe4"
+    },
+    "status": "RELEASING",
+    "averageScore": 71,
+    "meanScore": 72,
+    "trending": 16,
+    "nextAiringEpisode": {
+      "airingAt": 1650126600,
+      "episode": 12,
+      "timeUntilAiring": 156324
+    }
+  },
+  {
+    "id": 140643,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Tokyo 24-ku",
+      "english": "Tokyo 24th Ward",
+      "native": "東京24区"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "CloverWorks",
+          "isAnimationStudio": true,
+          "favourites": 3563
+        },
+        { "name": "Aniplex", "isAnimationStudio": false, "favourites": 1268 },
+        {
+          "name": "ABC Animation",
+          "isAnimationStudio": false,
+          "favourites": 12
+        },
+        { "name": "BS11", "isAnimationStudio": false, "favourites": 3 },
+        { "name": "TOKYO MX", "isAnimationStudio": false, "favourites": 4 },
+        {
+          "name": "Nagoya Broadcasting Network",
+          "isAnimationStudio": false,
+          "favourites": 0
+        },
+        { "name": "Movic", "isAnimationStudio": false, "favourites": 19 },
+        { "name": "Nitroplus", "isAnimationStudio": false, "favourites": 61 }
+      ]
+    },
+    "genres": ["Mystery", "Sci-Fi"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx140643-RpKlGdwDa7r7.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx140643-RpKlGdwDa7r7.jpg",
+      "color": "#5093e4"
+    },
+    "status": "FINISHED",
+    "averageScore": 62,
+    "meanScore": 62,
+    "trending": 4,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 140883,
+    "type": "ANIME",
+    "title": { "romaji": "Ero Ishi", "english": null, "native": "エロ医師" },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "PoRO petit", "isAnimationStudio": true, "favourites": 48 }
+      ]
+    },
+    "genres": ["Hentai"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx140883-TexThg1NH6Mt.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx140883-TexThg1NH6Mt.jpg",
+      "color": "#35aee4"
+    },
+    "status": "RELEASING",
+    "averageScore": 51,
+    "meanScore": 59,
+    "trending": 0,
+    "nextAiringEpisode": {
+      "airingAt": 1655996400,
+      "episode": 3,
+      "timeUntilAiring": 6026124
+    }
+  },
+  {
+    "id": 140950,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Irodorimidori",
+      "english": null,
+      "native": "イロドリミドリ"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "SEGA", "isAnimationStudio": false, "favourites": 6 },
+        { "name": "Akatsuki", "isAnimationStudio": true, "favourites": 0 }
+      ]
+    },
+    "genres": ["Music"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx140950-ppjdDkLTSnCu.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx140950-ppjdDkLTSnCu.jpg",
+      "color": "#e4a143"
+    },
+    "status": "FINISHED",
+    "averageScore": 55,
+    "meanScore": 57,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 141063,
+    "type": "ANIME",
+    "title": {
+      "romaji": "On Air Dekinai!",
+      "english": null,
+      "native": "オンエアできない！"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Jinnan Studio",
+          "isAnimationStudio": false,
+          "favourites": 0
+        },
+        {
+          "name": "Space Neko Company",
+          "isAnimationStudio": true,
+          "favourites": 6
+        },
+        { "name": "WarRock", "isAnimationStudio": false, "favourites": 0 }
+      ]
+    },
+    "genres": ["Comedy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx141063-ozFX5JCyKuAp.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx141063-ozFX5JCyKuAp.jpg",
+      "color": "#28c9f1"
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 61,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 141534,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Mushoku Tensei: Isekai Ittara Honki Dasu Part 2 - Eris no Goblin Toubatsu",
+      "english": "Mushoku Tensei: Jobless Reincarnation Cour 2 - Eris the Goblin Slayer",
+      "native": "無職転生 ～異世界行ったら本気だす～ 第2クール エリスのゴブリン討伐"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Studio Bind", "isAnimationStudio": true, "favourites": 871 },
+        {
+          "name": "Hakuhodo DY Music & Pictures",
+          "isAnimationStudio": false,
+          "favourites": 4
+        },
+        {
+          "name": "Toho Company",
+          "isAnimationStudio": false,
+          "favourites": 129
+        },
+        { "name": "KADOKAWA", "isAnimationStudio": false, "favourites": 131 },
+        {
+          "name": "Frontier Works",
+          "isAnimationStudio": false,
+          "favourites": 17
+        },
+        {
+          "name": "Nippon BS Broadcasting",
+          "isAnimationStudio": false,
+          "favourites": 0
+        },
+        { "name": "GREE", "isAnimationStudio": false, "favourites": 1 },
+        { "name": "EGG FIRM", "isAnimationStudio": true, "favourites": 74 }
+      ]
+    },
+    "genres": ["Adventure", "Drama", "Fantasy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx141534-Tmnlz4mvYhaU.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx141534-Tmnlz4mvYhaU.jpg",
+      "color": "#28aee4"
+    },
+    "status": "FINISHED",
+    "averageScore": 80,
+    "meanScore": 80,
+    "trending": 4,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 141907,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Ensemble Stars!!: Road to Show!!",
+      "english": null,
+      "native": "あんさんぶるスターズ！！-Road to Show!!-"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "David Production",
+          "isAnimationStudio": true,
+          "favourites": 3080
+        },
+        {
+          "name": "Happy Elements",
+          "isAnimationStudio": false,
+          "favourites": 1
+        },
+        {
+          "name": "Bandai Namco Arts",
+          "isAnimationStudio": false,
+          "favourites": 17
+        }
+      ]
+    },
+    "genres": ["Music", "Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx141907-5Hyw1Rp5NtRj.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx141907-5Hyw1Rp5NtRj.png",
+      "color": "#e4bb5d"
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 66,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 142080,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Delicious Party♡Precure",
+      "english": null,
+      "native": "デリシャスパーティ♡プリキュア"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Toei Animation",
+          "isAnimationStudio": true,
+          "favourites": 1952
+        }
+      ]
+    },
+    "genres": ["Fantasy", "Mahou Shoujo"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx142080-nCk0catlOELJ.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx142080-nCk0catlOELJ.jpg",
+      "color": "#d61abb"
+    },
+    "status": "RELEASING",
+    "averageScore": 67,
+    "meanScore": 72,
+    "trending": 1,
+    "nextAiringEpisode": {
+      "airingAt": 1650151800,
+      "episode": 6,
+      "timeUntilAiring": 181524
+    }
+  },
+  {
+    "id": 142116,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Garden: Takamine-ke no Nirinka The Animation",
+      "english": null,
+      "native": "Garden ～高嶺家の二輪花～ The Animation"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Pink Pineapple",
+          "isAnimationStudio": true,
+          "favourites": 403
+        },
+        { "name": "Seven", "isAnimationStudio": true, "favourites": 95 }
+      ]
+    },
+    "genres": ["Hentai"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx142116-9pjiwj1hc1Rm.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx142116-9pjiwj1hc1Rm.jpg",
+      "color": "#35aee4"
+    },
+    "status": "FINISHED",
+    "averageScore": 68,
+    "meanScore": 74,
+    "trending": 1,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 142117,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Kimi wa Yasashiku Netorareru The Animation",
+      "english": null,
+      "native": "キミはやさしく寝取られる The Animation"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Pink Pineapple",
+          "isAnimationStudio": true,
+          "favourites": 403
+        },
+        { "name": "Seven", "isAnimationStudio": true, "favourites": 95 }
+      ]
+    },
+    "genres": ["Hentai"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx142117-Ejf4cEpir37b.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx142117-Ejf4cEpir37b.jpg",
+      "color": "#356bbb"
+    },
+    "status": "RELEASING",
+    "averageScore": 52,
+    "meanScore": 59,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 142216,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Garugaku. II: Lucky Stars",
+      "english": null,
+      "native": "ガル学。II～Lucky Stars～"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [{ "name": "OLM", "isAnimationStudio": true, "favourites": 273 }]
+    },
+    "genres": ["Comedy", "Music"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx142216-kytebRu7F7ft.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx142216-kytebRu7F7ft.png",
+      "color": "#43aef1"
+    },
+    "status": "RELEASING",
+    "averageScore": null,
+    "meanScore": 64,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 142229,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Eroriman",
+      "english": null,
+      "native": "エロリーマン"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "PoRO petit", "isAnimationStudio": true, "favourites": 48 }
+      ]
+    },
+    "genres": ["Hentai"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx142229-ux7lcdcfJhN1.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx142229-ux7lcdcfJhN1.jpg",
+      "color": "#d6501a"
+    },
+    "status": "RELEASING",
+    "averageScore": null,
+    "meanScore": 65,
+    "trending": 0,
+    "nextAiringEpisode": {
+      "airingAt": 1651071600,
+      "episode": 2,
+      "timeUntilAiring": 1101324
+    }
+  },
+  {
+    "id": 142274,
+    "type": "ANIME",
+    "title": { "romaji": "Ninjala", "english": null, "native": "ニンジャラ" },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [{ "name": "OLM", "isAnimationStudio": true, "favourites": 273 }]
+    },
+    "genres": ["Action", "Comedy", "Sci-Fi"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx142274-qPfkeKk4caKI.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx142274-qPfkeKk4caKI.png",
+      "color": "#f1bb43"
+    },
+    "status": "RELEASING",
+    "averageScore": 47,
+    "meanScore": 51,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 142329,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Kimetsu no Yaiba: Yuukaku-hen",
+      "english": "Demon Slayer: Kimetsu no Yaiba Entertainment District Arc",
+      "native": "鬼滅の刃 遊郭編"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "ufotable", "isAnimationStudio": true, "favourites": 10161 },
+        { "name": "Aniplex", "isAnimationStudio": false, "favourites": 1268 },
+        { "name": "Shueisha", "isAnimationStudio": false, "favourites": 40 }
+      ]
+    },
+    "genres": ["Action", "Adventure", "Drama", "Fantasy", "Supernatural"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx142329-kET1PIXJv2eW.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx142329-kET1PIXJv2eW.jpg",
+      "color": "#f19350"
+    },
+    "status": "FINISHED",
+    "averageScore": 88,
+    "meanScore": 88,
+    "trending": 37,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 142411,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Boku no Hero Academia THE MOVIE: World Heroes' Mission - Tabidachi",
+      "english": null,
+      "native": "僕のヒーローアカデミア THE MOVIE ワールド ヒーローズ ミッション ≪旅立ち≫"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "bones", "isAnimationStudio": true, "favourites": 10438 }
+      ]
+    },
+    "genres": ["Action", "Comedy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx142411-Hb2c6mMLs6Jb.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx142411-Hb2c6mMLs6Jb.png",
+      "color": "#e4865d"
+    },
+    "status": "FINISHED",
+    "averageScore": 74,
+    "meanScore": 77,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 142794,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Pocket Monsters (2019): Kami to Yobareshi Arceus",
+      "english": null,
+      "native": "ポケットモンスター (2019) 神とよばれし アルセウス"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [{ "name": "OLM", "isAnimationStudio": true, "favourites": 273 }]
+    },
+    "genres": ["Adventure", "Fantasy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx142794-oVutXLFrlhDs.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx142794-oVutXLFrlhDs.jpg",
+      "color": "#4386e4"
+    },
+    "status": "FINISHED",
+    "averageScore": 64,
+    "meanScore": 68,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 142826,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Yami Shibai 10",
+      "english": "Theatre of Darkness: Yamishibai 10",
+      "native": "闇芝居 十期"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "ILCA", "isAnimationStudio": false, "favourites": 11 }
+      ]
+    },
+    "genres": ["Horror", "Supernatural"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx142826-54rQbxGUPayU.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx142826-54rQbxGUPayU.jpg",
+      "color": null
+    },
+    "status": "FINISHED",
+    "averageScore": 53,
+    "meanScore": 55,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 143065,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Yamitsuki Mura / Melty Limit The Animation",
+      "english": null,
+      "native": "闇憑村/めるてぃーりみっと The Animation"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Show-Ten", "isAnimationStudio": false, "favourites": 14 }
+      ]
+    },
+    "genres": ["Hentai"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx143065-0dIFVePaUqLc.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx143065-0dIFVePaUqLc.jpg",
+      "color": "#e4bbae"
+    },
+    "status": "RELEASING",
+    "averageScore": null,
+    "meanScore": 67,
+    "trending": 0,
+    "nextAiringEpisode": {
+      "airingAt": 1651071600,
+      "episode": 2,
+      "timeUntilAiring": 1101324
+    }
+  },
+  {
+    "id": 143413,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Teiko Penguin",
+      "english": null,
+      "native": "テイコウペンギン"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [{ "name": "Plott", "isAnimationStudio": true, "favourites": 0 }]
+    },
+    "genres": ["Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx143413-yA49X4tYfoQP.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx143413-yA49X4tYfoQP.jpg",
+      "color": "#f1c943"
+    },
+    "status": "RELEASING",
+    "averageScore": null,
+    "meanScore": 52,
+    "trending": 0,
+    "nextAiringEpisode": {
+      "airingAt": 1650407400,
+      "episode": 16,
+      "timeUntilAiring": 437124
+    }
+  },
+  {
+    "id": 143415,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Ohiru no Shocker-san",
+      "english": null,
+      "native": "お昼のショッカーさん"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "MMDGP", "isAnimationStudio": false, "favourites": 0 }
+      ]
+    },
+    "genres": ["Comedy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx143415-FsgUrTD6Oq5P.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx143415-FsgUrTD6Oq5P.jpg",
+      "color": "#e4d678"
+    },
+    "status": "RELEASING",
+    "averageScore": null,
+    "meanScore": null,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 143416,
+    "type": "ANIME",
+    "title": {
+      "romaji": "BABY-HAMITANG",
+      "english": null,
+      "native": "BABY-HAMITANG"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [{ "name": "Robot", "isAnimationStudio": true, "favourites": 3 }]
+    },
+    "genres": [],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx143416-VnkMd6zanoJW.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx143416-VnkMd6zanoJW.jpg",
+      "color": "#f1f10d"
+    },
+    "status": "RELEASING",
+    "averageScore": null,
+    "meanScore": 64,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 143485,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Onmyoji: Heian Monogatari 3",
+      "english": null,
+      "native": "陰陽師・平安物語 3"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Studio Massket",
+          "isAnimationStudio": true,
+          "favourites": 1
+        },
+        { "name": "NetEase", "isAnimationStudio": false, "favourites": 3 }
+      ]
+    },
+    "genres": ["Comedy", "Slice of Life", "Supernatural"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx143485-ljk9rdKO1o8N.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx143485-ljk9rdKO1o8N.jpg",
+      "color": "#e49350"
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 21,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 143612,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Anata wo Hitokoto de Arawashite Kudasai: no Shitsumon ga Nigate da.",
+      "english": null,
+      "native": "あなたを一言で表してください の質問が苦手だ。"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Sunrise", "isAnimationStudio": true, "favourites": 2438 }
+      ]
+    },
+    "genres": ["Sci-Fi"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/b143612-zCOVQaJXADPC.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/b143612-zCOVQaJXADPC.png",
+      "color": "#93d6f1"
+    },
+    "status": "FINISHED",
+    "averageScore": 54,
+    "meanScore": 62,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 143846,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Arifureta Shokugyou de Sekai Saikyou 2nd season Special",
+      "english": null,
+      "native": "ありふれた職業で世界最強 2nd season 未放送エピソード"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Asread", "isAnimationStudio": true, "favourites": 62 },
+        { "name": "studio MOTHER", "isAnimationStudio": true, "favourites": 3 }
+      ]
+    },
+    "genres": ["Action", "Adventure", "Fantasy", "Psychological"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx143846-tSw6l2kPEjsV.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx143846-tSw6l2kPEjsV.png",
+      "color": "#d61a35"
+    },
+    "status": "FINISHED",
+    "averageScore": 68,
+    "meanScore": 70,
+    "trending": 4,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 144336,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Tensai Ouji no Akaji Kokka Saisei Jutsu: Short Drama Specials",
+      "english": null,
+      "native": "天才王子の赤字国家再生術 ショートドラマ"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "AQUA ARIS", "isAnimationStudio": true, "favourites": 0 }
+      ]
+    },
+    "genres": ["Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx144336-NtlT1u5Uwo4d.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx144336-NtlT1u5Uwo4d.jpg",
+      "color": "#f1e4bb"
+    },
+    "status": "RELEASING",
+    "averageScore": null,
+    "meanScore": 76,
+    "trending": 0,
+    "nextAiringEpisode": {
+      "airingAt": 1650985200,
+      "episode": 2,
+      "timeUntilAiring": 1014924
+    }
+  },
+  {
+    "id": 144451,
+    "type": "ANIME",
+    "title": {
+      "romaji": "stars*collection",
+      "english": "stars*collection!",
+      "native": "スターズこれくしょん！"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Cover Corp", "isAnimationStudio": false, "favourites": 114 }
+      ]
+    },
+    "genres": ["Comedy", "Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx144451-uvD2qJiESSHL.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx144451-uvD2qJiESSHL.png",
+      "color": "#6b35ff"
+    },
+    "status": "RELEASING",
+    "averageScore": 65,
+    "meanScore": 78,
+    "trending": 0,
+    "nextAiringEpisode": {
+      "airingAt": 1650016800,
+      "episode": 12,
+      "timeUntilAiring": 46524
+    }
+  },
+  {
+    "id": 144852,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Aka-chan Honbuchou 2nd Season",
+      "english": null,
+      "native": "赤ちゃん本部長(第2シリーズ)"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "NHK Enterprises",
+          "isAnimationStudio": false,
+          "favourites": 5
+        },
+        { "name": "Tomovies", "isAnimationStudio": true, "favourites": 0 },
+        { "name": "NHK", "isAnimationStudio": false, "favourites": 14 }
+      ]
+    },
+    "genres": ["Comedy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/b144852-9L1xwmvrJaPX.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/b144852-9L1xwmvrJaPX.jpg",
+      "color": "#e4f16b"
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 28,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 144916,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Bukusuta The WORLD",
+      "english": null,
+      "native": "ぶくスタ The WORLD"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": { "nodes": [] },
+    "genres": ["Comedy", "Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx144916-pUaeojkwwdrX.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx144916-pUaeojkwwdrX.jpg",
+      "color": "#d6c91a"
+    },
+    "status": "RELEASING",
+    "averageScore": null,
+    "meanScore": null,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 145059,
+    "type": "ANIME",
+    "title": {
+      "romaji": "A Ripple in Time",
+      "english": null,
+      "native": "A Ripple in Time"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [{ "name": "OLM", "isAnimationStudio": true, "favourites": 273 }]
+    },
+    "genres": ["Adventure", "Fantasy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx145059-yUeYbYspEkz0.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx145059-yUeYbYspEkz0.png",
+      "color": "#86e443"
+    },
+    "status": "FINISHED",
+    "averageScore": 59,
+    "meanScore": 62,
+    "trending": 1,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 145063,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Kawaru Machi, Kawareru Machi, Ishinomaki feat. Jun",
+      "english": null,
+      "native": "変わるまち、変われるまち、石巻。feat.ジュン"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Robot", "isAnimationStudio": true, "favourites": 3 },
+        { "name": "monofilmo", "isAnimationStudio": false, "favourites": 1 }
+      ]
+    },
+    "genres": ["Drama", "Fantasy", "Psychological"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx145063-H097g5q4IH5J.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx145063-H097g5q4IH5J.png",
+      "color": "#c9e493"
+    },
+    "status": "FINISHED",
+    "averageScore": 57,
+    "meanScore": 68,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 145405,
+    "type": "ANIME",
+    "title": {
+      "romaji": "New Initial D Movie: BATTLE DIGEST",
+      "english": null,
+      "native": "新劇場版 頭文字D BATTLE DIGEST"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": { "nodes": [] },
+    "genres": ["Action", "Sports"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx145405-2GPZk0jdxsya.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx145405-2GPZk0jdxsya.png",
+      "color": "#e4d65d"
+    },
+    "status": "FINISHED",
+    "averageScore": 61,
+    "meanScore": 76,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 145478,
+    "type": "ANIME",
+    "title": {
+      "romaji": "hololiveERROR",
+      "english": "hololiveERROR",
+      "native": "hololiveERROR"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Cover Corp", "isAnimationStudio": false, "favourites": 114 },
+        { "name": "NOKID", "isAnimationStudio": true, "favourites": 0 }
+      ]
+    },
+    "genres": ["Horror", "Mystery", "Supernatural"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx145478-0S3z7SAFVzZx.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx145478-0S3z7SAFVzZx.png",
+      "color": null
+    },
+    "status": "RELEASING",
+    "averageScore": 63,
+    "meanScore": 76,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 145608,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Uma Musume: Pretty Derby - 1st Anniversary Special Animation",
+      "english": null,
+      "native": "ウマ娘 プリティーダービー 1st Anniversary Special Animation"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Cygames", "isAnimationStudio": false, "favourites": 15 },
+        { "name": "Studio KAI", "isAnimationStudio": true, "favourites": 23 }
+      ]
+    },
+    "genres": ["Slice of Life", "Sports"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx145608-beRhL5C0aO5V.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx145608-beRhL5C0aO5V.png",
+      "color": "#e4ae5d"
+    },
+    "status": "FINISHED",
+    "averageScore": 71,
+    "meanScore": 77,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 145841,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Tesla Note: Mickey to Oliver no Agent Yousei Kouza: Tsuika Kouza",
+      "english": null,
+      "native": "テスラノート ミッキーとオリバーのエージェント養成講座第14回「追加講義」"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "W-Toon Studio", "isAnimationStudio": false, "favourites": 0 }
+      ]
+    },
+    "genres": [],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx145841-dGtr5Gk7b6xq.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx145841-dGtr5Gk7b6xq.jpg",
+      "color": null
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 35,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 145852,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Ore, Tsushima x Na Mo Naki Nezumi",
+      "english": "I, Tsushima x Nameless Mouse",
+      "native": "俺、つしま×名もなきねずみ"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "AQUA ARIS", "isAnimationStudio": true, "favourites": 0 },
+        { "name": "Asmik Ace", "isAnimationStudio": false, "favourites": 3 }
+      ]
+    },
+    "genres": ["Comedy", "Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx145852-HL0gD3UbSNyH.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx145852-HL0gD3UbSNyH.png",
+      "color": "#c96b43"
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 50,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 145895,
+    "type": "ANIME",
+    "title": {
+      "romaji": "KOF XV: Special Animated Short",
+      "english": "KOF XV: SPECIAL ANIMATED SHORT",
+      "native": "KOF XV スペシャルショートアニメーション"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Studio G-1Neo", "isAnimationStudio": true, "favourites": 0 },
+        { "name": "Imagica", "isAnimationStudio": false, "favourites": 1 }
+      ]
+    },
+    "genres": ["Action"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx145895-hSkGDdQd10XZ.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx145895-hSkGDdQd10XZ.png",
+      "color": "#f1a15d"
+    },
+    "status": "FINISHED",
+    "averageScore": 56,
+    "meanScore": 70,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 146140,
+    "type": "ANIME",
+    "title": {
+      "romaji": "BanG Dream! Girls Band Party!: 5th Anniversary Animation - CiRCLE THANKS PARTY!",
+      "english": "BanG Dream! Girls Band Party! 5th Anniversary Animation -CiRCLE THANKS PARTY!-",
+      "native": "バンドリ！ ガールズバンドパーティ！ 5th Anniversary Animation -CiRCLE THANKS PARTY！-"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "SANZIGEN", "isAnimationStudio": true, "favourites": 60 },
+        { "name": "Bushiroad", "isAnimationStudio": false, "favourites": 15 }
+      ]
+    },
+    "genres": ["Music", "Slice of Life"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx146140-gT0U3M9znCoC.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx146140-gT0U3M9znCoC.jpg",
+      "color": "#e45d50"
+    },
+    "status": "FINISHED",
+    "averageScore": 74,
+    "meanScore": 80,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 146397,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Cosmo Samurai 2",
+      "english": "Cosmo Samurai 2",
+      "native": "Cosmo Samurai 2"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "Telecom Animation Film",
+          "isAnimationStudio": true,
+          "favourites": 86
+        },
+        { "name": "Adult Swim", "isAnimationStudio": false, "favourites": 13 }
+      ]
+    },
+    "genres": ["Action", "Sci-Fi"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx146397-aRKhX2OAwcit.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx146397-aRKhX2OAwcit.png",
+      "color": "#2878a1"
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 56,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 146485,
+    "type": "ANIME",
+    "title": {
+      "romaji": "SpoGOMI: World Cup Exhibition Match-hen",
+      "english": "SpoGomi: World Cup Exhibition Match Arc",
+      "native": "スポGOMI ワールドカップエキシビジョンマッチ編"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Tomason", "isAnimationStudio": false, "favourites": 0 }
+      ]
+    },
+    "genres": ["Sports"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx146485-ofJk9so978Np.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx146485-ofJk9so978Np.png",
+      "color": "#0daee4"
+    },
+    "status": "FINISHED",
+    "averageScore": null,
+    "meanScore": 48,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 146503,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Tensei Shitara Slime Datta Ken: Sukuwareru Ramiris",
+      "english": null,
+      "native": "転生したらスライムだった件 救われるラミリス"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "BANDAI SPIRITS",
+          "isAnimationStudio": false,
+          "favourites": 1
+        }
+      ]
+    },
+    "genres": ["Comedy", "Fantasy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/b146503-7YahVCQ9T039.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/b146503-7YahVCQ9T039.png",
+      "color": "#e4d65d"
+    },
+    "status": "RELEASING",
+    "averageScore": null,
+    "meanScore": 81,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 146866,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Jongtama PONG☆Hai",
+      "english": "Mahjong Soul Pon☆Cup",
+      "native": "じゃんたま PONG☆杯"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        { "name": "Scooter Films", "isAnimationStudio": true, "favourites": 0 }
+      ]
+    },
+    "genres": ["Comedy", "Sports"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx146866-1SSsNPRDLsjZ.png",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx146866-1SSsNPRDLsjZ.png",
+      "color": "#6b1a1a"
+    },
+    "status": "FINISHED",
+    "averageScore": 52,
+    "meanScore": 59,
+    "trending": 0,
+    "nextAiringEpisode": null
+  },
+  {
+    "id": 146885,
+    "type": "ANIME",
+    "title": {
+      "romaji": "Bakugan: Evolutions",
+      "english": "Bakugan: Evolutions",
+      "native": "爆丸エボリューションズ"
+    },
+    "season": "WINTER",
+    "seasonYear": 2022,
+    "studios": {
+      "nodes": [
+        {
+          "name": "TMS Entertainment",
+          "isAnimationStudio": true,
+          "favourites": 875
+        },
+        { "name": "Studio Hibari", "isAnimationStudio": true, "favourites": 40 }
+      ]
+    },
+    "genres": ["Action", "Comedy", "Fantasy"],
+    "coverImage": {
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/b146885-wJa9FMFzQaOB.jpg",
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/b146885-wJa9FMFzQaOB.jpg",
+      "color": "#e46b1a"
+    },
+    "status": "RELEASING",
+    "averageScore": null,
+    "meanScore": 62,
+    "trending": 0,
+    "nextAiringEpisode": {
+      "airingAt": 1650121200,
+      "episode": 11,
+      "timeUntilAiring": 150924
+    }
+  }
+]

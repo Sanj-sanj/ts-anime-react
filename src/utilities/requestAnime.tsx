@@ -1,5 +1,6 @@
 // // Here we define our query as a multi-line string
 
+import { APIVariables } from "../interfaces/apiRequestTypes";
 import { mainCard, apiPayload } from "../interfaces/apiResponseTypes";
 
 // // Storing it in a separate .graphql/.gql file is also possible
@@ -66,10 +67,6 @@ async function handleResponse(response: Response) {
   } else {
     return Promise.reject(json);
   }
-  // return response.json().then(function (json) {
-  //   console.log(json);
-  //   return response.ok ? json : Promise.reject(json);
-  // });
 }
 
 function handleData(data: apiPayload) {
@@ -86,7 +83,7 @@ export default async function requestAnime(
   acc = [] as mainCard[],
   page = 1
 ): Promise<mainCard[]> {
-  const variables = {
+  const variables: APIVariables = {
     page: page,
     perPage: 50,
     season: "WINTER",
@@ -109,7 +106,7 @@ export default async function requestAnime(
     .then(handleResponse)
     .then(handleData)
     .catch(handleError)) as apiPayload;
-  console.log(acc);
+
   if (results.data) {
     if (!results.data.Page.pageInfo.hasNextPage) {
       return acc.concat(results.data.Page.media);
