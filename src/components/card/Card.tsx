@@ -1,21 +1,30 @@
 import { FunctionComponent } from "react";
-import { Titles } from "../../interfaces/apiResponseTypes";
+import { CoverImage } from "../../interfaces/apiResponseTypes";
 
 type Data = {
-  title: Titles;
-  desc: string | null;
-  cover: string | null;
+  title: string;
+  season: string | null;
+  coverImage: CoverImage;
+  type: string | null;
+  meanScore: number | null;
 };
-const Card: FunctionComponent<Data> = (props) => {
-  const { title, desc, cover } = props;
+const Card: FunctionComponent<Data> = ({
+  title,
+  season,
+  coverImage,
+  type,
+  meanScore,
+}) => {
   return (
-    <div>
-      <h1>{title.english || title.romaji || title.native || "not found"}</h1>
-      <img
-        src={cover || "not founds"}
-        alt={title.english || title.romaji || title.native || "not found"}
-      />
-      <p>{desc}</p>
+    <div
+      className="flex m-2 py-1 border border-slate-800"
+      style={{ backgroundColor: coverImage.color || "#4282" }}
+    >
+      <img src={coverImage.medium || "not founds"} alt={title} />
+      <h1>{title}</h1>
+      <p>{season}</p>
+      <p>{type}</p>
+      <p>{meanScore}</p>
     </div>
   );
 };
