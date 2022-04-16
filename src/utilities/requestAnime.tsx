@@ -69,7 +69,7 @@ async function handleResponse(response: Response) {
   }
 }
 
-function handleData(data: apiPayload) {
+function handleData(data: apiPayload): apiPayload {
   // console.log(data);
   return data;
 }
@@ -80,16 +80,8 @@ function handleError(error: Error) {
 }
 
 export default async function requestAnime(
-  acc = [] as mainCard[],
-  page = 1
-): Promise<mainCard[]> {
-  const variables: APIVariables = {
-    page: page,
-    perPage: 50,
-    season: "WINTER",
-    seasonYear: 2022,
-  };
-  // console.log(variables);
+  settings: APIVariables
+): Promise<[mainCard[], boolean]> {
   const options = {
     method: "POST",
     headers: {
@@ -98,7 +90,7 @@ export default async function requestAnime(
     },
     body: JSON.stringify({
       query: query,
-      variables: variables,
+      variables: settings,
     }),
   };
 
@@ -106,15 +98,8 @@ export default async function requestAnime(
     .then(handleResponse)
     .then(handleData)
     .catch(handleError)) as apiPayload;
+  const mainCards = results.data.Page.media;
+  const hasNextPage = results.data.Page.pageInfo.hasNextPage;
 
-  if (results.data) {
-    if (!results.data.Page.pageInfo.hasNextPage) {
-      return acc.concat(results.data.Page.media);
-    } else {
-      page++;
-      return await requestAnime(acc.concat(results.data.Page.media), page);
-    }
-  } else {
-    return acc;
-  }
+  return [mainCards, hasNextPage];
 }
