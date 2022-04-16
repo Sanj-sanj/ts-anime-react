@@ -1,4 +1,4 @@
-export interface apiPayload {
+export type apiPayload = {
   data: {
     Page: {
       media: mainCard[];
@@ -11,27 +11,32 @@ export interface apiPayload {
       };
     };
   };
-}
+};
 
-interface StudioNode {
+type StudioNode = {
   name: string;
   isAnimationStudio: boolean;
   favourites: number;
-}
+};
 
-interface NextAiringEpisode {
+type NextAiringEpisode = {
   airingAt: number;
   episode: number;
   timeUntilAiring: number;
-}
+};
 
-export type Titles = {
+type Titles = {
   romaji: string | null;
   english: string | null;
   native: string | null;
 };
+export type CoverImage = {
+  color: string | null;
+  large: string | null;
+  medium: string | null;
+};
 
-export interface mainCard {
+export type mainCard = {
   meanScore: number | null;
   nextAiringEpisode: NextAiringEpisode | null;
   genres: string[];
@@ -41,11 +46,7 @@ export interface mainCard {
   type: string | null;
   trending: number | null;
   seasonYear: number | null;
-  coverImage: {
-    large: string | null;
-    medium: string | null;
-    color: string | null;
-  };
+  coverImage: CoverImage;
   title: Titles;
   studios: { nodes: StudioNode[] | null };
-}
+};
