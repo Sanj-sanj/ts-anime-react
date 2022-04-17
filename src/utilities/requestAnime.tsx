@@ -1,7 +1,7 @@
 // // Here we define our query as a multi-line string
 
 import { APIVariables } from "../interfaces/apiRequestTypes";
-import { mainCard, apiPayload } from "../interfaces/apiResponseTypes";
+import { MainCard, APIPayload } from "../interfaces/apiResponseTypes";
 
 // // Storing it in a separate .graphql/.gql file is also possible
 const query = `
@@ -61,7 +61,7 @@ const url = "https://graphql.anilist.co";
 // Make the HTTP Api request
 
 async function handleResponse(response: Response) {
-  const json = (await response.json()) as apiPayload;
+  const json = (await response.json()) as APIPayload;
   if (response.ok) {
     return json;
   } else {
@@ -69,7 +69,7 @@ async function handleResponse(response: Response) {
   }
 }
 
-function handleData(data: apiPayload): apiPayload {
+function handleData(data: APIPayload): APIPayload {
   // console.log(data);
   return data;
 }
@@ -81,7 +81,7 @@ function handleError(error: Error) {
 
 export default async function requestAnime(
   settings: APIVariables
-): Promise<[mainCard[], boolean]> {
+): Promise<[MainCard[], boolean]> {
   const options = {
     method: "POST",
     headers: {
@@ -97,7 +97,7 @@ export default async function requestAnime(
   const results = (await fetch(url, options)
     .then(handleResponse)
     .then(handleData)
-    .catch(handleError)) as apiPayload;
+    .catch(handleError)) as APIPayload;
   const mainCards = results.data.Page.media;
   const hasNextPage = results.data.Page.pageInfo.hasNextPage;
 

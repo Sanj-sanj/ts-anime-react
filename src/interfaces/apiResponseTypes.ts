@@ -1,7 +1,7 @@
-export type apiPayload = {
+export type APIPayload = {
   data: {
     Page: {
-      media: mainCard[];
+      media: MainCard[];
       pageInfo: {
         currentPage: number;
         hasNextPage: boolean;
@@ -36,7 +36,7 @@ export type CoverImage = {
   medium: string | null;
 };
 
-export type mainCard = {
+export type MainCard = {
   meanScore: number | null;
   nextAiringEpisode: NextAiringEpisode | null;
   genres: string[];

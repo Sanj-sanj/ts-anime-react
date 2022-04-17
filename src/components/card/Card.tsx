@@ -1,14 +1,14 @@
 import { FunctionComponent } from "react";
 import { CoverImage } from "../../interfaces/apiResponseTypes";
 
-type Data = {
+type CardProps = {
   title: string;
   season: string | null;
   coverImage: CoverImage;
   type: string | null;
   meanScore: number | null;
 };
-const Card: FunctionComponent<Data> = ({
+const Card: FunctionComponent<CardProps> = ({
   title,
   season,
   coverImage,

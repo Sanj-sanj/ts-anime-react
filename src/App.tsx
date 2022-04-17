@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import ReactDOM from "react-dom";
-import Card from "./components/card/Card";
 // import request from "./utilities/requestAnime";
 import mockApi from "./mockApi/mockAPI";
 import { mainCard } from "./interfaces/apiResponseTypes";
 import { APIVariables } from "./interfaces/apiRequestTypes";
 import { throttle } from "./utilities/utilities";
+import CardContainer from "./components/card/CardContainer";
+import appReducer from "./utilities/topReducer";
+import { InitialConfig } from "./interfaces/initialConfigTypes";
 
 const apiVariables: APIVariables = {
   page: 1,
@@ -14,13 +16,21 @@ const apiVariables: APIVariables = {
   seasonYear: 2022,
   hasNextPage: true,
 };
-const App = () => {
-  const [info, setInfo] = useState([] as mainCard[]);
-  const [variables, setVariables] = useState(apiVariables);
-  const [nextPageAvailable, setNextPageAvailable] = useState(true);
-  const [isFetching, setIsFetching] = useState(true);
-  const [yScrollPos, setYScrollPos] = useState(0);
 
+const initial: InitialConfig = {
+  variables: apiVariables,
+  nextPageAvailable: true,
+  isFetching: true,
+  yScrollPosition: 0,
+};
+
+const App = () => {
+  const [
+    { variables, yScrollPosition, isFetching, nextPageAvailable },
+    dispatch,
+  ] = useReducer(appReducer, initial);
+
+  const [info, setInfo] = useState([] as mainCard[]);
   const throttledScroll = throttle(getYOffset, 250);
 
   // async function requestAnimes(settings: APIVariables) {
@@ -32,17 +42,16 @@ const App = () => {
   function requestMockAPIAnimes(settings: APIVariables) {
     //Sends a request with the variable settings, the API response will return a boolean hasNextPage, this will determine subsequent network request based on scroll position (currently)
     const [res, hasNextPage] = mockApi(settings);
-    setNextPageAvailable(hasNextPage);
+    dispatch({ type: "UPDATE_NEXT_PAGE_AVAILABLE", payload: hasNextPage });
     setInfo(info.concat(res));
   }
   function getYOffset() {
     const position = window.scrollY;
-    // console.log(position);
-    setYScrollPos(position);
+    dispatch({ type: "UPDATE_Y_POSITION", payload: position });
   }
 
   function isBottomOfPage() {
-    return yScrollPos + window.innerHeight === document.body.clientHeight
+    return yScrollPosition + window.innerHeight === document.body.clientHeight
       ? true
       : null;
   }
@@ -51,9 +60,9 @@ const App = () => {
     if (isFetching) {
       // void requestAnimes(variables);
       void requestMockAPIAnimes(variables);
-      setIsFetching(false);
+      dispatch({ type: "UPDATE_IS_FETCHING", payload: false });
       const YscrollPositionResetID = setTimeout(
-        () => window.scrollTo(0, yScrollPos),
+        () => window.scrollTo(0, yScrollPosition),
         0
       );
       return () => clearTimeout(YscrollPositionResetID);
@@ -64,30 +73,15 @@ const App = () => {
     window.addEventListener("scroll", throttledScroll);
     if (isBottomOfPage() && nextPageAvailable) {
       const newVariables = { ...variables, page: variables.page + 1 };
-      setYScrollPos(yScrollPos - 1);
-      setVariables(newVariables);
-      setIsFetching(true);
+      dispatch({ type: "UPDATE_VARIABLES", payload: newVariables });
+      dispatch({ type: "UPDATE_Y_POSITION", payload: yScrollPosition - 1 });
+      dispatch({ type: "UPDATE_IS_FETCHING", payload: true });
     }
     return () => window.removeEventListener("scroll", throttledScroll);
   });
 
   return (
-    <div className="container flex flex-col p-3 ">
-      {info && !isFetching
-        ? info.map(({ id, title, season, coverImage, type, meanScore }) => (
-            <Card
-              key={id}
-              title={
-                title.english || title.romaji || title.native || "not found"
-              }
-              season={season}
-              coverImage={coverImage}
-              type={type}
-              meanScore={meanScore}
-            />
-          ))
-        : null}
-    </div>
+    <div className="container flex flex-col p-3 ">{CardContainer(info)}</div>
   );
 };
 
