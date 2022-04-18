@@ -1,49 +1,36 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer } from "react";
 import ReactDOM from "react-dom";
 // import request from "./utilities/requestAnime";
 import mockApi from "./mockApi/mockAPI";
-import { mainCard } from "./interfaces/apiResponseTypes";
+// import { MainCard } from "./interfaces/apiResponseTypes";
 import { APIVariables } from "./interfaces/apiRequestTypes";
 import { throttle } from "./utilities/utilities";
 import CardContainer from "./components/card/CardContainer";
 import appReducer from "./utilities/topReducer";
-import { InitialConfig } from "./interfaces/initialConfigTypes";
-
-const apiVariables: APIVariables = {
-  page: 1,
-  perPage: 7,
-  season: "WINTER",
-  seasonYear: 2022,
-  hasNextPage: true,
-};
-
-const initial: InitialConfig = {
-  variables: apiVariables,
-  nextPageAvailable: true,
-  isFetching: true,
-  yScrollPosition: 0,
-};
-
+// import { InitialConfig } from "./interfaces/initialConfigTypes";
+import { initial } from "./utilities/configVariables";
+// import { MainCard } from "./interfaces/apiResponseTypes";
 const App = () => {
   const [
-    { variables, yScrollPosition, isFetching, nextPageAvailable },
+    { variables, yScrollPosition, isFetching, nextPageAvailable, cards },
     dispatch,
   ] = useReducer(appReducer, initial);
 
-  const [info, setInfo] = useState([] as mainCard[]);
+  // const [cards, setInfo] = useState([] as MainCard[]);
   const throttledScroll = throttle(getYOffset, 250);
 
   // async function requestAnimes(settings: APIVariables) {
   //   const [res, hasNextPage] = await request(settings);
   //   setNextPageAvailable(hasNextPage);
-  //   setInfo(info.concat(res));
+  //   setInfo(cards.concat(res));
   // }
 
   function requestMockAPIAnimes(settings: APIVariables) {
     //Sends a request with the variable settings, the API response will return a boolean hasNextPage, this will determine subsequent network request based on scroll position (currently)
     const [res, hasNextPage] = mockApi(settings);
     dispatch({ type: "UPDATE_NEXT_PAGE_AVAILABLE", payload: hasNextPage });
-    setInfo(info.concat(res));
+    // setInfo(cards.concat(res));
+    dispatch({ type: "UPDATE_INFO", payload: cards.concat(res) });
   }
   function getYOffset() {
     const position = window.scrollY;
@@ -53,7 +40,7 @@ const App = () => {
   function isBottomOfPage() {
     return yScrollPosition + window.innerHeight === document.body.clientHeight
       ? true
-      : null;
+      : false;
   }
 
   useEffect(() => {
@@ -70,6 +57,8 @@ const App = () => {
   }, [isFetching]);
 
   useEffect(() => {
+    //rerender runs 4 times when new api results come in...
+    console.log("addScrollEventListener Effect");
     window.addEventListener("scroll", throttledScroll);
     if (isBottomOfPage() && nextPageAvailable) {
       const newVariables = { ...variables, page: variables.page + 1 };
@@ -81,7 +70,9 @@ const App = () => {
   });
 
   return (
-    <div className="container flex flex-col p-3 ">{CardContainer(info)}</div>
+    <div className="flex justify-center w-full">
+      <div className=" container">{CardContainer(cards)}</div>
+    </div>
   );
 };
 

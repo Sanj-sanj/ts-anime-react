@@ -1,8 +1,7 @@
-import { mainCard } from "../../interfaces/apiResponseTypes";
+import { MainCard } from "../../interfaces/apiResponseTypes";
 import Card from "./Card";
 
-const CardContainer = (cards: mainCard[]): JSX.Element => {
-  console.log("hits");
+const CardContainer = (cards: MainCard[]): JSX.Element => {
   return (
     <>
       {cards.map(({ id, title, season, coverImage, type, meanScore }) => (
