@@ -1,3 +1,4 @@
+import React from "react";
 import { APIVariables } from "../interfaces/apiRequestTypes";
 import { MainCard } from "./apiResponseTypes";
 
@@ -5,6 +6,19 @@ export type InitialConfig = {
   variables: APIVariables;
   nextPageAvailable: boolean;
   isFetching: boolean;
-  yScrollPosition: number;
   cards: MainCard[];
+  dispatch: React.Dispatch<Actions>;
+};
+
+//Type definitions for topReducer
+type ActionTypes =
+  | "UPDATE_VARIABLES"
+  | "UPDATE_IS_FETCHING"
+  | "UPDATE_NEXT_PAGE_AVAILABLE"
+  | "UPDATE_INFO";
+type Payload = string | number | boolean | APIVariables | MainCard[];
+
+export type Actions = {
+  type: ActionTypes;
+  payload: Payload;
 };

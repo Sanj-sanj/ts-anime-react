@@ -1,19 +1,6 @@
 import { APIVariables } from "../interfaces/apiRequestTypes";
 import { MainCard } from "../interfaces/apiResponseTypes";
-import { InitialConfig } from "../interfaces/initialConfigTypes";
-
-type Payload = string | number | boolean | APIVariables | MainCard[];
-type ActionTypes =
-  | "UPDATE_VARIABLES"
-  | "UPDATE_Y_POSITION"
-  | "UPDATE_IS_FETCHING"
-  | "UPDATE_NEXT_PAGE_AVAILABLE"
-  | "UPDATE_INFO";
-
-type Actions = {
-  type: ActionTypes;
-  payload: Payload;
-};
+import { Actions, InitialConfig } from "../interfaces/initialConfigTypes";
 
 const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
   switch (action.type) {
@@ -23,12 +10,6 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
         "seasonYear" in action.payload
       ) {
         return { ...state, variables: action.payload };
-      }
-      return state;
-
-    case "UPDATE_Y_POSITION":
-      if (typeof action.payload === "number") {
-        return { ...state, yScrollPosition: action.payload };
       }
       return state;
 

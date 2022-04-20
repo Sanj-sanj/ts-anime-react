@@ -25,7 +25,7 @@ type NextAiringEpisode = {
   timeUntilAiring: number;
 };
 
-type Titles = {
+export type Titles = {
   romaji: string | null;
   english: string | null;
   native: string | null;
