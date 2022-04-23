@@ -2,6 +2,7 @@ import React, { useContext, useReducer } from "react";
 import ReactDOM from "react-dom";
 
 import CardContainer from "./components/card/CardContainer";
+import Layout from "./components/layout/Layout";
 import appReducer from "./utilities/topReducer";
 import { Initial } from "./utilities/configVariables";
 
@@ -11,13 +12,13 @@ const App = () => {
   console.log("rendering App");
 
   return (
-    <div className="flex justify-center w-full">
+    <Layout>
       <Initial.Provider
         value={{ variables, isFetching, nextPageAvailable, cards, dispatch }}
       >
         <CardContainer cards={cards} />
       </Initial.Provider>
-    </div>
+    </Layout>
   );
 };
 

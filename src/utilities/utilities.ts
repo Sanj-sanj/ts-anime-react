@@ -25,7 +25,7 @@ export function isBottomOfPage(
   clientHeight: number,
   scrollHeight: number
 ): boolean {
-  return scrollTop + clientHeight === scrollHeight;
+  return scrollTop + clientHeight >= scrollHeight - 30;
 }
 
 export function handleCardContainerScroll(
