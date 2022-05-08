@@ -1,21 +1,29 @@
-import { FunctionComponent, useContext, useEffect } from "react";
+import { FunctionComponent, useEffect, useReducer, useState } from "react";
 import { APIVariables } from "../../interfaces/apiRequestTypes";
-import { MainCard } from "../../interfaces/apiResponseTypes";
 import callMockApi from "../../mockApi/mockAPI";
+import requestAnime from "../../utilities/requestAnime";
 import { Initial } from "../../utilities/configVariables";
-import { handleCardContainerScroll, throttle } from "../../utilities/utilities";
+import appReducer from "../../utilities/topReducer";
+import {
+  handleCardContainerOnClick,
+  handleCardContainerScroll,
+  throttle,
+} from "../../utilities/utilities";
 import Card from "./Card";
 
-const CardContainer: FunctionComponent<{ cards: MainCard[] }> = ({ cards }) => {
-  const { variables, isFetching, nextPageAvailable, dispatch } =
-    useContext(Initial);
+const CardContainer: FunctionComponent = () => {
+  const [isFetching, setIsFetching] = useState(true);
+  const [{ variables, nextPageAvailable, cards }, dispatch] = useReducer(
+    appReducer,
+    Initial
+  );
 
   //this probably isnt correct typescript
   const throttledHandler = throttle(handleCardContainerScroll);
 
   //Request from Anilist API
   // async function requestAnimes(settings: APIVariables) {
-  //   const [res, hasNextPage] = await requestAnime(settings);
+  // const [res, hasNextPage] = await requestAnime(settings);
   //   console.log("calling ANILIST_API");
   //   dispatch({ type: "UPDATE_NEXT_PAGE_AVAILABLE", payload: hasNextPage });
   //   dispatch({ type: "UPDATE_INFO", payload: cards.concat(res) });
@@ -33,28 +41,41 @@ const CardContainer: FunctionComponent<{ cards: MainCard[] }> = ({ cards }) => {
     if (isFetching) {
       // void requestAnimes(variables);
       void requestMockAPIAnimes(variables);
-      dispatch({ type: "UPDATE_IS_FETCHING", payload: false });
+      setIsFetching(false);
     }
   }, [isFetching]);
   return (
     <div
-      className="container overflow-y-scroll h-screen"
+      className="overflow-y-scroll w-full flex flex-col items-center"
+      style={{ maxHeight: "90vh", minHeight: "90vh", height: "90vh" }}
       onScroll={(e) =>
         nextPageAvailable
-          ? throttledHandler(e.currentTarget, dispatch, variables)
+          ? throttledHandler(
+              e.currentTarget,
+              dispatch,
+              variables,
+              setIsFetching
+            )
           : null
       }
     >
-      {cards.map(({ id, title, season, coverImage, type, meanScore }) => (
-        <Card
-          key={id}
-          title={title.english || title.romaji || title.native || "not found"}
-          season={season}
-          coverImage={coverImage}
-          type={type}
-          meanScore={meanScore}
-        />
-      ))}
+      <ol className="flex flex-wrap justify-center">
+        {cards.map((card) => (
+          <Card key={card.id} card={card} />
+        ))}
+      </ol>
+      {nextPageAvailable ? (
+        <button
+          className="border-2 bg-slate-200 border-blue-800 p-2"
+          onClick={() =>
+            handleCardContainerOnClick(dispatch, variables, setIsFetching)
+          }
+        >
+          Click here if more results do not load.
+        </button>
+      ) : (
+        <aside>you&apos;ve reached the end!</aside>
+      )}
     </div>
   );
 };

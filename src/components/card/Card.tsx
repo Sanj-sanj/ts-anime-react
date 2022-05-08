@@ -1,31 +1,56 @@
 import { FunctionComponent } from "react";
-import { CoverImage } from "../../interfaces/apiResponseTypes";
+import { MainCard } from "../../interfaces/apiResponseTypes";
 
-type CardProps = {
-  title: string;
-  season: string | null;
-  coverImage: CoverImage;
-  type: string | null;
-  meanScore: number | null;
-};
-const Card: FunctionComponent<CardProps> = ({
-  title,
-  season,
-  coverImage,
-  type,
-  meanScore,
-}) => {
+const Card: FunctionComponent<{ card: MainCard }> = ({ card }) => {
+  const {
+    title,
+    season,
+    coverImage,
+    type,
+    meanScore,
+    seasonYear,
+    status,
+    studios,
+  } = card;
   return (
-    <div
-      className="flex m-2 py-1 border border-slate-800"
-      style={{ backgroundColor: coverImage.color || "#4282" }}
+    <li
+      className="flex m-2 border-y-8 border-x-4 rounded-lg w-96 "
+      style={{
+        backgroundColor: coverImage.color || "#44248321",
+      }}
     >
-      <img src={coverImage.medium || "not founds"} alt={title} />
-      <h1>{title}</h1>
-      <p>{season}</p>
-      <p>{type}</p>
-      <p>{meanScore}</p>
-    </div>
+      <img
+        className="bg-slate-200 rounded-l-md"
+        src={coverImage?.medium || "not founds"}
+        alt={title.english || title.romaji || "L"}
+        style={{
+          minHeight: "143px",
+          minWidth: "100px",
+          maxHeight: "143px",
+          maxWidth: "100px",
+        }}
+      />
+      <div className="flex flex-col w-full">
+        <h2 className="leading-none text-lg">
+          {title.english || title.romaji || "lmao no title"}
+        </h2>
+        <small>
+          <ul className="w-full flex justify-around items-center font-light text-sm">
+            <li>{type}</li>
+            <li>{seasonYear}</li>
+            <li>{status}</li>
+          </ul>
+        </small>
+
+        <p>{season}</p>
+        <p>
+          {studios.nodes?.find((studio) => studio.isAnimationStudio)?.name ||
+            studios.nodes?.find((studio) => !studio.isAnimationStudio)?.name ||
+            "default"}
+        </p>
+        <p>{meanScore}</p>
+      </div>
+    </li>
   );
 };
 export default Card;

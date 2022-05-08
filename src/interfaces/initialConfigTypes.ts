@@ -1,13 +1,10 @@
-import React from "react";
 import { APIVariables } from "../interfaces/apiRequestTypes";
 import { MainCard } from "./apiResponseTypes";
 
 export type InitialConfig = {
   variables: APIVariables;
   nextPageAvailable: boolean;
-  isFetching: boolean;
   cards: MainCard[];
-  dispatch: React.Dispatch<Actions>;
 };
 
 //Type definitions for topReducer

@@ -1,4 +1,3 @@
-import { createContext } from "react";
 import { APIVariables } from "../interfaces/apiRequestTypes";
 import { InitialConfig } from "../interfaces/initialConfigTypes";
 
@@ -10,12 +9,8 @@ const apiVariables: APIVariables = {
   hasNextPage: true,
 };
 
-const initialConfig: InitialConfig = {
+export const Initial: InitialConfig = {
   variables: apiVariables,
   nextPageAvailable: true,
-  isFetching: true,
   cards: [],
-  dispatch: () => "v", //this probably isnt right way to initialize the dispatch
 };
-
-export const Initial = createContext(initialConfig);
