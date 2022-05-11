@@ -1,6 +1,6 @@
 // // Here we define our query as a multi-line string
 
-import { APIVariables } from "../interfaces/apiRequestTypes";
+import { APIVariables } from "../interfaces/apiResponseTypes";
 import { MainCard, APIPayload } from "../interfaces/apiResponseTypes";
 
 // // Storing it in a separate .graphql/.gql file is also possible

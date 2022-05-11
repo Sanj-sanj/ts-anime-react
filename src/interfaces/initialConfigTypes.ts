@@ -1,4 +1,4 @@
-import { APIVariables } from "../interfaces/apiRequestTypes";
+import { APIVariables } from "./apiResponseTypes";
 import { MainCard } from "./apiResponseTypes";
 
 export type InitialConfig = {

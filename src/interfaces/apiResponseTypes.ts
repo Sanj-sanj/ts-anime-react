@@ -13,6 +13,14 @@ export type APIPayload = {
   };
 };
 
+export interface APIVariables {
+  page: number;
+  perPage: number;
+  season: Seasons;
+  seasonYear: number;
+  hasNextPage: boolean;
+}
+
 type StudioNode = {
   name: string;
   isAnimationStudio: boolean;
@@ -35,18 +43,19 @@ export type CoverImage = {
   large: string | null;
   medium: string | null;
 };
+export type Seasons = "WINTER" | "SPRING" | "FALL" | "SUMMER";
 
-export type MainCard = {
+export interface MainCard {
   meanScore: number | null;
   nextAiringEpisode: NextAiringEpisode | null;
   genres: string[];
   id: number | null;
   status: string | null;
-  season: string | null;
+  season: Seasons;
   type: string | null;
   trending: number | null;
   seasonYear: number | null;
   coverImage: CoverImage;
   title: Titles;
   studios: { nodes: StudioNode[] | null };
-};
+}
