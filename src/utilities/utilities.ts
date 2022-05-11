@@ -1,5 +1,5 @@
 import React from "react";
-import { APIVariables } from "../interfaces/apiRequestTypes";
+import { APIVariables } from "../interfaces/apiResponseTypes";
 import { Actions } from "../interfaces/initialConfigTypes";
 
 type CurrentTarget = EventTarget | HTMLOListElement;
@@ -40,7 +40,7 @@ function nextAPIPage(
   dispatch: React.Dispatch<Actions>,
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>
 ) {
-  const newVariables = { ...variables, page: variables.page + 1 };
+  const newVariables: APIVariables = { ...variables, page: variables.page + 1 };
   dispatch({ type: "UPDATE_VARIABLES", payload: newVariables });
   setIsFetching(true);
 }

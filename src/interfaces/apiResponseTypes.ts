@@ -13,13 +13,13 @@ export type APIPayload = {
   };
 };
 
-export interface APIVariables {
+export type APIVariables = {
   page: number;
   perPage: number;
   season: Seasons;
   seasonYear: number;
   hasNextPage: boolean;
-}
+};
 
 type StudioNode = {
   name: string;

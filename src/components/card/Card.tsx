@@ -65,7 +65,10 @@ const Card: FunctionComponent<{ card: MainCard; key: number }> = ({ card }) => {
         <ul className="flex w-full text-sm font-light ">
           {genres.length ? (
             genres.map((genre) => (
-              <li className="mr-2 px-1 bg-zinc-100 border border-blue-600 rounded flex text-center ">
+              <li
+                key={genre}
+                className="mr-2 px-1 bg-zinc-100 border border-blue-600 rounded flex text-center "
+              >
                 {genre}
               </li>
             ))
