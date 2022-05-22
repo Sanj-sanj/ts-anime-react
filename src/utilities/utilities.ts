@@ -27,13 +27,11 @@ export function throttle(callback: (...arg: any) => void, delay = 250) {
   return throttledHandler;
 }
 
-export function isBottomOfPage(
+export const isBottomOfPage = (
   scrollTop: number,
   clientHeight: number,
   scrollHeight: number
-): boolean {
-  return scrollTop + clientHeight >= scrollHeight - 30;
-}
+): boolean => scrollTop + clientHeight >= scrollHeight;
 
 function nextAPIPage(
   variables: APIVariables,

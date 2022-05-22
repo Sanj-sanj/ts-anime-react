@@ -3,7 +3,6 @@ import { MainCard } from "../../interfaces/apiResponseTypes";
 
 const Card: FunctionComponent<{ card: MainCard; key: number }> = ({ card }) => {
   const {
-    id,
     title,
     season,
     coverImage,
@@ -14,14 +13,9 @@ const Card: FunctionComponent<{ card: MainCard; key: number }> = ({ card }) => {
     status,
     studios,
   } = card;
-  console.log(id);
+
   return (
-    <li
-      className="flex relative m-2 border-y-8 border-x-8 rounded-lg  w-full sm:w-10/12 md:w-2/5"
-      style={{
-        backgroundColor: coverImage.color || "#44248321",
-      }}
-    >
+    <li className="flex rounded-lg mb-2 border-2 border-slate-200 bg-orange-50 w-full md:w-10/12 lg:w-5/12">
       <img
         className="bg-slate-200 rounded-l-md w-full"
         src={coverImage?.medium || "not founds"}
@@ -33,51 +27,60 @@ const Card: FunctionComponent<{ card: MainCard; key: number }> = ({ card }) => {
           maxWidth: "100px",
         }}
       />
-      <div className="flex flex-col w-full overflow-hidden p-1 justify-around">
-        <h2
-          className="leading-none text-lg whitespace-nowrap text-ellipsis overflow-hidden"
-          title={title.english || title.romaji || "lmao no title"}
+      <div className="flex flex-col w-full overflow-hidden border-l-2">
+        <div
+          className="p-2 rounded-tr-md"
+          style={{
+            backgroundColor: coverImage.color || "#44248321",
+          }}
         >
-          {title.english || title.romaji || "lmao no title"}
-        </h2>
-        <small>
-          <ul className="w-full flex items-center justify-between font-light text-sm">
-            <div>
-              <li>
-                {season} {type} - {seasonYear}
-              </li>
-              <li>
-                Studio:{" "}
-                {studios.nodes?.find((studio) => studio.isAnimationStudio)
-                  ?.name ||
-                  studios.nodes?.find((studio) => !studio.isAnimationStudio)
-                    ?.name ||
-                  "default"}
-              </li>
-            </div>
-            <div className="">
-              <li>Status: {status}</li>
-            </div>
-          </ul>
-        </small>
+          <h2
+            className="leading-none text-lg whitespace-nowrap text-ellipsis overflow-hidden"
+            title={title.english || title.romaji || "lmao no title"}
+          >
+            {title.english || title.romaji || "lmao no title"}
+          </h2>
+          <hr />
+        </div>
 
-        <p>{meanScore}</p>
-        <ul className="flex w-full text-sm font-light ">
-          {genres.length ? (
-            genres.map((genre) => (
-              <li
-                key={genre}
-                className="mr-2 px-1 bg-zinc-100 border border-blue-600 rounded flex text-center "
-              >
-                {genre}
+        <div className="h-full flex flex-col justify-around px-2">
+          <small>
+            <ul className="w-full flex items-baseline justify-between font-light text-xs">
+              <div>
+                <li>
+                  {season} {type} - {seasonYear}
+                </li>
+                <li>
+                  Studio:{" "}
+                  {studios.nodes?.find((studio) => studio.isAnimationStudio)
+                    ?.name ||
+                    studios.nodes?.find((studio) => !studio.isAnimationStudio)
+                      ?.name ||
+                    "default"}
+                </li>
+              </div>
+              <li>{status}</li>
+            </ul>
+          </small>
+
+          <p>Rating: {meanScore}/100</p>
+          <ul className="flex w-full text-sm font-light ">
+            {genres.length ? (
+              genres.map((genre) => (
+                <li
+                  key={genre}
+                  className="mr-2 px-1 bg-zinc-100 border border-blue-600 rounded flex text-center "
+                >
+                  {genre}
+                </li>
+              ))
+            ) : (
+              <li className="mr-2 px-1 bg-zinc-100 border border-blue-600 rounded flex text-center">
+                {"No genre found"}
               </li>
-            ))
-          ) : (
-            <li className="mr-2 px-1 bg-zinc-100 border border-blue-600 rounded flex text-center">
-              {"No genre found"}
-            </li>
-          )}
-        </ul>
+            )}
+          </ul>
+        </div>
       </div>
     </li>
   );

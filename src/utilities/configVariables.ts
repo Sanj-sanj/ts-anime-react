@@ -1,9 +1,9 @@
-import { APIVariables } from "../interfaces/apiRequestTypes";
+import { APIVariables } from "../interfaces/apiResponseTypes";
 import { InitialConfig } from "../interfaces/initialConfigTypes";
 
 const apiVariables: APIVariables = {
   page: 1,
-  perPage: 7,
+  perPage: 14,
   season: "WINTER",
   seasonYear: 2022,
   hasNextPage: true,

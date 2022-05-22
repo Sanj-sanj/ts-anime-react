@@ -59,7 +59,7 @@ const CardContainer: FunctionComponent = () => {
           : null
       }
     >
-      <ol className="flex flex-wrap justify-center w-full whitespace-pre">
+      <ol className="flex flex-wrap justify-center w-full whitespace-pre p-2">
         {cards ? (
           cards.map((card) => (
             <Card key={card.id || Math.random() * 1000} card={card} />

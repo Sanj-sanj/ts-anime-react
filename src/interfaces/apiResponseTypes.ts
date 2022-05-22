@@ -1,4 +1,4 @@
-export type APIPayload = {
+export interface APIPayload {
   data: {
     Page: {
       media: MainCard[];
@@ -11,7 +11,7 @@ export type APIPayload = {
       };
     };
   };
-};
+}
 
 export type APIVariables = {
   page: number;
