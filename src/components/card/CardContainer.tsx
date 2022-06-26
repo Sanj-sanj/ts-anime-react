@@ -62,7 +62,7 @@ const CardContainer: FunctionComponent = () => {
       <ol className="flex flex-wrap justify-center w-full whitespace-pre p-2">
         {cards ? (
           cards.map((card) => (
-            <Card key={card.id || Math.random() * 1000} card={card} />
+            <Card key={card.id || card.title.romaji} card={card} />
           ))
         ) : (
           <li>noway</li>
@@ -78,7 +78,7 @@ const CardContainer: FunctionComponent = () => {
           Click here if more results do not load.
         </button>
       ) : (
-        <aside>you&apos;ve reached the end!</aside>
+        <aside>You&apos;ve reached the end!</aside>
       )}
     </div>
   );

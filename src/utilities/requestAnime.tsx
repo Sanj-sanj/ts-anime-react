@@ -5,7 +5,7 @@ import { MainCard, APIPayload } from "../interfaces/apiResponseTypes";
 
 // // Storing it in a separate .graphql/.gql file is also possible
 const query = `
-query ($id: Int, $page: Int, $perPage: Int, $season: MediaSeason, $seasonYear: Int) {
+query ($id: Int, $page: Int, $perPage: Int, $season: MediaSeason, $seasonYear: Int, $format_in: [MediaFormat]) {
   Page(page: $page, perPage: $perPage) {
     pageInfo {
       total
@@ -14,7 +14,7 @@ query ($id: Int, $page: Int, $perPage: Int, $season: MediaSeason, $seasonYear: I
       hasNextPage
       perPage
     }
-    media(id: $id, type: ANIME, season: $season, seasonYear: $seasonYear) {
+    media(id: $id, type: ANIME, season: $season, seasonYear: $seasonYear, format_in: $format_in) {
       id
       type
       title {
@@ -32,6 +32,7 @@ query ($id: Int, $page: Int, $perPage: Int, $season: MediaSeason, $seasonYear: I
         }
       }
       genres
+      format
       coverImage {
         medium
         large

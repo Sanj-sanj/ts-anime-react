@@ -16,10 +16,12 @@ export interface APIPayload {
 export type APIVariables = {
   page: number;
   perPage: number;
-  season: Seasons;
+  season: Season;
   seasonYear: number;
   hasNextPage: boolean;
+  format_in: Formats;
 };
+type Formats = ["TV", "TV_SHORT"] | ["MOVIE", "SPECIAL"] | ["ONA", "OVA"];
 
 type StudioNode = {
   name: string;
@@ -43,15 +45,16 @@ export type CoverImage = {
   large: string | null;
   medium: string | null;
 };
-export type Seasons = "WINTER" | "SPRING" | "FALL" | "SUMMER";
+export type Season = "WINTER" | "SPRING" | "SUMMER" | "FALL";
 
 export interface MainCard {
   meanScore: number | null;
   nextAiringEpisode: NextAiringEpisode | null;
   genres: string[];
+  format: string;
   id: number | null;
   status: string | null;
-  season: Seasons;
+  season: Season;
   type: string | null;
   trending: number | null;
   seasonYear: number | null;

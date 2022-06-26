@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { MainCard } from "../../interfaces/apiResponseTypes";
 
-const Card: FunctionComponent<{ card: MainCard; key: number }> = ({ card }) => {
+const Card: FunctionComponent<{ card: MainCard }> = ({ card }) => {
   const {
     title,
     season,
