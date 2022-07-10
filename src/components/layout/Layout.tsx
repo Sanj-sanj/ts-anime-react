@@ -1,10 +1,22 @@
+import Navigation from "../navigation/Navigation";
+import Header from "../header/Header";
+import { useState } from "react";
+
 type Props = {
-  children: JSX.Element[];
+  children: JSX.Element;
 };
 
 const Layout = ({ children }: Props) => {
+  const [isOpen, setisOpen] = useState(false);
+  const toggleNavigation = () => setisOpen(!isOpen);
+
   return (
-    <div className="min-h-full flex flex-col items-center">{children}</div>
+    <>
+      {/* Navigation panel hidden on the left */}
+      <Navigation isOpen={isOpen} />
+      <Header toggleNavigation={toggleNavigation} />
+      <main className="min-h-full flex flex-col items-center">{children}</main>
+    </>
   );
 };
 export default Layout;

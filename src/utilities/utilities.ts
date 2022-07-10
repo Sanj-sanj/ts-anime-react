@@ -6,7 +6,7 @@ type CurrentTarget = EventTarget | HTMLOListElement;
 type Dispatch = React.Dispatch<Actions>;
 
 export function throttle(callback: (...arg: any) => void, delay = 250) {
-  const timer = [] as NodeJS.Timeout[];
+  const timer: number[] = [];
 
   function throttledHandler(
     ...args: [
@@ -16,9 +16,9 @@ export function throttle(callback: (...arg: any) => void, delay = 250) {
       React.Dispatch<React.SetStateAction<boolean>>
     ]
   ) {
-    const id = setTimeout(() => callback(...args), delay);
+    const id = window.setTimeout(() => callback(...args), delay);
     if (timer[0]) {
-      const previousId = timer.shift() as NodeJS.Timeout;
+      const previousId = timer.shift();
       clearTimeout(previousId);
     }
     timer.push(id);
