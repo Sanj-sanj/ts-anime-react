@@ -15,7 +15,7 @@ const Card: FunctionComponent<{ card: MainCard }> = ({ card }) => {
   } = card;
 
   return (
-    <li className="flex rounded-lg mb-2 border-2 border-slate-200 bg-orange-50 w-full md:w-10/12 lg:w-5/12">
+    <li className="flex rounded-lg mb-2 border-2 border-slate-200 bg-stone-100 dark:bg-zinc-900 dark:border-slate-700 dark:text-slate-300 w-3/4">
       <img
         className="bg-slate-200 rounded-l-md w-full"
         src={coverImage?.medium || "not founds"}
@@ -35,7 +35,7 @@ const Card: FunctionComponent<{ card: MainCard }> = ({ card }) => {
           }}
         >
           <h2
-            className="leading-none text-lg whitespace-nowrap text-ellipsis overflow-hidden"
+            className="leading-none text-lg whitespace-nowrap text-ellipsis overflow-hidden dark:mix-blend-difference"
             title={title.english || title.romaji || "lmao no title"}
           >
             {title.english || title.romaji || "lmao no title"}
@@ -69,13 +69,13 @@ const Card: FunctionComponent<{ card: MainCard }> = ({ card }) => {
               genres.map((genre) => (
                 <li
                   key={genre}
-                  className="mr-2 px-1 bg-zinc-100 border border-blue-600 rounded flex text-center "
+                  className="mr-2 px-1 bg-zinc-100 dark:bg-zinc-800 border border-blue-600 rounded flex text-center "
                 >
                   {genre}
                 </li>
               ))
             ) : (
-              <li className="mr-2 px-1 bg-zinc-100 border border-blue-600 rounded flex text-center">
+              <li className="mr-2 px-1 bg-zinc-100 dark:bg-zinc-800 border border-blue-600 rounded flex text-center">
                 {"No genre found"}
               </li>
             )}

@@ -46,7 +46,7 @@ const CardContainer: FunctionComponent = () => {
   }, [isFetching]);
   return (
     <div
-      className="overflow-y-scroll w-screen flex flex-col items-center"
+      className="overflow-y-scroll w-screen flex flex-col items-center "
       style={{ maxHeight: "90vh", minHeight: "90vh", height: "90vh" }}
       onScroll={(e) =>
         nextPageAvailable
@@ -59,7 +59,7 @@ const CardContainer: FunctionComponent = () => {
           : null
       }
     >
-      <ol className="flex flex-wrap justify-center w-full whitespace-pre p-2">
+      <ol className="grid grid-cols-2 justify-items-center w-full whitespace-pre p-2">
         {cards ? (
           cards.map((card) => (
             <Card key={card.id || card.title.romaji} card={card} />
