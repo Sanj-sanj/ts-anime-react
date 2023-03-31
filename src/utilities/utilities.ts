@@ -2,27 +2,20 @@ import React from "react";
 import { APIVariables } from "../interfaces/apiResponseTypes";
 import { Actions } from "../interfaces/initialConfigTypes";
 
-type CurrentTarget = EventTarget | HTMLOListElement;
-type Dispatch = React.Dispatch<Actions>;
+// type CurrentTarget = EventTarget | HTMLOListElement;
+// type Dispatch = React.Dispatch<Actions>;
 
-export function throttle(callback: (...arg: any) => void, delay = 250) {
+export function throttle<fns>(callback: (params: fns) => void, delay = 250) {
   const timer: number[] = [];
 
-  function throttledHandler(
-    ...args: [
-      CurrentTarget,
-      Dispatch,
-      APIVariables,
-      React.Dispatch<React.SetStateAction<boolean>>
-    ]
-  ) {
-    const id = window.setTimeout(() => callback(...args), delay);
+  function throttledHandler(args: fns): void {
+    const id = window.setTimeout(() => callback(args), delay);
     if (timer[0]) {
       const previousId = timer.shift();
       clearTimeout(previousId);
     }
     timer.push(id);
-    return () => clearTimeout(id);
+    () => clearTimeout(id);
   }
   return throttledHandler;
 }
@@ -43,12 +36,21 @@ function nextAPIPage(
   setIsFetching(true);
 }
 
-export function handleCardContainerScroll(
-  currentTarget: EventTarget & HTMLDivElement,
-  dispatch: React.Dispatch<Actions>,
-  variables: APIVariables,
-  setIsFetching: React.Dispatch<React.SetStateAction<boolean>>
-) {
+export function handleCardContainerScroll([
+  currentTarget,
+  dispatch,
+  variables,
+  setIsFetching,
+]: [
+  HTMLDivElement & EventTarget,
+  React.Dispatch<Actions>,
+  APIVariables,
+  React.Dispatch<React.SetStateAction<boolean>>
+]) // currentTarget: EventTarget & HTMLDivElement,
+// dispatch: React.Dispatch<Actions>,
+// variables: APIVariables,
+// setIsFetching: React.Dispatch<React.SetStateAction<boolean>>
+{
   const { scrollTop, scrollHeight, clientHeight } = currentTarget;
   if (isBottomOfPage(scrollTop, clientHeight, scrollHeight)) {
     nextAPIPage(variables, dispatch, setIsFetching);

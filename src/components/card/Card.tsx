@@ -36,9 +36,9 @@ const Card: FunctionComponent<{ card: MainCard }> = ({ card }) => {
         >
           <h2
             className="leading-none text-lg whitespace-nowrap text-ellipsis overflow-hidden dark:mix-blend-difference"
-            title={title.english || title.romaji || "lmao no title"}
+            title={title.english || title.romaji || "Title unknown"}
           >
-            {title.english || title.romaji || "lmao no title"}
+            {title.english || title.romaji || "Title unknown"}
           </h2>
           <hr />
         </div>
@@ -59,12 +59,13 @@ const Card: FunctionComponent<{ card: MainCard }> = ({ card }) => {
                     "default"}
                 </li>
               </div>
-              <li>{status}</li>
+              <div className="text-right">
+                <li>{status}</li>
+                <span>{meanScore ? `${meanScore}/100` : "No score"}</span>
+              </div>
             </ul>
           </small>
-
-          <p>Rating: {meanScore}/100</p>
-          <ul className="flex w-full text-sm font-light ">
+          <ul className="flex w-full text-sm font-light overflow-auto">
             {genres.length ? (
               genres.map((genre) => (
                 <li

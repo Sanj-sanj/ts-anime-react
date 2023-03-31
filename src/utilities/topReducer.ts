@@ -17,7 +17,7 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
       }
       return state;
 
-    case "UPDATE_INFO":
+    case "UPDATE_CARDS":
       if (Array.isArray(action.payload)) {
         return { ...state, cards: action.payload };
       }

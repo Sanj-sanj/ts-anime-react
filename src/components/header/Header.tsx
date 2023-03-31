@@ -5,10 +5,10 @@ const Header: FunctionComponent<{ toggleNavigation: () => void }> = ({
 }) => {
   return (
     <header
-      className="w-full bg-slate-800 px-10 text-lg flex justify-between"
+      className="w-full bg-slate-800 px-10 flex justify-between items-center"
       style={{ minHeight: "10vh" }}
     >
-      <h1>lol lol lool</h1>
+      <h1 className="text-3xl text-slate-300">Seasonal Anime</h1>
       <button
         className="px-2 border border-gray-400"
         onClick={toggleNavigation}

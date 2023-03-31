@@ -1,4 +1,9 @@
-import { FunctionComponent, useEffect, useReducer, useState } from "react";
+import React, {
+  FunctionComponent,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import { APIVariables } from "../../interfaces/apiResponseTypes";
 import callMockApi from "../../mockApi/mockAPI";
 import requestAnime from "../../utilities/requestAnime";
@@ -10,6 +15,7 @@ import {
   throttle,
 } from "../../utilities/utilities";
 import Card from "./Card";
+import { Actions } from "../../interfaces/initialConfigTypes";
 
 const CardContainer: FunctionComponent = () => {
   const [isFetching, setIsFetching] = useState(true);
@@ -19,22 +25,29 @@ const CardContainer: FunctionComponent = () => {
   );
 
   //this probably isnt correct typescript
-  const throttledHandler = throttle(handleCardContainerScroll);
+  const callNextPageOnScroll = throttle<
+    [
+      EventTarget & HTMLDivElement,
+      React.Dispatch<Actions>,
+      APIVariables,
+      React.Dispatch<React.SetStateAction<boolean>>
+    ]
+  >(handleCardContainerScroll);
 
   //Request from Anilist API
   async function requestAnimes(settings: APIVariables) {
     const [res, hasNextPage] = await requestAnime(settings);
-    console.log("calling ANILIST_API");
+    console.log("calling ANILIST_API"); //eslint-disable-line
     dispatch({ type: "UPDATE_NEXT_PAGE_AVAILABLE", payload: hasNextPage });
-    dispatch({ type: "UPDATE_INFO", payload: cards.concat(res) });
+    dispatch({ type: "UPDATE_CARDS", payload: cards.concat(res) });
   }
 
   function requestMockAPIAnimes(settings: APIVariables) {
     //Sends a request with the variable settings, the API response will return a boolean hasNextPage, this will determine subsequent network request based on scroll position (currently)
     const [res, hasNextPage] = callMockApi(settings);
-    console.log("calling MOCK_API");
+    console.log("calling MOCK_API"); //eslint-disable-line
     dispatch({ type: "UPDATE_NEXT_PAGE_AVAILABLE", payload: hasNextPage });
-    dispatch({ type: "UPDATE_INFO", payload: cards.concat(res) });
+    dispatch({ type: "UPDATE_CARDS", payload: cards.concat(res) });
   }
 
   useEffect(() => {
@@ -50,12 +63,12 @@ const CardContainer: FunctionComponent = () => {
       style={{ maxHeight: "90vh", minHeight: "90vh", height: "90vh" }}
       onScroll={(e) =>
         nextPageAvailable
-          ? throttledHandler(
+          ? callNextPageOnScroll([
               e.currentTarget,
               dispatch,
               variables,
-              setIsFetching
-            )
+              setIsFetching,
+            ])
           : null
       }
     >

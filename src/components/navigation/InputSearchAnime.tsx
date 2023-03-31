@@ -10,7 +10,12 @@ const InputSearchAnime = ({
   return (
     <form action="#">
       <label htmlFor="search-anime">
-        <input type="search" id="search-anime" ref={inputRef} />
+        <input
+          className="text-slate-800"
+          type="search"
+          id="search-anime"
+          ref={inputRef}
+        />
       </label>
     </form>
   );
