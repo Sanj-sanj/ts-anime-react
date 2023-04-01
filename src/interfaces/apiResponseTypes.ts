@@ -53,7 +53,13 @@ export interface MainCard {
   genres: string[];
   format: string;
   id: number | null;
-  status: string | null;
+  status:
+    | "FINISHED"
+    | "RELEASING"
+    | "NOT_YET_RELEASED"
+    | "CANCELED"
+    | "HIATUS"
+    | null;
   season: Season;
   type: string | null;
   trending: number | null;

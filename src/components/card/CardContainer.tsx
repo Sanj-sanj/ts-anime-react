@@ -1,9 +1,4 @@
-import React, {
-  FunctionComponent,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import { FunctionComponent, useEffect, useReducer, useState } from "react";
 import { APIVariables } from "../../interfaces/apiResponseTypes";
 import callMockApi from "../../mockApi/mockAPI";
 import requestAnime from "../../utilities/requestAnime";
@@ -24,7 +19,6 @@ const CardContainer: FunctionComponent = () => {
     Initial
   );
 
-  //this probably isnt correct typescript
   const callNextPageOnScroll = throttle<
     [
       EventTarget & HTMLDivElement,
@@ -59,8 +53,7 @@ const CardContainer: FunctionComponent = () => {
   }, [isFetching]);
   return (
     <div
-      className="overflow-y-scroll w-screen flex flex-col items-center "
-      style={{ maxHeight: "90vh", minHeight: "90vh", height: "90vh" }}
+      className="overflow-y-scroll w-screen flex flex-col items-center h-[90vh]"
       onScroll={(e) =>
         nextPageAvailable
           ? callNextPageOnScroll([
@@ -72,13 +65,13 @@ const CardContainer: FunctionComponent = () => {
           : null
       }
     >
-      <ol className="grid grid-cols-2 justify-items-center w-full whitespace-pre p-2">
+      <ol className="flex flex-wrap whitespace-pre p-2 w-full flex-auto justify-center">
         {cards ? (
           cards.map((card) => (
             <Card key={card.id || card.title.romaji} card={card} />
           ))
         ) : (
-          <li>noway</li>
+          <li>No results found.</li>
         )}
       </ol>
       {nextPageAvailable ? (

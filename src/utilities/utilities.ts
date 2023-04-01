@@ -46,11 +46,7 @@ export function handleCardContainerScroll([
   React.Dispatch<Actions>,
   APIVariables,
   React.Dispatch<React.SetStateAction<boolean>>
-]) // currentTarget: EventTarget & HTMLDivElement,
-// dispatch: React.Dispatch<Actions>,
-// variables: APIVariables,
-// setIsFetching: React.Dispatch<React.SetStateAction<boolean>>
-{
+]) {
   const { scrollTop, scrollHeight, clientHeight } = currentTarget;
   if (isBottomOfPage(scrollTop, clientHeight, scrollHeight)) {
     nextAPIPage(variables, dispatch, setIsFetching);
