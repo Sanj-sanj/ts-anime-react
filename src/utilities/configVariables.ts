@@ -24,5 +24,5 @@ const apiVariables: APIVariables = {
 export const Initial: InitialConfig = {
   variables: apiVariables,
   nextPageAvailable: true,
-  cards: [],
+  cards: { WINTER: [], SPRING: [], SUMMER: [], FALL: [] },
 };

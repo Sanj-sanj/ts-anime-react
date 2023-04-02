@@ -1,6 +1,7 @@
 import { Actions, InitialConfig } from "../interfaces/initialConfigTypes";
 
 const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
+  console.log(state);
   switch (action.type) {
     case "UPDATE_VARIABLES":
       if (
@@ -19,7 +20,18 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
 
     case "UPDATE_CARDS":
       if (Array.isArray(action.payload)) {
-        return { ...state, cards: state.cards.concat(action.payload) };
+        const { season, seasonYear } = state.variables;
+        const previousCards = state.cards[season][seasonYear] || [];
+        return {
+          ...state,
+          cards: {
+            ...state.cards,
+            [season]: {
+              ...state.cards[season],
+              [seasonYear]: [...previousCards, ...action.payload],
+            },
+          },
+        };
       }
       return state;
 

@@ -1,10 +1,19 @@
 import { APIVariables } from "./apiResponseTypes";
 import { MainCard } from "./apiResponseTypes";
 
+type SeasonYear<Year extends number> = {
+  [Y in Year]: MainCard[];
+};
+
 export type InitialConfig = {
   variables: APIVariables;
   nextPageAvailable: boolean;
-  cards: MainCard[];
+  cards: {
+    WINTER: SeasonYear<number>;
+    SPRING: SeasonYear<number>;
+    SUMMER: SeasonYear<number>;
+    FALL: SeasonYear<number>;
+  };
 };
 
 //Type definitions for topReducer

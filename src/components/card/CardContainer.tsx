@@ -20,12 +20,15 @@ import {
 } from "../../utilities/API/requestCards_CardContainer";
 
 const CardContainer: FunctionComponent = (props) => {
-  console.log(props);
+  // console.log(props);
   const [isFetching, setIsFetching] = useState(true);
   const [{ variables, nextPageAvailable, cards }, dispatch] = useReducer(
     appReducer,
     Initial
   );
+
+  console.log(cards);
+  const { season, seasonYear } = variables;
 
   const callNextPageOnScroll = throttle<
     [
@@ -57,8 +60,8 @@ const CardContainer: FunctionComponent = (props) => {
       }
     >
       <ol className="flex flex-wrap whitespace-pre p-2 w-full flex-auto justify-center">
-        {cards ? (
-          cards.map((card) => (
+        {cards[season][seasonYear] ? (
+          cards[season][seasonYear].map((card) => (
             <Card key={card.id || card.title.romaji} card={card} />
           ))
         ) : (
