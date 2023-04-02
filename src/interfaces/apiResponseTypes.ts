@@ -51,7 +51,6 @@ export interface MainCard {
   meanScore: number | null;
   nextAiringEpisode: NextAiringEpisode | null;
   genres: string[];
-  format: string;
   id: number | null;
   status:
     | "FINISHED"
@@ -67,4 +66,5 @@ export interface MainCard {
   coverImage: CoverImage;
   title: Titles;
   studios: { nodes: StudioNode[] | null };
+  format?: string;
 }

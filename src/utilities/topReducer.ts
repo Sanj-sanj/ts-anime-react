@@ -19,7 +19,7 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
 
     case "UPDATE_CARDS":
       if (Array.isArray(action.payload)) {
-        return { ...state, cards: action.payload };
+        return { ...state, cards: state.cards.concat(action.payload) };
       }
       return state;
 

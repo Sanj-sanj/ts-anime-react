@@ -1,7 +1,7 @@
 // // Here we define our query as a multi-line string
 
-import { APIVariables } from "../interfaces/apiResponseTypes";
-import { MainCard, APIPayload } from "../interfaces/apiResponseTypes";
+import { APIVariables } from "../../interfaces/apiResponseTypes";
+import { MainCard, APIPayload } from "../../interfaces/apiResponseTypes";
 
 // // Storing it in a separate .graphql/.gql file is also possible
 const query = `
@@ -71,7 +71,6 @@ async function handleResponse(response: Response) {
 }
 
 function handleData(data: APIPayload): APIPayload {
-  // console.log(data);
   return data;
 }
 
@@ -80,7 +79,7 @@ function handleError(error: Error) {
   console.error(error);
 }
 
-export default async function requestAnime(
+export default async function HandleAPICall(
   settings: APIVariables
 ): Promise<[MainCard[], boolean]> {
   const options = {

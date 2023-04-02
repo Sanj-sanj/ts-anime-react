@@ -1,8 +1,8 @@
-import { MainCard } from "../interfaces/apiResponseTypes";
-import { APIVariables } from "../interfaces/apiResponseTypes";
-import json from "./mock.json";
+import { MainCard } from "../../interfaces/apiResponseTypes";
+import { APIVariables } from "../../interfaces/apiResponseTypes";
+import json from "../../mockApi/mock.json";
 
-export default function callMockApi(
+export default function HandleMockAPICall(
   variables: APIVariables
 ): [MainCard[], boolean] {
   const { perPage, page } = variables;
