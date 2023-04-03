@@ -1,7 +1,6 @@
 import { Actions, InitialConfig } from "../interfaces/initialConfigTypes";
 
 const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
-  console.log(state);
   switch (action.type) {
     case "UPDATE_VARIABLES":
       if (
@@ -34,7 +33,11 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
         };
       }
       return state;
-
+    case "UPDATE_SORT":
+      if (action.payload) {
+        return { ...state, sort: action.payload };
+      }
+      return state;
     default:
       return state;
   }

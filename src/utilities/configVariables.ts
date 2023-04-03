@@ -14,7 +14,7 @@ const [thisSeason, thisYear] = getCurrSeasonAndYear();
 
 const apiVariables: APIVariables = {
   page: 1,
-  perPage: 14,
+  perPage: 50,
   season: thisSeason,
   seasonYear: thisYear,
   hasNextPage: true,
@@ -25,4 +25,5 @@ export const Initial: InitialConfig = {
   variables: apiVariables,
   nextPageAvailable: true,
   cards: { WINTER: [], SPRING: [], SUMMER: [], FALL: [] },
+  sort: "Rating",
 };

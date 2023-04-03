@@ -1,6 +1,7 @@
 import React, {
   FunctionComponent,
   useEffect,
+  useLayoutEffect,
   useReducer,
   useState,
 } from "react";
@@ -18,17 +19,17 @@ import {
   requestAniListAPI,
   requestMockAPI,
 } from "../../utilities/API/requestCards_CardContainer";
+import SortCardsBy from "../../utilities/Cards/Helper";
 
-const CardContainer: FunctionComponent = (props) => {
-  // console.log(props);
+const CardContainer: FunctionComponent = () => {
   const [isFetching, setIsFetching] = useState(true);
-  const [{ variables, nextPageAvailable, cards }, dispatch] = useReducer(
+  const [{ variables, nextPageAvailable, cards, sort }, dispatch] = useReducer(
     appReducer,
     Initial
   );
-
-  console.log(cards);
   const { season, seasonYear } = variables;
+
+  const [display, setDisplay] = useState(cards[season][seasonYear] || []);
 
   const callNextPageOnScroll = throttle<
     [
@@ -39,10 +40,16 @@ const CardContainer: FunctionComponent = (props) => {
     ]
   >(handleCardContainerScroll);
 
+  useLayoutEffect(() => {
+    if (cards[season] && cards[season][seasonYear]) {
+      setDisplay(SortCardsBy(sort, cards[season][seasonYear]));
+    }
+  }, [cards]);
+
   useEffect(() => {
     if (isFetching) {
-      // void requestAniListAPI(variables, dispatch);
-      void requestMockAPI(variables, dispatch);
+      void requestAniListAPI(variables, dispatch);
+      // void requestMockAPI(variables, dispatch);
       setIsFetching(false);
     }
   }, [isFetching]);
@@ -60,8 +67,8 @@ const CardContainer: FunctionComponent = (props) => {
       }
     >
       <ol className="flex flex-wrap whitespace-pre p-2 w-full flex-auto justify-center">
-        {cards[season][seasonYear] ? (
-          cards[season][seasonYear].map((card) => (
+        {display.length ? (
+          display.map((card) => (
             <Card key={card.id || card.title.romaji} card={card} />
           ))
         ) : (

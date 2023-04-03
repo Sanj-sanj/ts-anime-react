@@ -14,10 +14,7 @@ const Layout = ({ children }: Props) => {
   const [isDarkMode, setIsDarkMode] = useState(setupDarkMode());
   const toggleNavigation = () => setisOpen(!isOpen);
 
-  const [{ cards, nextPageAvailable, variables }, dispatch] = useReducer(
-    appReducer,
-    Initial
-  );
+  const [{ sort }, dispatch] = useReducer(appReducer, Initial);
 
   function toggleDarkMode() {
     setIsDarkMode(!isDarkMode);
@@ -33,28 +30,18 @@ const Layout = ({ children }: Props) => {
     }
   }, [isDarkMode]);
 
-  const childrenWithProps = React.Children.map(children, (child) => {
-    if (React.isValidElement(child)) {
-      console.log("valids");
-
-      return React.cloneElement(
-        child,
-        [{ variables, cards, nextPageAvailable }],
-        <div>superdoo</div>
-      );
-    }
-    return child;
-  });
-
-  console.log(childrenWithProps);
-
   return (
     <>
       {/* Navigation panel hidden on the left */}
-      <Navigation isOpen={isOpen} darkMode={{ isDarkMode, toggleDarkMode }} />
+      <Navigation
+        isOpen={isOpen}
+        darkMode={{ isDarkMode, toggleDarkMode }}
+        sortBy={sort}
+        dispatch={dispatch}
+      />
       <Header toggleNavigation={toggleNavigation} />
       <main className="min-h-full flex flex-col items-center bg-stone-200 dark:bg-neutral-800">
-        {childrenWithProps}
+        {children}
       </main>
     </>
   );

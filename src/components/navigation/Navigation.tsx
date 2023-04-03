@@ -1,13 +1,18 @@
 import React, { useEffect, useRef, useState, MutableRefObject } from "react";
+import { Actions, SortableBy } from "../../interfaces/initialConfigTypes";
 import { hideNavOnClose } from "../../utilities/navigation/utilities";
 import InputSearchAnime from "./InputSearchAnime";
 
 const Navigation = ({
   isOpen,
   darkMode,
+  sortBy,
+  dispatch,
 }: {
   isOpen: boolean;
   darkMode: { isDarkMode: boolean; toggleDarkMode: () => void };
+  sortBy: SortableBy;
+  dispatch: React.Dispatch<Actions>;
 }) => {
   /* 
   We set the component to initially hold the tailwindCSS class 'hidden' to hide the navbar on initial page builds. 
@@ -17,6 +22,7 @@ const Navigation = ({
   const { isDarkMode, toggleDarkMode } = darkMode;
   const [initialVisibility, setInitialVisibility] = useState("hidden");
   const searchInput: MutableRefObject<HTMLInputElement | null> = useRef(null);
+  const SortableBy: SortableBy[] = ["Rating", "Popularity", "Countdown"];
 
   function searchAutoFocus() {
     if (searchInput.current && isOpen) {
@@ -60,11 +66,23 @@ const Navigation = ({
       </button>
 
       {navItemLabel("Sort By:")}
-      <label htmlFor="sort_cards_by" defaultValue="Rating">
-        <select name="sort_cards_by" id="sort_cards_by" className="w-full">
-          <option value="Rating">Rating</option>
-          <option value="Popularity">Popularity</option>
-          <option value="Countdown">Air Time</option>
+      <label htmlFor="sort_cards_by" defaultValue={sortBy}>
+        <select
+          name="sort_cards_by"
+          id="sort_cards_by"
+          className="w-full"
+          onChange={(e) =>
+            dispatch({
+              type: "UPDATE_SORT",
+              payload: e.target.value as SortableBy,
+            })
+          }
+        >
+          {SortableBy.map((sort) => (
+            <option key={sort} value={sort}>
+              {sort}
+            </option>
+          ))}
         </select>
       </label>
     </nav>
