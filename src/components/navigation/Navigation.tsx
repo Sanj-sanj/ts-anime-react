@@ -1,24 +1,33 @@
-import React, { useEffect, useRef, useState, MutableRefObject } from "react";
-import { Actions, SortableBy } from "../../interfaces/initialConfigTypes";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  MutableRefObject,
+  useReducer,
+} from "react";
+import { SortableBy } from "../../interfaces/initialConfigTypes";
+import SortCardsBy from "../../utilities/Cards/Helper";
+import { Initial } from "../../utilities/configVariables";
 import { hideNavOnClose } from "../../utilities/navigation/utilities";
+import appReducer from "../../utilities/topReducer";
 import InputSearchAnime from "./InputSearchAnime";
 
 const Navigation = ({
   isOpen,
   darkMode,
-  sortBy,
-  dispatch,
 }: {
   isOpen: boolean;
   darkMode: { isDarkMode: boolean; toggleDarkMode: () => void };
-  sortBy: SortableBy;
-  dispatch: React.Dispatch<Actions>;
 }) => {
   /* 
   We set the component to initially hold the tailwindCSS class 'hidden' to hide the navbar on initial page builds. 
   We then use a 'useEffect' which conditionally proceeds on the basis that the navbar is being opened for the first time. 
   Finally we swap the initial state of 'hidden' to an empty string to resume normal component functionality.
   */
+  const [{ cards, variables, sort }, dispatch] = useReducer(
+    appReducer,
+    Initial
+  );
   const { isDarkMode, toggleDarkMode } = darkMode;
   const [initialVisibility, setInitialVisibility] = useState("hidden");
   const searchInput: MutableRefObject<HTMLInputElement | null> = useRef(null);
@@ -66,7 +75,7 @@ const Navigation = ({
       </button>
 
       {navItemLabel("Sort By:")}
-      <label htmlFor="sort_cards_by" defaultValue={sortBy}>
+      <label htmlFor="sort_cards_by" defaultValue={sort}>
         <select
           name="sort_cards_by"
           id="sort_cards_by"
@@ -74,7 +83,12 @@ const Navigation = ({
           onChange={(e) =>
             dispatch({
               type: "UPDATE_SORT",
-              payload: e.target.value as SortableBy,
+              payload: {
+                sort: e.target.value as SortableBy,
+                sortfn: SortCardsBy,
+                season: variables.season,
+                year: variables.seasonYear,
+              },
             })
           }
         >
@@ -88,5 +102,6 @@ const Navigation = ({
     </nav>
   );
 };
+SortCardsBy;
 
 export default Navigation;

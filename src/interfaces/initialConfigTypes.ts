@@ -1,4 +1,4 @@
-import { APIVariables } from "./apiResponseTypes";
+import { APIVariables, Season } from "./apiResponseTypes";
 import { MainCard } from "./apiResponseTypes";
 
 type SeasonYear<Year extends number> = {
@@ -7,9 +7,15 @@ type SeasonYear<Year extends number> = {
 
 export type SortableBy = "Rating" | "Popularity" | "Countdown";
 
+export type ClientVariables = {
+  nextPageAvailable: boolean;
+  startIndex: number;
+  perPage: number;
+};
+
 export type InitialConfig = {
   variables: APIVariables;
-  nextPageAvailable: boolean;
+  client: ClientVariables;
   cards: {
     WINTER: SeasonYear<number>;
     SPRING: SeasonYear<number>;
@@ -39,7 +45,11 @@ export type Actions =
     }
   | {
       type: "UPDATE_NEXT_PAGE_AVAILABLE";
-      payload: boolean;
+      payload: {
+        season: Season;
+        year: number;
+        displayClientAmmount: number;
+      };
     }
   | {
       type: "UPDATE_CARDS";
@@ -47,5 +57,10 @@ export type Actions =
     }
   | {
       type: "UPDATE_SORT";
-      payload: SortableBy;
+      payload: {
+        sort: SortableBy;
+        sortfn: (sort: SortableBy, cards: MainCard[]) => void;
+        season: Season;
+        year: number;
+      };
     };

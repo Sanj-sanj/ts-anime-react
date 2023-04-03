@@ -23,7 +23,11 @@ const apiVariables: APIVariables = {
 
 export const Initial: InitialConfig = {
   variables: apiVariables,
-  nextPageAvailable: true,
+  client: {
+    nextPageAvailable: true,
+    startIndex: 0,
+    perPage: 15,
+  },
   cards: { WINTER: [], SPRING: [], SUMMER: [], FALL: [] },
   sort: "Rating",
 };

@@ -11,11 +11,19 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
       }
       return state;
 
-    case "UPDATE_NEXT_PAGE_AVAILABLE":
-      if (typeof action.payload === "boolean") {
-        return { ...state, nextPageAvailable: action.payload };
+    case "UPDATE_NEXT_PAGE_AVAILABLE": {
+      if (action.payload) {
+        const { season, year, displayClientAmmount } = action.payload;
+        const hasNextPage =
+          displayClientAmmount < state.cards[season][year].length;
+
+        return {
+          ...state,
+          client: { ...state.client, nextPageAvailable: hasNextPage },
+        };
       }
       return state;
+    }
 
     case "UPDATE_CARDS":
       if (Array.isArray(action.payload)) {
@@ -33,11 +41,17 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
         };
       }
       return state;
-    case "UPDATE_SORT":
+    case "UPDATE_SORT": {
       if (action.payload) {
-        return { ...state, sort: action.payload };
+        const { sort, season, year, sortfn } = action.payload;
+        console.log(sort);
+        console.log(season, year);
+        console.log(state.cards);
+        setTimeout(() => sortfn(sort, state.cards[season][year]), 200);
+        return { ...state, sort };
       }
       return state;
+    }
     default:
       return state;
   }

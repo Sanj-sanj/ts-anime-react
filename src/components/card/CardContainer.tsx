@@ -5,7 +5,6 @@ import React, {
   useReducer,
   useState,
 } from "react";
-import { APIVariables } from "../../interfaces/apiResponseTypes";
 import { Initial } from "../../utilities/configVariables";
 import appReducer from "../../utilities/topReducer";
 import {
@@ -14,72 +13,84 @@ import {
   throttle,
 } from "../../utilities/utilities";
 import Card from "./Card";
-import { Actions } from "../../interfaces/initialConfigTypes";
+import { Actions, ClientVariables } from "../../interfaces/initialConfigTypes";
 import {
   requestAniListAPI,
   requestMockAPI,
 } from "../../utilities/API/requestCards_CardContainer";
 import SortCardsBy from "../../utilities/Cards/Helper";
+import { APIVariables, MainCard } from "../../interfaces/apiResponseTypes";
 
 const CardContainer: FunctionComponent = () => {
-  const [isFetching, setIsFetching] = useState(true);
-  const [{ variables, nextPageAvailable, cards, sort }, dispatch] = useReducer(
+  const [{ variables, cards, sort, client }, dispatch] = useReducer(
     appReducer,
     Initial
   );
   const { season, seasonYear } = variables;
 
-  const [display, setDisplay] = useState(cards[season][seasonYear] || []);
+  const [isCallingAPI, setIsCallingAPI] = useState(true);
+  const [clientVisibleCards, setClientVisibleCards] = useState<MainCard[]>([]);
+  const [ammount, setAmmount] = useState(client.perPage);
 
   const callNextPageOnScroll = throttle<
     [
-      EventTarget & HTMLDivElement,
-      React.Dispatch<Actions>,
-      APIVariables,
-      React.Dispatch<React.SetStateAction<boolean>>
+      HTMLDivElement & EventTarget,
+      { client: ClientVariables; api: APIVariables },
+      number,
+      React.Dispatch<React.SetStateAction<number>>,
+      React.Dispatch<Actions>
     ]
   >(handleCardContainerScroll);
 
   useLayoutEffect(() => {
     if (cards[season] && cards[season][seasonYear]) {
-      setDisplay(SortCardsBy(sort, cards[season][seasonYear]));
+      setClientVisibleCards(cards[season][seasonYear].slice(0, ammount));
+      // setClientVisibleCards(
+      //   SortCardsBy(sort, cards[season][seasonYear]).slice(0, ammount)
+      // );
     }
-  }, [cards]);
+  }, [cards, ammount]);
 
   useEffect(() => {
-    if (isFetching) {
-      void requestAniListAPI(variables, dispatch);
-      // void requestMockAPI(variables, dispatch);
-      setIsFetching(false);
+    if (isCallingAPI) {
+      // void requestAniListAPI(variables, dispatch);
+      void requestMockAPI(variables, dispatch);
+      setIsCallingAPI(false);
     }
-  }, [isFetching]);
+  }, [isCallingAPI]);
   return (
     <div
       className="overflow-y-scroll w-screen flex flex-col items-center h-[90vh]"
       onScroll={(e) =>
-        nextPageAvailable &&
+        client.nextPageAvailable &&
         callNextPageOnScroll([
           e.currentTarget,
+          { client, api: variables },
+          ammount,
+          setAmmount,
           dispatch,
-          variables,
-          setIsFetching,
         ])
       }
     >
       <ol className="flex flex-wrap whitespace-pre p-2 w-full flex-auto justify-center">
-        {display.length ? (
-          display.map((card) => (
+        {clientVisibleCards.length ? (
+          clientVisibleCards.map((card) => (
             <Card key={card.id || card.title.romaji} card={card} />
           ))
         ) : (
           <li>No results found.</li>
         )}
       </ol>
-      {nextPageAvailable ? (
+      {client.nextPageAvailable ? (
         <button
           className="border-2 bg-slate-200 border-blue-800 p-2"
           onClick={() =>
-            handleCardContainerOnClick(dispatch, variables, setIsFetching)
+            handleCardContainerOnClick(
+              { client, api: variables },
+              ammount,
+              setAmmount,
+              dispatch
+            )
           }
         >
           Click here if more results do not load.

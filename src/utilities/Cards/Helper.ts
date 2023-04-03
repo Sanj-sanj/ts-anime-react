@@ -3,20 +3,20 @@ import { SortableBy } from "../../interfaces/initialConfigTypes";
 
 function SortCardsBy(sort: SortableBy, cards: MainCard[]) {
   console.log(sort);
-  const sortedCards = [...cards];
+
   switch (sort) {
     case "Rating":
-      sortedCards.sort((a, b) => {
+      cards.sort((a, b) => {
         return b.meanScore - a.meanScore;
       });
       break;
     case "Popularity":
-      sortedCards.sort((a, b) => {
+      cards.sort((a, b) => {
         return b.trending - a.trending;
       });
       break;
     case "Countdown":
-      sortedCards.sort((a, b) => {
+      cards.sort((a, b) => {
         return b.id - a.id;
       });
       break;
@@ -24,6 +24,5 @@ function SortCardsBy(sort: SortableBy, cards: MainCard[]) {
     default:
       break;
   }
-  return sortedCards;
 }
 export default SortCardsBy;

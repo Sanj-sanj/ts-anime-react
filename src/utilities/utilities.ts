@@ -1,6 +1,6 @@
 import React from "react";
-import { APIVariables } from "../interfaces/apiResponseTypes";
-import { Actions } from "../interfaces/initialConfigTypes";
+import { APIVariables, MainCard } from "../interfaces/apiResponseTypes";
+import { Actions, ClientVariables } from "../interfaces/initialConfigTypes";
 
 // type CurrentTarget = EventTarget | HTMLOListElement;
 // type Dispatch = React.Dispatch<Actions>;
@@ -26,36 +26,52 @@ export const isBottomOfPage = (
   scrollHeight: number
 ): boolean => scrollTop + clientHeight >= scrollHeight;
 
-function nextAPIPage(
-  variables: APIVariables,
-  dispatch: React.Dispatch<Actions>,
-  setIsFetching: React.Dispatch<React.SetStateAction<boolean>>
+function clientLoadNextPage(
+  variables: { client: ClientVariables; api: APIVariables },
+  ammount: number,
+  updateDisplayNumber: React.Dispatch<React.SetStateAction<number>>,
+  dispatch: React.Dispatch<Actions>
 ) {
-  const newVariables: APIVariables = { ...variables, page: variables.page + 1 };
-  dispatch({ type: "UPDATE_VARIABLES", payload: newVariables });
-  setIsFetching(true);
+  dispatch({
+    type: "UPDATE_NEXT_PAGE_AVAILABLE",
+    payload: {
+      season: variables.api.season,
+      year: variables.api.seasonYear,
+      displayClientAmmount: ammount + variables.client.perPage,
+    },
+  });
+  updateDisplayNumber(ammount + variables.client.perPage);
+  // setIsFetching(true);
 }
 
 export function handleCardContainerScroll([
   currentTarget,
-  dispatch,
   variables,
-  setIsFetching,
+  currentAmmount,
+  updateDisplayNumber,
+  dispatch,
 ]: [
   HTMLDivElement & EventTarget,
-  React.Dispatch<Actions>,
-  APIVariables,
-  React.Dispatch<React.SetStateAction<boolean>>
+  { client: ClientVariables; api: APIVariables },
+  number,
+  React.Dispatch<React.SetStateAction<number>>,
+  React.Dispatch<Actions>
 ]) {
   const { scrollTop, scrollHeight, clientHeight } = currentTarget;
   if (isBottomOfPage(scrollTop, clientHeight, scrollHeight)) {
-    nextAPIPage(variables, dispatch, setIsFetching);
+    clientLoadNextPage(
+      variables,
+      currentAmmount,
+      updateDisplayNumber,
+      dispatch
+    );
   }
 }
 export function handleCardContainerOnClick(
-  dispatch: React.Dispatch<Actions>,
-  variables: APIVariables,
-  setIsFetching: React.Dispatch<React.SetStateAction<boolean>>
+  variables: { client: ClientVariables; api: APIVariables },
+  currentAmmount: number,
+  updateDisplayNumber: React.Dispatch<React.SetStateAction<number>>,
+  dispatch: React.Dispatch<Actions>
 ): void {
-  nextAPIPage(variables, dispatch, setIsFetching);
+  clientLoadNextPage(variables, currentAmmount, updateDisplayNumber, dispatch);
 }

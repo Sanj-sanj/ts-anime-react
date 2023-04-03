@@ -80,8 +80,9 @@ function handleError(error: Error) {
 }
 
 export default async function HandleAPICall(
-  settings: APIVariables
-): Promise<[MainCard[], boolean]> {
+  settings: APIVariables,
+  accumulator: MainCard[] = []
+): Promise<MainCard[]> {
   const options = {
     method: "POST",
     headers: {
@@ -101,5 +102,12 @@ export default async function HandleAPICall(
   const mainCards = results.data.Page.media;
   const hasNextPage = results.data.Page.pageInfo.hasNextPage;
 
-  return [mainCards, hasNextPage];
+  if (hasNextPage) {
+    return await HandleAPICall({ ...settings, page: settings.page + 1 }, [
+      ...accumulator,
+      ...mainCards,
+    ]);
+  }
+
+  return [...accumulator, ...mainCards];
 }

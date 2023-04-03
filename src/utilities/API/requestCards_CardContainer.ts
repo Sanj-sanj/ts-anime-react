@@ -8,22 +8,21 @@ async function requestAniListAPI(
   settings: APIVariables,
   dispatch: React.Dispatch<Actions>
 ) {
-  const [res, hasNextPage] = await HandleAPICall(settings);
+  const cards = await HandleAPICall(settings);
   console.log("calling ANILIST_API"); //eslint-disable-line
-  dispatch({ type: "UPDATE_NEXT_PAGE_AVAILABLE", payload: hasNextPage });
-  dispatch({ type: "UPDATE_CARDS", payload: res });
+  // dispatch({ type: "UPDATE_NEXT_PAGE_AVAILABLE", payload: hasNextPage });
+  dispatch({ type: "UPDATE_CARDS", payload: cards });
 }
 
 function requestMockAPI(
   settings: APIVariables,
   dispatch: React.Dispatch<Actions>
 ) {
-  console.log(settings);
   //Sends a request with the variable settings, the API response will return a boolean hasNextPage, this will determine subsequent network request based on scroll position (currently)
-  const [res, hasNextPage] = HandleMockAPICall(settings);
+  const cards = HandleMockAPICall(settings);
   console.log("calling MOCK_API"); //eslint-disable-line
-  dispatch({ type: "UPDATE_NEXT_PAGE_AVAILABLE", payload: hasNextPage });
-  dispatch({ type: "UPDATE_CARDS", payload: res });
+  // dispatch({ type: "UPDATE_NEXT_PAGE_AVAILABLE", payload: hasNextPage });
+  dispatch({ type: "UPDATE_CARDS", payload: cards });
 }
 
 export { requestAniListAPI, requestMockAPI };
