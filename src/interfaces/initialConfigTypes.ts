@@ -59,8 +59,5 @@ export type Actions =
       type: "UPDATE_SORT";
       payload: {
         sort: SortableBy;
-        sortfn: (sort: SortableBy, cards: MainCard[]) => void;
-        season: Season;
-        year: number;
       };
     };

@@ -1,15 +1,11 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  MutableRefObject,
-  useReducer,
-} from "react";
+import React, { useEffect, useRef, useState, MutableRefObject } from "react";
 import { SortableBy } from "../../interfaces/initialConfigTypes";
-import SortCardsBy from "../../utilities/Cards/Helper";
-import { Initial } from "../../utilities/configVariables";
+import {
+  useDispatchContext,
+  useStateContext,
+} from "../../utilities/Context/AppContext";
+
 import { hideNavOnClose } from "../../utilities/navigation/utilities";
-import appReducer from "../../utilities/topReducer";
 import InputSearchAnime from "./InputSearchAnime";
 
 const Navigation = ({
@@ -24,10 +20,10 @@ const Navigation = ({
   We then use a 'useEffect' which conditionally proceeds on the basis that the navbar is being opened for the first time. 
   Finally we swap the initial state of 'hidden' to an empty string to resume normal component functionality.
   */
-  const [{ cards, variables, sort }, dispatch] = useReducer(
-    appReducer,
-    Initial
-  );
+
+  const { sort } = useStateContext();
+  const dispatch = useDispatchContext();
+
   const { isDarkMode, toggleDarkMode } = darkMode;
   const [initialVisibility, setInitialVisibility] = useState("hidden");
   const searchInput: MutableRefObject<HTMLInputElement | null> = useRef(null);
@@ -85,9 +81,6 @@ const Navigation = ({
               type: "UPDATE_SORT",
               payload: {
                 sort: e.target.value as SortableBy,
-                sortfn: SortCardsBy,
-                season: variables.season,
-                year: variables.seasonYear,
               },
             })
           }
@@ -102,6 +95,5 @@ const Navigation = ({
     </nav>
   );
 };
-SortCardsBy;
 
 export default Navigation;

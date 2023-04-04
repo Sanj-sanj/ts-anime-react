@@ -43,11 +43,7 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
       return state;
     case "UPDATE_SORT": {
       if (action.payload) {
-        const { sort, season, year, sortfn } = action.payload;
-        console.log(sort);
-        console.log(season, year);
-        console.log(state.cards);
-        setTimeout(() => sortfn(sort, state.cards[season][year]), 200);
+        const { sort } = action.payload;
         return { ...state, sort };
       }
       return state;

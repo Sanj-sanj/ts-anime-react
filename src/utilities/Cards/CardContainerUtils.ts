@@ -1,9 +1,6 @@
 import React from "react";
-import { APIVariables, MainCard } from "../interfaces/apiResponseTypes";
-import { Actions, ClientVariables } from "../interfaces/initialConfigTypes";
-
-// type CurrentTarget = EventTarget | HTMLOListElement;
-// type Dispatch = React.Dispatch<Actions>;
+import { APIVariables } from "../../interfaces/apiResponseTypes";
+import { Actions, ClientVariables } from "../../interfaces/initialConfigTypes";
 
 export function throttle<fns>(callback: (params: fns) => void, delay = 250) {
   const timer: number[] = [];
@@ -41,37 +38,44 @@ function clientLoadNextPage(
     },
   });
   updateDisplayNumber(ammount + variables.client.perPage);
-  // setIsFetching(true);
 }
 
 export function handleCardContainerScroll([
   currentTarget,
   variables,
-  currentAmmount,
-  updateDisplayNumber,
+  ammount,
   dispatch,
 ]: [
   HTMLDivElement & EventTarget,
   { client: ClientVariables; api: APIVariables },
-  number,
-  React.Dispatch<React.SetStateAction<number>>,
+  {
+    currentAmmount: number;
+    updateDisplayAmmount: React.Dispatch<React.SetStateAction<number>>;
+  },
   React.Dispatch<Actions>
 ]) {
   const { scrollTop, scrollHeight, clientHeight } = currentTarget;
   if (isBottomOfPage(scrollTop, clientHeight, scrollHeight)) {
     clientLoadNextPage(
       variables,
-      currentAmmount,
-      updateDisplayNumber,
+      ammount.currentAmmount,
+      ammount.updateDisplayAmmount,
       dispatch
     );
   }
 }
 export function handleCardContainerOnClick(
   variables: { client: ClientVariables; api: APIVariables },
-  currentAmmount: number,
-  updateDisplayNumber: React.Dispatch<React.SetStateAction<number>>,
+  ammount: {
+    currentAmmount: number;
+    updateDisplayAmmount: React.Dispatch<React.SetStateAction<number>>;
+  },
   dispatch: React.Dispatch<Actions>
 ): void {
-  clientLoadNextPage(variables, currentAmmount, updateDisplayNumber, dispatch);
+  clientLoadNextPage(
+    variables,
+    ammount.currentAmmount,
+    ammount.updateDisplayAmmount,
+    dispatch
+  );
 }

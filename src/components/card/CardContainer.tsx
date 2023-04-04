@@ -1,31 +1,26 @@
-import React, {
-  FunctionComponent,
-  useEffect,
-  useLayoutEffect,
-  useReducer,
-  useState,
-} from "react";
-import { Initial } from "../../utilities/configVariables";
-import appReducer from "../../utilities/topReducer";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import {
   handleCardContainerOnClick,
   handleCardContainerScroll,
   throttle,
-} from "../../utilities/utilities";
+} from "../../utilities/Cards/CardContainerUtils";
 import Card from "./Card";
 import { Actions, ClientVariables } from "../../interfaces/initialConfigTypes";
 import {
   requestAniListAPI,
   requestMockAPI,
 } from "../../utilities/API/requestCards_CardContainer";
-import SortCardsBy from "../../utilities/Cards/Helper";
+import SortCardsBy from "../../utilities/Cards/SortCardsBy";
 import { APIVariables, MainCard } from "../../interfaces/apiResponseTypes";
+import {
+  useDispatchContext,
+  useStateContext,
+} from "../../utilities/Context/AppContext";
 
 const CardContainer: FunctionComponent = () => {
-  const [{ variables, cards, sort, client }, dispatch] = useReducer(
-    appReducer,
-    Initial
-  );
+  const { cards, client, variables, sort } = useStateContext();
+  const dispatch = useDispatchContext();
+
   const { season, seasonYear } = variables;
 
   const [isCallingAPI, setIsCallingAPI] = useState(true);
@@ -36,20 +31,20 @@ const CardContainer: FunctionComponent = () => {
     [
       HTMLDivElement & EventTarget,
       { client: ClientVariables; api: APIVariables },
-      number,
-      React.Dispatch<React.SetStateAction<number>>,
+      {
+        currentAmmount: number;
+        updateDisplayAmmount: React.Dispatch<React.SetStateAction<number>>;
+      },
       React.Dispatch<Actions>
     ]
   >(handleCardContainerScroll);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (cards[season] && cards[season][seasonYear]) {
-      setClientVisibleCards(cards[season][seasonYear].slice(0, ammount));
-      // setClientVisibleCards(
-      //   SortCardsBy(sort, cards[season][seasonYear]).slice(0, ammount)
-      // );
+      const sorted = SortCardsBy(sort, cards[season][seasonYear]);
+      setClientVisibleCards(sorted.slice(0, ammount));
     }
-  }, [cards, ammount]);
+  }, [cards, sort, ammount]);
 
   useEffect(() => {
     if (isCallingAPI) {
@@ -66,8 +61,7 @@ const CardContainer: FunctionComponent = () => {
         callNextPageOnScroll([
           e.currentTarget,
           { client, api: variables },
-          ammount,
-          setAmmount,
+          { currentAmmount: ammount, updateDisplayAmmount: setAmmount },
           dispatch,
         ])
       }
@@ -87,8 +81,10 @@ const CardContainer: FunctionComponent = () => {
           onClick={() =>
             handleCardContainerOnClick(
               { client, api: variables },
-              ammount,
-              setAmmount,
+              {
+                currentAmmount: ammount,
+                updateDisplayAmmount: setAmmount,
+              },
               dispatch
             )
           }
