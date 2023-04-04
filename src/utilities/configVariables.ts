@@ -19,6 +19,7 @@ const apiVariables: APIVariables = {
   seasonYear: thisYear,
   hasNextPage: true,
   format_in: ["TV", "TV_SHORT"],
+  format: "TV",
 };
 
 export const Initial: InitialConfig = {

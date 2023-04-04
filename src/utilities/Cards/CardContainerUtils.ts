@@ -34,6 +34,7 @@ function clientLoadNextPage(
     payload: {
       season: variables.api.season,
       year: variables.api.seasonYear,
+      format: variables.api.format,
       displayClientAmmount: ammount + variables.client.perPage,
     },
   });

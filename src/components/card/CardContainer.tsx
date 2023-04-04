@@ -5,23 +5,32 @@ import {
   throttle,
 } from "../../utilities/Cards/CardContainerUtils";
 import Card from "./Card";
-import { Actions, ClientVariables } from "../../interfaces/initialConfigTypes";
+import {
+  Actions,
+  ClientVariables,
+  ValidFormats,
+} from "../../interfaces/initialConfigTypes";
 import {
   requestAniListAPI,
   requestMockAPI,
 } from "../../utilities/API/requestCards_CardContainer";
 import SortCardsBy from "../../utilities/Cards/SortCardsBy";
-import { APIVariables, MainCard } from "../../interfaces/apiResponseTypes";
+import {
+  APIVariables,
+  MainCard,
+  Season,
+} from "../../interfaces/apiResponseTypes";
 import {
   useDispatchContext,
   useStateContext,
 } from "../../utilities/Context/AppContext";
+import ContainerPrefrences from "./ContainerPrefrences";
 
 const CardContainer: FunctionComponent = () => {
   const { cards, client, variables, sort } = useStateContext();
   const dispatch = useDispatchContext();
 
-  const { season, seasonYear } = variables;
+  const { season, seasonYear, format } = variables;
 
   const [isCallingAPI, setIsCallingAPI] = useState(true);
   const [clientVisibleCards, setClientVisibleCards] = useState<MainCard[]>([]);
@@ -39,62 +48,87 @@ const CardContainer: FunctionComponent = () => {
     ]
   >(handleCardContainerScroll);
 
+  function checkIfCardsExist(
+    season: Season,
+    year: number,
+    format: ValidFormats
+  ) {
+    return cards[season]?.[year]?.[format]?.length ? true : false;
+  }
+
   useEffect(() => {
-    if (cards[season] && cards[season][seasonYear]) {
-      const sorted = SortCardsBy(sort, cards[season][seasonYear]);
+    console.log("variables cahgnes");
+    setIsCallingAPI(true);
+  }, [variables]);
+
+  useEffect(() => {
+    if (cards[season]?.[seasonYear]?.[format]) {
+      const sorted = SortCardsBy(sort, cards[season][seasonYear][format]);
       setClientVisibleCards(sorted.slice(0, ammount));
     }
   }, [cards, sort, ammount]);
 
   useEffect(() => {
     if (isCallingAPI) {
-      // void requestAniListAPI(variables, dispatch);
-      void requestMockAPI(variables, dispatch);
+      console.log("isCallingAPi");
+      if (checkIfCardsExist(season, seasonYear, format)) {
+        console.log("cards already exist");
+        // setClientVisibleCards(cards[season][seasonYear][format]);
+      } else {
+        void requestAniListAPI(variables, dispatch);
+        // void requestMockAPI(variables, dispatch);
+      }
+      setClientVisibleCards([]);
+      setAmmount(15);
       setIsCallingAPI(false);
     }
   }, [isCallingAPI]);
+
   return (
-    <div
-      className="overflow-y-scroll w-screen flex flex-col items-center h-[90vh]"
-      onScroll={(e) =>
-        client.nextPageAvailable &&
-        callNextPageOnScroll([
-          e.currentTarget,
-          { client, api: variables },
-          { currentAmmount: ammount, updateDisplayAmmount: setAmmount },
-          dispatch,
-        ])
-      }
-    >
-      <ol className="flex flex-wrap whitespace-pre p-2 w-full flex-auto justify-center">
-        {clientVisibleCards.length ? (
-          clientVisibleCards.map((card) => (
-            <Card key={card.id || card.title.romaji} card={card} />
-          ))
+    <>
+      <ContainerPrefrences />
+      <div
+        className="overflow-y-scroll w-screen flex flex-col items-center h-[85vh]"
+        onScroll={(e) =>
+          client.nextPageAvailable &&
+          callNextPageOnScroll([
+            e.currentTarget,
+            { client, api: variables },
+            { currentAmmount: ammount, updateDisplayAmmount: setAmmount },
+            dispatch,
+          ])
+        }
+      >
+        <ol className="flex flex-wrap whitespace-pre p-2 w-full flex-auto justify-center">
+          {clientVisibleCards.length ? (
+            clientVisibleCards.map((card) => (
+              <Card key={card.id || card.title.romaji} card={card} />
+            ))
+          ) : (
+            <li>No results found.</li>
+          )}
+        </ol>
+        {client.nextPageAvailable ? (
+          <button
+            className="border-2 bg-slate-200 border-blue-800 p-2"
+            onClick={() =>
+              handleCardContainerOnClick(
+                { client, api: variables },
+                {
+                  currentAmmount: ammount,
+                  updateDisplayAmmount: setAmmount,
+                },
+                dispatch
+              )
+            }
+          >
+            Click here if more results do not load.
+          </button>
         ) : (
-          <li>No results found.</li>
+          <aside>You&apos;ve reached the end!</aside>
         )}
-      </ol>
-      {client.nextPageAvailable ? (
-        <button
-          className="border-2 bg-slate-200 border-blue-800 p-2"
-          onClick={() =>
-            handleCardContainerOnClick(
-              { client, api: variables },
-              {
-                currentAmmount: ammount,
-                updateDisplayAmmount: setAmmount,
-              },
-              dispatch
-            )
-          }
-        >
-          Click here if more results do not load.
-        </button>
-      ) : (
-        <aside>You&apos;ve reached the end!</aside>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 

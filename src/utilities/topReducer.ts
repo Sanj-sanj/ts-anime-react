@@ -13,9 +13,9 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
 
     case "UPDATE_NEXT_PAGE_AVAILABLE": {
       if (action.payload) {
-        const { season, year, displayClientAmmount } = action.payload;
+        const { season, year, format, displayClientAmmount } = action.payload;
         const hasNextPage =
-          displayClientAmmount < state.cards[season][year].length;
+          displayClientAmmount < state.cards[season]?.[year]?.[format]?.length;
 
         return {
           ...state,
@@ -27,15 +27,19 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
 
     case "UPDATE_CARDS":
       if (Array.isArray(action.payload)) {
-        const { season, seasonYear } = state.variables;
-        const previousCards = state.cards[season][seasonYear] || [];
+        const { season, seasonYear, format } = state.variables;
+        const previousCards = state.cards[season]?.[seasonYear]?.[format] || [];
         return {
           ...state,
           cards: {
             ...state.cards,
             [season]: {
               ...state.cards[season],
-              [seasonYear]: [...previousCards, ...action.payload],
+
+              [seasonYear]: {
+                ...state.cards[season]?.[seasonYear],
+                [format]: [...previousCards, ...action.payload],
+              },
             },
           },
         };

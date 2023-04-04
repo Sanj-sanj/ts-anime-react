@@ -2,7 +2,6 @@ import { MainCard } from "../../interfaces/apiResponseTypes";
 import { SortableBy } from "../../interfaces/initialConfigTypes";
 
 function SortCardsBy(sort: SortableBy, cards: MainCard[]) {
-  console.log(sort);
   const sortedCards = [...cards];
   switch (sort) {
     case "Rating":

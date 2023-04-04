@@ -1,8 +1,12 @@
 import { APIVariables, Season } from "./apiResponseTypes";
 import { MainCard } from "./apiResponseTypes";
 
-type SeasonYear<Year extends number> = {
-  [Y in Year]: MainCard[];
+type SeasonCards<Year extends number> = {
+  [Y in Year]: {
+    TV: MainCard[];
+    OVA: MainCard[];
+    MOVIE: MainCard[];
+  };
 };
 
 export type SortableBy = "Rating" | "Popularity" | "Countdown";
@@ -13,26 +17,19 @@ export type ClientVariables = {
   perPage: number;
 };
 
+export type ValidFormats = "TV" | "MOVIE" | "OVA";
+
 export type InitialConfig = {
   variables: APIVariables;
   client: ClientVariables;
   cards: {
-    WINTER: SeasonYear<number>;
-    SPRING: SeasonYear<number>;
-    SUMMER: SeasonYear<number>;
-    FALL: SeasonYear<number>;
+    WINTER: SeasonCards<number>;
+    SPRING: SeasonCards<number>;
+    SUMMER: SeasonCards<number>;
+    FALL: SeasonCards<number>;
   };
   sort: SortableBy;
 };
-
-//Type definitions for topReducer
-// type ActionTypes =
-//   | "UPDATE_VARIABLES"
-//   | "UPDATE_IS_FETCHING"
-//   | "UPDATE_NEXT_PAGE_AVAILABLE"
-//   | "UPDATE_CARDS"
-//   | "UPDATE_SORT";
-// type Payload = string | number | boolean | APIVariables | MainCard[];
 
 export type Actions =
   | {
@@ -48,6 +45,7 @@ export type Actions =
       payload: {
         season: Season;
         year: number;
+        format: ValidFormats;
         displayClientAmmount: number;
       };
     }

@@ -1,3 +1,5 @@
+import { ValidFormats } from "./initialConfigTypes";
+
 export interface APIPayload {
   data: {
     Page: {
@@ -20,8 +22,12 @@ export type APIVariables = {
   seasonYear: number;
   hasNextPage: boolean;
   format_in: Formats;
+  format: ValidFormats;
 };
-type Formats = ["TV", "TV_SHORT"] | ["MOVIE", "SPECIAL"] | ["ONA", "OVA"];
+export type Formats =
+  | ["TV", "TV_SHORT"]
+  | ["MOVIE", "SPECIAL"]
+  | ["ONA", "OVA"];
 
 type StudioNode = {
   name: string;
