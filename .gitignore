@@ -2,3 +2,4 @@ node_modules/
 .parcel-cache
 .vscode
 dist/
+src/mockApi/mock2.json

@@ -1,6 +1,11 @@
 import React from "react";
-import { APIVariables } from "../../interfaces/apiResponseTypes";
-import { Actions, ClientVariables } from "../../interfaces/initialConfigTypes";
+import { APIVariables, Season } from "../../interfaces/apiResponseTypes";
+import {
+  Actions,
+  ClientVariables,
+  InitialConfig,
+  ValidFormats,
+} from "../../interfaces/initialConfigTypes";
 
 export function throttle<fns>(callback: (params: fns) => void, delay = 250) {
   const timer: number[] = [];
@@ -22,6 +27,15 @@ export const isBottomOfPage = (
   clientHeight: number,
   scrollHeight: number
 ): boolean => scrollTop + clientHeight >= scrollHeight;
+
+export function checkIfCardsExist(
+  season: Season,
+  year: number,
+  format: ValidFormats,
+  { cards }: Pick<InitialConfig, "cards">
+) {
+  return cards[season]?.[year]?.[format]?.length ? true : false;
+}
 
 function clientLoadNextPage(
   variables: { client: ClientVariables; api: APIVariables },

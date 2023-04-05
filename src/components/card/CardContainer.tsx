@@ -1,25 +1,18 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import {
+  checkIfCardsExist,
   handleCardContainerOnClick,
   handleCardContainerScroll,
   throttle,
 } from "../../utilities/Cards/CardContainerUtils";
 import Card from "./Card";
-import {
-  Actions,
-  ClientVariables,
-  ValidFormats,
-} from "../../interfaces/initialConfigTypes";
+import { Actions, ClientVariables } from "../../interfaces/initialConfigTypes";
 import {
   requestAniListAPI,
   requestMockAPI,
 } from "../../utilities/API/requestCards_CardContainer";
 import SortCardsBy from "../../utilities/Cards/SortCardsBy";
-import {
-  APIVariables,
-  MainCard,
-  Season,
-} from "../../interfaces/apiResponseTypes";
+import { APIVariables, MainCard } from "../../interfaces/apiResponseTypes";
 import {
   useDispatchContext,
   useStateContext,
@@ -31,7 +24,6 @@ const CardContainer: FunctionComponent = () => {
   const dispatch = useDispatchContext();
 
   const { season, seasonYear, format } = variables;
-
   const [isCallingAPI, setIsCallingAPI] = useState(true);
   const [clientVisibleCards, setClientVisibleCards] = useState<MainCard[]>([]);
   const [ammount, setAmmount] = useState(client.perPage);
@@ -48,14 +40,6 @@ const CardContainer: FunctionComponent = () => {
     ]
   >(handleCardContainerScroll);
 
-  function checkIfCardsExist(
-    season: Season,
-    year: number,
-    format: ValidFormats
-  ) {
-    return cards[season]?.[year]?.[format]?.length ? true : false;
-  }
-
   useEffect(() => {
     if (cards[season]?.[seasonYear]?.[format]) {
       const sorted = SortCardsBy(sort, cards[season][seasonYear][format]);
@@ -68,9 +52,9 @@ const CardContainer: FunctionComponent = () => {
 
   useEffect(() => {
     if (isCallingAPI) {
-      if (!checkIfCardsExist(season, seasonYear, format)) {
-        void requestAniListAPI(variables, dispatch);
-        // void requestMockAPI(variables, dispatch);
+      if (!checkIfCardsExist(season, seasonYear, format, { cards })) {
+        // void requestAniListAPI(variables, dispatch);
+        void requestMockAPI(variables, dispatch);
       }
       setClientVisibleCards([]);
       setIsCallingAPI(false);

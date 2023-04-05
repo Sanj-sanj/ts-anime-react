@@ -19,7 +19,7 @@ async function requestAniListAPI(
     payload: { format, season, year: seasonYear, displayClientAmmount: 15 },
   });
 }
-
+// this mock API will only return a single season followed by a single format the Mock API will need to be reworked.
 function requestMockAPI(
   settings: APIVariables,
   dispatch: React.Dispatch<Actions>

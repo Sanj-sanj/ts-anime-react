@@ -75,8 +75,11 @@ function handleData(data: APIPayload): APIPayload {
 }
 
 function handleError(error: Error) {
-  alert("Error, check console");
-  console.error(error);
+  return new Error(
+    `Somethign went wrong with the API request:  \n${error.name} \n${
+      error.message
+    } \n${error.stack || ""} `
+  );
 }
 
 export default async function HandleAPICall(
@@ -95,10 +98,18 @@ export default async function HandleAPICall(
     }),
   };
 
-  const results = (await fetch(url, options)
+  const results = await fetch(url, options)
     .then(handleResponse)
     .then(handleData)
-    .catch(handleError)) as APIPayload;
+    .catch(handleError);
+
+  const isError = (payload: APIPayload | Error): payload is Error =>
+    payload instanceof Error;
+
+  if (isError(results)) {
+    return [];
+  }
+
   const mainCards = results.data.Page.media;
   const hasNextPage = results.data.Page.pageInfo.hasNextPage;
 

@@ -1,13 +1,15 @@
 import { MainCard } from "../../interfaces/apiResponseTypes";
 import { APIVariables } from "../../interfaces/apiResponseTypes";
-import json from "../../mockApi/mock.json";
+// import json from "../../mockApi/mock.json";
+import json2 from "../../mockApi/mock2.json";
 
 export default function HandleMockAPICall(variables: APIVariables): MainCard[] {
-  const { perPage, page } = variables;
-  // const startIndex = page <= 1 ? 0 : perPage * (page - 1);
-  // const endIndex = startIndex + perPage;
-  const response = json.map((card) => card) as MainCard[];
+  const { format, season, seasonYear } = variables;
+  const mappedJson = json2.map((section) => section);
 
-  // const hasNextPage = startIndex + response.length < json.length;
-  return response;
+  const response2 = mappedJson[0][season]?.[seasonYear.toString()]?.[
+    format
+  ] as MainCard[];
+
+  return response2;
 }
