@@ -57,29 +57,22 @@ const CardContainer: FunctionComponent = () => {
   }
 
   useEffect(() => {
-    console.log("variables cahgnes");
-    setIsCallingAPI(true);
-  }, [variables]);
-
-  useEffect(() => {
     if (cards[season]?.[seasonYear]?.[format]) {
       const sorted = SortCardsBy(sort, cards[season][seasonYear][format]);
       setClientVisibleCards(sorted.slice(0, ammount));
+    } else {
+      setIsCallingAPI(true);
+      setAmmount(15);
     }
-  }, [cards, sort, ammount]);
+  }, [cards, sort, ammount, season, format]);
 
   useEffect(() => {
     if (isCallingAPI) {
-      console.log("isCallingAPi");
-      if (checkIfCardsExist(season, seasonYear, format)) {
-        console.log("cards already exist");
-        // setClientVisibleCards(cards[season][seasonYear][format]);
-      } else {
+      if (!checkIfCardsExist(season, seasonYear, format)) {
         void requestAniListAPI(variables, dispatch);
         // void requestMockAPI(variables, dispatch);
       }
       setClientVisibleCards([]);
-      setAmmount(15);
       setIsCallingAPI(false);
     }
   }, [isCallingAPI]);
@@ -90,7 +83,8 @@ const CardContainer: FunctionComponent = () => {
       <div
         className="overflow-y-scroll w-screen flex flex-col items-center h-[85vh]"
         onScroll={(e) =>
-          client.nextPageAvailable &&
+          clientVisibleCards.length <
+            cards?.[season]?.[seasonYear]?.[format]?.length &&
           callNextPageOnScroll([
             e.currentTarget,
             { client, api: variables },
@@ -108,7 +102,8 @@ const CardContainer: FunctionComponent = () => {
             <li>No results found.</li>
           )}
         </ol>
-        {client.nextPageAvailable ? (
+        {clientVisibleCards.length <
+        cards[season]?.[seasonYear]?.[format]?.length ? (
           <button
             className="border-2 bg-slate-200 border-blue-800 p-2"
             onClick={() =>

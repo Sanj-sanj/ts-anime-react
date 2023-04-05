@@ -14,6 +14,7 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
     case "UPDATE_NEXT_PAGE_AVAILABLE": {
       if (action.payload) {
         const { season, year, format, displayClientAmmount } = action.payload;
+        console.log(state.cards);
         const hasNextPage =
           displayClientAmmount < state.cards[season]?.[year]?.[format]?.length;
 

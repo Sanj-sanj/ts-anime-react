@@ -4,14 +4,20 @@ import HandleMockAPICall from "./HandleMockAPICall";
 import HandleAPICall from "./HandleAPICall";
 
 //Request from Anilist API
+
 async function requestAniListAPI(
   settings: APIVariables,
   dispatch: React.Dispatch<Actions>
 ) {
-  const cards = await HandleAPICall(settings);
+  const { format, season, seasonYear } = settings;
   console.log("calling ANILIST_API"); //eslint-disable-line
-  // dispatch({ type: "UPDATE_NEXT_PAGE_AVAILABLE", payload: hasNextPage });
+  const cards = await HandleAPICall(settings);
+
   dispatch({ type: "UPDATE_CARDS", payload: cards });
+  dispatch({
+    type: "UPDATE_NEXT_PAGE_AVAILABLE",
+    payload: { format, season, year: seasonYear, displayClientAmmount: 15 },
+  });
 }
 
 function requestMockAPI(

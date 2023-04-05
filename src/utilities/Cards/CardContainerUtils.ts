@@ -29,12 +29,13 @@ function clientLoadNextPage(
   updateDisplayNumber: React.Dispatch<React.SetStateAction<number>>,
   dispatch: React.Dispatch<Actions>
 ) {
+  const { format, season, seasonYear } = variables.api;
   dispatch({
     type: "UPDATE_NEXT_PAGE_AVAILABLE",
     payload: {
-      season: variables.api.season,
-      year: variables.api.seasonYear,
-      format: variables.api.format,
+      season: season,
+      year: seasonYear,
+      format: format,
       displayClientAmmount: ammount + variables.client.perPage,
     },
   });
