@@ -34,7 +34,7 @@ export function checkIfCardsExist(
   format: ValidFormats,
   { cards }: Pick<InitialConfig, "cards">
 ) {
-  return cards[season]?.[year]?.[format]?.length ? true : false;
+  return cards[season]?.[year]?.[format]?.length > 0 ? true : false;
 }
 
 function clientLoadNextPage(

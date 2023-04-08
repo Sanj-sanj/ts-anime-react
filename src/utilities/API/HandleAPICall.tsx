@@ -84,9 +84,10 @@ function handleError(error: Error) {
 
 export default async function HandleAPICall(
   settings: APIVariables,
-  accumulator: MainCard[] = []
+  accumulator: MainCard[] = [],
+  signal?: AbortSignal
 ): Promise<MainCard[]> {
-  const options = {
+  const options: RequestInit = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -96,6 +97,7 @@ export default async function HandleAPICall(
       query: query,
       variables: settings,
     }),
+    signal,
   };
 
   const results = await fetch(url, options)
@@ -114,10 +116,11 @@ export default async function HandleAPICall(
   const hasNextPage = results.data.Page.pageInfo.hasNextPage;
 
   if (hasNextPage) {
-    return await HandleAPICall({ ...settings, page: settings.page + 1 }, [
-      ...accumulator,
-      ...mainCards,
-    ]);
+    return await HandleAPICall(
+      { ...settings, page: settings.page + 1 },
+      [...accumulator, ...mainCards],
+      signal
+    );
   }
 
   return [...accumulator, ...mainCards];

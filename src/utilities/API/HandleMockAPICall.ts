@@ -3,7 +3,9 @@ import { APIVariables } from "../../interfaces/apiResponseTypes";
 // import json from "../../mockApi/mock.json";
 import json2 from "../../mockApi/mock2.json";
 
-export default function HandleMockAPICall(variables: APIVariables): MainCard[] {
+export default async function HandleMockAPICall(
+  variables: APIVariables
+): Promise<MainCard[]> {
   const { format, season, seasonYear } = variables;
   const mappedJson = json2.map((section) => section);
 
@@ -11,5 +13,7 @@ export default function HandleMockAPICall(variables: APIVariables): MainCard[] {
     format
   ] as MainCard[];
 
-  return response2;
+  return new Promise<MainCard[]>((res) =>
+    setTimeout(() => res(response2 || []), 300)
+  ).then((v) => v);
 }

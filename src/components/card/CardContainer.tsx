@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import {
   checkIfCardsExist,
   handleCardContainerOnClick,
@@ -24,9 +24,11 @@ const CardContainer: FunctionComponent = () => {
   const dispatch = useDispatchContext();
 
   const { season, seasonYear, format } = variables;
-  const [isCallingAPI, setIsCallingAPI] = useState(true);
+  //try a ref because its not really neccessary for renders
+  const [isCallingAPI, setIsCallingAPI] = useState(false);
   const [clientVisibleCards, setClientVisibleCards] = useState<MainCard[]>([]);
   const [ammount, setAmmount] = useState(client.perPage);
+  const abortRef = useRef<null | AbortController>(null);
 
   const callNextPageOnScroll = throttle<
     [
@@ -41,72 +43,82 @@ const CardContainer: FunctionComponent = () => {
   >(handleCardContainerScroll);
 
   useEffect(() => {
-    if (cards[season]?.[seasonYear]?.[format]) {
+    //if API results for a given SEASON / YEAR / FORMAT exist; reuse the cached data
+    console.log("hi");
+    console.log(isCallingAPI);
+    if (checkIfCardsExist(season, seasonYear, format, { cards })) {
+      // IF cards are cached / re-use the  cached cards
       const sorted = SortCardsBy(sort, cards[season][seasonYear][format]);
       setClientVisibleCards(sorted.slice(0, ammount));
     } else {
-      setIsCallingAPI(true);
-      setAmmount(15);
+      //create new AbortController to cancel consecutive requests if new request is made
+      abortRef.current = new AbortController();
+      if (!isCallingAPI) {
+        // void requestAniListAPI(variables, dispatch, abortRef.current.signal);
+        void requestMockAPI(variables, dispatch);
+        setIsCallingAPI(true);
+        setClientVisibleCards([]);
+        setAmmount(15);
+      }
+      return () => {
+        if (abortRef.current) {
+          abortRef.current.abort();
+          setIsCallingAPI(false);
+        }
+      };
     }
   }, [cards, sort, ammount, season, format]);
-
-  useEffect(() => {
-    if (isCallingAPI) {
-      if (!checkIfCardsExist(season, seasonYear, format, { cards })) {
-        // void requestAniListAPI(variables, dispatch);
-        void requestMockAPI(variables, dispatch);
-      }
-      setClientVisibleCards([]);
-      setIsCallingAPI(false);
-    }
-  }, [isCallingAPI]);
 
   return (
     <>
       <ContainerPrefrences />
-      <div
-        className="overflow-y-scroll w-screen flex flex-col items-center h-[85vh]"
-        onScroll={(e) =>
-          clientVisibleCards.length <
-            cards?.[season]?.[seasonYear]?.[format]?.length &&
-          callNextPageOnScroll([
-            e.currentTarget,
-            { client, api: variables },
-            { currentAmmount: ammount, updateDisplayAmmount: setAmmount },
-            dispatch,
-          ])
-        }
-      >
-        <ol className="flex flex-wrap whitespace-pre p-2 w-full flex-auto justify-center">
-          {clientVisibleCards.length ? (
-            clientVisibleCards.map((card) => (
-              <Card key={card.id || card.title.romaji} card={card} />
-            ))
+      {isCallingAPI ? (
+        <div>calling api</div>
+      ) : (
+        <div
+          className="overflow-y-scroll w-screen flex flex-col items-center h-[85vh]"
+          onScroll={(e) =>
+            clientVisibleCards.length <
+              cards?.[season]?.[seasonYear]?.[format]?.length &&
+            callNextPageOnScroll([
+              e.currentTarget,
+              { client, api: variables },
+              { currentAmmount: ammount, updateDisplayAmmount: setAmmount },
+              dispatch,
+            ])
+          }
+        >
+          <ol className="flex flex-wrap whitespace-pre p-2 w-full flex-auto justify-center">
+            {clientVisibleCards.length ? (
+              clientVisibleCards.map((card) => (
+                <Card key={card.id || card.title.romaji} card={card} />
+              ))
+            ) : (
+              <li>No results found.</li>
+            )}
+          </ol>
+          {clientVisibleCards.length <
+          cards[season]?.[seasonYear]?.[format]?.length ? (
+            <button
+              className="border-2 bg-slate-200 border-blue-800 p-2"
+              onClick={() =>
+                handleCardContainerOnClick(
+                  { client, api: variables },
+                  {
+                    currentAmmount: ammount,
+                    updateDisplayAmmount: setAmmount,
+                  },
+                  dispatch
+                )
+              }
+            >
+              Click here if more results do not load.
+            </button>
           ) : (
-            <li>No results found.</li>
+            <aside>You&apos;ve reached the end!</aside>
           )}
-        </ol>
-        {clientVisibleCards.length <
-        cards[season]?.[seasonYear]?.[format]?.length ? (
-          <button
-            className="border-2 bg-slate-200 border-blue-800 p-2"
-            onClick={() =>
-              handleCardContainerOnClick(
-                { client, api: variables },
-                {
-                  currentAmmount: ammount,
-                  updateDisplayAmmount: setAmmount,
-                },
-                dispatch
-              )
-            }
-          >
-            Click here if more results do not load.
-          </button>
-        ) : (
-          <aside>You&apos;ve reached the end!</aside>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 };
