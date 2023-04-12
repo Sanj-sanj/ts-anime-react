@@ -1,5 +1,6 @@
 import { FunctionComponent } from "react";
 import { MainCard } from "../../interfaces/apiResponseTypes";
+import ListButton from "./ListButton";
 
 const Card: FunctionComponent<{ card: MainCard }> = ({ card }) => {
   const {
@@ -20,7 +21,8 @@ const Card: FunctionComponent<{ card: MainCard }> = ({ card }) => {
     ? date.setSeconds(nextAiringEpisode?.timeUntilAiring || 0)
     : null;
   return (
-    <li className="flex rounded-lg my-2 md:mx-2 border-2 border-slate-300 bg-stone-100 dark:bg-zinc-900 dark:border-slate-700 dark:text-slate-300 w-full max-w-md max-h-[147px]">
+    <li className="flex relative rounded-lg my-2 md:mx-2 border-2 border-slate-300 bg-stone-100 dark:bg-zinc-900 dark:border-slate-700 dark:text-slate-300 w-full max-w-md max-h-[147px]">
+      <ListButton card={card} />
       <div className="relative">
         <img
           className="bg-slate-200 rounded-l-md w-full max-h-[143px] min-h-[143px] min-w-[100px] max-w-[100px]"

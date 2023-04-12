@@ -44,8 +44,6 @@ const CardContainer: FunctionComponent = () => {
 
   useEffect(() => {
     //if API results for a given SEASON / YEAR / FORMAT exist; reuse the cached data
-    console.log("hi");
-    console.log(isCallingAPI);
     if (checkIfCardsExist(season, seasonYear, format, { cards })) {
       // IF cards are cached / re-use the  cached cards
       const sorted = SortCardsBy(sort, cards[season][seasonYear][format]);

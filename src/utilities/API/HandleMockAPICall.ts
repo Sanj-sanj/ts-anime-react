@@ -14,6 +14,9 @@ export default async function HandleMockAPICall(
   ] as MainCard[];
 
   return new Promise<MainCard[]>((res) =>
-    setTimeout(() => res(response2 || []), 300)
+    setTimeout(
+      () => res(response2 || []),
+      Math.floor((Math.random() * (response2.length * 100)) / 2)
+    )
   ).then((v) => v);
 }
