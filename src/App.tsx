@@ -1,18 +1,20 @@
-import ReactDOM from "react-dom";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 
 import CardContainer from "./components/card/CardContainer";
 import Layout from "./components/layout/Layout";
-// import Header from "./components/header/Header";
 
+const root = createRoot(document.getElementById("root") as HTMLElement);
 const App = () => {
   console.log("rendering App");
 
   return (
-    <Layout>
-      {/* <Header /> */}
-      <CardContainer />
-    </Layout>
+    <StrictMode>
+      <Layout>
+        <CardContainer />
+      </Layout>
+    </StrictMode>
   );
 };
-
-ReactDOM.render(<App />, document.getElementById("root"));
+// console.log(ReactDOM.version);
+root.render(<App />);

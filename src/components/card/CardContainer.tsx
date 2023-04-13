@@ -24,8 +24,7 @@ const CardContainer: FunctionComponent = () => {
   const dispatch = useDispatchContext();
 
   const { season, seasonYear, format } = variables;
-  //try a ref because its not really neccessary for renders
-  const [isCallingAPI, setIsCallingAPI] = useState(false);
+  const isCallingAPI = useRef(false);
   const [clientVisibleCards, setClientVisibleCards] = useState<MainCard[]>([]);
   const [ammount, setAmmount] = useState(client.perPage);
   const abortRef = useRef<null | AbortController>(null);
@@ -43,7 +42,6 @@ const CardContainer: FunctionComponent = () => {
   >(handleCardContainerScroll);
 
   useEffect(() => {
-    //if API results for a given SEASON / YEAR / FORMAT exist; reuse the cached data
     if (checkIfCardsExist(season, seasonYear, format, { cards })) {
       // IF cards are cached / re-use the  cached cards
       const sorted = SortCardsBy(sort, cards[season][seasonYear][format]);
@@ -51,18 +49,25 @@ const CardContainer: FunctionComponent = () => {
     } else {
       //create new AbortController to cancel consecutive requests if new request is made
       abortRef.current = new AbortController();
-      if (!isCallingAPI) {
-        // void requestAniListAPI(variables, dispatch, abortRef.current.signal);
-        void requestMockAPI(variables, dispatch);
-        setIsCallingAPI(true);
-        setClientVisibleCards([]);
-        setAmmount(15);
-      }
+      // ****************** ANILIST API *********************
+      // void requestAniListAPI(
+      //   variables,
+      //   dispatch,
+      //   isCallingAPI,
+      //   abortRef.current.signal
+      // );
+      // ****************** MOCK API ************************
+      void requestMockAPI(
+        variables,
+        dispatch,
+        isCallingAPI,
+        abortRef.current.signal
+      );
+
+      setClientVisibleCards([]);
+      setAmmount(15);
       return () => {
-        if (abortRef.current) {
-          abortRef.current.abort();
-          setIsCallingAPI(false);
-        }
+        if (abortRef.current) abortRef.current.abort();
       };
     }
   }, [cards, sort, ammount, season, format]);
@@ -70,7 +75,7 @@ const CardContainer: FunctionComponent = () => {
   return (
     <>
       <ContainerPrefrences />
-      {isCallingAPI ? (
+      {isCallingAPI.current == true ? (
         <div>calling api</div>
       ) : (
         <div

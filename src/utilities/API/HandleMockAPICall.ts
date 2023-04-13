@@ -13,10 +13,11 @@ export default async function HandleMockAPICall(
     format
   ] as MainCard[];
 
-  return new Promise<MainCard[]>((res) =>
+  return new Promise<MainCard[]>((res) => {
+    const cards = response2 || [];
     setTimeout(
-      () => res(response2 || []),
-      Math.floor((Math.random() * (response2.length * 100)) / 2)
-    )
-  ).then((v) => v);
+      () => res(cards),
+      Math.floor((Math.random() * (cards.length || 20 * 100)) / 2)
+    );
+  }).then((v) => v);
 }
