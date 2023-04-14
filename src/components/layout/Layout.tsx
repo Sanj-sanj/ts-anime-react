@@ -1,19 +1,26 @@
+import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Navigation from "../navigation/Navigation";
 import Header from "../header/Header";
-import React, { useEffect, useState } from "react";
+import Modal from "../modal/Modal";
 import { setupDarkMode } from "../../utilities/layout/utilities";
-import AppProvider from "../../utilities/Context/AppContext";
+import {
+  useDispatchContext,
+  useStateContext,
+} from "../../utilities/Context/AppContext";
 
 type Props = {
   children: JSX.Element;
 };
 
 const Layout = ({ children }: Props) => {
-  const [isOpen, setisOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(setupDarkMode());
-  const toggleNavigation = () => setisOpen(!isOpen);
+  const { client } = useStateContext();
+  const dispatch = useDispatchContext();
 
-  // const {AppDispatchContext, AppStateContext} = Contexts
+  const toggleNavigation = () => dispatch({ type: "TOGGLE_NAVIGATION" });
+  const closeModal = () =>
+    dispatch({ type: "TOGGLE_MODAL", payload: { action: "CLOSE" } });
 
   function toggleDarkMode() {
     setIsDarkMode(!isDarkMode);
@@ -31,14 +38,20 @@ const Layout = ({ children }: Props) => {
 
   return (
     <>
+      {client.isOpen.modal ? (
+        createPortal(
+          <Modal closeModal={closeModal} />,
+          document.getElementById("modalRoot") as HTMLDivElement
+        )
+      ) : (
+        <></>
+      )}
       {/* Navigation panel hidden on the left */}
-      <AppProvider>
-        <Navigation isOpen={isOpen} darkMode={{ isDarkMode, toggleDarkMode }} />
-        <Header toggleNavigation={toggleNavigation} />
-        <main className="min-h-full flex flex-col items-center bg-stone-200 dark:bg-neutral-800">
-          {children}
-        </main>
-      </AppProvider>
+      <Navigation darkMode={{ isDarkMode, toggleDarkMode }} />
+      <Header toggleNavigation={toggleNavigation} />
+      <main className="min-h-full flex flex-col items-center bg-stone-200 dark:bg-neutral-800">
+        {children}
+      </main>
     </>
   );
 };

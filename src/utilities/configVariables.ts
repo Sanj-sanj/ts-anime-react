@@ -28,6 +28,11 @@ export const Initial: InitialConfig = {
     nextPageAvailable: true,
     startIndex: 0,
     perPage: 15,
+    isOpen: {
+      modal: false,
+      navigation: false,
+    },
+    modalData: null,
   },
   cards: { WINTER: [], SPRING: [], SUMMER: [], FALL: [] },
   sort: "Rating",

@@ -15,6 +15,11 @@ export type ClientVariables = {
   nextPageAvailable: boolean;
   startIndex: number;
   perPage: number;
+  isOpen: {
+    modal: boolean;
+    navigation: boolean;
+  };
+  modalData: MainCard | null;
 };
 
 export type ValidFormats = "TV" | "MOVIE" | "OVA";
@@ -58,4 +63,18 @@ export type Actions =
       payload: {
         sort: SortableBy;
       };
+    }
+  | {
+      type: "TOGGLE_MODAL";
+      payload:
+        | {
+            action: "OPEN";
+            data: MainCard;
+          }
+        | {
+            action: "CLOSE";
+          };
+    }
+  | {
+      type: "TOGGLE_NAVIGATION";
     };

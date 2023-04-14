@@ -9,10 +9,10 @@ import { hideNavOnClose } from "../../utilities/navigation/utilities";
 import InputSearchAnime from "./InputSearchAnime";
 
 const Navigation = ({
-  isOpen,
+  // isVisible,
   darkMode,
 }: {
-  isOpen: boolean;
+  // isVisible: boolean;
   darkMode: { isDarkMode: boolean; toggleDarkMode: () => void };
 }) => {
   /* 
@@ -21,7 +21,10 @@ const Navigation = ({
   Finally we swap the initial state of 'hidden' to an empty string to resume normal component functionality.
   */
 
-  const { sort } = useStateContext();
+  const {
+    sort,
+    client: { isOpen },
+  } = useStateContext();
   const dispatch = useDispatchContext();
 
   const { isDarkMode, toggleDarkMode } = darkMode;
@@ -30,16 +33,16 @@ const Navigation = ({
   const SortableBy: SortableBy[] = ["Rating", "Popularity", "Countdown"];
 
   function searchAutoFocus() {
-    if (searchInput.current && isOpen) {
+    if (searchInput.current && isOpen.navigation) {
       searchInput.current.focus();
     }
   }
 
   useEffect(() => {
-    if (isOpen === true && initialVisibility === "hidden") {
+    if (isOpen.navigation === true && initialVisibility === "hidden") {
       setInitialVisibility("");
     }
-  }, [isOpen]);
+  }, [isOpen.navigation]);
 
   function navItemLabel(text: string) {
     return <h3 className="dark:text-slate-300">{text}</h3>;
@@ -48,7 +51,7 @@ const Navigation = ({
   return (
     <nav
       className={`${initialVisibility} z-10 absolute flex flex-col h-screen p-4 bg-slate-500 dark:bg-zinc-800  ${
-        isOpen && initialVisibility === ""
+        isOpen.navigation && initialVisibility === ""
           ? "animate-slide-in-left"
           : "animate-slide-out-left"
       } `}

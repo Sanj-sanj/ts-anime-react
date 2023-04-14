@@ -52,6 +52,42 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
       }
       return state;
     }
+    case "TOGGLE_MODAL": {
+      const modalRoot = document.getElementById("modalRoot") as HTMLElement;
+      if (action.payload.action === "CLOSE") {
+        modalRoot.classList.add("invisible");
+        return {
+          ...state,
+          client: {
+            ...state.client,
+            isOpen: { ...state.client.isOpen, modal: false },
+          },
+        };
+      }
+      if (action.payload.action === "OPEN") {
+        modalRoot.classList.remove("invisible");
+        return {
+          ...state,
+          client: {
+            ...state.client,
+            isOpen: { ...state.client.isOpen, modal: true },
+            modalData: action.payload.data,
+          },
+        };
+      }
+      return state;
+    }
+    case "TOGGLE_NAVIGATION":
+      return {
+        ...state,
+        client: {
+          ...state.client,
+          isOpen: {
+            ...state.client.isOpen,
+            navigation: !state.client.isOpen.navigation,
+          },
+        },
+      };
     default:
       return state;
   }
