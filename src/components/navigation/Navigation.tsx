@@ -50,7 +50,7 @@ const Navigation = ({
 
   return (
     <nav
-      className={`${initialVisibility} z-10 absolute flex flex-col h-screen p-4 bg-slate-500 dark:bg-zinc-800  ${
+      className={`${initialVisibility} z-10 absolute flex flex-col h-screen p-4 bg-slate-500 dark:bg-slate-900  ${
         isOpen.navigation && initialVisibility === ""
           ? "animate-slide-in-left"
           : "animate-slide-out-left"

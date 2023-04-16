@@ -1,0 +1,26 @@
+[component fixes]
+CardContainer:
+    -reset scroll position to top on change of season, year, format...
+    -save focus when opening modal and resume focus on close of modal.
+
+Modal
+    -modal should be a reusable generic component to fit any content.
+    -contents of cards should be a different component
+
+Navigation:
+    -should have use an overlay to prevent clicks to background content
+    -add accessibility in tab & shift+tab scrolling and esc + clicking bg-overlay to close.
+
+[new feature]
+-- OVERLAY: 
+    -add an generic overlay component that prevents interaction
+    -bg should be dimmed 
+    -accepts children to render components 
+
+-- MODAL CONTENT
+    -new modal contents for saving to list/rating/bookmarks etc
+    -- for viewing more information on particual anime..
+    --- should work with Modal and Overlay
+
+SortCardsBy.ts
+    -improper sorting not a 'real' working feature

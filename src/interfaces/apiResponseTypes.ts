@@ -35,11 +35,11 @@ type StudioNode = {
   favourites: number;
 };
 
-type NextAiringEpisode = {
+export type NextAiringEpisode = {
   airingAt: number;
   episode: number;
   timeUntilAiring: number;
-};
+} | null;
 
 export type Titles = {
   romaji: string | null;
@@ -52,19 +52,19 @@ export type CoverImage = {
   medium: string | null;
 };
 export type Season = "WINTER" | "SPRING" | "SUMMER" | "FALL";
-
+export type ShowStatus =
+  | "FINISHED"
+  | "RELEASING"
+  | "NOT_YET_RELEASED"
+  | "CANCELED"
+  | "HIATUS"
+  | null;
 export interface MainCard {
   meanScore: number | null;
-  nextAiringEpisode: NextAiringEpisode | null;
+  nextAiringEpisode: NextAiringEpisode;
   genres: string[];
   id: number | null;
-  status:
-    | "FINISHED"
-    | "RELEASING"
-    | "NOT_YET_RELEASED"
-    | "CANCELED"
-    | "HIATUS"
-    | null;
+  status: ShowStatus;
   season: Season;
   type: string | null;
   trending: number | null;

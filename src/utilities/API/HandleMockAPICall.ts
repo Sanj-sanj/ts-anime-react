@@ -7,7 +7,7 @@ export default async function HandleMockAPICall(
   variables: APIVariables
 ): Promise<MainCard[]> {
   const { format, season, seasonYear } = variables;
-  const year = seasonYear.toString() as "2023";
+
   const mappedJson = json2.map((section) => section);
 
   const response2 = mappedJson[0][season]?.[seasonYear]?.[format] as MainCard[];

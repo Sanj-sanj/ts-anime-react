@@ -55,17 +55,20 @@ const CardContainer: FunctionComponent = () => {
       //   dispatch,
       //   isCallingAPI,
       //   abortRef.current.signal
-      // );
+      // ).then(() => {
+      //   setClientVisibleCards([]);
+      //   setAmmount(15);
+      // });
       // ****************** MOCK API ************************
       void requestMockAPI(
         variables,
         dispatch,
         isCallingAPI,
         abortRef.current.signal
-      );
-
-      setClientVisibleCards([]);
-      setAmmount(15);
+      ).then(() => {
+        setClientVisibleCards([]);
+        setAmmount(15);
+      });
       return () => {
         if (abortRef.current) abortRef.current.abort();
       };
@@ -85,7 +88,7 @@ const CardContainer: FunctionComponent = () => {
               cards?.[season]?.[seasonYear]?.[format]?.length &&
             callNextPageOnScroll([
               e.currentTarget,
-              { client, api: variables },
+              { client, api: { ...variables } },
               { currentAmmount: ammount, updateDisplayAmmount: setAmmount },
               dispatch,
             ])
@@ -106,7 +109,7 @@ const CardContainer: FunctionComponent = () => {
               className="border-2 bg-slate-200 border-blue-800 p-2"
               onClick={() =>
                 handleCardContainerOnClick(
-                  { client, api: variables },
+                  { client, api: { ...variables } },
                   {
                     currentAmmount: ammount,
                     updateDisplayAmmount: setAmmount,
