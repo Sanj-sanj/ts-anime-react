@@ -95,3 +95,14 @@ export function handleCardContainerOnClick(
     dispatch
   );
 }
+export const callNextPageOnScroll = throttle<
+  [
+    HTMLDivElement & EventTarget,
+    { client: ClientVariables; api: APIVariables },
+    {
+      currentAmmount: number;
+      updateDisplayAmmount: React.Dispatch<React.SetStateAction<number>>;
+    },
+    React.Dispatch<Actions>
+  ]
+>(handleCardContainerScroll);

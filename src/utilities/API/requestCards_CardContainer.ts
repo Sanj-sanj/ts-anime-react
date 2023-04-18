@@ -38,6 +38,7 @@ async function requestMockAPI(
     isCallingAPI.current = false;
     if (signal.aborted) return;
     dispatch({ type: "UPDATE_CARDS", payload: cards });
+    console.log("done calling api");
   });
 }
 

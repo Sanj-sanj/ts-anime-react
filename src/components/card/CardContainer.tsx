@@ -1,18 +1,16 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import {
+  callNextPageOnScroll,
   checkIfCardsExist,
   handleCardContainerOnClick,
-  handleCardContainerScroll,
-  throttle,
 } from "../../utilities/Cards/CardContainerUtils";
 import Card from "./Card";
-import { Actions, ClientVariables } from "../../interfaces/initialConfigTypes";
 import {
   requestAniListAPI,
   requestMockAPI,
 } from "../../utilities/API/requestCards_CardContainer";
 import SortCardsBy from "../../utilities/Cards/SortCardsBy";
-import { APIVariables, MainCard } from "../../interfaces/apiResponseTypes";
+import { MainCard } from "../../interfaces/apiResponseTypes";
 import {
   useDispatchContext,
   useStateContext,
@@ -21,25 +19,27 @@ import ContainerPrefrences from "./ContainerPrefrences";
 
 const CardContainer: FunctionComponent = () => {
   const { cards, client, variables, sort } = useStateContext();
+  const { season, seasonYear, format } = variables;
   const dispatch = useDispatchContext();
 
-  const { season, seasonYear, format } = variables;
-  const isCallingAPI = useRef(false);
   const [clientVisibleCards, setClientVisibleCards] = useState<MainCard[]>([]);
   const [ammount, setAmmount] = useState(client.perPage);
+  const isCallingAPI = useRef(false);
   const abortRef = useRef<null | AbortController>(null);
+  const containerRef = useRef<null | HTMLDivElement>(null);
+  const lastFocusedCard = useRef<null | HTMLButtonElement>(null);
 
-  const callNextPageOnScroll = throttle<
-    [
-      HTMLDivElement & EventTarget,
-      { client: ClientVariables; api: APIVariables },
-      {
-        currentAmmount: number;
-        updateDisplayAmmount: React.Dispatch<React.SetStateAction<number>>;
-      },
-      React.Dispatch<Actions>
-    ]
-  >(handleCardContainerScroll);
+  useEffect(() => {
+    if (lastFocusedCard.current !== null && client.isOpen.modal === false) {
+      lastFocusedCard.current.focus();
+      lastFocusedCard.current = null;
+    }
+  }, [client.isOpen.modal]);
+
+  useEffect(() => {
+    containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    setAmmount(15);
+  }, [season, format]);
 
   useEffect(() => {
     if (checkIfCardsExist(season, seasonYear, format, { cards })) {
@@ -48,6 +48,8 @@ const CardContainer: FunctionComponent = () => {
       setClientVisibleCards(sorted.slice(0, ammount));
     } else {
       //create new AbortController to cancel consecutive requests if new request is made
+      setClientVisibleCards([]);
+      setAmmount(15);
       abortRef.current = new AbortController();
       // ****************** ANILIST API *********************
       // void requestAniListAPI(
@@ -55,20 +57,14 @@ const CardContainer: FunctionComponent = () => {
       //   dispatch,
       //   isCallingAPI,
       //   abortRef.current.signal
-      // ).then(() => {
-      //   setClientVisibleCards([]);
-      //   setAmmount(15);
-      // });
+      // );
       // ****************** MOCK API ************************
       void requestMockAPI(
         variables,
         dispatch,
         isCallingAPI,
         abortRef.current.signal
-      ).then(() => {
-        setClientVisibleCards([]);
-        setAmmount(15);
-      });
+      );
       return () => {
         if (abortRef.current) abortRef.current.abort();
       };
@@ -78,53 +74,69 @@ const CardContainer: FunctionComponent = () => {
   return (
     <>
       <ContainerPrefrences />
-      {isCallingAPI.current == true ? (
-        <div>calling api</div>
-      ) : (
-        <div
-          className="overflow-y-scroll w-screen flex flex-col items-center h-[85vh]"
-          onScroll={(e) =>
-            clientVisibleCards.length <
-              cards?.[season]?.[seasonYear]?.[format]?.length &&
+      <div
+        className="overflow-y-scroll w-screen p-2 flex flex-col items-center h-[85vh]"
+        ref={containerRef}
+        onScroll={(e) => {
+          clientVisibleCards.length <
+            cards?.[season]?.[seasonYear]?.[format]?.length &&
             callNextPageOnScroll([
               e.currentTarget,
               { client, api: { ...variables } },
               { currentAmmount: ammount, updateDisplayAmmount: setAmmount },
               dispatch,
-            ])
-          }
-        >
-          <ol className="flex flex-wrap whitespace-pre p-2 w-full flex-auto justify-center">
-            {clientVisibleCards.length ? (
-              clientVisibleCards.map((card) => (
-                <Card key={card.id || card.title.romaji} card={card} />
-              ))
-            ) : (
-              <li>No results found.</li>
-            )}
-          </ol>
-          {clientVisibleCards.length <
-          cards[season]?.[seasonYear]?.[format]?.length ? (
-            <button
-              className="border-2 bg-slate-200 border-blue-800 p-2"
-              onClick={() =>
-                handleCardContainerOnClick(
-                  { client, api: { ...variables } },
-                  {
-                    currentAmmount: ammount,
-                    updateDisplayAmmount: setAmmount,
-                  },
-                  dispatch
-                )
-              }
-            >
-              Click here if more results do not load.
-            </button>
-          ) : (
-            <aside>You&apos;ve reached the end!</aside>
-          )}
-        </div>
-      )}
+            ]);
+          lastFocusedCard.current !== null
+            ? lastFocusedCard.current.focus()
+            : null;
+        }}
+      >
+        {isCallingAPI.current == true ? (
+          <div>calling api</div>
+        ) : (
+          <>
+            <ol className="flex flex-wrap whitespace-pre w-full flex-auto justify-center">
+              {clientVisibleCards.length ? (
+                clientVisibleCards.map((card) => (
+                  <Card
+                    key={card.id || card.title.romaji}
+                    card={card}
+                    focusRef={lastFocusedCard}
+                  />
+                ))
+              ) : (
+                <li>No results found.</li>
+              )}
+            </ol>
+            <div className="flex flex-col border rounded border-gray-900 w-full mb-4 pt-2 pb-4 items-center">
+              You&apos;ve reached the bottom!
+              {clientVisibleCards.length <
+              cards[season]?.[seasonYear]?.[format]?.length ? (
+                <button
+                  className="border-2 bg-slate-200 border-blue-800 p-2 w-fit"
+                  onClick={() => {
+                    handleCardContainerOnClick(
+                      { client, api: { ...variables } },
+                      {
+                        currentAmmount: ammount,
+                        updateDisplayAmmount: setAmmount,
+                      },
+                      dispatch
+                    );
+                    lastFocusedCard.current !== null
+                      ? lastFocusedCard.current.focus()
+                      : null;
+                  }}
+                >
+                  Click here for more results.
+                </button>
+              ) : (
+                <aside>You&apos;ve reached the end!</aside>
+              )}
+            </div>
+          </>
+        )}
+      </div>
     </>
   );
 };

@@ -2,6 +2,7 @@
 CardContainer:
     -reset scroll position to top on change of season, year, format...
     -save focus when opening modal and resume focus on close of modal.
+---    [COMPLETED]
 
 Modal
     -modal should be a reusable generic component to fit any content.
