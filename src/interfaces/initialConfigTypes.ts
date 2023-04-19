@@ -77,4 +77,5 @@ export type Actions =
     }
   | {
       type: "TOGGLE_NAVIGATION";
+      action: "OPEN" | "CLOSE";
     };

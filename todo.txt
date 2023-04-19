@@ -7,16 +7,19 @@ CardContainer:
 Modal
     -modal should be a reusable generic component to fit any content.
     -contents of cards should be a different component
+---     [COMPLETED]
 
 Navigation:
     -should have use an overlay to prevent clicks to background content
     -add accessibility in tab & shift+tab scrolling and esc + clicking bg-overlay to close.
+---     [SEMI COMPLETED]
 
 [new feature]
 -- OVERLAY: 
     -add an generic overlay component that prevents interaction
     -bg should be dimmed 
-    -accepts children to render components 
+    -accepts children to render components [NOT NEEDED] 
+---     [COMPLETED]
 
 -- MODAL CONTENT
     -new modal contents for saving to list/rating/bookmarks etc

@@ -1,18 +1,15 @@
-import React, { useEffect, useRef, useState, MutableRefObject } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SortableBy } from "../../interfaces/initialConfigTypes";
 import {
   useDispatchContext,
   useStateContext,
 } from "../../utilities/Context/AppContext";
-
-import { hideNavOnClose } from "../../utilities/navigation/utilities";
+import useFocusEffect from "../../utilities/Focus/FocusUtil";
 import InputSearchAnime from "./InputSearchAnime";
 
 const Navigation = ({
-  // isVisible,
   darkMode,
 }: {
-  // isVisible: boolean;
   darkMode: { isDarkMode: boolean; toggleDarkMode: () => void };
 }) => {
   /* 
@@ -29,13 +26,14 @@ const Navigation = ({
 
   const { isDarkMode, toggleDarkMode } = darkMode;
   const [initialVisibility, setInitialVisibility] = useState("hidden");
-  const searchInput: MutableRefObject<HTMLInputElement | null> = useRef(null);
+  const navigationRef = useRef<HTMLElement | null>(null);
   const SortableBy: SortableBy[] = ["Rating", "Popularity", "Countdown"];
 
-  function searchAutoFocus() {
-    if (searchInput.current && isOpen.navigation) {
-      searchInput.current.focus();
-    }
+  const closeNavigation = () => {
+    dispatch({ type: "TOGGLE_NAVIGATION", action: "CLOSE" });
+  };
+  function navItemLabel(text: string) {
+    return <h3 className="dark:text-slate-300">{text}</h3>;
   }
 
   useEffect(() => {
@@ -44,24 +42,23 @@ const Navigation = ({
     }
   }, [isOpen.navigation]);
 
-  function navItemLabel(text: string) {
-    return <h3 className="dark:text-slate-300">{text}</h3>;
-  }
+  useFocusEffect(navigationRef.current, closeNavigation);
 
   return (
     <nav
-      className={`${initialVisibility} z-10 absolute flex flex-col h-screen p-4 bg-slate-500 dark:bg-slate-900  ${
+      className={`${initialVisibility} z-30 absolute flex flex-col h-screen p-4 bg-slate-500 dark:bg-slate-900  ${
         isOpen.navigation && initialVisibility === ""
           ? "animate-slide-in-left"
           : "animate-slide-out-left"
       } `}
-      onAnimationEnd={(e) => {
-        hideNavOnClose(e);
-        searchAutoFocus();
+      onAnimationEnd={() => {
+        if (navigationRef.current?.classList.contains("animate-slide-out-left"))
+          navigationRef.current.classList.add("hidden");
       }}
+      ref={navigationRef}
     >
       {navItemLabel("My Profile | Sign In")}
-      <InputSearchAnime inputRef={searchInput} />
+      <InputSearchAnime />
       {navItemLabel("My List")}
       <button
         className="bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 active:bg-slate-500 focus:outline focus:outline-zinc-700 dark:text-slate-300"
