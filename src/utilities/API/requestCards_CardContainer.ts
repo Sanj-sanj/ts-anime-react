@@ -18,10 +18,6 @@ async function requestAniListAPI(
     isCallingAPI.current = false;
     if (signal.aborted) return;
     dispatch({ type: "UPDATE_CARDS", payload: cards });
-    // dispatch({
-    //   type: "UPDATE_NEXT_PAGE_AVAILABLE",
-    //   payload: { format, season, year: seasonYear, displayClientAmmount: 15 },
-    // });
   });
 }
 // Mock API functions similary to acutal anilist API. only reducers "UPDATE_NEXT_PAGE_AVAILABLE" not called

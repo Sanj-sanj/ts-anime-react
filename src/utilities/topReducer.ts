@@ -84,7 +84,7 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
           ...state.client,
           isOpen: {
             ...state.client.isOpen,
-            navigation: !state.client.isOpen.navigation,
+            navigation: action.payload === "CLOSE" ? false : true,
           },
         },
       };

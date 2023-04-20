@@ -109,27 +109,29 @@ const CardContainer: FunctionComponent = () => {
               )}
             </ol>
             <div className="flex flex-col border rounded border-gray-900 w-full mb-4 pt-2 pb-4 items-center">
-              You&apos;ve reached the bottom!
               {clientVisibleCards.length <
               cards[season]?.[seasonYear]?.[format]?.length ? (
-                <button
-                  className="border-2 bg-slate-200 border-blue-800 p-2 w-fit"
-                  onClick={() => {
-                    handleCardContainerOnClick(
-                      { client, api: { ...variables } },
-                      {
-                        currentAmmount: ammount,
-                        updateDisplayAmmount: setAmmount,
-                      },
-                      dispatch
-                    );
-                    lastFocusedCard.current !== null
-                      ? lastFocusedCard.current.focus()
-                      : null;
-                  }}
-                >
-                  Click here for more results.
-                </button>
+                <>
+                  You&apos;ve reached the bottom!
+                  <button
+                    className="border-2 bg-slate-200 border-blue-800 p-2 w-fit"
+                    onClick={() => {
+                      handleCardContainerOnClick(
+                        { client, api: { ...variables } },
+                        {
+                          currentAmmount: ammount,
+                          updateDisplayAmmount: setAmmount,
+                        },
+                        dispatch
+                      );
+                      lastFocusedCard.current !== null
+                        ? lastFocusedCard.current.focus()
+                        : null;
+                    }}
+                  >
+                    Click here for more results.
+                  </button>
+                </>
               ) : (
                 <aside>You&apos;ve reached the end!</aside>
               )}

@@ -20,7 +20,7 @@ const Layout = ({ children }: Props) => {
   const dispatch = useDispatchContext();
 
   const openNavigation = () =>
-    dispatch({ type: "TOGGLE_NAVIGATION", action: "OPEN" });
+    dispatch({ type: "TOGGLE_NAVIGATION", payload: "OPEN" });
   const closeModal = () =>
     dispatch({ type: "TOGGLE_MODAL", payload: { action: "CLOSE" } });
 
@@ -51,7 +51,7 @@ const Layout = ({ children }: Props) => {
         ref={overlayRef}
         onClick={() => {
           dispatch({ type: "TOGGLE_MODAL", payload: { action: "CLOSE" } });
-          dispatch({ type: "TOGGLE_NAVIGATION", action: "CLOSE" });
+          dispatch({ type: "TOGGLE_NAVIGATION", payload: "CLOSE" });
         }}
       />
       {client.isOpen.modal
@@ -60,9 +60,9 @@ const Layout = ({ children }: Props) => {
             document.getElementById("modalRoot") as HTMLDivElement
           )
         : null}
-      {client.isOpen.navigation ? (
-        <Navigation darkMode={{ isDarkMode, toggleDarkMode }} />
-      ) : null}
+      <Navigation darkMode={{ isDarkMode, toggleDarkMode }} />
+      {/* {client.isOpen.navigation ? (
+      ) : null} */}
       <Header openNavigation={openNavigation} />
       <main className="min-h-full flex flex-col items-center bg-stone-200 dark:bg-neutral-800">
         {children}

@@ -24,7 +24,7 @@ export default function useFocusEffect(
   };
 
   useEffect(() => {
-    if (!container) return;
+    if (!container || container.hidden) return;
     const focusables =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     const focusEls: NodeListOf<HTMLElement> =

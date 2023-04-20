@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { SortableBy } from "../../interfaces/initialConfigTypes";
 import {
   useDispatchContext,
@@ -12,33 +12,35 @@ const Navigation = ({
 }: {
   darkMode: { isDarkMode: boolean; toggleDarkMode: () => void };
 }) => {
-  /* 
-  We set the component to initially hold the tailwindCSS class 'hidden' to hide the navbar on initial page builds. 
-  We then use a 'useEffect' which conditionally proceeds on the basis that the navbar is being opened for the first time. 
-  Finally we swap the initial state of 'hidden' to an empty string to resume normal component functionality.
-  */
-
   const {
     sort,
     client: { isOpen },
   } = useStateContext();
   const dispatch = useDispatchContext();
-
-  const { isDarkMode, toggleDarkMode } = darkMode;
-  const [initialVisibility, setInitialVisibility] = useState("hidden");
-  const navigationRef = useRef<HTMLElement | null>(null);
   const SortableBy: SortableBy[] = ["Rating", "Popularity", "Countdown"];
 
+  const { isDarkMode, toggleDarkMode } = darkMode;
+  const navigationRef = useRef<HTMLElement | null>(null);
+
   const closeNavigation = () => {
-    dispatch({ type: "TOGGLE_NAVIGATION", action: "CLOSE" });
+    dispatch({ type: "TOGGLE_NAVIGATION", payload: "CLOSE" });
   };
   function navItemLabel(text: string) {
     return <h3 className="dark:text-slate-300">{text}</h3>;
   }
 
   useEffect(() => {
-    if (isOpen.navigation === true && initialVisibility === "hidden") {
-      setInitialVisibility("");
+    if (isOpen.navigation === true) {
+      navigationRef.current?.classList.replace("hidden", "flex");
+      navigationRef.current?.classList.replace(
+        "animate-slide-out-left",
+        "animate-slide-in-left"
+      );
+    } else {
+      navigationRef.current?.classList.replace(
+        "animate-slide-in-left",
+        "animate-slide-out-left"
+      );
     }
   }, [isOpen.navigation]);
 
@@ -46,11 +48,8 @@ const Navigation = ({
 
   return (
     <nav
-      className={`${initialVisibility} z-30 absolute flex flex-col h-screen p-4 bg-slate-500 dark:bg-slate-900  ${
-        isOpen.navigation && initialVisibility === ""
-          ? "animate-slide-in-left"
-          : "animate-slide-out-left"
-      } `}
+      hidden={!isOpen.navigation}
+      className="hidden z-30 absolute flex-col h-screen p-4 bg-slate-500 dark:bg-slate-900 animate-slide-in-left"
       onAnimationEnd={() => {
         if (navigationRef.current?.classList.contains("animate-slide-out-left"))
           navigationRef.current.classList.add("hidden");
