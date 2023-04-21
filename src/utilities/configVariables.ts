@@ -1,5 +1,6 @@
 import { APIVariables, Season } from "../interfaces/apiResponseTypes";
 import { InitialConfig } from "../interfaces/initialConfigTypes";
+import { UserPreferences } from "../interfaces/UserPreferences";
 
 const getCurrSeasonAndYear = (): [Season, number] => {
   //load this function on initial load to get nearest season & year
@@ -20,6 +21,14 @@ const apiVariables: APIVariables = {
   hasNextPage: true,
   format_in: ["TV", "TV_SHORT"],
   format: "TV",
+};
+
+const UserPreferences: UserPreferences = {
+  watching: [],
+  interested: [],
+  completed: [],
+  dropped: [],
+  skipped: [],
 };
 
 export const Initial: InitialConfig = {

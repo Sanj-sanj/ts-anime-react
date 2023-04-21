@@ -1,8 +1,9 @@
+import { FunctionComponent } from "react";
 import {
+  MainCard,
   NextAiringEpisode,
   ShowStatus,
 } from "../../interfaces/apiResponseTypes";
-import { useStateContext } from "../../utilities/Context/AppContext";
 
 function buildCountdownBar(
   status: ShowStatus,
@@ -20,10 +21,9 @@ function buildCountdownBar(
     </div>
   );
 }
-const CardDetailsModal = () => {
-  const {
-    client: { modalData },
-  } = useStateContext();
+const CardDetailsModal: FunctionComponent<{ modalData: MainCard | null }> = ({
+  modalData,
+}) => {
   return modalData !== null ? (
     <>
       <div className="flex flex-col sm:flex-row items-center sm:items-start">
@@ -55,8 +55,6 @@ const CardDetailsModal = () => {
       <button>test</button>
       <input type="search" name="" id="" />
     </>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 export default CardDetailsModal;

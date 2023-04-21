@@ -12,7 +12,7 @@ Modal
 Navigation:
     -should have use an overlay to prevent clicks to background content
     -add accessibility in tab & shift+tab scrolling and esc + clicking bg-overlay to close.
----     [SEMI COMPLETED]
+---     [COMPLETED]
 
 [new feature]
 -- OVERLAY: 
@@ -25,6 +25,8 @@ Navigation:
     -new modal contents for saving to list/rating/bookmarks etc
     -- for viewing more information on particual anime..
     --- should work with Modal and Overlay
+-- [WIP]
+
 
 SortCardsBy.ts
     -improper sorting not a 'real' working feature
