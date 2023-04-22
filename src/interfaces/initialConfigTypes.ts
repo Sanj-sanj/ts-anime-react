@@ -1,5 +1,6 @@
 import { APIVariables, Season } from "./apiResponseTypes";
 import { MainCard } from "./apiResponseTypes";
+import { UserShowStatus } from "./UserPreferences";
 
 type SeasonCards<Year extends number> = {
   [Y in Year]: {
@@ -78,4 +79,11 @@ export type Actions =
   | {
       type: "TOGGLE_NAVIGATION";
       payload: "OPEN" | "CLOSE";
+    }
+  | {
+      type: "UPDATE_PREFERENCE";
+      payload: {
+        option: UserShowStatus;
+        cardData: MainCard;
+      };
     };

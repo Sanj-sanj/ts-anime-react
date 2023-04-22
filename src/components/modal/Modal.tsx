@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useStateContext } from "../../utilities/Context/AppContext";
 
 import useFocusEffect from "../../utilities/Focus/FocusUtil";
@@ -9,7 +9,10 @@ const ModalButton: FunctionComponent<{ text: string; onClick: () => void }> = ({
   text,
   onClick,
 }) => (
-  <button className="border rounded bg-slate-700 p-1 mb-2" onClick={onClick}>
+  <button
+    className="border rounded bg-stone-400 dark:bg-slate-700 p-1 mb-2"
+    onClick={onClick}
+  >
     {text}
   </button>
 );
@@ -21,6 +24,7 @@ const Modal: FunctionComponent<{
     client: { modalData },
   } = useStateContext();
 
+  const hideInput = useRef(true);
   const [childComponent, setChildComponent] = useState<null | JSX.Element>(
     null
   );
@@ -53,7 +57,9 @@ const Modal: FunctionComponent<{
           <ModalButton
             text="List Options"
             onClick={() =>
-              setChildComponent(<CardListOptions modalData={modalData} />)
+              setChildComponent(
+                <CardListOptions modalData={modalData} hideInput={hideInput} />
+              )
             }
           />
         </div>

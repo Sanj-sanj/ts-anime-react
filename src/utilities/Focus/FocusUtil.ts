@@ -6,6 +6,25 @@ export default function useFocusEffect(
 ) {
   let index = 0;
 
+  const incrementAndSkipHidden = (
+    operand: "+" | "-",
+    elements: NodeListOf<HTMLElement>
+  ) => {
+    switch (operand) {
+      case "+":
+        index++;
+        if (index >= elements.length) index = 0;
+        break;
+      case "-":
+        index--;
+        if (index < 0) index = elements.length - 1;
+        break;
+    }
+    if (elements[index].hidden) {
+      incrementAndSkipHidden(operand, elements);
+    }
+  };
+
   const modalKeyListener = (
     e: KeyboardEvent,
     focusEls: NodeListOf<HTMLElement>
@@ -16,9 +35,9 @@ export default function useFocusEffect(
     }
     if (e.key === "Tab" || (e.shiftKey && e.key === "Tab")) {
       e.preventDefault();
-      e.shiftKey ? index-- : index++;
-      if (index >= focusEls.length) index = 0;
-      if (index < 0) index = focusEls.length - 1;
+      e.shiftKey
+        ? incrementAndSkipHidden("-", focusEls)
+        : incrementAndSkipHidden("+", focusEls);
       focusEls[index].focus();
     }
   };

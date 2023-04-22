@@ -63,7 +63,7 @@ export interface MainCard {
   meanScore: number | null;
   nextAiringEpisode: NextAiringEpisode;
   genres: string[];
-  id: number | null;
+  id: number;
   status: ShowStatus;
   season: Season;
   type: string | null;

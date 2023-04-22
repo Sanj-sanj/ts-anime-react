@@ -61,8 +61,6 @@ const Layout = ({ children }: Props) => {
           )
         : null}
       <Navigation darkMode={{ isDarkMode, toggleDarkMode }} />
-      {/* {client.isOpen.navigation ? (
-      ) : null} */}
       <Header openNavigation={openNavigation} />
       <main className="min-h-full flex flex-col items-center bg-stone-200 dark:bg-neutral-800">
         {children}
