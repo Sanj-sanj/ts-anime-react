@@ -3,14 +3,14 @@ import { Season, Titles } from "./apiResponseTypes";
 // NOTE: ShowListDetails & ListDetails may need to be reworked.
 
 export type ListDetails = {
-  id: number;
-  season: Season;
+  id: number | null;
+  season: Season | null;
   year: number | null;
-  title: Titles;
+  title: Titles | null;
   currentEpisode: number | null;
   userScore: number | null;
-  startedOn: Date | null;
-  completedOn: Date | null;
+  startedOn: string | null;
+  completedOn: string | null;
   notes: string | null;
 };
 
@@ -35,9 +35,9 @@ export type UserShowStatus =
   | "DROPPED"
   | "SKIPPED";
 export interface UserPreferences {
-  watching: ShowListDetails<number>[];
-  interested: ShowListDetails<number>[];
-  completed: ShowListDetails<number>[];
-  dropped: ShowListDetails<number>[];
-  skipped: ShowListDetails<number>[];
+  WATCHING: ShowListDetails<number>;
+  INTERESTED: ShowListDetails<number>;
+  COMPLETED: ShowListDetails<number>;
+  DROPPED: ShowListDetails<number>;
+  SKIPPED: ShowListDetails<number>;
 }

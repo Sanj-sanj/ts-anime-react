@@ -1,6 +1,10 @@
 import { APIVariables, Season } from "./apiResponseTypes";
 import { MainCard } from "./apiResponseTypes";
-import { UserShowStatus } from "./UserPreferences";
+import {
+  ListDetails,
+  UserPreferences,
+  UserShowStatus,
+} from "./UserPreferences";
 
 type SeasonCards<Year extends number> = {
   [Y in Year]: {
@@ -28,6 +32,9 @@ export type ValidFormats = "TV" | "MOVIE" | "OVA";
 export type InitialConfig = {
   variables: APIVariables;
   client: ClientVariables;
+  user: {
+    lists: UserPreferences;
+  };
   cards: {
     WINTER: SeasonCards<number>;
     SPRING: SeasonCards<number>;
@@ -83,7 +90,7 @@ export type Actions =
   | {
       type: "UPDATE_PREFERENCE";
       payload: {
-        option: UserShowStatus;
-        cardData: MainCard;
+        status: UserShowStatus;
+        cardData: ListDetails;
       };
     };

@@ -49,10 +49,6 @@ const Layout = ({ children }: Props) => {
       <button
         className="overlay w-screen h-screen bg-zinc-800 absolute opacity-70 z-20 hidden"
         ref={overlayRef}
-        onClick={() => {
-          dispatch({ type: "TOGGLE_MODAL", payload: { action: "CLOSE" } });
-          dispatch({ type: "TOGGLE_NAVIGATION", payload: "CLOSE" });
-        }}
       />
       {client.isOpen.modal
         ? createPortal(

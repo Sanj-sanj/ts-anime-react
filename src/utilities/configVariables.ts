@@ -24,11 +24,11 @@ const apiVariables: APIVariables = {
 };
 
 const UserPreferences: UserPreferences = {
-  watching: [],
-  interested: [],
-  completed: [],
-  dropped: [],
-  skipped: [],
+  WATCHING: [],
+  INTERESTED: [],
+  COMPLETED: [],
+  DROPPED: [],
+  SKIPPED: [],
 };
 
 export const Initial: InitialConfig = {
@@ -43,6 +43,7 @@ export const Initial: InitialConfig = {
     },
     modalData: null,
   },
+  user: { lists: UserPreferences },
   cards: { WINTER: [], SPRING: [], SUMMER: [], FALL: [] },
   sort: "Rating",
 };

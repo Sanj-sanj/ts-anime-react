@@ -88,6 +88,24 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
           },
         },
       };
+
+    case "UPDATE_PREFERENCE": {
+      const lists = state.user.lists;
+      const prev = lists[action.payload.status];
+      return {
+        ...state,
+        user: {
+          lists: {
+            ...lists,
+            [action.payload.status]: {
+              ...prev,
+              [action.payload.cardData.id as number]: action.payload.cardData,
+            },
+          },
+        },
+      };
+    }
+
     default:
       return state;
   }

@@ -24,10 +24,10 @@ const Modal: FunctionComponent<{
     client: { modalData },
   } = useStateContext();
 
-  const hideInput = useRef(true);
   const [childComponent, setChildComponent] = useState<null | JSX.Element>(
     null
   );
+  const unsavedChanges = useRef<boolean>(false);
   const modal = document.querySelector("#modalRoot") as HTMLDivElement;
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const Modal: FunctionComponent<{
       modal.classList.replace("flex", "hidden");
     };
   });
-  useFocusEffect(modal, closeModal);
+  useFocusEffect(modal, closeModal, unsavedChanges);
 
   return (
     <div className="flex flex-col w-4/5 md:w-4/6 xl:w-2/4 min-h-[16rem] p-3 absolute bg-slate-200 dark:bg-slate-800 left-0 right-0 mx-auto z-40 rounded">
@@ -56,11 +56,14 @@ const Modal: FunctionComponent<{
           />
           <ModalButton
             text="List Options"
-            onClick={() =>
+            onClick={() => {
               setChildComponent(
-                <CardListOptions modalData={modalData} hideInput={hideInput} />
-              )
-            }
+                <CardListOptions
+                  modalData={modalData}
+                  unsavedChanges={unsavedChanges}
+                />
+              );
+            }}
           />
         </div>
       )}
