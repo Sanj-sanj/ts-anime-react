@@ -6,7 +6,7 @@ import {
   UserShowStatus,
 } from "./UserPreferences";
 
-type SeasonCards<Year extends number> = {
+export type SeasonCards<Year extends number> = {
   [Y in Year]: {
     TV: MainCard[];
     OVA: MainCard[];

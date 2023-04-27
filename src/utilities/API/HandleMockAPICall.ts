@@ -1,7 +1,7 @@
 import { MainCard } from "../../interfaces/apiResponseTypes";
 import { APIVariables } from "../../interfaces/apiResponseTypes";
 // import json from "../../mockApi/mock.json";
-import json2 from "../../mockApi/mock2.json";
+import json2 from "../../mockApi/mock3.json";
 
 export default async function HandleMockAPICall(
   variables: APIVariables
@@ -16,7 +16,8 @@ export default async function HandleMockAPICall(
     const cards = response2 || [];
     setTimeout(
       () => res(cards),
-      Math.floor((Math.random() * (cards.length || 20) * 100) / 2)
+      2
+      // Math.floor((Math.random() * (cards.length || 20) * 100) / 2)
     );
   }).then((v) => v);
 }

@@ -3,6 +3,10 @@
 import { APIVariables } from "../../interfaces/apiResponseTypes";
 import { MainCard, APIPayload } from "../../interfaces/apiResponseTypes";
 
+/**
+ * Refrence Docs: https://anilist.github.io/ApiV2-GraphQL-Docs/
+ */
+
 // // Storing it in a separate .graphql/.gql file is also possible
 const query = `
 query ($id: Int, $page: Int, $perPage: Int, $season: MediaSeason, $seasonYear: Int, $format_in: [MediaFormat]) {
@@ -42,6 +46,12 @@ query ($id: Int, $page: Int, $perPage: Int, $season: MediaSeason, $seasonYear: I
 			averageScore
       meanScore
       trending
+      popularity
+      episodes
+      duration
+      modNotes
+      description
+      source
       nextAiringEpisode {
         airingAt
         episode

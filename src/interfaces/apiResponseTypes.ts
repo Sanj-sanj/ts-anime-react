@@ -73,4 +73,10 @@ export interface MainCard {
   title: Titles;
   studios: { nodes: StudioNode[] | null };
   format?: string;
+  popularity?: number;
+  episodes?: number;
+  duration?: number;
+  modNotes?: string;
+  description?: string;
+  source?: string;
 }

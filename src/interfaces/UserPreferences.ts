@@ -3,29 +3,20 @@ import { Season, Titles } from "./apiResponseTypes";
 // NOTE: ShowListDetails & ListDetails may need to be reworked.
 
 export type ListDetails = {
-  id: number | null;
-  season: Season | null;
-  year: number | null;
-  title: Titles | null;
-  currentEpisode: number | null;
-  userScore: number | null;
-  startedOn: string | null;
-  completedOn: string | null;
-  notes: string | null;
+  id: number | undefined;
+  season: Season | undefined;
+  year: number | undefined;
+  title: Titles | undefined;
+  currentEpisode: number | undefined;
+  userScore: number | undefined;
+  rewatches: number | undefined;
+  startedOn: string | undefined;
+  completedOn: string | undefined;
+  notes: string | undefined;
 };
 
 export type ShowListDetails<id extends number> = {
-  [n in id]: {
-    id: n;
-    season: Season;
-    year: number;
-    title: Titles;
-    currentEpisode: number | null;
-    userScore: number | null;
-    startedOn: Date | null;
-    completedOn: Date | null;
-    notes: string | null;
-  };
+  [n in id]: ListDetails;
 };
 
 export type UserShowStatus =
