@@ -1,4 +1,9 @@
 import { FunctionComponent, useEffect, useRef, useState } from "react";
+import {
+  ListDetails,
+  ShowListDetails,
+  UserShowStatus,
+} from "../../interfaces/UserPreferences";
 import { useStateContext } from "../../utilities/Context/AppContext";
 
 import useFocusEffect from "../../utilities/Focus/FocusUtil";
@@ -10,7 +15,7 @@ const ModalButton: FunctionComponent<{ text: string; onClick: () => void }> = ({
   onClick,
 }) => (
   <button
-    className="border rounded bg-stone-400 dark:bg-slate-700 p-1 mb-2"
+    className="border rounded bg-stone-400 dark:bg-slate-400 p-1"
     onClick={onClick}
   >
     {text}
@@ -22,11 +27,30 @@ const Modal: FunctionComponent<{
 }> = ({ closeModal }) => {
   const {
     client: { modalData },
+    user: { lists },
   } = useStateContext();
 
   const [childComponent, setChildComponent] = useState<null | JSX.Element>(
     null
   );
+
+  const prefArray = Object.entries(lists) as [
+    UserShowStatus,
+    ShowListDetails<number>
+  ][];
+
+  let inList: [UserShowStatus, ShowListDetails<number>] | undefined;
+  if (modalData?.id) {
+    inList = prefArray.find(([, details]) => {
+      return modalData.id in details;
+    });
+  }
+  console.log(inList);
+  const modifiedlist: [UserShowStatus, ListDetails] | undefined = inList
+    ? [inList[0], inList[1][modalData?.id as number]]
+    : undefined;
+  console.log(modifiedlist);
+
   const unsavedChanges = useRef<boolean>(false);
   const modal = document.querySelector("#modalRoot") as HTMLDivElement;
 
@@ -39,8 +63,8 @@ const Modal: FunctionComponent<{
   useFocusEffect(modal, closeModal, unsavedChanges);
 
   return (
-    <div className="flex flex-col w-4/5 md:w-4/6 xl:w-2/4 min-h-[16rem] p-3 absolute bg-slate-200 dark:bg-slate-800 left-0 right-0 mx-auto z-40 rounded">
-      <div className="w-full flex justify-between">
+    <div className="flex flex-col w-4/5 md:w-4/6 xl:w-2/4 min-h-[16rem] max-h-[85%] absolute bg-slate-200 dark:bg-slate-800 left-0 right-0 mx-auto my-4 z-40 rounded-md">
+      <div className="w-full flex justify-between bg-slate-600 p-2 items-center rounded-t">
         <ModalButton text="Close Me" onClick={closeModal} />
         {childComponent ? (
           <ModalButton text="Go Back" onClick={() => setChildComponent(null)} />
@@ -61,6 +85,7 @@ const Modal: FunctionComponent<{
                 <CardListOptions
                   modalData={modalData}
                   unsavedChanges={unsavedChanges}
+                  previousDetails={modifiedlist}
                 />
               );
             }}

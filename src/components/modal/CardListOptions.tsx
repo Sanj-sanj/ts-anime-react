@@ -12,27 +12,34 @@ import { useDispatchContext } from "../../utilities/Context/AppContext";
 const CardListOptions: FunctionComponent<{
   modalData: MainCard | null;
   unsavedChanges: MutableRefObject<boolean>;
-}> = ({ modalData, unsavedChanges }) => {
-  const hideInput = useRef(true);
-  const formRef = useRef<HTMLFormElement | null>(null);
+  previousDetails: [UserShowStatus, ListDetails] | undefined;
+}> = ({ modalData, unsavedChanges, previousDetails }) => {
   const dispatch = useDispatchContext();
+  const hideInput = useRef(previousDetails ? false : true);
+  const formRef = useRef<HTMLFormElement | null>(null);
   const [unsavedNotification, setUnsavedNotification] =
     useState<JSX.Element | null>(null);
-  const [tempStatus, setTempStatus] = useState<UserShowStatus>();
-  const [tempDetails, setTempDetails] = useState<ListDetails>({
-    id: modalData?.id || null,
-    season: modalData?.season || null,
-    year: modalData?.seasonYear || null,
-    title: modalData?.title || null,
-    currentEpisode: null,
-    userScore: null,
-    startedOn: null,
-    completedOn: null,
-    notes: null,
-  });
+  const [tempStatus, setTempStatus] = useState<UserShowStatus | undefined>(
+    previousDetails?.[0]
+  );
+  const [tempDetails, setTempDetails] = useState<ListDetails>(
+    previousDetails?.[1] || {
+      id: modalData?.id || undefined,
+      season: modalData?.season || undefined,
+      year: modalData?.seasonYear || undefined,
+      title: modalData?.title || undefined,
+      currentEpisode: undefined,
+      userScore: undefined,
+      rewatches: undefined,
+      startedOn: undefined,
+      completedOn: undefined,
+      notes: undefined,
+    }
+  );
 
   useEffect(() => {
-    if (tempStatus !== undefined) {
+    //is tempStatus changes from the previousDetails[0] value OR if a value of tempDetails !== similar value of same key in previousDetails[1]: UNSAVED_CHANGES = true
+    if (tempStatus !== undefined && tempStatus !== previousDetails?.[0]) {
       // || if tempStatus !== previous from user.lists[id#][STATUS]
       unsavedChanges.current = true;
       setUnsavedNotification(
@@ -52,7 +59,7 @@ const CardListOptions: FunctionComponent<{
   };
 
   return (
-    <div className="dark:text-stone-300">
+    <div className="dark:text-stone-300 p-2">
       <h2 className="font-bold text-2xl text-center">List Editor</h2>
       <hr className="border-slate-950 dark:border-stone-400 border-1 mb-2" />
       <h3 className="font-semibold text-xl text-center">
@@ -62,7 +69,7 @@ const CardListOptions: FunctionComponent<{
       <form ref={formRef} className="flex flex-col items-center">
         <h4 className="text-center font-medium">Show Status</h4>
         {unsavedNotification}
-        <div className="flex w-full flex-col flex-wrap sm:flex-row">
+        <div className="flex w-full flex-col flex-wrap sm:flex-row mb-2">
           <div className="w-full sm:w-1/2">
             <div className="flex justify-between px-2 mb-2">
               <p>Status:</p>
@@ -82,6 +89,7 @@ const CardListOptions: FunctionComponent<{
                       currentEpisode: +e.target.value,
                     })
                   }
+                  defaultValue={tempDetails.currentEpisode}
                   id=""
                 />
               </label>
@@ -92,18 +100,19 @@ const CardListOptions: FunctionComponent<{
               <label className="flex justify-between w-full">
                 Started:
                 <input
+                  className="w-32 text-black"
                   type="date"
                   hidden={hideInput.current}
+                  defaultValue={tempDetails.startedOn}
                   disabled={hideInput.current}
                   name="start-date"
                   id=""
                   onChange={(e) =>
                     setTempDetails({
                       ...tempDetails,
-                      startedOn: e.target.value || null,
+                      startedOn: e.target.value,
                     })
                   }
-                  className="w-32 text-black"
                 />
               </label>
             </div>
@@ -114,12 +123,13 @@ const CardListOptions: FunctionComponent<{
                   type="date"
                   hidden={hideInput.current}
                   disabled={hideInput.current}
+                  defaultValue={tempDetails.completedOn}
                   name="completed-date"
                   id=""
                   onChange={(e) =>
                     setTempDetails({
                       ...tempDetails,
-                      completedOn: e.target.value || null,
+                      completedOn: e.target.value,
                     })
                   }
                   className="w-32 text-black"
@@ -134,6 +144,7 @@ const CardListOptions: FunctionComponent<{
                 <select
                   name="rating"
                   id=""
+                  defaultValue={tempDetails.userScore}
                   onChange={(e) =>
                     setTempDetails({
                       ...tempDetails,
@@ -164,20 +175,36 @@ const CardListOptions: FunctionComponent<{
                 <input
                   className="w-12 pl-1 text-center text-black"
                   hidden={hideInput.current}
+                  defaultValue={tempDetails.rewatches}
                   type="number"
                   name="rewatch"
                   id=""
+                  onChange={(e) =>
+                    setTempDetails({
+                      ...tempDetails,
+                      rewatches: +e.target.value,
+                    })
+                  }
                 />
               </label>
             </div>
           </div>
-          <textarea
-            className="w-full mb-4 mx-2 p-2 text-black"
-            name="notes"
-            disabled={hideInput.current}
-            id=""
-            rows={4}
-          ></textarea>
+          <div className="w-full flex justify-center">
+            <textarea
+              className="w-11/12 text-black p-2"
+              name="notes"
+              defaultValue={tempDetails.notes}
+              disabled={hideInput.current}
+              hidden={hideInput.current}
+              onChange={(e) =>
+                setTempDetails({
+                  ...tempDetails,
+                  notes: e.target.value,
+                })
+              }
+              id=""
+            ></textarea>
+          </div>
         </div>
       </form>
       {modalData ? (
