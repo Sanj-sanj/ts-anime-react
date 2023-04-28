@@ -12,18 +12,18 @@ import { useDispatchContext } from "../../utilities/Context/AppContext";
 const CardListOptions: FunctionComponent<{
   modalData: MainCard | null;
   unsavedChanges: MutableRefObject<boolean>;
-  previousDetails: [UserShowStatus, ListDetails] | undefined;
-}> = ({ modalData, unsavedChanges, previousDetails }) => {
+  previous: [UserShowStatus, ListDetails] | undefined;
+}> = ({ modalData, unsavedChanges, previous }) => {
   const dispatch = useDispatchContext();
-  const hideInput = useRef(previousDetails ? false : true);
+  const hideInput = useRef(previous ? false : true);
   const formRef = useRef<HTMLFormElement | null>(null);
   const [unsavedNotification, setUnsavedNotification] =
     useState<JSX.Element | null>(null);
   const [tempStatus, setTempStatus] = useState<UserShowStatus | undefined>(
-    previousDetails?.[0]
+    previous?.[0]
   );
   const [tempDetails, setTempDetails] = useState<ListDetails>(
-    previousDetails?.[1] || {
+    previous?.[1] || {
       id: modalData?.id || undefined,
       season: modalData?.season || undefined,
       year: modalData?.seasonYear || undefined,
@@ -37,26 +37,40 @@ const CardListOptions: FunctionComponent<{
     }
   );
 
+  const statusOnClick = (status: UserShowStatus) => {
+    setTempStatus(status);
+    hideInput.current = false;
+  };
+
+  function isPrevDetailsMismatch() {
+    if (!previous?.[1]) return;
+    const a = Object.entries(tempDetails);
+    const b = Object.entries(previous[1]);
+    const mismatch = a.some(([, val], i) => b[i][1] !== val);
+    return mismatch;
+  }
+
+  function isPrevStatusMismatch() {
+    return tempStatus !== undefined && tempStatus !== previous?.[0];
+  }
+
   useEffect(() => {
     //is tempStatus changes from the previousDetails[0] value OR if a value of tempDetails !== similar value of same key in previousDetails[1]: UNSAVED_CHANGES = true
-    if (tempStatus !== undefined && tempStatus !== previousDetails?.[0]) {
-      // || if tempStatus !== previous from user.lists[id#][STATUS]
+    if (isPrevStatusMismatch() || isPrevDetailsMismatch()) {
       unsavedChanges.current = true;
       setUnsavedNotification(
         <div className="text-stone-200 bg-red-950 w-max px-2 py-1 text-center border border-red-400 rounded">
           <p>You have unsaved changes</p>
         </div>
       );
+    } else {
+      unsavedChanges.current = false;
     }
     return () => {
       unsavedChanges.current = false;
+      setUnsavedNotification(null);
     };
   }, [tempStatus, tempDetails]);
-
-  const statusOnClick = (status: UserShowStatus) => {
-    setTempStatus(status);
-    hideInput.current = false;
-  };
 
   return (
     <div className="dark:text-stone-300 p-2">

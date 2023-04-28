@@ -45,11 +45,8 @@ const Modal: FunctionComponent<{
       return modalData.id in details;
     });
   }
-  console.log(inList);
-  const modifiedlist: [UserShowStatus, ListDetails] | undefined = inList
-    ? [inList[0], inList[1][modalData?.id as number]]
-    : undefined;
-  console.log(modifiedlist);
+  const previousStatusDetails: [UserShowStatus, ListDetails] | undefined =
+    inList ? [inList[0], inList[1][modalData?.id as number]] : undefined;
 
   const unsavedChanges = useRef<boolean>(false);
   const modal = document.querySelector("#modalRoot") as HTMLDivElement;
@@ -85,7 +82,7 @@ const Modal: FunctionComponent<{
                 <CardListOptions
                   modalData={modalData}
                   unsavedChanges={unsavedChanges}
-                  previousDetails={modifiedlist}
+                  previous={previousStatusDetails}
                 />
               );
             }}

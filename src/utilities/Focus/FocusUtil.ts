@@ -48,6 +48,12 @@ export default function useFocusEffect(
     if (unsavedChanges?.current) return;
     closeDialogue();
   };
+  const modalFocusClickWatcher = (allEls: NodeListOf<HTMLElement>) => {
+    //if user clicks on focusable element, update the index accordingly
+    const entries: HTMLElement[] = [];
+    allEls.forEach((el) => entries.push(el));
+    index = entries.findIndex((el) => el.isSameNode(document.activeElement));
+  };
 
   useEffect(() => {
     if (!container || container.hidden) return;
@@ -63,9 +69,13 @@ export default function useFocusEffect(
     focusEls[0].focus();
     document.addEventListener("keydown", keyListener);
     overlay.addEventListener("click", focusOverlayClickListener);
+    container.addEventListener("click", () => modalFocusClickWatcher(focusEls));
     return () => {
       document.removeEventListener("keydown", keyListener);
       overlay.removeEventListener("click", focusOverlayClickListener);
+      container.removeEventListener("click", () =>
+        modalFocusClickWatcher(focusEls)
+      );
     };
   });
 }
