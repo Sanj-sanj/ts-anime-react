@@ -30,11 +30,14 @@ const CardContainer: FunctionComponent = () => {
   const lastFocusedCard = useRef<null | HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (lastFocusedCard.current !== null && client.isOpen.modal === false) {
+    if (
+      lastFocusedCard.current !== null &&
+      client.overlay.modal.active === false
+    ) {
       lastFocusedCard.current.focus();
       lastFocusedCard.current = null;
     }
-  }, [client.isOpen.modal]);
+  }, [client.overlay.modal]);
 
   useEffect(() => {
     containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });

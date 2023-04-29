@@ -14,7 +14,7 @@ const Navigation = ({
 }) => {
   const {
     sort,
-    client: { isOpen },
+    client: { overlay },
   } = useStateContext();
   const dispatch = useDispatchContext();
   const SortableBy: SortableBy[] = ["Rating", "Popularity", "Countdown"];
@@ -30,7 +30,7 @@ const Navigation = ({
   }
 
   useEffect(() => {
-    if (isOpen.navigation === true) {
+    if (overlay.navigation.active === true) {
       navigationRef.current?.classList.replace("hidden", "flex");
       navigationRef.current?.classList.replace(
         "animate-slide-out-left",
@@ -42,13 +42,13 @@ const Navigation = ({
         "animate-slide-out-left"
       );
     }
-  }, [isOpen.navigation]);
+  }, [overlay.navigation.active]);
 
   useFocusEffect(navigationRef.current, closeNavigation);
 
   return (
     <nav
-      hidden={!isOpen.navigation}
+      hidden={!overlay.navigation.active}
       className="hidden z-30 absolute flex-col h-screen p-4 bg-slate-500 dark:bg-slate-900 animate-slide-in-left"
       onAnimationEnd={() => {
         if (navigationRef.current?.classList.contains("animate-slide-out-left"))

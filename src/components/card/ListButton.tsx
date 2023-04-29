@@ -15,7 +15,7 @@ const ListButton: FunctionComponent<{
       onClick={() => {
         dispatch({
           type: "TOGGLE_MODAL",
-          payload: { action: "OPEN", data: card },
+          payload: { action: "OPEN", data: card, entryPoint: "card" },
         });
       }}
       onFocus={() => focusHandler(buttonRef.current as HTMLButtonElement)}

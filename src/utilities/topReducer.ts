@@ -60,7 +60,10 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
           ...state,
           client: {
             ...state.client,
-            isOpen: { ...state.client.isOpen, modal: false },
+            overlay: {
+              ...state.client.overlay,
+              modal: { entryPoint: undefined, active: false },
+            },
           },
         };
       }
@@ -70,7 +73,10 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
           ...state,
           client: {
             ...state.client,
-            isOpen: { ...state.client.isOpen, modal: true },
+            overlay: {
+              ...state.client.overlay,
+              modal: { entryPoint: action.payload.entryPoint, active: true },
+            },
             modalData: action.payload.data,
           },
         };
@@ -82,9 +88,9 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
         ...state,
         client: {
           ...state.client,
-          isOpen: {
-            ...state.client.isOpen,
-            navigation: action.payload === "CLOSE" ? false : true,
+          overlay: {
+            ...state.client.overlay,
+            navigation: { active: action.payload === "CLOSE" ? false : true },
           },
         },
       };

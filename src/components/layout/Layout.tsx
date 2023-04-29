@@ -29,10 +29,13 @@ const Layout = ({ children }: Props) => {
   }
 
   useEffect(() => {
-    if (Object.entries(client.isOpen).find(([, val]) => val) && overlayRef)
+    if (
+      Object.entries(client.overlay).find(([, { active }]) => active) &&
+      overlayRef
+    )
       overlayRef.current?.classList.replace("hidden", "block");
     else overlayRef.current?.classList.replace("block", "hidden");
-  }, [client.isOpen]);
+  }, [client.overlay]);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -50,9 +53,9 @@ const Layout = ({ children }: Props) => {
         className="overlay w-screen h-screen bg-zinc-800 absolute opacity-70 z-20 hidden"
         ref={overlayRef}
       />
-      {client.isOpen.modal
+      {client.overlay.modal.active
         ? createPortal(
-            <Modal closeModal={closeModal} />,
+            <Modal closeModal={closeModal} entryPoint="card" />,
             document.getElementById("modalRoot") as HTMLDivElement
           )
         : null}

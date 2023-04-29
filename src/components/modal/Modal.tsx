@@ -24,7 +24,8 @@ const ModalButton: FunctionComponent<{ text: string; onClick: () => void }> = ({
 
 const Modal: FunctionComponent<{
   closeModal: () => void;
-}> = ({ closeModal }) => {
+  entryPoint: "card" | "new release";
+}> = ({ closeModal, entryPoint }) => {
   const {
     client: { modalData },
     user: { lists },
@@ -67,7 +68,7 @@ const Modal: FunctionComponent<{
           <ModalButton text="Go Back" onClick={() => setChildComponent(null)} />
         ) : null}
       </div>
-      {childComponent ? null : (
+      {entryPoint === "card" && !childComponent ? (
         <div>
           <ModalButton
             text="Details"
@@ -88,7 +89,8 @@ const Modal: FunctionComponent<{
             }}
           />
         </div>
-      )}
+      ) : null}
+
       {childComponent}
     </div>
   );

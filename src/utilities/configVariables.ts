@@ -37,9 +37,9 @@ export const Initial: InitialConfig = {
     nextPageAvailable: true,
     startIndex: 0,
     perPage: 15,
-    isOpen: {
-      modal: false,
-      navigation: false,
+    overlay: {
+      modal: { active: false, entryPoint: undefined },
+      navigation: { active: false },
     },
     modalData: null,
   },

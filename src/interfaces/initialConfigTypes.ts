@@ -16,13 +16,19 @@ export type SeasonCards<Year extends number> = {
 
 export type SortableBy = "Rating" | "Popularity" | "Countdown";
 
+export type ModalEntryPoint = "card" | "new release" | undefined;
 export type ClientVariables = {
   nextPageAvailable: boolean;
   startIndex: number;
   perPage: number;
-  isOpen: {
-    modal: boolean;
-    navigation: boolean;
+  overlay: {
+    modal: {
+      entryPoint: ModalEntryPoint;
+      active: boolean;
+    };
+    navigation: {
+      active: boolean;
+    };
   };
   modalData: MainCard | null;
 };
@@ -77,6 +83,7 @@ export type Actions =
       payload:
         | {
             action: "OPEN";
+            entryPoint: ModalEntryPoint;
             data: MainCard;
           }
         | {
