@@ -1,5 +1,9 @@
 import { MutableRefObject, useEffect } from "react";
 
+type FocusableTypes = NodeListOf<
+  HTMLButtonElement | HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+>;
+
 export default function useFocusEffect(
   container: HTMLElement | null,
   closeDialogue: () => void,
@@ -10,7 +14,12 @@ export default function useFocusEffect(
 
   const incrementAndSkipHidden = (
     operand: "+" | "-",
-    elements: NodeListOf<HTMLElement>
+    elements: NodeListOf<
+      | HTMLButtonElement
+      | HTMLInputElement
+      | HTMLSelectElement
+      | HTMLTextAreaElement
+    >
   ) => {
     switch (operand) {
       case "+":
@@ -22,15 +31,12 @@ export default function useFocusEffect(
         if (index < 0) index = elements.length - 1;
         break;
     }
-    if (elements[index].hidden) {
+    if (elements[index].hidden || elements[index].disabled) {
       incrementAndSkipHidden(operand, elements);
     }
   };
 
-  const focusKeyListener = (
-    e: KeyboardEvent,
-    focusEls: NodeListOf<HTMLElement>
-  ) => {
+  const focusKeyListener = (e: KeyboardEvent, focusEls: FocusableTypes) => {
     if (e.key === "Escape") {
       e.preventDefault();
       if (unsavedChanges?.current) return;
@@ -48,7 +54,7 @@ export default function useFocusEffect(
     if (unsavedChanges?.current) return;
     closeDialogue();
   };
-  const modalFocusClickWatcher = (allEls: NodeListOf<HTMLElement>) => {
+  const modalFocusClickWatcher = (allEls: FocusableTypes) => {
     //if user clicks on focusable element, update the index accordingly
     const entries: HTMLElement[] = [];
     allEls.forEach((el) => entries.push(el));
@@ -59,8 +65,7 @@ export default function useFocusEffect(
     if (!container || container.hidden) return;
     const focusables =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    const focusEls: NodeListOf<HTMLElement> =
-      container.querySelectorAll(focusables);
+    const focusEls: FocusableTypes = container.querySelectorAll(focusables);
 
     const keyListener = (e: KeyboardEvent) => {
       focusKeyListener(e, focusEls);

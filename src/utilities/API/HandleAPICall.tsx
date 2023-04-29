@@ -52,6 +52,11 @@ query ($id: Int, $page: Int, $perPage: Int, $season: MediaSeason, $seasonYear: I
       modNotes
       description
       source
+      startDate {
+        year
+        month
+        day
+      }
       nextAiringEpisode {
         airingAt
         episode

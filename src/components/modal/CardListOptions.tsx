@@ -36,7 +36,20 @@ const CardListOptions: FunctionComponent<{
       notes: undefined,
     }
   );
-
+  const formattedStartDate = ({
+    day,
+    month,
+    year,
+  }: {
+    year: number | null;
+    month: number | null;
+    day: number | null;
+  }) => {
+    if (!day || !month || !year) return;
+    return `${year}-${month <= 9 ? "0" + month.toString() : month}-${
+      day <= 9 ? "0" + day.toString() : day
+    }`;
+  };
   const statusOnClick = (status: UserShowStatus) => {
     setTempStatus(status);
     hideInput.current = false;
@@ -95,21 +108,28 @@ const CardListOptions: FunctionComponent<{
                 <input
                   className="w-14 text-black text-center"
                   hidden={hideInput.current}
+                  disabled={modalData?.status === "NOT_YET_RELEASED"}
                   type="number"
                   name="progress"
+                  min={0}
+                  max={
+                    (modalData?.nextAiringEpisode?.episode &&
+                      modalData?.nextAiringEpisode?.episode - 1) ||
+                    modalData?.episodes
+                  }
                   onChange={(e) =>
                     setTempDetails({
                       ...tempDetails,
                       currentEpisode: +e.target.value,
                     })
                   }
-                  defaultValue={tempDetails.currentEpisode}
+                  defaultValue={tempDetails.currentEpisode || 0}
                   id=""
                 />
               </label>
             </div>
           </div>
-          <div className="w-full sm:w-1/2 mb-2">
+          <div className="w-full sm:w-1/2">
             <div className="mx-2 mb-2">
               <label className="flex justify-between w-full">
                 Started:
@@ -117,8 +137,15 @@ const CardListOptions: FunctionComponent<{
                   className="w-32 text-black"
                   type="date"
                   hidden={hideInput.current}
-                  defaultValue={tempDetails.startedOn}
-                  disabled={hideInput.current}
+                  defaultValue={
+                    tempDetails.startedOn ||
+                    (modalData?.startDate &&
+                      formattedStartDate(modalData?.startDate))
+                  }
+                  disabled={
+                    hideInput.current ||
+                    modalData?.status === "NOT_YET_RELEASED"
+                  }
                   name="start-date"
                   id=""
                   onChange={(e) =>
@@ -136,7 +163,10 @@ const CardListOptions: FunctionComponent<{
                 <input
                   type="date"
                   hidden={hideInput.current}
-                  disabled={hideInput.current}
+                  disabled={
+                    (hideInput.current && modalData?.status !== "FINISHED") ||
+                    modalData?.status !== "CANCELED"
+                  }
                   defaultValue={tempDetails.completedOn}
                   name="completed-date"
                   id=""
@@ -151,7 +181,7 @@ const CardListOptions: FunctionComponent<{
               </label>
             </div>
           </div>
-          <div className="w-full sm:w-1/2 mb-2">
+          <div className="w-full sm:w-1/2">
             <div className="mx-2 mb-2">
               <label className="flex justify-between">
                 Rating:
@@ -159,15 +189,17 @@ const CardListOptions: FunctionComponent<{
                   name="rating"
                   id=""
                   defaultValue={tempDetails.userScore}
+                  disabled={modalData?.status === "NOT_YET_RELEASED"}
                   onChange={(e) =>
                     setTempDetails({
                       ...tempDetails,
-                      userScore: +e.target.value,
+                      userScore: +e.target.value || undefined,
                     })
                   }
                   hidden={hideInput.current}
                   className="bg-white pl-2 text-center text-black"
                 >
+                  <option value="unrated">-</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -189,9 +221,11 @@ const CardListOptions: FunctionComponent<{
                 <input
                   className="w-12 pl-1 text-center text-black"
                   hidden={hideInput.current}
-                  defaultValue={tempDetails.rewatches}
+                  defaultValue={tempDetails.rewatches || 0}
+                  disabled={modalData?.status === "NOT_YET_RELEASED"}
                   type="number"
                   name="rewatch"
+                  min={0}
                   id=""
                   onChange={(e) =>
                     setTempDetails({
@@ -225,32 +259,36 @@ const CardListOptions: FunctionComponent<{
         <>
           <div className="flex w-full flex-wrap justify-evenly items-center dark:text-black">
             <button
-              className="border rounded border-neutral-800 dark:border-stone-400 bg-lime-500 p-1 m-1 w-24"
+              className="border rounded border-neutral-800 dark:border-stone-400 bg-lime-500 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
               onClick={() => statusOnClick("WATCHING")}
+              disabled={modalData.status === "NOT_YET_RELEASED"}
             >
               Watching
             </button>
             <button
-              className="border rounded border-neutral-800 dark:border-stone-400 bg-indigo-400 p-1 m-1 w-24"
+              className="border rounded border-neutral-800 dark:border-stone-400 bg-indigo-400 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
               onClick={() => statusOnClick("INTERESTED")}
             >
               Interested
             </button>
             <button
-              className="border rounded border-neutral-800 dark:border-stone-400 bg-blue-400 p-1 m-1 w-24"
+              className="border rounded border-neutral-800 dark:border-stone-400 bg-blue-400 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
               onClick={() => statusOnClick("COMPLETED")}
+              disabled={modalData.status === "NOT_YET_RELEASED"}
             >
               Completed
             </button>
             <button
-              className="border rounded border-neutral-800 dark:border-stone-400 bg-red-500 p-1 m-1 w-24"
+              className="border rounded border-neutral-800 dark:border-stone-400 bg-red-500 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
               onClick={() => statusOnClick("DROPPED")}
+              disabled={modalData.status === "NOT_YET_RELEASED"}
             >
               Dropped
             </button>
             <button
-              className="border rounded border-neutral-800 dark:border-stone-400 bg-amber-600 p-1 m-1 w-24"
+              className="border rounded border-neutral-800 dark:border-stone-400 bg-amber-600 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
               onClick={() => statusOnClick("SKIPPED")}
+              disabled={modalData.status === "NOT_YET_RELEASED"}
             >
               Skipped
             </button>

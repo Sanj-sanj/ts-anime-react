@@ -79,4 +79,9 @@ export interface MainCard {
   modNotes?: string;
   description?: string;
   source?: string;
+  startDate?: {
+    day: number | null;
+    month: number | null;
+    year: number | null;
+  };
 }
