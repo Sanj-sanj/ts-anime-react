@@ -91,6 +91,19 @@ const Navigation = ({
           ))}
         </select>
       </label>
+      {navItemLabel("new releases:")}
+      <button
+        className="bg-slate-300 dark:bg-slate-700"
+        onClick={() => {
+          closeNavigation();
+          dispatch({
+            type: "TOGGLE_MODAL",
+            payload: { action: "OPEN", entryPoint: "new release" },
+          });
+        }}
+      >
+        click
+      </button>
     </nav>
   );
 };

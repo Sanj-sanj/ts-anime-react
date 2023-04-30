@@ -1,4 +1,5 @@
 import { FunctionComponent, useEffect, useRef, useState } from "react";
+import { ModalEntryPoint } from "../../interfaces/initialConfigTypes";
 import {
   ListDetails,
   ShowListDetails,
@@ -24,7 +25,7 @@ const ModalButton: FunctionComponent<{ text: string; onClick: () => void }> = ({
 
 const Modal: FunctionComponent<{
   closeModal: () => void;
-  entryPoint: "card" | "new release";
+  entryPoint: ModalEntryPoint;
 }> = ({ closeModal, entryPoint }) => {
   const {
     client: { modalData },

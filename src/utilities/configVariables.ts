@@ -41,7 +41,7 @@ export const Initial: InitialConfig = {
       modal: { active: false, entryPoint: undefined },
       navigation: { active: false },
     },
-    modalData: null,
+    modalData: undefined,
   },
   user: { lists: UserPreferences },
   cards: { WINTER: [], SPRING: [], SUMMER: [], FALL: [] },

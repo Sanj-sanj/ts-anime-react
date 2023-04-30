@@ -55,7 +55,10 @@ const Layout = ({ children }: Props) => {
       />
       {client.overlay.modal.active
         ? createPortal(
-            <Modal closeModal={closeModal} entryPoint="card" />,
+            <Modal
+              closeModal={closeModal}
+              entryPoint={client.overlay.modal.entryPoint}
+            />,
             document.getElementById("modalRoot") as HTMLDivElement
           )
         : null}

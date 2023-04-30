@@ -21,10 +21,10 @@ function buildCountdownBar(
     </div>
   );
 }
-const CardDetailsModal: FunctionComponent<{ modalData: MainCard | null }> = ({
-  modalData,
-}) => {
-  return modalData !== null ? (
+const CardDetailsModal: FunctionComponent<{
+  modalData: MainCard | undefined;
+}> = ({ modalData }) => {
+  return modalData !== undefined ? (
     <div className="overflow-scroll p-2 dark:text-slate-300">
       <div className="flex flex-col sm:flex-row items-center sm:items-start">
         <div className="left-column flex w-full sm:block">

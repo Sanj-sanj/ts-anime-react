@@ -10,7 +10,7 @@ import { ListDetails, UserShowStatus } from "../../interfaces/UserPreferences";
 import { useDispatchContext } from "../../utilities/Context/AppContext";
 
 const CardListOptions: FunctionComponent<{
-  modalData: MainCard | null;
+  modalData: MainCard | undefined;
   unsavedChanges: MutableRefObject<boolean>;
   previous: [UserShowStatus, ListDetails] | undefined;
 }> = ({ modalData, unsavedChanges, previous }) => {

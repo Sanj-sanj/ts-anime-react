@@ -30,7 +30,7 @@ export type ClientVariables = {
       active: boolean;
     };
   };
-  modalData: MainCard | null;
+  modalData: MainCard | undefined;
 };
 
 export type ValidFormats = "TV" | "MOVIE" | "OVA";
@@ -84,7 +84,7 @@ export type Actions =
         | {
             action: "OPEN";
             entryPoint: ModalEntryPoint;
-            data: MainCard;
+            data?: MainCard;
           }
         | {
             action: "CLOSE";
