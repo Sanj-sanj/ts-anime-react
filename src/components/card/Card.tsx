@@ -18,6 +18,7 @@ const Card: FunctionComponent<{
     studios,
     format,
     nextAiringEpisode,
+    episodes,
   } = card;
 
   const date = nextAiringEpisode?.airingAt ? new Date() : "";
@@ -86,7 +87,9 @@ const Card: FunctionComponent<{
                   {status === "NOT_YET_RELEASED"
                     ? "PREMIERS"
                     : status === "RELEASING"
-                    ? `EP: ${nextAiringEpisode?.episode || "?"}`
+                    ? `EP: ${nextAiringEpisode?.episode || "?"} / ${
+                        episodes || "?"
+                      }`
                     : status}
                 </li>
                 <li>{typeof date === "object" ? date.toDateString() : date}</li>

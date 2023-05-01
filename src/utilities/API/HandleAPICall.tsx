@@ -57,6 +57,11 @@ query ($id: Int, $page: Int, $perPage: Int, $season: MediaSeason, $seasonYear: I
         month
         day
       }
+      endDate {
+        year
+        month
+        day
+      }
       nextAiringEpisode {
         airingAt
         episode

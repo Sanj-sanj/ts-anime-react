@@ -55,19 +55,19 @@ const CardContainer: FunctionComponent = () => {
       setAmmount(15);
       abortRef.current = new AbortController();
       // ****************** ANILIST API *********************
-      // void requestAniListAPI(
-      //   variables,
-      //   dispatch,
-      //   isCallingAPI,
-      //   abortRef.current.signal
-      // );
-      // ****************** MOCK API ************************
-      void requestMockAPI(
+      void requestAniListAPI(
         variables,
         dispatch,
         isCallingAPI,
         abortRef.current.signal
       );
+      // ****************** MOCK API ************************
+      // void requestMockAPI(
+      //   variables,
+      //   dispatch,
+      //   isCallingAPI,
+      //   abortRef.current.signal
+      // );
       return () => {
         if (abortRef.current) abortRef.current.abort();
       };

@@ -28,28 +28,33 @@ const CardListOptions: FunctionComponent<{
       season: modalData?.season || undefined,
       year: modalData?.seasonYear || undefined,
       title: modalData?.title || undefined,
-      currentEpisode: undefined,
+      currentEpisode:
+        (modalData?.nextAiringEpisode?.episode &&
+          modalData?.nextAiringEpisode?.episode - 1) ||
+        undefined,
       userScore: undefined,
-      rewatches: undefined,
-      startedOn: undefined,
-      completedOn: undefined,
+      rewatches: 0,
+      startedOn: formattedStartDate(modalData?.startDate),
+      completedOn:
+        modalData?.status === "FINISHED"
+          ? formattedStartDate(modalData?.endDate)
+          : undefined,
       notes: undefined,
     }
   );
-  const formattedStartDate = ({
-    day,
-    month,
-    year,
-  }: {
+
+  function formattedStartDate(date?: {
     year: number | null;
     month: number | null;
     day: number | null;
-  }) => {
+  }) {
+    if (!date) return;
+    const { day, month, year } = date;
     if (!day || !month || !year) return;
     return `${year}-${month <= 9 ? "0" + month.toString() : month}-${
       day <= 9 ? "0" + day.toString() : day
     }`;
-  };
+  }
   const statusOnClick = (status: UserShowStatus) => {
     setTempStatus(status);
     hideInput.current = false;
@@ -164,10 +169,14 @@ const CardListOptions: FunctionComponent<{
                   type="date"
                   hidden={hideInput.current}
                   disabled={
-                    (hideInput.current && modalData?.status !== "FINISHED") ||
+                    (hideInput.current || modalData?.status !== "FINISHED") &&
                     modalData?.status !== "CANCELED"
                   }
-                  defaultValue={tempDetails.completedOn}
+                  defaultValue={
+                    modalData?.status === "FINISHED"
+                      ? tempDetails.completedOn
+                      : undefined
+                  }
                   name="completed-date"
                   id=""
                   onChange={(e) =>

@@ -65,12 +65,12 @@ const Modal: FunctionComponent<{
     <div className="flex flex-col w-4/5 md:w-4/6 xl:w-2/4 min-h-[16rem] max-h-[85%] absolute bg-slate-200 dark:bg-slate-800 left-0 right-0 mx-auto my-4 z-40 rounded-md">
       <div className="w-full flex justify-between bg-slate-600 p-2 items-center rounded-t">
         <ModalButton text="Close Me" onClick={closeModal} />
-        {childComponent ? (
+        {entryPoint === "card" && childComponent ? (
           <ModalButton text="Go Back" onClick={() => setChildComponent(null)} />
         ) : null}
       </div>
       {entryPoint === "card" && !childComponent ? (
-        <div>
+        <div className="w-full min-h-fit contents">
           <ModalButton
             text="Details"
             onClick={() =>
@@ -90,6 +90,8 @@ const Modal: FunctionComponent<{
             }}
           />
         </div>
+      ) : entryPoint === "new release" ? (
+        <div> new releases and stuff</div>
       ) : null}
 
       {childComponent}

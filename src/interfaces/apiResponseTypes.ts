@@ -84,4 +84,9 @@ export interface MainCard {
     month: number | null;
     year: number | null;
   };
+  endDate?: {
+    day: number | null;
+    month: number | null;
+    year: number | null;
+  };
 }
