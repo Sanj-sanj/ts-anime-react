@@ -10,6 +10,26 @@ const CardDetailsModal: FunctionComponent<{
   modalData: MainCard | undefined;
 }> = ({ modalData }) => {
   if (!modalData) return <></>;
+  const {
+    genres,
+    meanScore,
+    nextAiringEpisode,
+    status,
+    season,
+    seasonYear,
+    studios,
+    source,
+    startDate,
+    description,
+    episodes,
+    format,
+    duration,
+    coverImage,
+    title,
+    type,
+    popularity,
+    trending,
+  } = modalData;
   const [countdown, setCountdown] = useState<undefined | string>();
 
   function buildCountdownBar(
@@ -38,11 +58,11 @@ const CardDetailsModal: FunctionComponent<{
   }
   useEffect(() => {
     const then = new Date();
-    then.setSeconds(modalData.nextAiringEpisode?.timeUntilAiring || 0);
-    buildCountdownBar(modalData.status, modalData.nextAiringEpisode);
+    then.setSeconds(nextAiringEpisode?.timeUntilAiring || 0);
+    buildCountdownBar(status, nextAiringEpisode);
 
     const timeout = setInterval(
-      () => buildCountdownBar(modalData.status, modalData.nextAiringEpisode),
+      () => buildCountdownBar(status, nextAiringEpisode),
       1000
     );
     return () => {
@@ -51,38 +71,52 @@ const CardDetailsModal: FunctionComponent<{
   });
 
   return (
-    <div className="overflow-scroll p-2 dark:text-slate-300">
-      <div className="flex flex-col sm:flex-row items-center sm:items-start">
-        <div className="left-column flex w-full sm:block">
-          <img
-            className="pr-4 w-min"
-            src={modalData.coverImage.large || ""}
-            alt={modalData.title.romaji || ""}
-          />
+    <div className="overflow-scroll p-2 dark:text-slate-300 bg-stone-300 dark:bg-slate-800">
+      <div className="flex items-center flex-col mb-3">
+        <h4 className="font-semibold text-2xl pr-2 text-center mb-1">
+          {title.romaji}
+        </h4>
+        <div className="w-48 min-w-fit text-center">
+          <time className="p-1 rounded bg-sky-600 dark:bg-sky-800 inline-block w-full font-mono">
+            {countdown}
+          </time>
+        </div>
+      </div>
+      <div className="sm:flex-row items-center sm:items-start lg:flex">
+        <div className="left-column flex flex-col items-center p-4 mr-1 bg-stone-400 dark:bg-slate-600 sm:float-left lg:float-none lg:w-1/2">
           <div>
-            <p>
-              <span className="font-semibold">Rating:</span>{" "}
-              {modalData.meanScore}
+            <img
+              className="w-min"
+              src={coverImage.large || ""}
+              alt={title.romaji || ""}
+            />
+            <p className="flex justify-between">
+              <span className="font-semibold">Rating:</span> {meanScore}
               /100
             </p>
-            <p>
-              <span className="font-semibold">Status:</span> {modalData.status}
+            <p className="flex justify-between">
+              <span className="font-semibold">Premier:</span>{" "}
+              {/* make the next 10 lines into a utility function and use in Card too */}
+              {(startDate?.day &&
+                dayjs(
+                  `${startDate.year}-${startDate.month}-${startDate.day}`
+                ).format("MMMM DD, YYYY")) ||
+                (startDate?.month &&
+                  dayjs(`${startDate?.year}-${startDate.month}`).format(
+                    "MMMM YYYY"
+                  )) ||
+                `${season.slice(0, 1)}${season.slice(1).toLowerCase()}, ${
+                  startDate?.year || ""
+                }` ||
+                "No info"}
+            </p>
+            <p className="flex justify-between">
+              <span className="font-semibold">Status:</span> {status}
             </p>
           </div>
         </div>
         <div className="w-full">
-          <div className="flex justify-between ">
-            <h4 className="font-semibold text-2xl pr-2">
-              {modalData.title.romaji}
-            </h4>
-          </div>
-
-          <div className="bg-sky-600 dark:bg-sky-800 text-center">
-            <time className="w-full font-mono">{countdown}</time>
-          </div>
-          <p
-            dangerouslySetInnerHTML={{ __html: modalData.description || "" }}
-          />
+          <p dangerouslySetInnerHTML={{ __html: description || "" }} />
         </div>
       </div>
       <input type="search" name="" id="" />

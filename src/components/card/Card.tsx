@@ -1,6 +1,7 @@
 import { FunctionComponent, MutableRefObject } from "react";
 import { MainCard } from "../../interfaces/apiResponseTypes";
 import ListButton from "./ListButton";
+import dayjs from "dayjs";
 
 const Card: FunctionComponent<{
   card: MainCard;
@@ -15,6 +16,7 @@ const Card: FunctionComponent<{
     meanScore,
     seasonYear,
     status,
+    startDate,
     studios,
     format,
     nextAiringEpisode,
@@ -25,6 +27,17 @@ const Card: FunctionComponent<{
   typeof date === "object"
     ? date.setSeconds(nextAiringEpisode?.timeUntilAiring || 0)
     : null;
+  const date2 =
+    (startDate?.day &&
+      dayjs(`${startDate.year}-${startDate.month}-${startDate.day}`).format(
+        "ddd, MMMM D, YYYY"
+      )) ||
+    (startDate?.month &&
+      dayjs(`${startDate.year}-${startDate.month}`).format("MMMM, YYYY")) ||
+    `${season.slice(0, 1)}${season.slice(1).toLowerCase()}, ${
+      startDate?.year || ""
+    }` ||
+    "No info";
   return (
     <li className="flex relative rounded-lg my-2 md:mx-2 border-2 border-slate-300 bg-stone-100 dark:bg-zinc-900 dark:border-slate-700 dark:text-slate-300 w-full max-w-md max-h-[147px]">
       <ListButton
@@ -92,7 +105,7 @@ const Card: FunctionComponent<{
                       }`
                     : status}
                 </li>
-                <li>{typeof date === "object" ? date.toDateString() : date}</li>
+                <li>{date2}</li>
               </div>
             </ul>
           </small>

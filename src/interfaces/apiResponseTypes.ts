@@ -81,8 +81,8 @@ export interface MainCard {
   source?: string;
   startDate?: {
     day: number | null;
-    month: number | null;
-    year: number | null;
+    month: number;
+    year: number;
   };
   endDate?: {
     day: number | null;
