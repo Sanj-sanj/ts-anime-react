@@ -5,6 +5,8 @@ import {
   formatStudiosText,
   formattedGenresText,
   formattedStatusText,
+  formattedEndDate,
+  formatTitleCase,
 } from "../../utilities/Cards/FormattedCardTexts";
 import setCountdownText from "../../utilities/Cards/setCountdownText";
 
@@ -23,10 +25,10 @@ const CardDetailsModal: FunctionComponent<{
     source,
     startDate,
     description,
+    endDate,
     episodes,
     format,
     duration,
-    popularity,
     coverImage,
     title,
     type,
@@ -34,8 +36,6 @@ const CardDetailsModal: FunctionComponent<{
   const [countdown, setCountdown] = useState<undefined | string>();
 
   useEffect(() => {
-    const then = new Date();
-    then.setSeconds(nextAiringEpisode?.timeUntilAiring || 0);
     setCountdownText(status, nextAiringEpisode, setCountdown);
     const timeout = setInterval(
       () => setCountdownText(status, nextAiringEpisode, setCountdown),
@@ -47,7 +47,13 @@ const CardDetailsModal: FunctionComponent<{
   });
 
   return (
-    <div className="overflow-scroll p-2 dark:text-slate-300 bg-stone-300 dark:bg-slate-800">
+    <div
+      className="overflow-y-scroll p-2 dark:text-slate-300 bg-stone-300 dark:bg-slate-800"
+      role="main"
+      aria-labelledby="details-content"
+      // eslint-disable-next-line
+      tabIndex={0}
+    >
       <div className="flex items-center flex-col mb-3">
         <h4 className="font-semibold text-2xl pr-2 text-center mb-1">
           {title.romaji}
@@ -75,8 +81,12 @@ const CardDetailsModal: FunctionComponent<{
             />
             <div className="information text-sm mt-2">
               <p className="flex justify-between">
-                <span className="font-semibold">Premier:</span>{" "}
+                <span className="font-semibold">Premiers:</span>{" "}
                 {formattedStartDate(startDate, season)}
+              </p>
+              <p className="flex justify-between">
+                <span className="font-semibold">Finished:</span>{" "}
+                {formattedEndDate(endDate)}
               </p>
               <p className="flex justify-between">
                 <span className="font-semibold">Season:</span> {season}{" "}
@@ -91,7 +101,8 @@ const CardDetailsModal: FunctionComponent<{
                 {formatStudiosText(studios.nodes)}
               </p>
               <p className="flex justify-between">
-                <span className="font-semibold">Source:</span> {source}
+                <span className="font-semibold">Source:</span>{" "}
+                {formatTitleCase(source)}
               </p>
               <p className="flex justify-between">
                 <span className="font-semibold">Genres:</span>{" "}
@@ -99,10 +110,12 @@ const CardDetailsModal: FunctionComponent<{
               </p>
               <p className="flex justify-between">
                 <span className="font-semibold">Episodes:</span>{" "}
-                {(nextAiringEpisode?.episode &&
-                  nextAiringEpisode?.episode - 1) ||
-                  "?"}{" "}
-                / {episodes || "?"}
+                {(status !== "FINISHED" &&
+                  nextAiringEpisode?.episode &&
+                  `${nextAiringEpisode?.episode - 1} /`) ||
+                  (status === "FINISHED" && " ") ||
+                  "? /"}{" "}
+                {episodes || "?"}
               </p>
               <p className="flex justify-between">
                 <span className="font-semibold">Duration:</span>{" "}
@@ -111,7 +124,7 @@ const CardDetailsModal: FunctionComponent<{
             </div>
           </div>
         </div>
-        <div className="w-full mt-2 sm:mt-0">
+        <div className="w-full mt-2 sm:mt-0 p-2">
           <p dangerouslySetInnerHTML={{ __html: description || "" }} />
         </div>
       </div>

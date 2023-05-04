@@ -33,10 +33,8 @@ const CardContainer: FunctionComponent = () => {
     if (
       lastFocusedCard.current !== null &&
       client.overlay.modal.active === false
-    ) {
+    )
       lastFocusedCard.current.focus();
-      lastFocusedCard.current = null;
-    }
   }, [client.overlay.modal]);
 
   useEffect(() => {

@@ -59,6 +59,24 @@ export type ShowStatus =
   | "CANCELED"
   | "HIATUS"
   | null;
+
+export type SourceMaterial =
+  | "ORIGINAL"
+  | "MANGA"
+  | "LIGHT_NOVEL"
+  | "VISUAL_NOVEL"
+  | "VIDEO_GAME"
+  | "OTHER"
+  | "NOVEL"
+  | "DOUJINSHI"
+  | "ANIME"
+  | "WEB_NOVEL"
+  | "LIVE_ACTION"
+  | "GAME"
+  | "COMIC"
+  | "MULTIMEDIA_PROJECT"
+  | "PICTURE_BOOK";
+
 export interface MainCard {
   meanScore: number | null;
   nextAiringEpisode: NextAiringEpisode;
@@ -78,15 +96,21 @@ export interface MainCard {
   duration?: number;
   modNotes?: string;
   description?: string;
-  source?: string;
+  source?: SourceMaterial;
   startDate?: {
     day: number | null;
     month: number;
     year: number;
   };
-  endDate?: {
-    day: number | null;
-    month: number | null;
-    year: number | null;
-  };
+  endDate?:
+    | {
+        day: number;
+        month: number;
+        year: number;
+      }
+    | {
+        day: null;
+        month: null;
+        year: null;
+      };
 }

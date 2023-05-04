@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import {
   Season,
   ShowStatus,
+  SourceMaterial,
   StudioNode,
 } from "../../interfaces/apiResponseTypes";
 
@@ -25,6 +26,28 @@ export function formattedStartDate(
     `${season.slice(0, 1)}${season.slice(1).toLowerCase()}, ${
       startDate?.year || ""
     }` ||
+    "No info"
+  );
+}
+export function formattedEndDate(
+  endDate:
+    | {
+        day: null;
+        month: null;
+        year: null;
+      }
+    | {
+        day: number;
+        month: number;
+        year: number;
+      }
+    | undefined
+) {
+  return (
+    (endDate?.day &&
+      dayjs(`${endDate.year}-${endDate.month}-${endDate.day}`).format(
+        "MMMM DD, YYYY"
+      )) ||
     "No info"
   );
 }
@@ -52,4 +75,12 @@ export function formattedStatusText(status: ShowStatus) {
   };
   if (!status) return "Unknown";
   return dict[status];
+}
+
+export function formatTitleCase(str: string | undefined) {
+  if (!str) return "Unknown";
+  return str
+    .split("_")
+    .map((line) => line.slice(0, 1).concat(line.slice(1).toLowerCase()))
+    .join(" ");
 }
