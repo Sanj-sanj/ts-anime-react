@@ -1,7 +1,11 @@
 import { FunctionComponent, MutableRefObject } from "react";
 import { MainCard } from "../../interfaces/apiResponseTypes";
 import ListButton from "./ListButton";
-import dayjs from "dayjs";
+
+import {
+  formattedStartDate,
+  formatStudiosText,
+} from "../../utilities/Cards/FormattedCardTexts";
 
 const Card: FunctionComponent<{
   card: MainCard;
@@ -23,21 +27,8 @@ const Card: FunctionComponent<{
     episodes,
   } = card;
 
-  const date = nextAiringEpisode?.airingAt ? new Date() : "";
-  typeof date === "object"
-    ? date.setSeconds(nextAiringEpisode?.timeUntilAiring || 0)
-    : null;
-  const date2 =
-    (startDate?.day &&
-      dayjs(`${startDate.year}-${startDate.month}-${startDate.day}`).format(
-        "ddd, MMMM D, YYYY"
-      )) ||
-    (startDate?.month &&
-      dayjs(`${startDate.year}-${startDate.month}`).format("MMMM, YYYY")) ||
-    `${season.slice(0, 1)}${season.slice(1).toLowerCase()}, ${
-      startDate?.year || ""
-    }` ||
-    "No info";
+  const startDateText = formattedStartDate(startDate, season);
+
   return (
     <li className="flex relative rounded-lg my-2 md:mx-2 border-2 border-slate-300 bg-stone-100 dark:bg-zinc-900 dark:border-slate-700 dark:text-slate-300 w-full max-w-md max-h-[147px]">
       <ListButton
@@ -86,12 +77,7 @@ const Card: FunctionComponent<{
                   {season} {type} - {seasonYear}
                 </li>
                 <li className="whitespace-pre-line">
-                  Studio:{" "}
-                  {studios.nodes?.find((studio) => studio.isAnimationStudio)
-                    ?.name ||
-                    studios.nodes?.find((studio) => !studio.isAnimationStudio)
-                      ?.name ||
-                    "Unknown"}
+                  Studio: {formatStudiosText(studios.nodes)}
                 </li>
                 <li>{meanScore ? `${meanScore}/100` : "No score"}</li>
               </div>
@@ -105,7 +91,7 @@ const Card: FunctionComponent<{
                       }`
                     : status}
                 </li>
-                <li>{date2}</li>
+                <li>{startDateText}</li>
               </div>
             </ul>
           </small>

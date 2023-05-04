@@ -1,10 +1,12 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import dayjs from "dayjs";
+import { MainCard } from "../../interfaces/apiResponseTypes";
 import {
-  MainCard,
-  NextAiringEpisode,
-  ShowStatus,
-} from "../../interfaces/apiResponseTypes";
+  formattedStartDate,
+  formatStudiosText,
+  formattedGenresText,
+  formattedStatusText,
+} from "../../utilities/Cards/FormattedCardTexts";
+import setCountdownText from "../../utilities/Cards/setCountdownText";
 
 const CardDetailsModal: FunctionComponent<{
   modalData: MainCard | undefined;
@@ -24,45 +26,19 @@ const CardDetailsModal: FunctionComponent<{
     episodes,
     format,
     duration,
+    popularity,
     coverImage,
     title,
     type,
-    popularity,
-    trending,
   } = modalData;
   const [countdown, setCountdown] = useState<undefined | string>();
 
-  function buildCountdownBar(
-    status: ShowStatus,
-    nextAiringEpisode: NextAiringEpisode
-  ): void {
-    type FAULTY = "FINISHED" | "CANCELED" | "HIATUS";
-    const faultyStatus: FAULTY[] = ["FINISHED", "CANCELED", "HIATUS"];
-    const found = faultyStatus.find((e) => e === status);
-    if (found) {
-      return setCountdown(found);
-    }
-    const now = dayjs();
-    const then2 = dayjs(
-      nextAiringEpisode?.airingAt && nextAiringEpisode.airingAt * 1000
-    );
-    const days = then2.diff(now, "d"),
-      hours = then2.diff(now, "h") % 24,
-      mins = then2.diff(now, "m") % 60,
-      secs = then2.diff(now, "s") % 60;
-    setCountdown(
-      `Ep: ${nextAiringEpisode?.episode || "?"} - ${days}d ${hours}h ${
-        mins <= 9 ? "0".concat(mins.toString()) : mins
-      }m ${secs <= 9 ? "0".concat(secs.toString()) : secs}s`
-    );
-  }
   useEffect(() => {
     const then = new Date();
     then.setSeconds(nextAiringEpisode?.timeUntilAiring || 0);
-    buildCountdownBar(status, nextAiringEpisode);
-
+    setCountdownText(status, nextAiringEpisode, setCountdown);
     const timeout = setInterval(
-      () => buildCountdownBar(status, nextAiringEpisode),
+      () => setCountdownText(status, nextAiringEpisode, setCountdown),
       1000
     );
     return () => {
@@ -77,45 +53,65 @@ const CardDetailsModal: FunctionComponent<{
           {title.romaji}
         </h4>
         <div className="w-48 min-w-fit text-center">
-          <time className="p-1 rounded bg-sky-600 dark:bg-sky-800 inline-block w-full font-mono">
+          <time className="p-1 rounded bg-sky-600 dark:bg-sky-800 text-slate-300 inline-block w-full font-mono">
             {countdown}
           </time>
         </div>
       </div>
       <div className="sm:flex-row items-center sm:items-start lg:flex">
-        <div className="left-column flex flex-col items-center p-4 mr-1 bg-stone-400 dark:bg-slate-600 sm:float-left lg:float-none lg:w-1/2">
+        <div className="left-column flex flex-col items-center p-4 mr-1 bg-stone-400 dark:bg-slate-700 sm:float-left lg:float-none lg:w-1/2">
           <div>
+            <p className="flex justify-center">
+              {format} {type}
+            </p>
+            <p className="flex justify-between">
+              <span className="font-semibold">Rating:</span> {meanScore}
+              /100
+            </p>
             <img
               className="w-min"
               src={coverImage.large || ""}
               alt={title.romaji || ""}
             />
-            <p className="flex justify-between">
-              <span className="font-semibold">Rating:</span> {meanScore}
-              /100
-            </p>
-            <p className="flex justify-between">
-              <span className="font-semibold">Premier:</span>{" "}
-              {/* make the next 10 lines into a utility function and use in Card too */}
-              {(startDate?.day &&
-                dayjs(
-                  `${startDate.year}-${startDate.month}-${startDate.day}`
-                ).format("MMMM DD, YYYY")) ||
-                (startDate?.month &&
-                  dayjs(`${startDate?.year}-${startDate.month}`).format(
-                    "MMMM YYYY"
-                  )) ||
-                `${season.slice(0, 1)}${season.slice(1).toLowerCase()}, ${
-                  startDate?.year || ""
-                }` ||
-                "No info"}
-            </p>
-            <p className="flex justify-between">
-              <span className="font-semibold">Status:</span> {status}
-            </p>
+            <div className="information text-sm mt-2">
+              <p className="flex justify-between">
+                <span className="font-semibold">Premier:</span>{" "}
+                {formattedStartDate(startDate, season)}
+              </p>
+              <p className="flex justify-between">
+                <span className="font-semibold">Season:</span> {season}{" "}
+                {seasonYear}
+              </p>
+              <p className="flex justify-between">
+                <span className="font-semibold">Status:</span>{" "}
+                {formattedStatusText(status)}
+              </p>
+              <p className="flex justify-between">
+                <span className="font-semibold">Studio:</span>{" "}
+                {formatStudiosText(studios.nodes)}
+              </p>
+              <p className="flex justify-between">
+                <span className="font-semibold">Source:</span> {source}
+              </p>
+              <p className="flex justify-between">
+                <span className="font-semibold">Genres:</span>{" "}
+                {formattedGenresText(genres, 2).join(", ")}
+              </p>
+              <p className="flex justify-between">
+                <span className="font-semibold">Episodes:</span>{" "}
+                {(nextAiringEpisode?.episode &&
+                  nextAiringEpisode?.episode - 1) ||
+                  "?"}{" "}
+                / {episodes || "?"}
+              </p>
+              <p className="flex justify-between">
+                <span className="font-semibold">Duration:</span>{" "}
+                {duration || "?"} mins
+              </p>
+            </div>
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full mt-2 sm:mt-0">
           <p dangerouslySetInnerHTML={{ __html: description || "" }} />
         </div>
       </div>

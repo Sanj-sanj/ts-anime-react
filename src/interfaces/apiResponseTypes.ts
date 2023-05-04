@@ -29,7 +29,7 @@ export type Formats =
   | ["MOVIE", "SPECIAL"]
   | ["ONA", "OVA"];
 
-type StudioNode = {
+export type StudioNode = {
   name: string;
   isAnimationStudio: boolean;
   favourites: number;
