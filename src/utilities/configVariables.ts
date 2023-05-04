@@ -24,11 +24,11 @@ const apiVariables: APIVariables = {
 };
 
 const UserPreferences: UserPreferences = {
-  WATCHING: [],
-  INTERESTED: [],
-  COMPLETED: [],
-  DROPPED: [],
-  SKIPPED: [],
+  WATCHING: {},
+  INTERESTED: {},
+  COMPLETED: {},
+  DROPPED: {},
+  SKIPPED: {},
 };
 
 export const Initial: InitialConfig = {

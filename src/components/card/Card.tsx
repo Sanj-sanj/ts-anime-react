@@ -84,7 +84,7 @@ const Card: FunctionComponent<{
               <div className="text-right">
                 <li>
                   {status === "NOT_YET_RELEASED"
-                    ? "PREMIERS"
+                    ? "UNRELEASED"
                     : status === "RELEASING"
                     ? `EP: ${
                         (nextAiringEpisode?.episode &&
@@ -93,7 +93,7 @@ const Card: FunctionComponent<{
                       } / ${episodes || "?"}`
                     : status}
                 </li>
-                <li>Began: {startDateText}</li>
+                <li>Start: {startDateText}</li>
               </div>
             </ul>
           </small>

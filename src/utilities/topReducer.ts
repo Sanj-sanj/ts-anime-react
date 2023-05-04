@@ -1,4 +1,6 @@
+import { ShowStatus } from "../interfaces/apiResponseTypes";
 import { Actions, InitialConfig } from "../interfaces/initialConfigTypes";
+import { ShowListDetails, UserShowStatus } from "../interfaces/UserPreferences";
 
 const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
   switch (action.type) {
@@ -97,15 +99,31 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
 
     case "UPDATE_PREFERENCE": {
       const lists = state.user.lists;
-      const prev = lists[action.payload.status];
+      const prevListItems = lists[action.payload.status];
+      const id = action.payload.cardData.id as number;
+      // rmove the previous entry if the user changes the show status from like watchign to skipped removed .
+      const statusAndDetailsEntries = Object.entries(lists) as [
+        UserShowStatus,
+        ShowListDetails<number>
+      ][];
+      const foundInPreviousList = statusAndDetailsEntries.filter(
+        ([key, list]) => {
+          return key !== action.payload.status && list[id];
+        }
+      );
+      if (foundInPreviousList) {
+        foundInPreviousList.forEach(([status]) => {
+          delete lists[status][id];
+        });
+      }
       return {
         ...state,
         user: {
           lists: {
             ...lists,
             [action.payload.status]: {
-              ...prev,
-              [action.payload.cardData.id as number]: action.payload.cardData,
+              ...prevListItems,
+              [id]: action.payload.cardData,
             },
           },
         },

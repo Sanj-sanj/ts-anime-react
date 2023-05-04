@@ -311,7 +311,14 @@ const CardListOptions: FunctionComponent<{
               setUnsavedNotification(null);
               dispatch({
                 type: "UPDATE_PREFERENCE",
-                payload: { status: tempStatus, cardData: tempDetails },
+                payload: {
+                  status: tempStatus,
+                  cardData: tempDetails,
+                  previous: previous && {
+                    status: previous[0],
+                    details: previous[1],
+                  },
+                },
               });
             }}
           >

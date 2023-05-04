@@ -74,7 +74,12 @@ const Modal: FunctionComponent<{
           <ModalButton
             text="Details"
             onClick={() =>
-              setChildComponent(<CardDetailsModal modalData={modalData} />)
+              setChildComponent(
+                <CardDetailsModal
+                  modalData={modalData}
+                  details={previousStatusDetails}
+                />
+              )
             }
           />
           <ModalButton

@@ -2,7 +2,6 @@ import dayjs from "dayjs";
 import {
   Season,
   ShowStatus,
-  SourceMaterial,
   StudioNode,
 } from "../../interfaces/apiResponseTypes";
 

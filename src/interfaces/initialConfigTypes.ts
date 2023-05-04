@@ -99,5 +99,6 @@ export type Actions =
       payload: {
         status: UserShowStatus;
         cardData: ListDetails;
+        previous?: { status: UserShowStatus; details: ListDetails };
       };
     };

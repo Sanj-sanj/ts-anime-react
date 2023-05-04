@@ -1,5 +1,6 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { MainCard } from "../../interfaces/apiResponseTypes";
+import { ListDetails, UserShowStatus } from "../../interfaces/UserPreferences";
 import {
   formattedStartDate,
   formatStudiosText,
@@ -12,7 +13,8 @@ import setCountdownText from "../../utilities/Cards/setCountdownText";
 
 const CardDetailsModal: FunctionComponent<{
   modalData: MainCard | undefined;
-}> = ({ modalData }) => {
+  details: [UserShowStatus, ListDetails] | undefined;
+}> = ({ modalData, details }) => {
   if (!modalData) return <></>;
   const {
     genres,
@@ -34,13 +36,31 @@ const CardDetailsModal: FunctionComponent<{
     type,
   } = modalData;
   const [countdown, setCountdown] = useState<undefined | string>();
+  const detailsAndImageContainer = useRef<HTMLDivElement | null>(null);
+  const [userShowStatus, listDetails] = details || [undefined, undefined];
 
+  function getNewBGColor(status: UserShowStatus | undefined) {
+    if (!status) return ["dark:bg-slate-700", "bg-stone-600"];
+    const dict = {
+      WATCHING: ["dark:bg-lime-900", "bg-lime-400"],
+      INTERESTED: ["dark:bg-indigo-900", "bg-indigo-400"],
+      COMPLETED: ["dark:bg-blue-900", "bg-blue-400"],
+      DROPPED: ["dark:bg-red-900", "bg-red-400"],
+      SKIPPED: ["dark:bg-amber-900", "bg-amber-400"],
+    };
+    return dict[status];
+  }
   useEffect(() => {
     setCountdownText(status, nextAiringEpisode, setCountdown);
     const timeout = setInterval(
       () => setCountdownText(status, nextAiringEpisode, setCountdown),
       1000
     );
+
+    detailsAndImageContainer.current?.classList.add(
+      ...getNewBGColor(userShowStatus)
+    );
+
     return () => {
       clearInterval(timeout);
     };
@@ -55,23 +75,30 @@ const CardDetailsModal: FunctionComponent<{
       tabIndex={0}
     >
       <div className="flex items-center flex-col mb-3">
-        <h4 className="font-semibold text-2xl pr-2 text-center mb-1">
+        <h2 className="font-semibold text-2xl pr-2 text-center mb-1">
           {title.romaji}
-        </h4>
+        </h2>
         <div className="w-48 min-w-fit text-center">
-          <time className="p-1 rounded bg-sky-600 dark:bg-sky-800 text-slate-300 inline-block w-full font-mono">
+          <time className="p-1 rounded bg-sky-700 text-slate-300 inline-block w-full font-mono">
             {countdown}
           </time>
         </div>
       </div>
-      <div className="sm:flex-row items-center sm:items-start lg:flex">
-        <div className="left-column flex flex-col items-center p-4 mr-1 bg-stone-400 dark:bg-slate-700 sm:float-left lg:float-none lg:w-1/2">
+      <div className="flex flex-col sm:flex-row">
+        <div
+          className="left-column flex flex-col items-center p-2 px-3 mr-1  sm:w-1/2"
+          ref={detailsAndImageContainer}
+        >
           <div>
             <p className="flex justify-center">
               {format} {type}
             </p>
             <p className="flex justify-between">
-              <span className="font-semibold">Rating:</span> {meanScore}
+              <span className="font-semibold">My status:</span>{" "}
+              {formatTitleCase(userShowStatus || "-")}
+            </p>
+            <p className="flex justify-between">
+              <span className="font-semibold">Mean Score:</span> {meanScore}
               /100
             </p>
             <img
@@ -124,13 +151,26 @@ const CardDetailsModal: FunctionComponent<{
             </div>
           </div>
         </div>
-        <div className="w-full mt-2 sm:mt-0 p-2">
+        <div className="right-column w-full sm:w-1/2 mt-2 sm:mt-0 p-2">
           <p dangerouslySetInnerHTML={{ __html: description || "" }} />
         </div>
       </div>
-      <input type="search" name="" id="" />
-      <button>test</button>
-      <input type="search" name="" id="" />
+      <details className="flex bg-slate-500 rounded-md mt-2">
+        <summary>My Details</summary>
+        <p>My Score: {listDetails?.userScore || "-"}</p>
+        <p>
+          My Progress:{" "}
+          {(listDetails?.currentEpisode &&
+            `${listDetails.currentEpisode} / ${episodes || "?"}`) ||
+            "-"}
+        </p>
+        <p>My Start Date: {listDetails?.startedOn || "-"}</p>
+        <p>My Completion Date: {listDetails?.completedOn || "-"}</p>
+        <p>Rewatched: {listDetails?.rewatches || "0"} times</p>
+        <p>My Notes: {listDetails?.notes || "-"}</p>
+      </details>
+      {/* this will load more details about the show but it will also fire off a network request to get those details */}
+      <button>load more info... incomplete</button>
     </div>
   );
 };

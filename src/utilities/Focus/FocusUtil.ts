@@ -1,7 +1,11 @@
 import { MutableRefObject, useEffect } from "react";
 
 type FocusableTypes = NodeListOf<
-  HTMLButtonElement | HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+  | HTMLButtonElement
+  | HTMLInputElement
+  | HTMLSelectElement
+  | HTMLTextAreaElement
+  | HTMLElement
 >;
 
 export default function useFocusEffect(
@@ -14,12 +18,7 @@ export default function useFocusEffect(
 
   const incrementAndSkipHidden = (
     operand: "+" | "-",
-    elements: NodeListOf<
-      | HTMLButtonElement
-      | HTMLInputElement
-      | HTMLSelectElement
-      | HTMLTextAreaElement
-    >
+    elements: FocusableTypes
   ) => {
     switch (operand) {
       case "+":
@@ -31,7 +30,7 @@ export default function useFocusEffect(
         if (index < 0) index = elements.length - 1;
         break;
     }
-    if (elements[index].hidden || elements[index].disabled) {
+    if (elements[index].hidden || elements[index].hasAttribute("disabled")) {
       incrementAndSkipHidden(operand, elements);
     }
   };
@@ -64,7 +63,7 @@ export default function useFocusEffect(
   useEffect(() => {
     if (!container || container.hidden) return;
     const focusables =
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+      'button, [href], input, select, textarea, summary, [tabindex]:not([tabindex="-1"])';
     const focusEls: FocusableTypes = container.querySelectorAll(focusables);
 
     const keyListener = (e: KeyboardEvent) => {
