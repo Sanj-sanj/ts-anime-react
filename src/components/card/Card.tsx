@@ -3,7 +3,7 @@ import { MainCard } from "../../interfaces/apiResponseTypes";
 import ListButton from "./ListButton";
 
 import {
-  formattedStartDate,
+  formattedDate,
   formatStudiosText,
 } from "../../utilities/Cards/FormattedCardTexts";
 
@@ -27,7 +27,7 @@ const Card: FunctionComponent<{
     episodes,
   } = card;
 
-  const startDateText = formattedStartDate(startDate, season);
+  const startDateText = formattedDate(startDate, season);
 
   return (
     <li className="flex relative rounded-lg my-2 md:mx-2 border-2 border-slate-300 bg-stone-100 dark:bg-zinc-900 dark:border-slate-700 dark:text-slate-300 w-full max-w-md max-h-[147px]">

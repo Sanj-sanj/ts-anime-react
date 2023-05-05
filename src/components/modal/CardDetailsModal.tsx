@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { MainCard } from "../../interfaces/apiResponseTypes";
 import { ListDetails, UserShowStatus } from "../../interfaces/UserPreferences";
 import {
-  formattedStartDate,
+  formattedDate,
   formatStudiosText,
   formattedGenresText,
   formattedStatusText,
@@ -109,7 +109,7 @@ const CardDetailsModal: FunctionComponent<{
             <div className="information text-sm mt-2">
               <p className="flex justify-between">
                 <span className="font-semibold">Premiers:</span>{" "}
-                {formattedStartDate(startDate, season)}
+                {formattedDate(startDate, season)}
               </p>
               <p className="flex justify-between">
                 <span className="font-semibold">Finished:</span>{" "}

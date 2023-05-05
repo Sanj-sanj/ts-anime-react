@@ -86,7 +86,7 @@ export interface MainCard {
   season: Season;
   type: string | null;
   trending: number | null;
-  seasonYear: number | null;
+  seasonYear: number;
   coverImage: CoverImage;
   title: Titles;
   studios: { nodes: StudioNode[] | null };

@@ -7,6 +7,7 @@ import {
 } from "react";
 import { MainCard } from "../../interfaces/apiResponseTypes";
 import { ListDetails, UserShowStatus } from "../../interfaces/UserPreferences";
+import { formattedDate } from "../../utilities/Cards/FormattedCardTexts";
 import { useDispatchContext } from "../../utilities/Context/AppContext";
 
 const CardListOptions: FunctionComponent<{
@@ -14,6 +15,8 @@ const CardListOptions: FunctionComponent<{
   unsavedChanges: MutableRefObject<boolean>;
   previous: [UserShowStatus, ListDetails] | undefined;
 }> = ({ modalData, unsavedChanges, previous }) => {
+  if (!modalData) return <></>;
+
   const dispatch = useDispatchContext();
   const hideInput = useRef(previous ? false : true);
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -22,39 +25,30 @@ const CardListOptions: FunctionComponent<{
   const [tempStatus, setTempStatus] = useState<UserShowStatus | undefined>(
     previous?.[0]
   );
+
+  // UNDEFINED VALUES ARE NOT GETTING SAVED WHEN STRINGIFIED BY JSON OBJ????? WTF
+
   const [tempDetails, setTempDetails] = useState<ListDetails>(
     previous?.[1] || {
-      id: modalData?.id || undefined,
-      season: modalData?.season || undefined,
-      year: modalData?.seasonYear || undefined,
-      title: modalData?.title || undefined,
+      id: modalData.id,
+      season: modalData.season,
+      year: modalData.seasonYear,
+      title: modalData.title,
       currentEpisode:
-        (modalData?.nextAiringEpisode?.episode &&
-          modalData?.nextAiringEpisode?.episode - 1) ||
-        undefined,
-      userScore: undefined,
+        (modalData.nextAiringEpisode?.episode &&
+          modalData.nextAiringEpisode.episode - 1) ||
+        0,
+      userScore: 0,
       rewatches: 0,
-      startedOn: formattedStartDate(modalData?.startDate),
+      startedOn: formattedDate(modalData.startDate, modalData.season, true),
       completedOn:
-        modalData?.status === "FINISHED"
-          ? formattedStartDate(modalData?.endDate)
-          : undefined,
-      notes: undefined,
+        modalData.endDate?.day && modalData?.status === "FINISHED"
+          ? formattedDate(modalData.endDate, modalData.season, true)
+          : "",
+      notes: "",
     }
   );
 
-  function formattedStartDate(date?: {
-    year: number | null;
-    month: number | null;
-    day: number | null;
-  }) {
-    if (!date) return;
-    const { day, month, year } = date;
-    if (!day || !month || !year) return;
-    return `${year}-${month <= 9 ? "0" + month.toString() : month}-${
-      day <= 9 ? "0" + day.toString() : day
-    }`;
-  }
   const statusOnClick = (status: UserShowStatus) => {
     setTempStatus(status);
     hideInput.current = false;
@@ -64,6 +58,8 @@ const CardListOptions: FunctionComponent<{
     if (!previous?.[1]) return;
     const a = Object.entries(tempDetails);
     const b = Object.entries(previous[1]);
+    console.log(a);
+    console.log(b);
     const mismatch = a.some(([, val], i) => b[i][1] !== val);
     return mismatch;
   }
@@ -95,7 +91,7 @@ const CardListOptions: FunctionComponent<{
       <h2 className="font-bold text-2xl text-center">List Editor</h2>
       <hr className="border-slate-950 dark:border-stone-400 border-1 mb-2" />
       <h3 className="font-semibold text-xl text-center">
-        {modalData?.title.english || modalData?.title.romaji}
+        {modalData.title.english || modalData.title.romaji}
       </h3>
       <hr className="border-slate-950 dark:border-stone-400 border-2" />
       <form ref={formRef} className="flex flex-col items-center">
@@ -113,14 +109,18 @@ const CardListOptions: FunctionComponent<{
                 <input
                   className="w-14 text-black text-center"
                   hidden={hideInput.current}
-                  disabled={modalData?.status === "NOT_YET_RELEASED"}
+                  disabled={
+                    modalData.status === "NOT_YET_RELEASED" ||
+                    tempStatus === "INTERESTED" ||
+                    tempStatus === "SKIPPED"
+                  }
                   type="number"
                   name="progress"
                   min={0}
                   max={
-                    (modalData?.nextAiringEpisode?.episode &&
-                      modalData?.nextAiringEpisode?.episode - 1) ||
-                    modalData?.episodes
+                    (modalData.nextAiringEpisode?.episode &&
+                      modalData.nextAiringEpisode.episode - 1) ||
+                    modalData.episodes
                   }
                   onChange={(e) =>
                     setTempDetails({
@@ -142,14 +142,12 @@ const CardListOptions: FunctionComponent<{
                   className="w-32 text-black"
                   type="date"
                   hidden={hideInput.current}
-                  defaultValue={
-                    tempDetails.startedOn ||
-                    (modalData?.startDate &&
-                      formattedStartDate(modalData?.startDate))
-                  }
+                  defaultValue={tempDetails.startedOn}
                   disabled={
                     hideInput.current ||
-                    modalData?.status === "NOT_YET_RELEASED"
+                    modalData.status === "NOT_YET_RELEASED" ||
+                    tempStatus === "SKIPPED" ||
+                    tempStatus === "INTERESTED"
                   }
                   name="start-date"
                   id=""
@@ -169,11 +167,13 @@ const CardListOptions: FunctionComponent<{
                   type="date"
                   hidden={hideInput.current}
                   disabled={
-                    (hideInput.current || modalData?.status !== "FINISHED") &&
-                    modalData?.status !== "CANCELED"
+                    tempStatus === "SKIPPED" ||
+                    tempStatus === "INTERESTED" ||
+                    tempStatus === "WATCHING" ||
+                    hideInput.current
                   }
                   defaultValue={
-                    modalData?.status === "FINISHED"
+                    modalData.status !== "FINISHED"
                       ? tempDetails.completedOn
                       : undefined
                   }
@@ -198,7 +198,11 @@ const CardListOptions: FunctionComponent<{
                   name="rating"
                   id=""
                   defaultValue={tempDetails.userScore}
-                  disabled={modalData?.status === "NOT_YET_RELEASED"}
+                  disabled={
+                    modalData.status === "NOT_YET_RELEASED" ||
+                    tempStatus === "INTERESTED" ||
+                    tempStatus === "SKIPPED"
+                  }
                   onChange={(e) =>
                     setTempDetails({
                       ...tempDetails,
@@ -206,7 +210,7 @@ const CardListOptions: FunctionComponent<{
                     })
                   }
                   hidden={hideInput.current}
-                  className="bg-white pl-2 text-center text-black"
+                  className="bg-white pl-2 text-center text-black disabled:bg-gray-400"
                 >
                   <option value="unrated">-</option>
                   <option value="1">1</option>
@@ -231,7 +235,10 @@ const CardListOptions: FunctionComponent<{
                   className="w-12 pl-1 text-center text-black"
                   hidden={hideInput.current}
                   defaultValue={tempDetails.rewatches || 0}
-                  disabled={modalData?.status === "NOT_YET_RELEASED"}
+                  disabled={
+                    modalData.status === "NOT_YET_RELEASED" ||
+                    tempStatus !== "COMPLETED"
+                  }
                   type="number"
                   name="rewatch"
                   min={0}
@@ -264,68 +271,66 @@ const CardListOptions: FunctionComponent<{
           </div>
         </div>
       </form>
-      {modalData ? (
-        <>
-          <div className="flex w-full flex-wrap justify-evenly items-center dark:text-black">
-            <button
-              className="border rounded border-neutral-800 dark:border-stone-400 bg-lime-500 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
-              onClick={() => statusOnClick("WATCHING")}
-              disabled={modalData.status === "NOT_YET_RELEASED"}
-            >
-              Watching
-            </button>
-            <button
-              className="border rounded border-neutral-800 dark:border-stone-400 bg-indigo-400 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
-              onClick={() => statusOnClick("INTERESTED")}
-            >
-              Interested
-            </button>
-            <button
-              className="border rounded border-neutral-800 dark:border-stone-400 bg-blue-400 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
-              onClick={() => statusOnClick("COMPLETED")}
-              disabled={modalData.status === "NOT_YET_RELEASED"}
-            >
-              Completed
-            </button>
-            <button
-              className="border rounded border-neutral-800 dark:border-stone-400 bg-red-500 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
-              onClick={() => statusOnClick("DROPPED")}
-              disabled={modalData.status === "NOT_YET_RELEASED"}
-            >
-              Dropped
-            </button>
-            <button
-              className="border rounded border-neutral-800 dark:border-stone-400 bg-amber-600 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
-              onClick={() => statusOnClick("SKIPPED")}
-              disabled={modalData.status === "NOT_YET_RELEASED"}
-            >
-              Skipped
-            </button>
-          </div>
-          <button
-            className="border rounded border-slate-950 dark:border-stone-400 bg-rose-700 w-20 p-1 mt-4"
-            onClick={() => {
-              if (!tempDetails || !tempStatus || tempDetails.id === null)
-                return;
-              unsavedChanges.current = false;
-              setUnsavedNotification(null);
-              dispatch({
-                type: "UPDATE_PREFERENCE",
-                payload: {
-                  status: tempStatus,
-                  cardData: tempDetails,
-                  previous: previous && {
-                    status: previous[0],
-                    details: previous[1],
-                  },
-                },
-              });
-            }}
-          >
-            Save
-          </button>
-        </>
-      ) : null}
+      <div className="flex w-full flex-wrap justify-evenly items-center dark:text-black">
+        <button
+          className="border rounded border-neutral-800 dark:border-stone-400 bg-lime-500 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
+          onClick={() => statusOnClick("WATCHING")}
+          disabled={modalData.status === "NOT_YET_RELEASED"}
+        >
+          Watching
+        </button>
+        <button
+          className="border rounded border-neutral-800 dark:border-stone-400 bg-indigo-400 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
+          onClick={() => statusOnClick("INTERESTED")}
+        >
+          Interested
+        </button>
+        <button
+          className="border rounded border-neutral-800 dark:border-stone-400 bg-blue-400 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
+          onClick={() => statusOnClick("COMPLETED")}
+          disabled={
+            modalData.status === "NOT_YET_RELEASED" ||
+            modalData.status === "RELEASING"
+          }
+        >
+          Completed
+        </button>
+        <button
+          className="border rounded border-neutral-800 dark:border-stone-400 bg-red-500 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
+          onClick={() => statusOnClick("DROPPED")}
+          disabled={modalData.status === "NOT_YET_RELEASED"}
+        >
+          Dropped
+        </button>
+        <button
+          className="border rounded border-neutral-800 dark:border-stone-400 bg-amber-600 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
+          onClick={() => statusOnClick("SKIPPED")}
+          disabled={modalData.status === "NOT_YET_RELEASED"}
+        >
+          Skipped
+        </button>
+      </div>
+      <button
+        className="border rounded border-slate-950 dark:border-stone-400 bg-rose-700 w-20 p-1 mt-4"
+        onClick={() => {
+          if (!tempDetails || !tempStatus || tempDetails.id === null) return;
+          unsavedChanges.current = false;
+          setUnsavedNotification(null);
+          dispatch({
+            type: "UPDATE_PREFERENCE",
+            payload: {
+              status: tempStatus,
+              cardData: tempDetails,
+              previous: previous && {
+                status: previous[0],
+                details: previous[1],
+              },
+            },
+          });
+        }}
+      >
+        Save
+      </button>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import { ShowStatus } from "../interfaces/apiResponseTypes";
 import { Actions, InitialConfig } from "../interfaces/initialConfigTypes";
 import { ShowListDetails, UserShowStatus } from "../interfaces/UserPreferences";
 

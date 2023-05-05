@@ -5,7 +5,7 @@ import {
   StudioNode,
 } from "../../interfaces/apiResponseTypes";
 
-export function formattedStartDate(
+export function formattedDate(
   startDate:
     | {
         day: number | null;
@@ -13,8 +13,18 @@ export function formattedStartDate(
         year: number;
       }
     | undefined,
-  season: Season
+  season: Season,
+  formatForInputDefault?: boolean
 ) {
+  if (formatForInputDefault) {
+    return (
+      (startDate?.day &&
+        dayjs(
+          `${startDate?.year}-${startDate?.month}-${startDate?.day}`
+        ).format("YYYY-MM-DD")) ||
+      ""
+    );
+  }
   return (
     (startDate?.day &&
       dayjs(`${startDate.year}-${startDate.month}-${startDate.day}`).format(
