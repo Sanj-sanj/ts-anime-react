@@ -86,7 +86,7 @@ const CardDetailsModal: FunctionComponent<{
       </div>
       <div className="flex flex-col sm:flex-row">
         <div
-          className="left-column flex flex-col items-center p-2 px-3 mr-1  sm:w-1/2"
+          className="left-column flex flex-col items-center p-2 px-3 mr-1 sm:w-1/2 h-full"
           ref={detailsAndImageContainer}
         >
           <div>
@@ -155,19 +155,40 @@ const CardDetailsModal: FunctionComponent<{
           <p dangerouslySetInnerHTML={{ __html: description || "" }} />
         </div>
       </div>
-      <details className="flex bg-slate-500 rounded-md mt-2">
+      <details className="flex bg-slate-500 rounded-md mt-2 py-2 px-6">
         <summary>My Details</summary>
-        <p>My Score: {listDetails?.userScore || "-"}</p>
-        <p>
-          My Progress:{" "}
-          {(listDetails?.currentEpisode &&
-            `${listDetails.currentEpisode} / ${episodes || "?"}`) ||
-            "-"}
+        <p className="flex justify-between">
+          My Score:{" "}
+          <span className="font-semibold">{listDetails?.userScore || "-"}</span>
         </p>
-        <p>My Start Date: {listDetails?.startedOn || "-"}</p>
-        <p>My Completion Date: {listDetails?.completedOn || "-"}</p>
-        <p>Rewatched: {listDetails?.rewatches || "0"} times</p>
-        <p>My Notes: {listDetails?.notes || "-"}</p>
+        <p className="flex justify-between">
+          My Progress:{" "}
+          <span className="font-semibold">
+            {(listDetails?.currentEpisode &&
+              `${listDetails.currentEpisode} / ${episodes || "?"}`) ||
+              "-"}
+          </span>
+        </p>
+        <p className="flex justify-between">
+          My Start Date:{" "}
+          <span className="font-semibold">{listDetails?.startedOn || "-"}</span>
+        </p>
+        <p className="flex justify-between">
+          My Completion Date:{" "}
+          <span className="font-semibold">
+            {listDetails?.completedOn || "-"}
+          </span>
+        </p>
+        <p className="flex justify-between">
+          Rewatched:{" "}
+          <span className="font-semibold">
+            {listDetails?.rewatches || "0"} times
+          </span>
+        </p>
+        <p className="flex flex-col">
+          My Notes:{" "}
+          <span className="font-semibold">{listDetails?.notes || "-"}</span>
+        </p>
       </details>
       {/* this will load more details about the show but it will also fire off a network request to get those details */}
       <button>load more info... incomplete</button>

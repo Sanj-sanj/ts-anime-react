@@ -8,6 +8,7 @@ import {
   useDispatchContext,
   useStateContext,
 } from "../../utilities/Context/AppContext";
+import { UserPreferences } from "../../interfaces/UserPreferences";
 
 type Props = {
   children: JSX.Element;
@@ -27,6 +28,14 @@ const Layout = ({ children }: Props) => {
   function toggleDarkMode() {
     setIsDarkMode(!isDarkMode);
   }
+
+  useEffect(() => {
+    const listHistory = localStorage.getItem("userList");
+    if (listHistory) {
+      const list = JSON.parse(listHistory) as UserPreferences;
+      dispatch({ type: "LOAD_LIST", payload: list });
+    }
+  }, []);
 
   useEffect(() => {
     if (

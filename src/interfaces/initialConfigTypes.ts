@@ -101,4 +101,9 @@ export type Actions =
         cardData: ListDetails;
         previous?: { status: UserShowStatus; details: ListDetails };
       };
+    }
+  | {
+      // takes previous userPrefrences and loads them into state.
+      type: "LOAD_LIST";
+      payload: UserPreferences;
     };

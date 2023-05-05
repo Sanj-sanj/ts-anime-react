@@ -116,7 +116,7 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
           delete lists[status][id];
         });
       }
-      return {
+      const newState = {
         ...state,
         user: {
           lists: {
@@ -126,6 +126,17 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
               [id]: action.payload.cardData,
             },
           },
+        },
+      };
+      localStorage.setItem("userList", JSON.stringify(newState.user.lists));
+      return newState;
+    }
+
+    case "LOAD_LIST": {
+      return {
+        ...state,
+        user: {
+          lists: action.payload,
         },
       };
     }
