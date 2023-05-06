@@ -7,7 +7,7 @@ import {
 } from "react";
 import { MainCard } from "../../interfaces/apiResponseTypes";
 import { ListDetails, UserShowStatus } from "../../interfaces/UserPreferences";
-import { formattedDate } from "../../utilities/Cards/FormattedCardTexts";
+// import { formattedDate } from "../../utilities/Cards/FormattedCardTexts";
 import { useDispatchContext } from "../../utilities/Context/AppContext";
 
 const CardListOptions: FunctionComponent<{
@@ -34,17 +34,11 @@ const CardListOptions: FunctionComponent<{
       season: modalData.season,
       year: modalData.seasonYear,
       title: modalData.title,
-      currentEpisode:
-        (modalData.nextAiringEpisode?.episode &&
-          modalData.nextAiringEpisode.episode - 1) ||
-        0,
+      currentEpisode: 0,
       userScore: 0,
       rewatches: 0,
-      startedOn: formattedDate(modalData.startDate, modalData.season, true),
-      completedOn:
-        modalData.endDate?.day && modalData?.status === "FINISHED"
-          ? formattedDate(modalData.endDate, modalData.season, true)
-          : "",
+      startedOn: "",
+      completedOn: "",
       notes: "",
     }
   );
@@ -58,8 +52,6 @@ const CardListOptions: FunctionComponent<{
     if (!previous?.[1]) return;
     const a = Object.entries(tempDetails);
     const b = Object.entries(previous[1]);
-    console.log(a);
-    console.log(b);
     const mismatch = a.some(([, val], i) => b[i][1] !== val);
     return mismatch;
   }
@@ -94,7 +86,17 @@ const CardListOptions: FunctionComponent<{
         {modalData.title.english || modalData.title.romaji}
       </h3>
       <hr className="border-slate-950 dark:border-stone-400 border-2" />
-      <form ref={formRef} className="flex flex-col items-center">
+      <form
+        ref={formRef}
+        className="flex flex-col items-center"
+        onChange={(e) => {
+          const target = e.target as
+            | HTMLInputElement
+            | HTMLSelectElement
+            | HTMLTextAreaElement;
+          setTempDetails({ ...tempDetails, [target.name]: target.value });
+        }}
+      >
         <h4 className="text-center font-medium">Show Status</h4>
         {unsavedNotification}
         <div className="flex w-full flex-col flex-wrap sm:flex-row mb-2">
@@ -115,21 +117,14 @@ const CardListOptions: FunctionComponent<{
                     tempStatus === "SKIPPED"
                   }
                   type="number"
-                  name="progress"
+                  name="currentEpisode"
                   min={0}
                   max={
                     (modalData.nextAiringEpisode?.episode &&
                       modalData.nextAiringEpisode.episode - 1) ||
                     modalData.episodes
                   }
-                  onChange={(e) =>
-                    setTempDetails({
-                      ...tempDetails,
-                      currentEpisode: +e.target.value,
-                    })
-                  }
-                  defaultValue={tempDetails.currentEpisode || 0}
-                  id=""
+                  defaultValue={0}
                 />
               </label>
             </div>
@@ -142,21 +137,13 @@ const CardListOptions: FunctionComponent<{
                   className="w-32 text-black"
                   type="date"
                   hidden={hideInput.current}
-                  defaultValue={tempDetails.startedOn}
                   disabled={
                     hideInput.current ||
                     modalData.status === "NOT_YET_RELEASED" ||
                     tempStatus === "SKIPPED" ||
                     tempStatus === "INTERESTED"
                   }
-                  name="start-date"
-                  id=""
-                  onChange={(e) =>
-                    setTempDetails({
-                      ...tempDetails,
-                      startedOn: e.target.value,
-                    })
-                  }
+                  name="startedOn"
                 />
               </label>
             </div>
@@ -164,6 +151,7 @@ const CardListOptions: FunctionComponent<{
               <label className="flex justify-between w-full">
                 Completed:
                 <input
+                  className="w-32 text-black"
                   type="date"
                   hidden={hideInput.current}
                   disabled={
@@ -172,20 +160,7 @@ const CardListOptions: FunctionComponent<{
                     tempStatus === "WATCHING" ||
                     hideInput.current
                   }
-                  defaultValue={
-                    modalData.status !== "FINISHED"
-                      ? tempDetails.completedOn
-                      : undefined
-                  }
-                  name="completed-date"
-                  id=""
-                  onChange={(e) =>
-                    setTempDetails({
-                      ...tempDetails,
-                      completedOn: e.target.value,
-                    })
-                  }
-                  className="w-32 text-black"
+                  name="completedOn"
                 />
               </label>
             </div>
@@ -195,22 +170,14 @@ const CardListOptions: FunctionComponent<{
               <label className="flex justify-between">
                 Rating:
                 <select
-                  name="rating"
-                  id=""
-                  defaultValue={tempDetails.userScore}
+                  className="bg-white pl-2 text-center text-black disabled:bg-gray-400"
+                  name="userScore"
                   disabled={
                     modalData.status === "NOT_YET_RELEASED" ||
                     tempStatus === "INTERESTED" ||
                     tempStatus === "SKIPPED"
                   }
-                  onChange={(e) =>
-                    setTempDetails({
-                      ...tempDetails,
-                      userScore: +e.target.value || undefined,
-                    })
-                  }
                   hidden={hideInput.current}
-                  className="bg-white pl-2 text-center text-black disabled:bg-gray-400"
                 >
                   <option value="unrated">-</option>
                   <option value="1">1</option>
@@ -234,21 +201,13 @@ const CardListOptions: FunctionComponent<{
                 <input
                   className="w-12 pl-1 text-center text-black"
                   hidden={hideInput.current}
-                  defaultValue={tempDetails.rewatches || 0}
                   disabled={
                     modalData.status === "NOT_YET_RELEASED" ||
                     tempStatus !== "COMPLETED"
                   }
                   type="number"
-                  name="rewatch"
+                  name="rewatches"
                   min={0}
-                  id=""
-                  onChange={(e) =>
-                    setTempDetails({
-                      ...tempDetails,
-                      rewatches: +e.target.value,
-                    })
-                  }
                 />
               </label>
             </div>
@@ -257,16 +216,8 @@ const CardListOptions: FunctionComponent<{
             <textarea
               className="w-11/12 text-black p-2"
               name="notes"
-              defaultValue={tempDetails.notes}
               disabled={hideInput.current}
               hidden={hideInput.current}
-              onChange={(e) =>
-                setTempDetails({
-                  ...tempDetails,
-                  notes: e.target.value,
-                })
-              }
-              id=""
             ></textarea>
           </div>
         </div>
@@ -281,7 +232,17 @@ const CardListOptions: FunctionComponent<{
         </button>
         <button
           className="border rounded border-neutral-800 dark:border-stone-400 bg-indigo-400 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
-          onClick={() => statusOnClick("INTERESTED")}
+          onClick={() => {
+            setTempDetails({
+              ...tempDetails,
+              currentEpisode: 0,
+              completedOn: "",
+              startedOn: "",
+              rewatches: 0,
+              userScore: 0,
+            });
+            statusOnClick("INTERESTED");
+          }}
         >
           Interested
         </button>

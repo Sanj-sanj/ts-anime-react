@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { MainCard } from "../../interfaces/apiResponseTypes";
 import { ListDetails, UserShowStatus } from "../../interfaces/UserPreferences";
@@ -156,10 +157,24 @@ const CardDetailsModal: FunctionComponent<{
         </div>
       </div>
       <details className="flex bg-slate-500 rounded-md mt-2 py-2 px-6">
-        <summary>My Details</summary>
+        <summary
+          onClick={(e) => {
+            const el = e.currentTarget;
+
+            setTimeout(
+              () => el && el.scrollIntoView({ behavior: "smooth" }),
+              100
+            );
+          }}
+        >
+          My Details
+        </summary>
         <p className="flex justify-between">
           My Score:{" "}
-          <span className="font-semibold">{listDetails?.userScore || "-"}</span>
+          <span className="font-semibold">
+            {(listDetails?.userScore && `${listDetails?.userScore} / 10`) ||
+              "-"}
+          </span>
         </p>
         <p className="flex justify-between">
           My Progress:{" "}
@@ -171,12 +186,18 @@ const CardDetailsModal: FunctionComponent<{
         </p>
         <p className="flex justify-between">
           My Start Date:{" "}
-          <span className="font-semibold">{listDetails?.startedOn || "-"}</span>
+          <span className="font-semibold">
+            {(listDetails?.startedOn &&
+              dayjs(listDetails.startedOn).format("MMMM DD, YYYY")) ||
+              "-"}
+          </span>
         </p>
         <p className="flex justify-between">
           My Completion Date:{" "}
           <span className="font-semibold">
-            {listDetails?.completedOn || "-"}
+            {(listDetails?.completedOn &&
+              dayjs(listDetails.completedOn).format("MMMM DD, YYYY")) ||
+              "-"}
           </span>
         </p>
         <p className="flex justify-between">
