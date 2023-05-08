@@ -1,8 +1,14 @@
-import { APIVariables } from "../../interfaces/apiResponseTypes";
+import {
+  APIVariables,
+  MainCard,
+  NewEpisodeCards,
+} from "../../interfaces/apiResponseTypes";
 import { Actions } from "../../interfaces/initialConfigTypes";
 import HandleMockAPICall from "./HandleMockAPICall";
 import HandleAPICall from "./HandleAPICall";
 import { MutableRefObject } from "react";
+import { mainCardQuery } from "./QueryStrings/MainCardQuery";
+import { isMainCard } from "../Cards/CheckCardType";
 
 //Request from Anilist API
 async function requestAniListAPI(
@@ -14,9 +20,10 @@ async function requestAniListAPI(
   // const { format, season, seasonYear } = settings;
   console.log("calling ANILIST_API"); //eslint-disable-line
   isCallingAPI.current = true;
-  await HandleAPICall(settings, [], signal).then((cards) => {
+  await HandleAPICall(settings, [], mainCardQuery, signal).then((cards) => {
     isCallingAPI.current = false;
     if (signal.aborted) return;
+    if (!isMainCard(cards)) return [];
     dispatch({ type: "UPDATE_CARDS", payload: cards });
   });
 }

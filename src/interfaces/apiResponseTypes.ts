@@ -3,7 +3,7 @@ import { ValidFormats } from "./initialConfigTypes";
 export interface APIPayload {
   data: {
     Page: {
-      media: MainCard[];
+      media: MainCard[] | NewEpisodeCards[];
       pageInfo: {
         currentPage: number;
         hasNextPage: boolean;
@@ -24,6 +24,13 @@ export type APIVariables = {
   format_in: Formats;
   format: ValidFormats;
 };
+
+export type APINewEpisodesVariables = {
+  page: number;
+  perPage: number;
+  id_in: number[];
+};
+
 export type Formats =
   | ["TV", "TV_SHORT"]
   | ["MOVIE", "SPECIAL"]
@@ -76,6 +83,14 @@ export type SourceMaterial =
   | "COMIC"
   | "MULTIMEDIA_PROJECT"
   | "PICTURE_BOOK";
+
+export interface NewEpisodeCards {
+  id: number;
+  title: Titles;
+  status: ShowStatus;
+  episodes: number;
+  nextAiringEpisode: NextAiringEpisode;
+}
 
 export interface MainCard {
   meanScore: number | null;

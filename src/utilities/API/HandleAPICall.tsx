@@ -1,78 +1,11 @@
 // // Here we define our query as a multi-line string
 
-import { APIVariables } from "../../interfaces/apiResponseTypes";
+import {
+  APINewEpisodesVariables,
+  APIVariables,
+  NewEpisodeCards,
+} from "../../interfaces/apiResponseTypes";
 import { MainCard, APIPayload } from "../../interfaces/apiResponseTypes";
-
-/**
- * Refrence Docs: https://anilist.github.io/ApiV2-GraphQL-Docs/
- */
-
-// // Storing it in a separate .graphql/.gql file is also possible
-const query = `
-query ($id: Int, $page: Int, $perPage: Int, $season: MediaSeason, $seasonYear: Int, $format_in: [MediaFormat]) {
-  Page(page: $page, perPage: $perPage) {
-    pageInfo {
-      total
-      currentPage
-      lastPage
-      hasNextPage
-      perPage
-    }
-    media(id: $id, type: ANIME, season: $season, seasonYear: $seasonYear, format_in: $format_in) {
-      id
-      type
-      title {
-        romaji
-        english
-        native
-      }
-      season
-      seasonYear
-      studios {
-        nodes {
-          name
-          isAnimationStudio
-          favourites
-        }
-      }
-      genres
-      format
-      coverImage {
-        medium
-        large
-        color
-      }
-      status
-			averageScore
-      meanScore
-      trending
-      popularity
-      episodes
-      duration
-      modNotes
-      description
-      source
-      startDate {
-        year
-        month
-        day
-      }
-      endDate {
-        year
-        month
-        day
-      }
-      nextAiringEpisode {
-        airingAt
-        episode
-        timeUntilAiring
-      }
-    }
-  }
-}
-
-
-`;
 
 // // Define our query variables and values that will be used in the query request
 
@@ -103,10 +36,11 @@ function handleError(error: Error) {
 }
 
 export default async function HandleAPICall(
-  settings: APIVariables,
-  accumulator: MainCard[] = [],
+  settings: APIVariables | APINewEpisodesVariables,
+  accumulator: (MainCard | NewEpisodeCards)[] = [],
+  query: string,
   signal?: AbortSignal
-): Promise<MainCard[]> {
+): Promise<(MainCard | NewEpisodeCards)[]> {
   const options: RequestInit = {
     method: "POST",
     headers: {
@@ -139,6 +73,7 @@ export default async function HandleAPICall(
     return await HandleAPICall(
       { ...settings, page: settings.page + 1 },
       [...accumulator, ...mainCards],
+      query,
       signal
     );
   }

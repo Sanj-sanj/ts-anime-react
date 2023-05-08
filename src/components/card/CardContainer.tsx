@@ -16,6 +16,8 @@ import {
   useStateContext,
 } from "../../utilities/Context/AppContext";
 import ContainerPrefrences from "./ContainerPrefrences";
+import { UserPreferences } from "../../interfaces/UserPreferences";
+import requestNewEpisodesCheck from "../../utilities/API/requestNewEpisodesCheck";
 
 const CardContainer: FunctionComponent = () => {
   const { cards, client, variables, sort } = useStateContext();
@@ -25,7 +27,8 @@ const CardContainer: FunctionComponent = () => {
   const [clientVisibleCards, setClientVisibleCards] = useState<MainCard[]>([]);
   const [ammount, setAmmount] = useState(client.perPage);
   const isCallingAPI = useRef(false);
-  const abortRef = useRef<null | AbortController>(null);
+  const abortMainCard = useRef<null | AbortController>(null);
+  const abortNewEpisode = useRef<null | AbortController>(null);
   const containerRef = useRef<null | HTMLDivElement>(null);
   const lastFocusedCard = useRef<null | HTMLButtonElement>(null);
 
@@ -51,26 +54,47 @@ const CardContainer: FunctionComponent = () => {
       //create new AbortController to cancel consecutive requests if new request is made
       setClientVisibleCards([]);
       setAmmount(15);
-      abortRef.current = new AbortController();
+      abortMainCard.current = new AbortController();
       // ****************** ANILIST API *********************
       void requestAniListAPI(
         variables,
         dispatch,
         isCallingAPI,
-        abortRef.current.signal
+        abortMainCard.current.signal
       );
       // ****************** MOCK API ************************
       // void requestMockAPI(
       //   variables,
       //   dispatch,
       //   isCallingAPI,
-      //   abortRef.current.signal
+      //   abortMainCard.current.signal
       // );
       return () => {
-        if (abortRef.current) abortRef.current.abort();
+        if (abortMainCard.current) abortMainCard.current.abort();
       };
     }
   }, [cards, sort, ammount, season, format]);
+
+  useEffect(() => {
+    abortNewEpisode.current = new AbortController();
+    const listHistory = localStorage.getItem("userList");
+    if (listHistory) {
+      const list = JSON.parse(listHistory) as UserPreferences;
+      dispatch({ type: "LOAD_LIST", payload: list });
+      void requestNewEpisodesCheck(
+        Object.keys(list.WATCHING)
+          .concat(Object.keys(list.INTERESTED))
+          .map((n) => +n),
+        list,
+        dispatch,
+        abortNewEpisode.current.signal
+      );
+    }
+
+    return () => {
+      if (abortNewEpisode.current) abortNewEpisode.current.abort();
+    };
+  }, []);
 
   return (
     <>

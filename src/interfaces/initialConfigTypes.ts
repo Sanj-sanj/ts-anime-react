@@ -1,4 +1,4 @@
-import { APIVariables, Season } from "./apiResponseTypes";
+import { APIVariables, NewEpisodeCards, Season } from "./apiResponseTypes";
 import { MainCard } from "./apiResponseTypes";
 import {
   ListDetails,
@@ -30,7 +30,7 @@ export type ClientVariables = {
       active: boolean;
     };
   };
-  modalData: MainCard | undefined;
+  modalData: MainCard | NewEpisodeCards[] | undefined;
 };
 
 export type ValidFormats = "TV" | "MOVIE" | "OVA";
@@ -84,7 +84,7 @@ export type Actions =
         | {
             action: "OPEN";
             entryPoint: ModalEntryPoint;
-            data?: MainCard;
+            data?: MainCard | NewEpisodeCards[];
           }
         | {
             action: "CLOSE";

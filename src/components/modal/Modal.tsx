@@ -1,10 +1,15 @@
 import { FunctionComponent, useEffect, useRef, useState } from "react";
+import { MainCard } from "../../interfaces/apiResponseTypes";
 import { ModalEntryPoint } from "../../interfaces/initialConfigTypes";
 import {
   ListDetails,
   ShowListDetails,
   UserShowStatus,
 } from "../../interfaces/UserPreferences";
+import {
+  isMainCard,
+  isNewEpisodeCards,
+} from "../../utilities/Cards/CheckCardType";
 import { useStateContext } from "../../utilities/Context/AppContext";
 
 import useFocusEffect from "../../utilities/Focus/FocusUtil";
@@ -31,27 +36,11 @@ const Modal: FunctionComponent<{
     client: { modalData },
     user: { lists },
   } = useStateContext();
-
+  const unsavedChanges = useRef<boolean>(false);
+  const modal = document.querySelector("#modalRoot") as HTMLDivElement;
   const [childComponent, setChildComponent] = useState<null | JSX.Element>(
     null
   );
-
-  const prefArray = Object.entries(lists) as [
-    UserShowStatus,
-    ShowListDetails<number>
-  ][];
-
-  let inList: [UserShowStatus, ShowListDetails<number>] | undefined;
-  if (modalData?.id) {
-    inList = prefArray.find(([, details]) => {
-      return modalData.id in details;
-    });
-  }
-  const previousStatusDetails: [UserShowStatus, ListDetails] | undefined =
-    inList ? [inList[0], inList[1][modalData?.id as number]] : undefined;
-
-  const unsavedChanges = useRef<boolean>(false);
-  const modal = document.querySelector("#modalRoot") as HTMLDivElement;
 
   useEffect(() => {
     modal.classList.replace("hidden", "flex");
@@ -60,6 +49,22 @@ const Modal: FunctionComponent<{
     };
   });
   useFocusEffect(modal, closeModal, unsavedChanges);
+
+  const prefArray = Object.entries(lists) as [
+    UserShowStatus,
+    ShowListDetails<number>
+  ][];
+
+  let inList: [UserShowStatus, ShowListDetails<number>] | undefined;
+  let previousStatusDetails: [UserShowStatus, ListDetails] | undefined;
+  if (modalData && !Array.isArray(modalData) && isMainCard([modalData])) {
+    inList = prefArray.find(([, details]) => {
+      return modalData.id in details;
+    });
+    previousStatusDetails = inList
+      ? [inList[0], inList[1][modalData.id]]
+      : undefined;
+  }
 
   return (
     <div className="flex flex-col w-4/5 md:w-4/6 xl:w-2/4 min-h-[16rem] max-h-[85%] absolute bg-slate-200 dark:bg-slate-800 left-0 right-0 mx-auto my-4 z-40 rounded-md">
@@ -76,7 +81,7 @@ const Modal: FunctionComponent<{
             onClick={() =>
               setChildComponent(
                 <CardDetailsModal
-                  modalData={modalData}
+                  modalData={modalData as MainCard}
                   details={previousStatusDetails}
                 />
               )
@@ -87,7 +92,7 @@ const Modal: FunctionComponent<{
             onClick={() => {
               setChildComponent(
                 <CardListOptions
-                  modalData={modalData}
+                  modalData={modalData as MainCard}
                   unsavedChanges={unsavedChanges}
                   previous={previousStatusDetails}
                 />
@@ -95,8 +100,12 @@ const Modal: FunctionComponent<{
             }}
           />
         </div>
-      ) : entryPoint === "new release" ? (
-        <div> new releases and stuff</div>
+      ) : entryPoint === "new release" &&
+        Array.isArray(modalData) &&
+        isNewEpisodeCards(modalData) ? (
+        modalData.map((data) => (
+          <div key={data.id}>{data.title.romaji || data.title.english}</div>
+        ))
       ) : null}
 
       {childComponent}
