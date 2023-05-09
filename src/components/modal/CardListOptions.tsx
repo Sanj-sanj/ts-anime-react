@@ -7,7 +7,8 @@ import {
 } from "react";
 import { MainCard } from "../../interfaces/apiResponseTypes";
 import { ListDetails, UserShowStatus } from "../../interfaces/UserPreferences";
-// import { formattedDate } from "../../utilities/Cards/FormattedCardTexts";
+import { formattedDate } from "../../utilities/Cards/FormattedCardTexts";
+
 import { useDispatchContext } from "../../utilities/Context/AppContext";
 
 const CardListOptions: FunctionComponent<{
@@ -16,20 +17,20 @@ const CardListOptions: FunctionComponent<{
   previous: [UserShowStatus, ListDetails] | undefined;
 }> = ({ modalData, unsavedChanges, previous }) => {
   if (!modalData) return <></>;
-
+  const [prevStatus, prevDetails] = previous || [undefined, undefined];
   const dispatch = useDispatchContext();
   const hideInput = useRef(previous ? false : true);
   const formRef = useRef<HTMLFormElement | null>(null);
   const [unsavedNotification, setUnsavedNotification] =
     useState<JSX.Element | null>(null);
   const [tempStatus, setTempStatus] = useState<UserShowStatus | undefined>(
-    previous?.[0]
+    prevStatus
   );
 
   // UNDEFINED VALUES ARE NOT GETTING SAVED WHEN STRINGIFIED BY JSON OBJ????? WTF
 
   const [tempDetails, setTempDetails] = useState<ListDetails>(
-    previous?.[1] || {
+    prevDetails || {
       id: modalData.id,
       season: modalData.season,
       year: modalData.seasonYear,
@@ -49,15 +50,15 @@ const CardListOptions: FunctionComponent<{
   };
 
   function isPrevDetailsMismatch() {
-    if (!previous?.[1]) return;
+    if (!prevDetails) return;
     const a = Object.entries(tempDetails);
-    const b = Object.entries(previous[1]);
+    const b = Object.entries(prevDetails);
     const mismatch = a.some(([, val], i) => b[i][1] !== val);
     return mismatch;
   }
 
   function isPrevStatusMismatch() {
-    return tempStatus !== undefined && tempStatus !== previous?.[0];
+    return tempStatus !== undefined && tempStatus !== prevStatus;
   }
 
   useEffect(() => {
@@ -89,13 +90,13 @@ const CardListOptions: FunctionComponent<{
       <form
         ref={formRef}
         className="flex flex-col items-center"
-        onChange={(e) => {
-          const target = e.target as
-            | HTMLInputElement
-            | HTMLSelectElement
-            | HTMLTextAreaElement;
-          setTempDetails({ ...tempDetails, [target.name]: target.value });
-        }}
+        // onChange={(e) => {
+        //   const target = e.target as
+        //     | HTMLInputElement
+        //     | HTMLSelectElement
+        //     | HTMLTextAreaElement;
+        //   setTempDetails({ ...tempDetails, [target.name]: target.value });
+        // }}
       >
         <h4 className="text-center font-medium">Show Status</h4>
         {unsavedNotification}
@@ -124,7 +125,13 @@ const CardListOptions: FunctionComponent<{
                       modalData.nextAiringEpisode.episode - 1) ||
                     modalData.episodes
                   }
-                  defaultValue={0}
+                  onChange={(e) => {
+                    setTempDetails({
+                      ...tempDetails,
+                      currentEpisode: +e.target.value,
+                    });
+                  }}
+                  value={tempDetails.currentEpisode}
                 />
               </label>
             </div>
@@ -133,35 +140,125 @@ const CardListOptions: FunctionComponent<{
             <div className="mx-2 mb-2">
               <label className="flex justify-between w-full">
                 Started:
-                <input
-                  className="w-32 text-black"
-                  type="date"
-                  hidden={hideInput.current}
-                  disabled={
-                    hideInput.current ||
-                    modalData.status === "NOT_YET_RELEASED" ||
-                    tempStatus === "SKIPPED" ||
-                    tempStatus === "INTERESTED"
-                  }
-                  name="startedOn"
-                />
+                <div>
+                  <input
+                    className="w-32 text-black"
+                    type="date"
+                    hidden={hideInput.current}
+                    disabled={
+                      hideInput.current ||
+                      modalData.status === "NOT_YET_RELEASED" ||
+                      tempStatus === "SKIPPED" ||
+                      tempStatus === "INTERESTED"
+                    }
+                    name="startedOn"
+                    value={tempDetails.startedOn}
+                    onChange={(e) =>
+                      setTempDetails({
+                        ...tempDetails,
+                        startedOn: e.target.value,
+                      })
+                    }
+                  />
+                  <button
+                    className="border rounded px-1 ml-1 bg-slate-300 text-black disabled:bg-slate-600 disabled:text-slate-800"
+                    title="Set the calendar date corresponding to this show's premier date."
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const input = formRef.current?.elements.namedItem(
+                        "startedOn"
+                      ) as HTMLInputElement;
+
+                      const cleanDate = formattedDate(
+                        modalData.startDate,
+                        modalData.season,
+                        true
+                      );
+                      tempDetails.startedOn === cleanDate
+                        ? null
+                        : setTempDetails({
+                            ...tempDetails,
+                            startedOn: cleanDate,
+                          });
+                      input.value = cleanDate;
+                    }}
+                    hidden={hideInput.current}
+                    disabled={
+                      hideInput.current ||
+                      modalData.status === "NOT_YET_RELEASED" ||
+                      tempStatus === "SKIPPED" ||
+                      tempStatus === "INTERESTED"
+                    }
+                  >
+                    Set
+                  </button>
+                </div>
               </label>
             </div>
             <div className="mx-2 mb-2">
               <label className="flex justify-between w-full">
                 Completed:
-                <input
-                  className="w-32 text-black"
-                  type="date"
-                  hidden={hideInput.current}
-                  disabled={
-                    tempStatus === "SKIPPED" ||
-                    tempStatus === "INTERESTED" ||
-                    tempStatus === "WATCHING" ||
-                    hideInput.current
-                  }
-                  name="completedOn"
-                />
+                <div>
+                  <input
+                    className="w-32 text-black"
+                    type="date"
+                    hidden={hideInput.current}
+                    disabled={
+                      tempStatus === "SKIPPED" ||
+                      tempStatus === "INTERESTED" ||
+                      tempStatus === "WATCHING" ||
+                      hideInput.current
+                    }
+                    name="completedOn"
+                    value={tempDetails.completedOn}
+                    onChange={(e) =>
+                      setTempDetails({
+                        ...tempDetails,
+                        completedOn: e.target.value,
+                      })
+                    }
+                  />
+                  <button
+                    className="border rounded px-1 ml-1 bg-slate-300 text-black disabled:bg-slate-600 disabled:text-slate-800"
+                    title="Set the calendar date corresponding to this show's ending date."
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const input = formRef.current?.elements.namedItem(
+                        "completedOn"
+                      ) as HTMLInputElement;
+
+                      const cleanDate =
+                        modalData.status === "FINISHED"
+                          ? formattedDate(
+                              modalData.endDate as {
+                                day: number;
+                                month: number;
+                                year: number;
+                              },
+                              modalData.season,
+                              true
+                            )
+                          : "";
+                      tempDetails.completedOn === cleanDate
+                        ? null
+                        : setTempDetails({
+                            ...tempDetails,
+                            completedOn: cleanDate,
+                          });
+                      input.value = cleanDate;
+                    }}
+                    hidden={hideInput.current}
+                    disabled={
+                      hideInput.current ||
+                      modalData.status !== "FINISHED" ||
+                      tempStatus === "SKIPPED" ||
+                      tempStatus === "INTERESTED" ||
+                      tempStatus === "WATCHING"
+                    }
+                  >
+                    Set
+                  </button>
+                </div>
               </label>
             </div>
           </div>
@@ -171,15 +268,21 @@ const CardListOptions: FunctionComponent<{
                 Rating:
                 <select
                   className="bg-white pl-2 text-center text-black disabled:bg-gray-400"
-                  name="userScore"
                   disabled={
                     modalData.status === "NOT_YET_RELEASED" ||
                     tempStatus === "INTERESTED" ||
                     tempStatus === "SKIPPED"
                   }
                   hidden={hideInput.current}
+                  value={tempDetails.userScore}
+                  onChange={(e) =>
+                    setTempDetails({
+                      ...tempDetails,
+                      userScore: +e.target.value,
+                    })
+                  }
+                  name="userScore"
                 >
-                  <option value="unrated">-</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -207,6 +310,13 @@ const CardListOptions: FunctionComponent<{
                   }
                   type="number"
                   name="rewatches"
+                  value={tempDetails.rewatches}
+                  onChange={(e) =>
+                    setTempDetails({
+                      ...tempDetails,
+                      rewatches: +e.target.value,
+                    })
+                  }
                   min={0}
                 />
               </label>
@@ -218,6 +328,10 @@ const CardListOptions: FunctionComponent<{
               name="notes"
               disabled={hideInput.current}
               hidden={hideInput.current}
+              value={tempDetails.notes}
+              onChange={(e) =>
+                setTempDetails({ ...tempDetails, notes: e.target.value })
+              }
             ></textarea>
           </div>
         </div>
@@ -225,7 +339,12 @@ const CardListOptions: FunctionComponent<{
       <div className="flex w-full flex-wrap justify-evenly items-center dark:text-black">
         <button
           className="border rounded border-neutral-800 dark:border-stone-400 bg-lime-500 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
-          onClick={() => statusOnClick("WATCHING")}
+          onClick={() => {
+            if (tempStatus !== "WATCHING" && prevDetails) {
+              setTempDetails({ ...prevDetails, completedOn: "" });
+            }
+            statusOnClick("WATCHING");
+          }}
           disabled={modalData.status === "NOT_YET_RELEASED"}
         >
           Watching
@@ -248,7 +367,14 @@ const CardListOptions: FunctionComponent<{
         </button>
         <button
           className="border rounded border-neutral-800 dark:border-stone-400 bg-blue-400 disabled:bg-slate-400 disabled:text-gray-700 p-1 m-1 w-24"
-          onClick={() => statusOnClick("COMPLETED")}
+          onClick={() => {
+            setTempDetails({
+              ...tempDetails,
+              currentEpisode:
+                modalData.episodes || tempDetails.currentEpisode || 0,
+            });
+            statusOnClick("COMPLETED");
+          }}
           disabled={
             modalData.status === "NOT_YET_RELEASED" ||
             modalData.status === "RELEASING"
@@ -277,15 +403,17 @@ const CardListOptions: FunctionComponent<{
           if (!tempDetails || !tempStatus || tempDetails.id === null) return;
           unsavedChanges.current = false;
           setUnsavedNotification(null);
+          console.log(tempDetails);
           dispatch({
             type: "UPDATE_PREFERENCE",
             payload: {
               status: tempStatus,
               cardData: tempDetails,
-              previous: previous && {
-                status: previous[0],
-                details: previous[1],
-              },
+              previous: prevStatus &&
+                prevDetails && {
+                  status: prevStatus,
+                  details: prevDetails,
+                },
             },
           });
         }}

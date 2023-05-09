@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { MainCard, NewEpisodeCards } from "../../interfaces/apiResponseTypes";
+import { NewEpisodeCards } from "../../interfaces/apiResponseTypes";
 import { Actions } from "../../interfaces/initialConfigTypes";
 import { UserPreferences } from "../../interfaces/UserPreferences";
 import { isNewEpisodeCards } from "../Cards/CheckCardType";

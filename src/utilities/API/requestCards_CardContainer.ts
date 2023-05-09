@@ -1,8 +1,4 @@
-import {
-  APIVariables,
-  MainCard,
-  NewEpisodeCards,
-} from "../../interfaces/apiResponseTypes";
+import { APIVariables } from "../../interfaces/apiResponseTypes";
 import { Actions } from "../../interfaces/initialConfigTypes";
 import HandleMockAPICall from "./HandleMockAPICall";
 import HandleAPICall from "./HandleAPICall";
@@ -17,7 +13,6 @@ async function requestAniListAPI(
   isCallingAPI: MutableRefObject<boolean>,
   signal: AbortSignal
 ) {
-  // const { format, season, seasonYear } = settings;
   console.log("calling ANILIST_API"); //eslint-disable-line
   isCallingAPI.current = true;
   await HandleAPICall(settings, [], mainCardQuery, signal).then((cards) => {
@@ -41,7 +36,7 @@ async function requestMockAPI(
     isCallingAPI.current = false;
     if (signal.aborted) return;
     dispatch({ type: "UPDATE_CARDS", payload: cards });
-    console.log("done calling api");
+    console.log("done calling api"); //eslint-disable-line
   });
 }
 

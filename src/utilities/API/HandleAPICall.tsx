@@ -66,17 +66,17 @@ export default async function HandleAPICall(
     return [];
   }
 
-  const mainCards = results.data.Page.media;
+  const cards = results.data.Page.media;
   const hasNextPage = results.data.Page.pageInfo.hasNextPage;
 
   if (hasNextPage) {
     return await HandleAPICall(
       { ...settings, page: settings.page + 1 },
-      [...accumulator, ...mainCards],
+      [...accumulator, ...cards],
       query,
       signal
     );
   }
 
-  return [...accumulator, ...mainCards];
+  return [...accumulator, ...cards];
 }

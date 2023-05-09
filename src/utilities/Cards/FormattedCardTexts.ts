@@ -19,9 +19,9 @@ export function formattedDate(
   if (formatForInputDefault) {
     return (
       (startDate?.day &&
-        dayjs(
-          `${startDate?.year}-${startDate?.month}-${startDate?.day}`
-        ).format("YYYY-MM-DD")) ||
+        dayjs(`${startDate.year}-${startDate.month}-${startDate.day}`).format(
+          "YYYY-MM-DD"
+        )) ||
       ""
     );
   }

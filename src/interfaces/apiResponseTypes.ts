@@ -88,7 +88,7 @@ export interface NewEpisodeCards {
   id: number;
   title: Titles;
   status: ShowStatus;
-  episodes: number;
+  episodes: number | null;
   nextAiringEpisode: NextAiringEpisode;
 }
 

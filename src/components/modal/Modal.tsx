@@ -15,6 +15,7 @@ import { useStateContext } from "../../utilities/Context/AppContext";
 import useFocusEffect from "../../utilities/Focus/FocusUtil";
 import CardDetailsModal from "./CardDetailsModal";
 import CardListOptions from "./CardListOptions";
+import NewEpisodeModal from "./NewEpisodesModal";
 
 const ModalButton: FunctionComponent<{ text: string; onClick: () => void }> = ({
   text,
@@ -103,9 +104,7 @@ const Modal: FunctionComponent<{
       ) : entryPoint === "new release" &&
         Array.isArray(modalData) &&
         isNewEpisodeCards(modalData) ? (
-        modalData.map((data) => (
-          <div key={data.id}>{data.title.romaji || data.title.english}</div>
-        ))
+        <NewEpisodeModal modalData={modalData} />
       ) : null}
 
       {childComponent}
