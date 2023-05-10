@@ -1,3 +1,4 @@
+import { MouseEvent, useRef } from "react";
 import { Formats, Season } from "../../interfaces/apiResponseTypes";
 import { ValidFormats } from "../../interfaces/initialConfigTypes";
 import {
@@ -9,6 +10,7 @@ export default function ContainerPrefrences() {
   const { variables } = useStateContext();
   const dispatch = useDispatchContext();
   const { season, seasonYear } = variables;
+  const currentlyActiveFormat = useRef<HTMLButtonElement | null>(null);
 
   function changeSeason(change: "up" | "down") {
     const seasons: Season[] = ["WINTER", "SPRING", "SUMMER", "FALL"];
@@ -39,8 +41,17 @@ export default function ContainerPrefrences() {
   function isValidFormat(format: string): format is ValidFormats {
     return ["TV", "MOVIE", "OVA"].includes(format);
   }
-  function changeFormat(whichFormat: string) {
+  function changeFormat(e: MouseEvent) {
+    const target = e.currentTarget as HTMLButtonElement;
+    const whichFormat = target.value;
     if (!isValidFormat(whichFormat)) return;
+    currentlyActiveFormat.current?.classList.remove(
+      "thick-underline",
+      "underline-offset-8"
+    );
+    target.classList.add("thick-underline", "underline-offset-8");
+    currentlyActiveFormat.current = target;
+
     const formats: { [k in ValidFormats]: Formats } = {
       TV: ["TV", "TV_SHORT"],
       MOVIE: ["MOVIE", "SPECIAL"],
@@ -76,23 +87,24 @@ export default function ContainerPrefrences() {
 
       <div className="pl-0 sm:pl-6">
         <button
-          className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
+          className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400 thick-underline underline-offset-8"
           value="TV"
-          onClick={(e) => changeFormat(e.currentTarget.value)}
+          onClick={(e) => changeFormat(e)}
+          ref={currentlyActiveFormat}
         >
           TV
         </button>
         <button
           className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
           value="MOVIE"
-          onClick={(e) => changeFormat(e.currentTarget.value)}
+          onClick={(e) => changeFormat(e)}
         >
           MOVIE
         </button>
         <button
           className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
           value="OVA"
-          onClick={(e) => changeFormat(e.currentTarget.value)}
+          onClick={(e) => changeFormat(e)}
         >
           OVA
         </button>

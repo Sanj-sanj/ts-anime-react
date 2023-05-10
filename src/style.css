@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.thick-underline {
+  text-decoration: double underline seashell 1px;
+}

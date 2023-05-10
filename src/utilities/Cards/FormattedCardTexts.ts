@@ -16,6 +16,8 @@ export function formattedDate(
   season: Season,
   formatForInputDefault?: boolean
 ) {
+  // this file serves formatting display information for the cards and modal views
+  // move this if statement to its own function and file for seperate usage.
   if (formatForInputDefault) {
     return (
       (startDate?.day &&

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { SortableBy } from "../../interfaces/initialConfigTypes";
+import requestNewEpisodesCheck from "../../utilities/API/requestNewEpisodesCheck";
 import {
   useDispatchContext,
   useStateContext,
@@ -15,10 +16,11 @@ const Navigation = ({
   const {
     sort,
     client: { overlay },
+    user: { lists },
   } = useStateContext();
   const dispatch = useDispatchContext();
   const SortableBy: SortableBy[] = ["Rating", "Popularity", "Countdown"];
-
+  const abortNewEpisode = useRef<null | AbortController>();
   const { isDarkMode, toggleDarkMode } = darkMode;
   const navigationRef = useRef<HTMLElement | null>(null);
 
@@ -96,10 +98,14 @@ const Navigation = ({
         className="bg-slate-300 dark:bg-slate-700"
         onClick={() => {
           closeNavigation();
-          dispatch({
-            type: "TOGGLE_MODAL",
-            payload: { action: "OPEN", entryPoint: "new release" },
-          });
+          void requestNewEpisodesCheck(
+            Object.keys(lists.WATCHING)
+              .concat(Object.keys(lists.INTERESTED))
+              .map((n) => +n),
+            lists,
+            dispatch,
+            abortNewEpisode.current?.signal
+          );
         }}
       >
         click

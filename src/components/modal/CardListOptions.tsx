@@ -35,6 +35,7 @@ const CardListOptions: FunctionComponent<{
       season: modalData.season,
       year: modalData.seasonYear,
       title: modalData.title,
+      showAiringStatus: modalData.status,
       currentEpisode: 0,
       userScore: 0,
       rewatches: 0,
@@ -403,7 +404,7 @@ const CardListOptions: FunctionComponent<{
           if (!tempDetails || !tempStatus || tempDetails.id === null) return;
           unsavedChanges.current = false;
           setUnsavedNotification(null);
-          console.log(tempDetails);
+
           dispatch({
             type: "UPDATE_PREFERENCE",
             payload: {

@@ -1,4 +1,4 @@
-import { Season, Titles } from "./apiResponseTypes";
+import { Season, ShowStatus, Titles } from "./apiResponseTypes";
 
 // NOTE: ShowListDetails & ListDetails may need to be reworked.
 
@@ -13,6 +13,7 @@ export type ListDetails = {
   startedOn: string | undefined;
   completedOn: string | undefined;
   notes: string | undefined;
+  showAiringStatus: ShowStatus;
 };
 
 export type ShowListDetails<id extends number> = {
