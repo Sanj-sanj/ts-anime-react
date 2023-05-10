@@ -99,6 +99,7 @@ export type Actions =
       payload: {
         status: UserShowStatus;
         cardData: ListDetails;
+        // I dont think previous is needed atm, currently search through the array teither implement or delete this. <!BETTER OFF DELETED!>
         previous?: { status: UserShowStatus; details: ListDetails };
       };
     }
