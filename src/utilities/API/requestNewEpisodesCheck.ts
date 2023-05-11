@@ -60,7 +60,7 @@ export default async function requestNewEpisodesCheck(
         if (
           isUserListEpisodeLessThanNextAiringEpisode(userList, found) ||
           hasShowFinishedAiringRecently(userList, found)
-        )
+        ) {
           if (hasShowFinishedAiringRecently(userList, found)) {
             dispatch({
               type: "UPDATE_PREFERENCE",
@@ -70,7 +70,8 @@ export default async function requestNewEpisodesCheck(
               },
             });
           }
-        acc = [...acc, found];
+          acc = [...acc, found];
+        }
       }
       return acc;
     }, [] as NewEpisodeCards[]);

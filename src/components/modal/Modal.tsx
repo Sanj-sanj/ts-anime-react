@@ -56,19 +56,30 @@ const Modal: FunctionComponent<{
     ShowListDetails<number>
   ][];
 
-  let inList: [UserShowStatus, ShowListDetails<number>] | undefined;
-  let previousStatusDetails: [UserShowStatus, ListDetails] | undefined;
+  const airingEpisodesDetails: ShowListDetails<number> = {};
+  let previousStatusDetailsForCardEntryPoint:
+    | [UserShowStatus, ListDetails]
+    | undefined;
   if (modalData && !Array.isArray(modalData) && isMainCard([modalData])) {
-    inList = prefArray.find(([, details]) => {
-      return modalData.id in details;
-    });
-    previousStatusDetails = inList
+    const inList: [UserShowStatus, ShowListDetails<number>] | undefined =
+      prefArray.find(([, details]) => {
+        return modalData.id in details;
+      });
+    previousStatusDetailsForCardEntryPoint = inList
       ? [inList[0], inList[1][modalData.id]]
       : undefined;
+  } else if (
+    modalData &&
+    Array.isArray(modalData) &&
+    isNewEpisodeCards(modalData)
+  ) {
+    modalData.forEach((card) => {
+      airingEpisodesDetails[card.id] = lists.WATCHING[card.id];
+    });
   }
 
   return (
-    <div className="flex flex-col w-4/5 md:w-4/6 xl:w-2/4 min-h-[16rem] max-h-[85%] absolute bg-slate-200 dark:bg-slate-800 left-0 right-0 mx-auto my-4 z-40 rounded-md">
+    <div className="flex flex-col w-4/5 md:w-4/6 xl:w-2/4 max-h-[85%] absolute bg-slate-200 dark:bg-slate-800 left-0 right-0 mx-auto my-4 z-40 rounded-md">
       <div className="w-full flex justify-between bg-slate-600 p-2 items-center rounded-t">
         <ModalButton text="Close Me" onClick={closeModal} />
         {entryPoint === "card" && childComponent ? (
@@ -83,7 +94,7 @@ const Modal: FunctionComponent<{
               setChildComponent(
                 <CardDetailsModal
                   modalData={modalData as MainCard}
-                  details={previousStatusDetails}
+                  details={previousStatusDetailsForCardEntryPoint}
                 />
               )
             }
@@ -95,7 +106,7 @@ const Modal: FunctionComponent<{
                 <CardListOptions
                   modalData={modalData as MainCard}
                   unsavedChanges={unsavedChanges}
-                  previous={previousStatusDetails}
+                  previous={previousStatusDetailsForCardEntryPoint}
                 />
               );
             }}
@@ -104,7 +115,10 @@ const Modal: FunctionComponent<{
       ) : entryPoint === "new release" &&
         Array.isArray(modalData) &&
         isNewEpisodeCards(modalData) ? (
-        <NewEpisodeModal modalData={modalData} />
+        <NewEpisodeModal
+          modalData={modalData}
+          userDetails={airingEpisodesDetails}
+        />
       ) : null}
 
       {childComponent}

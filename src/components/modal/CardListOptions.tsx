@@ -410,11 +410,6 @@ const CardListOptions: FunctionComponent<{
             payload: {
               status: tempStatus,
               cardData: tempDetails,
-              previous: prevStatus &&
-                prevDetails && {
-                  status: prevStatus,
-                  details: prevDetails,
-                },
             },
           });
         }}
