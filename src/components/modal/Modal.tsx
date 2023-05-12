@@ -55,11 +55,11 @@ const Modal: FunctionComponent<{
     UserShowStatus,
     ShowListDetails<number>
   ][];
-
   const airingEpisodesDetails: ShowListDetails<number> = {};
   let previousStatusDetailsForCardEntryPoint:
     | [UserShowStatus, ListDetails]
     | undefined;
+
   if (modalData && !Array.isArray(modalData) && isMainCard([modalData])) {
     const inList: [UserShowStatus, ShowListDetails<number>] | undefined =
       prefArray.find(([, details]) => {

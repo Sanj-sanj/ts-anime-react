@@ -5,6 +5,7 @@ import {
   useDispatchContext,
   useStateContext,
 } from "../../utilities/Context/AppContext";
+import getCurrSeasonAndYear from "../../utilities/getCurrentSeasonAndYear";
 
 export default function ContainerPrefrences() {
   const { variables } = useStateContext();
@@ -85,7 +86,7 @@ export default function ContainerPrefrences() {
         </button>
       </div>
 
-      <div className="pl-0 sm:pl-6">
+      <div className="pl-0 sm:pl-6 min-w-fit">
         <button
           className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400 thick-underline underline-offset-8"
           value="TV"
@@ -107,6 +108,32 @@ export default function ContainerPrefrences() {
           onClick={(e) => changeFormat(e)}
         >
           OVA
+        </button>
+      </div>
+      <div className="w-full flex justify-end">
+        <button
+          className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
+          onClick={() => {
+            const [currSeason, currYear] = getCurrSeasonAndYear();
+            if (
+              variables.season !== currSeason ||
+              variables.seasonYear !== currYear
+            ) {
+              dispatch({
+                type: "UPDATE_VARIABLES",
+                payload: {
+                  ...variables,
+                  season: currSeason,
+                  seasonYear: currYear,
+                },
+              });
+            }
+          }}
+        >
+          Current Season
+        </button>
+        <button className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400">
+          Calendar
         </button>
       </div>
     </div>

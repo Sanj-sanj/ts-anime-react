@@ -1,15 +1,7 @@
-import { APIVariables, Season } from "../interfaces/apiResponseTypes";
+import { APIVariables } from "../interfaces/apiResponseTypes";
 import { InitialConfig } from "../interfaces/initialConfigTypes";
 import { UserPreferences } from "../interfaces/UserPreferences";
-
-const getCurrSeasonAndYear = (): [Season, number] => {
-  //load this function on initial load to get nearest season & year
-  const today = new Date();
-  const seasons: Season[] = ["WINTER", "SPRING", "SUMMER", "FALL"];
-  const thisSeason: Season = seasons[Math.round((today.getMonth() + 1) / 4)];
-  const thisYear = today.getFullYear();
-  return [thisSeason, thisYear];
-};
+import getCurrSeasonAndYear from "./getCurrentSeasonAndYear";
 
 const [thisSeason, thisYear] = getCurrSeasonAndYear();
 
