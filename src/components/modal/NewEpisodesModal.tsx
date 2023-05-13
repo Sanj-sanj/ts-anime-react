@@ -27,15 +27,17 @@ const NewEpisodeModal: FunctionComponent<{
           return (
             <li key={id} className=" w-full px-3 mt-2">
               <div className="w-full flex flex-col justify-evenly items-center sm:flex-row">
-                <p className="sm:text-left sm:w-1/2 font-bold text-lg">
+                <p className="sm:text-left sm:w-1/2 font-bold text-lg sm:mr-2">
                   {title.romaji || title.english}:{" "}
                 </p>
-                <hr className="w-11/12 mt-1 sm:mt-0 " />
-                <div className="w-full sm:w-1/2 flex flex-col items-center sm:items-end">
-                  <p className="w-3/4 flex justify-between">
-                    My Progress: <span>{listDetail?.currentEpisode}</span>
+                <hr className="w-11/12 mb-2 sm:my-0 border-red-300 dark:border-white border-2 rounded" />
+                <div className="w-full sm:w-1/2 flex flex-col items-center sm:items-stretch sm:ml-4 border-x sm:border-0">
+                  <p className="w-3/4 sm:w-full flex justify-between py-1 px-6 sm:p-0">
+                    Progress: <button className="border px-1.5">-</button>
+                    <span>{listDetail?.currentEpisode}</span>
+                    <button className="border px-1.5">+</button>
                   </p>{" "}
-                  <p className="w-3/4 flex justify-between">
+                  <p className="w-3/4 flex justify-between px-6 py-1 sm:p-0">
                     Latest: <span>{latestEpAndTotalEp}</span>
                   </p>
                 </div>
