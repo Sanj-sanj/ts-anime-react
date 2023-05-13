@@ -3,9 +3,10 @@ import { NewEpisodeCards } from "../../interfaces/apiResponseTypes";
 import { ShowListDetails } from "../../interfaces/UserPreferences";
 
 const NewEpisodeModal: FunctionComponent<{
-  modalData: NewEpisodeCards[];
+  modalData: NewEpisodeCards[] | undefined;
   userDetails: ShowListDetails<number> | undefined;
 }> = ({ modalData, userDetails }) => {
+  if (!modalData) return <></>;
   return (
     <div className="w-full text-center dark:text-stone-300">
       <h2 className="font-semibold text-2xl mt-2">
@@ -31,19 +32,29 @@ const NewEpisodeModal: FunctionComponent<{
                   {title.romaji || title.english}:{" "}
                 </p>
                 <hr className="w-11/12 mb-2 sm:my-0 border-red-300 dark:border-white border-2 rounded" />
-                <div className="w-full sm:w-1/2 flex flex-col items-center sm:items-stretch sm:ml-4 border-x sm:border-0">
-                  <p className="w-3/4 sm:w-full flex justify-between py-1 px-6 sm:p-0">
-                    Progress: <button className="border px-1.5">-</button>
-                    <span>{listDetail?.currentEpisode}</span>
-                    <button className="border px-1.5">+</button>
+                <div className="w-full sm:w-1/2 flex flex-col items-center sm:items-stretch sm:ml-4 border-x border-b sm:border-0 rounded-b ">
+                  <p className="w-3/4 sm:w-full flex justify-between py-1 px-3 sm:p-0">
+                    Progress:
+                    <span className="flex ml-3">
+                      {listDetail?.currentEpisode}
+                      <button className="border px-1 ml-2">-</button>
+                      <button
+                        className="border px-1 ml-2"
+                        onClick={() =>
+                          listDetail?.currentEpisode &&
+                          listDetail.currentEpisode++
+                        }
+                      >
+                        +
+                      </button>
+                    </span>
                   </p>{" "}
-                  <p className="w-3/4 flex justify-between px-6 py-1 sm:p-0">
+                  <p className="w-3/4 sm:w-full flex justify-between px-3 py-1 sm:p-0">
                     Latest: <span>{latestEpAndTotalEp}</span>
                   </p>
                 </div>
-                <hr className="w-full sm:w-0" />
               </div>
-              <hr className="sm:w-full" />
+              <hr className="w-0 sm:w-full" />
             </li>
           );
         })}

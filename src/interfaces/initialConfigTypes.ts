@@ -30,7 +30,7 @@ export type ClientVariables = {
       active: boolean;
     };
   };
-  modalData: MainCard | NewEpisodeCards[] | undefined;
+  // modalData: MainCard | NewEpisodeCards[] | undefined;
 };
 
 export type ValidFormats = "TV" | "MOVIE" | "OVA";
@@ -40,6 +40,8 @@ export type InitialConfig = {
   client: ClientVariables;
   user: {
     lists: UserPreferences;
+    newEpisodesAvailable: NewEpisodeCards[] | undefined;
+    modalData: MainCard | undefined;
   };
   cards: {
     WINTER: SeasonCards<number>;
@@ -83,8 +85,13 @@ export type Actions =
       payload:
         | {
             action: "OPEN";
-            entryPoint: ModalEntryPoint;
-            data?: MainCard | NewEpisodeCards[];
+            entryPoint: "card";
+            data?: MainCard;
+          }
+        | {
+            action: "OPEN";
+            entryPoint: "new release";
+            data?: NewEpisodeCards[];
           }
         | {
             action: "CLOSE";

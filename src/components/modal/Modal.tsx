@@ -6,12 +6,8 @@ import {
   ShowListDetails,
   UserShowStatus,
 } from "../../interfaces/UserPreferences";
-import {
-  isMainCard,
-  isNewEpisodeCards,
-} from "../../utilities/Cards/CheckCardType";
-import { useStateContext } from "../../utilities/Context/AppContext";
 
+import { useStateContext } from "../../utilities/Context/AppContext";
 import useFocusEffect from "../../utilities/Focus/FocusUtil";
 import CardDetailsModal from "./CardDetailsModal";
 import CardListOptions from "./CardListOptions";
@@ -34,8 +30,7 @@ const Modal: FunctionComponent<{
   entryPoint: ModalEntryPoint;
 }> = ({ closeModal, entryPoint }) => {
   const {
-    client: { modalData },
-    user: { lists },
+    user: { lists, modalData, newEpisodesAvailable },
   } = useStateContext();
   const unsavedChanges = useRef<boolean>(false);
   const modal = document.querySelector("#modalRoot") as HTMLDivElement;
@@ -60,7 +55,7 @@ const Modal: FunctionComponent<{
     | [UserShowStatus, ListDetails]
     | undefined;
 
-  if (modalData && !Array.isArray(modalData) && isMainCard([modalData])) {
+  if (entryPoint === "card" && modalData) {
     const inList: [UserShowStatus, ShowListDetails<number>] | undefined =
       prefArray.find(([, details]) => {
         return modalData.id in details;
@@ -68,12 +63,8 @@ const Modal: FunctionComponent<{
     previousStatusDetailsForCardEntryPoint = inList
       ? [inList[0], inList[1][modalData.id]]
       : undefined;
-  } else if (
-    modalData &&
-    Array.isArray(modalData) &&
-    isNewEpisodeCards(modalData)
-  ) {
-    modalData.forEach((card) => {
+  } else if (entryPoint === "new release" && newEpisodesAvailable) {
+    newEpisodesAvailable.forEach((card) => {
       airingEpisodesDetails[card.id] = lists.WATCHING[card.id];
     });
   }
@@ -112,11 +103,9 @@ const Modal: FunctionComponent<{
             }}
           />
         </div>
-      ) : entryPoint === "new release" &&
-        Array.isArray(modalData) &&
-        isNewEpisodeCards(modalData) ? (
+      ) : entryPoint === "new release" ? (
         <NewEpisodeModal
-          modalData={modalData}
+          modalData={newEpisodesAvailable}
           userDetails={airingEpisodesDetails}
         />
       ) : null}

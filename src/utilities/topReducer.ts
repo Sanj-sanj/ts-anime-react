@@ -70,17 +70,31 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
       }
       if (action.payload.action === "OPEN") {
         modalRoot.classList.remove("invisible");
-        return {
-          ...state,
-          client: {
-            ...state.client,
-            overlay: {
-              ...state.client.overlay,
-              modal: { entryPoint: action.payload.entryPoint, active: true },
+        if (action.payload.entryPoint === "card") {
+          return {
+            ...state,
+            client: {
+              ...state.client,
+              overlay: {
+                ...state.client.overlay,
+                modal: { entryPoint: action.payload.entryPoint, active: true },
+              },
             },
-            modalData: action.payload.data,
-          },
-        };
+            user: { ...state.user, modalData: action.payload.data },
+          };
+        } else if (action.payload.entryPoint === "new release") {
+          return {
+            ...state,
+            client: {
+              ...state.client,
+              overlay: {
+                ...state.client.overlay,
+                modal: { entryPoint: action.payload.entryPoint, active: true },
+              },
+            },
+            user: { ...state.user, newEpisodesAvailable: action.payload.data },
+          };
+        }
       }
       return state;
     }
@@ -118,6 +132,7 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
       const newState = {
         ...state,
         user: {
+          ...state.user,
           lists: {
             ...lists,
             [action.payload.status]: {
@@ -135,6 +150,7 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
       return {
         ...state,
         user: {
+          ...state.user,
           lists: action.payload,
         },
       };
