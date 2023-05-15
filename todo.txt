@@ -25,8 +25,15 @@ Navigation:
     -new modal contents for saving to list/rating/bookmarks etc
     -- for viewing more information on particual anime..
     --- should work with Modal and Overlay
--- [WIP]
+    
+    --- ModalData's view for new Releases needs to have a way to sync with the user's watching list so new releases can have their progress updates. ex:
+        [New release out for : Oshi no Ko, progress 3: (c) --- 5: (a) / 12: (t)  
+        -  Therefore user should be able to +/- progres: (c) upto a value of (a), never exceeding 0 - (a) 
+        -  On modal close, changes should be saved to user's list.]
+    -- Feature is working, however need to look more into useEffect cleanup function to call on component unmount rather than on state change. 
+---     [COMPLETED]
 
 
 SortCardsBy.ts
     -improper sorting not a 'real' working feature
+--- [COMPLETED]

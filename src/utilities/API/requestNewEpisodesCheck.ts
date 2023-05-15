@@ -12,7 +12,7 @@ function isUserListEpisodeLessThanNextAiringEpisode(
   found: NewEpisodeCards
 ) {
   return (
-    userList.currentEpisode &&
+    typeof userList.currentEpisode === "number" &&
     found.nextAiringEpisode &&
     userList.currentEpisode < found.nextAiringEpisode?.episode - 1
   );
@@ -21,12 +21,8 @@ function hasShowFinishedAiringRecently(
   userList: ListDetails,
   found: NewEpisodeCards
 ) {
-  //   found &&
-  //   (userList.showAiringStatus === "RELEASING" ||
-  //     userList.showAiringStatus === "NOT_YET_RELEASED") &&
-  //   found.status === "FINISHED"
   return (
-    userList.currentEpisode &&
+    typeof userList.currentEpisode === "number" &&
     found.episodes &&
     userList.currentEpisode < found.episodes &&
     found.status === "FINISHED"

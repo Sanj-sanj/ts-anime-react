@@ -14,6 +14,7 @@ export type ListDetails = {
   completedOn: string | undefined;
   notes: string | undefined;
   showAiringStatus: ShowStatus;
+  userStatus: UserShowStatus | "";
 };
 
 export type ShowListDetails<id extends number> = {

@@ -1,12 +1,41 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { NewEpisodeCards } from "../../interfaces/apiResponseTypes";
-import { ShowListDetails } from "../../interfaces/UserPreferences";
+import {
+  ShowListDetails,
+  UserShowStatus,
+} from "../../interfaces/UserPreferences";
+import { useDispatchContext } from "../../utilities/Context/AppContext";
 
 const NewEpisodeModal: FunctionComponent<{
   modalData: NewEpisodeCards[] | undefined;
   userDetails: ShowListDetails<number> | undefined;
 }> = ({ modalData, userDetails }) => {
-  if (!modalData) return <></>;
+  if (!modalData || !userDetails) return <></>;
+
+  const dispatch = useDispatchContext();
+  const [statefulDetails, setStatefulDetails] = useState<
+    ShowListDetails<number>
+  >({ ...userDetails });
+  const listPrefDispatchIDs = useRef<number[]>([]);
+
+  useEffect(() => {
+    return () => {
+      listPrefDispatchIDs.current.forEach((id) => {
+        if (
+          statefulDetails[id].currentEpisode === userDetails[id].currentEpisode
+        )
+          return;
+        dispatch({
+          type: "UPDATE_PREFERENCE",
+          payload: {
+            cardData: statefulDetails[id],
+            status: statefulDetails[id].userStatus as UserShowStatus,
+          },
+        });
+      });
+    };
+  }, [statefulDetails]);
+
   return (
     <div className="w-full text-center dark:text-stone-300">
       <h2 className="font-semibold text-2xl mt-2">
@@ -14,7 +43,7 @@ const NewEpisodeModal: FunctionComponent<{
       </h2>
       <ul className="h-full px-2 mb-4">
         {modalData.map(({ id, status, title, nextAiringEpisode, episodes }) => {
-          const listDetail = userDetails?.[id];
+          const showDetails = statefulDetails[id];
           const latestEpAndTotalEp =
             status === "RELEASING" || status === "HIATUS"
               ? `${
@@ -36,14 +65,50 @@ const NewEpisodeModal: FunctionComponent<{
                   <p className="w-3/4 sm:w-full flex justify-between py-1 px-3 sm:p-0">
                     Progress:
                     <span className="flex ml-3">
-                      {listDetail?.currentEpisode}
-                      <button className="border px-1 ml-2">-</button>
+                      {showDetails.currentEpisode}
                       <button
-                        className="border px-1 ml-2"
-                        onClick={() =>
-                          listDetail?.currentEpisode &&
-                          listDetail.currentEpisode++
-                        }
+                        className="border px-1 ml-2 rounded-sm"
+                        onClick={() => {
+                          const currEp = showDetails.currentEpisode;
+                          if (!currEp) return;
+                          let newCurr = currEp - 1;
+                          if (newCurr < 0) newCurr = 0;
+                          setStatefulDetails({
+                            ...statefulDetails,
+                            [id]: {
+                              ...showDetails,
+                              currentEpisode: newCurr,
+                            },
+                          });
+                          if (!listPrefDispatchIDs.current.includes(id)) {
+                            listPrefDispatchIDs.current.push(id);
+                          }
+                        }}
+                      >
+                        -
+                      </button>
+                      <button
+                        className="border px-1 ml-2 rounded-sm"
+                        onClick={() => {
+                          const currEp = showDetails.currentEpisode;
+                          if (typeof currEp !== "number") return;
+                          let newCurr = currEp + 1;
+                          if (
+                            (episodes && newCurr > episodes) ||
+                            (nextAiringEpisode?.episode &&
+                              newCurr > nextAiringEpisode.episode - 1)
+                          )
+                            newCurr--;
+                          setStatefulDetails({
+                            ...statefulDetails,
+                            [id]: {
+                              ...showDetails,
+                              currentEpisode: newCurr,
+                            },
+                          });
+                          if (!listPrefDispatchIDs.current.includes(id))
+                            listPrefDispatchIDs.current.push(id);
+                        }}
                       >
                         +
                       </button>

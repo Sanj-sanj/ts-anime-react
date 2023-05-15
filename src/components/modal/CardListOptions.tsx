@@ -27,8 +27,6 @@ const CardListOptions: FunctionComponent<{
     prevStatus
   );
 
-  // UNDEFINED VALUES ARE NOT GETTING SAVED WHEN STRINGIFIED BY JSON OBJ????? WTF
-
   const [tempDetails, setTempDetails] = useState<ListDetails>(
     prevDetails || {
       id: modalData.id,
@@ -39,6 +37,7 @@ const CardListOptions: FunctionComponent<{
       currentEpisode: 0,
       userScore: 0,
       rewatches: 0,
+      userStatus: "",
       startedOn: "",
       completedOn: "",
       notes: "",
@@ -88,17 +87,7 @@ const CardListOptions: FunctionComponent<{
         {modalData.title.english || modalData.title.romaji}
       </h3>
       <hr className="border-slate-950 dark:border-stone-400 border-2" />
-      <form
-        ref={formRef}
-        className="flex flex-col items-center"
-        // onChange={(e) => {
-        //   const target = e.target as
-        //     | HTMLInputElement
-        //     | HTMLSelectElement
-        //     | HTMLTextAreaElement;
-        //   setTempDetails({ ...tempDetails, [target.name]: target.value });
-        // }}
-      >
+      <form ref={formRef} className="flex flex-col items-center">
         <h4 className="text-center font-medium">Show Status</h4>
         {unsavedNotification}
         <div className="flex w-full flex-col flex-wrap sm:flex-row mb-2">

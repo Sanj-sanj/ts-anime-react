@@ -113,7 +113,8 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
     case "UPDATE_PREFERENCE": {
       const lists = state.user.lists;
       const prevListItems = lists[action.payload.status];
-      const id = action.payload.cardData.id as number;
+      const card = action.payload.cardData;
+      const id = card.id as number;
       // rmove the previous entry if the user changes the show status from like watchign to skipped removed .
       const statusAndDetailsEntries = Object.entries(lists) as [
         UserShowStatus,
@@ -129,6 +130,7 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
           delete lists[status][id];
         });
       }
+      card.userStatus = action.payload.status;
       const newState = {
         ...state,
         user: {
@@ -137,7 +139,7 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
             ...lists,
             [action.payload.status]: {
               ...prevListItems,
-              [id]: action.payload.cardData,
+              [id]: card,
             },
           },
         },
