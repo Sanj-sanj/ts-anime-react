@@ -69,7 +69,7 @@ const Card: FunctionComponent<{
           <hr />
         </div>
 
-        <div className="h-full flex flex-col justify-around px-2">
+        <div className="h-full flex flex-col justify-around px-2 pt-2">
           <small>
             <ul className="w-full flex items-baseline justify-between font-light text-xs">
               <div>
@@ -97,7 +97,8 @@ const Card: FunctionComponent<{
               </div>
             </ul>
           </small>
-          <ul className="flex w-full text-sm font-light overflow-auto">
+          <hr />
+          <ul className="flex w-full text-sm font-light overflow-auto pb-1">
             {genres.length ? (
               genres.map((genre) => (
                 <li

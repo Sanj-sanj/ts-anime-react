@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import Navigation from "../navigation/Navigation";
 import Header from "../header/Header";
 import Modal from "../modal/Modal";
-import { setupDarkMode } from "../../utilities/layout/utilities";
+import { setupDarkMode } from "../../utilities/layout/setupDarkMode";
 import {
   useDispatchContext,
   useStateContext,
