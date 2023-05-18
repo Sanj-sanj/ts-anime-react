@@ -8,12 +8,9 @@ import {
   useDispatchContext,
   useStateContext,
 } from "../../utilities/Context/AppContext";
+import { Outlet } from "react-router-dom";
 
-type Props = {
-  children: JSX.Element;
-};
-
-const Layout = ({ children }: Props) => {
+const Layout = () => {
   const [isDarkMode, setIsDarkMode] = useState(setupDarkMode());
   const overlayRef = useRef<null | HTMLButtonElement>(null);
   const { client } = useStateContext();
@@ -65,7 +62,8 @@ const Layout = ({ children }: Props) => {
       <Navigation darkMode={{ isDarkMode, toggleDarkMode }} />
       <Header openNavigation={openNavigation} />
       <main className="min-h-full flex flex-col items-center bg-stone-200 dark:bg-neutral-800">
-        {children}
+        {/* {children} */}
+        <Outlet />
       </main>
     </>
   );

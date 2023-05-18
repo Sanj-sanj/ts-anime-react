@@ -1,7 +1,7 @@
 import { MainCard } from "../../interfaces/apiResponseTypes";
 import { APIVariables } from "../../interfaces/apiResponseTypes";
 // import json from "../../mockApi/mock.json";
-import json2 from "../../mockApi/mock3.json";
+import json2 from "../../mockApi/mock2.json";
 
 export default async function HandleMockAPICall(
   variables: APIVariables

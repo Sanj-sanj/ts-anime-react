@@ -6,6 +6,7 @@ import {
   useStateContext,
 } from "../../utilities/Context/AppContext";
 import getCurrSeasonAndYear from "../../utilities/getCurrentSeasonAndYear";
+import { Link } from "react-router-dom";
 
 export default function ContainerPrefrences() {
   const { variables } = useStateContext();
@@ -135,6 +136,11 @@ export default function ContainerPrefrences() {
         <button className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400">
           Calendar
         </button>
+        <Link to="/list">
+          <button className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400">
+            My List
+          </button>
+        </Link>
       </div>
     </div>
   );
