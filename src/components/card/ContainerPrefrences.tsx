@@ -1,4 +1,5 @@
 import { MouseEvent, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Formats, Season } from "../../interfaces/apiResponseTypes";
 import { ValidFormats } from "../../interfaces/initialConfigTypes";
 import {
@@ -6,7 +7,8 @@ import {
   useStateContext,
 } from "../../utilities/Context/AppContext";
 import getCurrSeasonAndYear from "../../utilities/getCurrentSeasonAndYear";
-import { Link } from "react-router-dom";
+import calendarSVG from "../../assets/calendar-svgrepo-com.svg";
+import medalSVG from "../../assets/medal.svg";
 
 export default function ContainerPrefrences() {
   const { variables } = useStateContext();
@@ -70,11 +72,12 @@ export default function ContainerPrefrences() {
   }
 
   return (
-    <div className="w-full bg-slate-600 px-10 flex items-center min-h-[5vh] flex-col sm:flex-row">
+    <div className="w-full bg-slate-600 px-10 flex items-center min-h-[5vh] flex-col lg:flex-row">
       <div className="pl-1 text-2xl w-60 whitespace-nowrap flex justify-between">
         <button
           className="px-2 focus:outline outline-2 rounded-sm outline-zinc-400 mr-1"
           onClick={() => changeSeason("down")}
+          title="Previous season"
         >
           {"<"}
         </button>
@@ -82,65 +85,77 @@ export default function ContainerPrefrences() {
         <button
           className="px-2 focus:outline outline-2 rounded-sm outline-zinc-400 ml-1"
           onClick={() => changeSeason("up")}
+          title="Next season"
         >
           {">"}
         </button>
       </div>
 
-      <div className="pl-0 sm:pl-6 min-w-fit">
-        <button
-          className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400 thick-underline underline-offset-8"
-          value="TV"
-          onClick={(e) => changeFormat(e)}
-          ref={currentlyActiveFormat}
-        >
-          TV
-        </button>
-        <button
-          className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
-          value="MOVIE"
-          onClick={(e) => changeFormat(e)}
-        >
-          MOVIE
-        </button>
-        <button
-          className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
-          value="OVA"
-          onClick={(e) => changeFormat(e)}
-        >
-          OVA
-        </button>
-      </div>
-      <div className="w-full flex justify-end">
-        <button
-          className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
-          onClick={() => {
-            const [currSeason, currYear] = getCurrSeasonAndYear();
-            if (
-              variables.season !== currSeason ||
-              variables.seasonYear !== currYear
-            ) {
-              dispatch({
-                type: "UPDATE_VARIABLES",
-                payload: {
-                  ...variables,
-                  season: currSeason,
-                  seasonYear: currYear,
-                },
-              });
-            }
-          }}
-        >
-          Current Season
-        </button>
-        <button className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400">
-          Calendar
-        </button>
-        <Link to="/list">
-          <button className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400">
-            My List
+      <div>
+        <div className="pl-0 sm:pl-6 min-w-fit">
+          <button
+            className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400 thick-underline underline-offset-8"
+            value="TV"
+            onClick={(e) => changeFormat(e)}
+            title="Tv / Tv shorts"
+            ref={currentlyActiveFormat}
+          >
+            TV
           </button>
-        </Link>
+          <button
+            className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
+            value="MOVIE"
+            onClick={(e) => changeFormat(e)}
+            title="Movies"
+          >
+            MOVIE
+          </button>
+          <button
+            className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
+            value="OVA"
+            onClick={(e) => changeFormat(e)}
+            title="OVA / ONA"
+          >
+            OVA
+          </button>
+        </div>
+        <div className="w-full flex justify-center lg:justify-end">
+          <button
+            className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
+            title="Nearest Season"
+            onClick={() => {
+              const [currSeason, currYear] = getCurrSeasonAndYear();
+              if (
+                variables.season !== currSeason ||
+                variables.seasonYear !== currYear
+              ) {
+                dispatch({
+                  type: "UPDATE_VARIABLES",
+                  payload: {
+                    ...variables,
+                    season: currSeason,
+                    seasonYear: currYear,
+                  },
+                });
+              }
+            }}
+          >
+            Current Season
+          </button>
+          <button
+            className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
+            title="Calendar view"
+          >
+            <img src={calendarSVG} className="w-6" alt="" />
+          </button>
+          <Link
+            to="/list"
+            className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
+            title="My list"
+          >
+            <img src={medalSVG} className="w-6" alt="" />
+          </Link>
+        </div>
       </div>
     </div>
   );
