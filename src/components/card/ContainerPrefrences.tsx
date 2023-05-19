@@ -7,8 +7,9 @@ import {
   useStateContext,
 } from "../../utilities/Context/AppContext";
 import getCurrSeasonAndYear from "../../utilities/getCurrentSeasonAndYear";
-import calendarSVG from "../../assets/calendar-svgrepo-com.svg";
-import medalSVG from "../../assets/medal.svg";
+
+import CalendarSVG from "../../assets/calendar-svgrepo-com.svg";
+import MedalSVG from "../../assets/medal.svg";
 
 export default function ContainerPrefrences() {
   const { variables } = useStateContext();
@@ -146,14 +147,16 @@ export default function ContainerPrefrences() {
             className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
             title="Calendar view"
           >
-            <img src={calendarSVG} className="w-6" alt="" />
+            <img src={CalendarSVG as string} className="w-6" alt="" />
+            {/* <CalendarSVG /> */}
           </button>
           <Link
             to="/list"
             className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
             title="My list"
           >
-            <img src={medalSVG} className="w-6" alt="" />
+            <img src={MedalSVG as string} className="w-6" alt="" />
+            {/* <MedalSVG /> */}
           </Link>
         </div>
       </div>
