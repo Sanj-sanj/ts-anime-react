@@ -1,6 +1,6 @@
 import { APIVariables } from "../interfaces/apiResponseTypes";
 import { InitialConfig } from "../interfaces/initialConfigTypes";
-import { UserPreferences } from "../interfaces/UserPreferences";
+import { UserPreferences } from "../interfaces/UserPreferencesTypes";
 import getCurrSeasonAndYear from "./getCurrentSeasonAndYear";
 
 const [thisSeason, thisYear] = getCurrSeasonAndYear();

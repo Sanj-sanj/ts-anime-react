@@ -9,10 +9,13 @@ import {
   useStateContext,
 } from "../../utilities/Context/AppContext";
 import { Outlet } from "react-router-dom";
+import { UserPreferences } from "../../interfaces/UserPreferencesTypes";
+import requestNewEpisodesCheck from "../../utilities/API/requestNewEpisodesCheck";
 
 const Layout = () => {
   const [isDarkMode, setIsDarkMode] = useState(setupDarkMode());
   const overlayRef = useRef<null | HTMLButtonElement>(null);
+  const abortNewEpisode = useRef<null | AbortController>(null);
   const { client } = useStateContext();
   const dispatch = useDispatchContext();
 
@@ -44,6 +47,26 @@ const Layout = () => {
     }
   }, [isDarkMode]);
 
+  useEffect(() => {
+    abortNewEpisode.current = new AbortController();
+    const listHistory = localStorage.getItem("userList");
+    if (listHistory) {
+      const list = JSON.parse(listHistory) as UserPreferences;
+      dispatch({ type: "LOAD_LIST", payload: list });
+      void requestNewEpisodesCheck(
+        Object.keys(list.WATCHING)
+          .concat(Object.keys(list.INTERESTED))
+          .map((n) => +n),
+        list,
+        dispatch,
+        abortNewEpisode.current.signal
+      );
+    }
+    return () => {
+      if (abortNewEpisode.current) abortNewEpisode.current.abort();
+    };
+  }, []);
+
   return (
     <>
       <button
@@ -61,7 +84,7 @@ const Layout = () => {
         : null}
       <Navigation darkMode={{ isDarkMode, toggleDarkMode }} />
       <Header openNavigation={openNavigation} />
-      <main className="min-h-full flex flex-col items-center bg-stone-200 dark:bg-neutral-800">
+      <main className="min-h-[90vh] flex flex-col items-center bg-stone-200 dark:bg-neutral-800">
         {/* {children} */}
         <Outlet />
       </main>

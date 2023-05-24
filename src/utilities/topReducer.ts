@@ -1,5 +1,8 @@
 import { Actions, InitialConfig } from "../interfaces/initialConfigTypes";
-import { ShowListDetails, UserShowStatus } from "../interfaces/UserPreferences";
+import {
+  ShowListDetails,
+  UserShowStatus,
+} from "../interfaces/UserPreferencesTypes";
 
 const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
   switch (action.type) {

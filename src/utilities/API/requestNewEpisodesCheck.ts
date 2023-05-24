@@ -1,7 +1,10 @@
 import { Dispatch } from "react";
 import { NewEpisodeCards } from "../../interfaces/apiResponseTypes";
 import { Actions } from "../../interfaces/initialConfigTypes";
-import { ListDetails, UserPreferences } from "../../interfaces/UserPreferences";
+import {
+  ListDetails,
+  UserPreferences,
+} from "../../interfaces/UserPreferencesTypes";
 import { isNewEpisodeCards } from "../Cards/CheckCardType";
 import HandleAPICall from "./HandleAPICall";
 import { newEpisodesCheckQuery } from "./QueryStrings/NewEpisodesQuery";

@@ -6,7 +6,10 @@ import {
   useState,
 } from "react";
 import { MainCard } from "../../interfaces/apiResponseTypes";
-import { ListDetails, UserShowStatus } from "../../interfaces/UserPreferences";
+import {
+  ListDetails,
+  UserShowStatus,
+} from "../../interfaces/UserPreferencesTypes";
 import { formattedDate } from "../../utilities/Cards/FormattedCardTexts";
 
 import { useDispatchContext } from "../../utilities/Context/AppContext";

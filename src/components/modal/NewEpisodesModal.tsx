@@ -3,26 +3,27 @@ import { NewEpisodeCards } from "../../interfaces/apiResponseTypes";
 import {
   ShowListDetails,
   UserShowStatus,
-} from "../../interfaces/UserPreferences";
+} from "../../interfaces/UserPreferencesTypes";
 import { useDispatchContext } from "../../utilities/Context/AppContext";
 
 const NewEpisodeModal: FunctionComponent<{
   modalData: NewEpisodeCards[] | undefined;
-  userDetails: ShowListDetails<number> | undefined;
-}> = ({ modalData, userDetails }) => {
-  if (!modalData || !userDetails) return <></>;
+  singelShowDetails: ShowListDetails<number> | undefined;
+}> = ({ modalData, singelShowDetails }) => {
+  if (!modalData || !singelShowDetails) return <></>;
 
   const dispatch = useDispatchContext();
   const [statefulDetails, setStatefulDetails] = useState<
     ShowListDetails<number>
-  >({ ...userDetails });
+  >({ ...singelShowDetails });
   const listPrefDispatchIDs = useRef<number[]>([]);
 
   useEffect(() => {
     return () => {
       listPrefDispatchIDs.current.forEach((id) => {
         if (
-          statefulDetails[id].currentEpisode === userDetails[id].currentEpisode
+          statefulDetails[id].currentEpisode ===
+          singelShowDetails[id].currentEpisode
         )
           return;
         dispatch({

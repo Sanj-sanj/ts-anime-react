@@ -5,7 +5,7 @@ import {
   ListDetails,
   ShowListDetails,
   UserShowStatus,
-} from "../../interfaces/UserPreferences";
+} from "../../interfaces/UserPreferencesTypes";
 
 import { useStateContext } from "../../utilities/Context/AppContext";
 import useFocusEffect from "../../utilities/Focus/FocusUtil";
@@ -106,7 +106,7 @@ const Modal: FunctionComponent<{
       ) : entryPoint === "new release" ? (
         <NewEpisodeModal
           modalData={newEpisodesAvailable}
-          userDetails={airingEpisodesDetails}
+          singelShowDetails={airingEpisodesDetails}
         />
       ) : null}
 

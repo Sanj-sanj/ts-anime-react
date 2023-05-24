@@ -148,7 +148,6 @@ export default function ContainerPrefrences() {
             title="Calendar view"
           >
             <img src={CalendarSVG as string} className="w-6" alt="" />
-            {/* <CalendarSVG /> */}
           </button>
           <Link
             to="/list"
@@ -156,7 +155,6 @@ export default function ContainerPrefrences() {
             title="My list"
           >
             <img src={MedalSVG as string} className="w-6" alt="" />
-            {/* <MedalSVG /> */}
           </Link>
         </div>
       </div>

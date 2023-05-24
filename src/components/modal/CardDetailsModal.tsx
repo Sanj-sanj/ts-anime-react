@@ -1,7 +1,10 @@
 import dayjs from "dayjs";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { MainCard } from "../../interfaces/apiResponseTypes";
-import { ListDetails, UserShowStatus } from "../../interfaces/UserPreferences";
+import {
+  ListDetails,
+  UserShowStatus,
+} from "../../interfaces/UserPreferencesTypes";
 import {
   formattedDate,
   formatStudiosText,

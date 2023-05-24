@@ -4,7 +4,7 @@ import {
   ListDetails,
   UserPreferences,
   UserShowStatus,
-} from "./UserPreferences";
+} from "./UserPreferencesTypes";
 
 export type SeasonCards<Year extends number> = {
   [Y in Year]: {
@@ -30,7 +30,6 @@ export type ClientVariables = {
       active: boolean;
     };
   };
-  // modalData: MainCard | NewEpisodeCards[] | undefined;
 };
 
 export type ValidFormats = "TV" | "MOVIE" | "OVA";
