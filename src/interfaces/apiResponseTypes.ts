@@ -91,6 +91,18 @@ export interface NewEpisodeCards {
   episodes: number | null;
   nextAiringEpisode: NextAiringEpisode;
 }
+export interface UserListCards {
+  id: number;
+  title: Titles;
+  status: ShowStatus;
+  episodes: number | null;
+  nextAiringEpisode: NextAiringEpisode;
+  coverImage: CoverImage;
+  format: string;
+  meanScore: number | null;
+  averageScore: number | null;
+  popularity: number | null;
+}
 
 export interface MainCard {
   meanScore: number | null;

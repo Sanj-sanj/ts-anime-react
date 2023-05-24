@@ -1,4 +1,4 @@
-import { Season, ShowStatus, Titles } from "./apiResponseTypes";
+import { Season, ShowStatus, Titles, UserListCards } from "./apiResponseTypes";
 
 // NOTE: ShowListDetails & ListDetails may need to be reworked.
 
@@ -19,6 +19,12 @@ export type ListDetails = {
 
 export type ShowListDetails<id extends number> = {
   [n in id]: ListDetails;
+};
+export type UserListDetails<id extends number> = {
+  [n in id]: {
+    userListDetails: ListDetails;
+    apiResults: UserListCards;
+  };
 };
 
 export type UserShowStatus =
