@@ -94,12 +94,12 @@ const CardListOptions: FunctionComponent<{
         <h4 className="text-center font-medium">Show Status</h4>
         {unsavedNotification}
         <div className="flex w-full flex-col flex-wrap sm:flex-row mb-2">
-          <div className="w-full sm:w-1/2">
-            <div className="flex justify-between px-2 mb-2">
+          <div className="w-full sm:w-1/2 px-2">
+            <div className="flex justify-between mb-2">
               <p>Status:</p>
               <span>{tempStatus}</span>
             </div>
-            <div className="px-2 mb-2">
+            <div className="mb-2">
               <label className="flex justify-between w-full">
                 Progress:
                 <input
@@ -128,12 +128,46 @@ const CardListOptions: FunctionComponent<{
                 />
               </label>
             </div>
+
+            <div className="mb-2">
+              <label className="flex justify-between">
+                Rating:
+                <select
+                  className="bg-white pl-2 text-center text-black disabled:bg-gray-400"
+                  disabled={
+                    modalData.status === "NOT_YET_RELEASED" ||
+                    tempStatus === "INTERESTED" ||
+                    tempStatus === "SKIPPED"
+                  }
+                  hidden={hideInput.current}
+                  value={tempDetails.userScore}
+                  onChange={(e) =>
+                    setTempDetails({
+                      ...tempDetails,
+                      userScore: +e.target.value,
+                    })
+                  }
+                  name="userScore"
+                >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </label>
+            </div>
           </div>
-          <div className="w-full sm:w-1/2">
-            <div className="mx-2 mb-2">
+          <div className="w-full sm:w-1/2 px-2">
+            <div className="mb-2">
               <label className="flex justify-between w-full">
                 Started:
-                <div>
+                <div className="flex">
                   <input
                     className="w-32 text-black"
                     type="date"
@@ -188,10 +222,10 @@ const CardListOptions: FunctionComponent<{
                 </div>
               </label>
             </div>
-            <div className="mx-2 mb-2">
+            <div className="mb-2">
               <label className="flex justify-between w-full">
                 Completed:
-                <div>
+                <div className="flex">
                   <input
                     className="w-32 text-black"
                     type="date"
@@ -254,44 +288,7 @@ const CardListOptions: FunctionComponent<{
                 </div>
               </label>
             </div>
-          </div>
-          <div className="w-full sm:w-1/2">
-            <div className="mx-2 mb-2">
-              <label className="flex justify-between">
-                Rating:
-                <select
-                  className="bg-white pl-2 text-center text-black disabled:bg-gray-400"
-                  disabled={
-                    modalData.status === "NOT_YET_RELEASED" ||
-                    tempStatus === "INTERESTED" ||
-                    tempStatus === "SKIPPED"
-                  }
-                  hidden={hideInput.current}
-                  value={tempDetails.userScore}
-                  onChange={(e) =>
-                    setTempDetails({
-                      ...tempDetails,
-                      userScore: +e.target.value,
-                    })
-                  }
-                  name="userScore"
-                >
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                </select>
-              </label>
-            </div>
-          </div>
-          <div className="w-full sm:w-1/2 mb-2">
-            <div className="mx-2 mb-2">
+            <div className="mb-2">
               <label className="flex justify-between">
                 Rewatch:
                 <input

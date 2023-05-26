@@ -31,12 +31,14 @@ const Card: FunctionComponent<{
 
   return (
     <li className="flex relative rounded-lg my-2 md:mx-2 border-2 border-slate-300 bg-stone-100 dark:bg-zinc-900 dark:border-slate-700 dark:text-slate-300 w-full max-w-md max-h-[147px]">
-      <ListButton
-        card={card}
-        focusHandler={(ref: HTMLButtonElement) => {
-          focusRef.current = ref;
-        }}
-      />
+      <span className="absolute -right-3 -top-3">
+        <ListButton
+          card={card}
+          focusHandler={(ref: HTMLButtonElement) => {
+            focusRef.current = ref;
+          }}
+        />
+      </span>
       <div className="relative">
         <img
           className="bg-slate-200 rounded-l-md w-full max-h-[143px] min-h-[143px] min-w-[100px] max-w-[100px]"

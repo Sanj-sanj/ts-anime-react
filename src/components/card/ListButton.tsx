@@ -10,7 +10,7 @@ const ListButton: FunctionComponent<{
   const buttonRef = useRef<null | HTMLButtonElement>(null);
   return (
     <button
-      className="absolute -right-3 -top-3 bg-red-700 rounded-lg focus:outline outline-blue-400"
+      className=" bg-red-700 rounded-lg focus:outline outline-blue-400"
       ref={buttonRef}
       onClick={() => {
         dispatch({

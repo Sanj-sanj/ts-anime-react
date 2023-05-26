@@ -70,7 +70,7 @@ const Modal: FunctionComponent<{
   }
 
   return (
-    <div className="flex flex-col w-4/5 md:w-4/6 xl:w-2/4 max-h-[85%] absolute bg-slate-200 dark:bg-slate-800 left-0 right-0 mx-auto my-4 z-40 rounded-md">
+    <div className="flex flex-col w-11/12 md:w-5/6 lg:w-4/6 xl:w-2/4 max-h-[85%] absolute bg-slate-200 dark:bg-slate-800 left-0 right-0 mx-auto my-4 z-40 rounded-md">
       <div className="w-full flex justify-between bg-slate-600 p-2 items-center rounded-t">
         <ModalButton text="Close Me" onClick={closeModal} />
         {entryPoint === "card" && childComponent ? (
