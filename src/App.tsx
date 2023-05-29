@@ -4,8 +4,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import AppProvider from "./utilities/Context/AppContext";
 import Layout from "./components/layout/Layout";
-import CardContainer from "./components/card/CardContainer";
-import UserList from "./components/UserList/UserList";
+import CardContainer from "./components/pages/cardView/CardContainer";
+import UserList from "./components/pages/UserList/UserList";
 
 const root = createRoot(document.getElementById("root") as HTMLElement);
 

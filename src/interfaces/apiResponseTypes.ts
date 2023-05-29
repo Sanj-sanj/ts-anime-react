@@ -1,3 +1,8 @@
+import {
+  ListDetails,
+  UserListDetails,
+  UserShowStatus,
+} from "./UserPreferencesTypes";
 import { ValidFormats } from "./initialConfigTypes";
 
 export interface APIPayload {
@@ -103,7 +108,11 @@ export interface UserListCards {
   averageScore: number | null;
   popularity: number | null;
 }
-
+type UserListData = {
+  userListDetails: ListDetails;
+  apiResults: MainCard;
+}[];
+export type UserListParams = { [x in UserShowStatus]: UserListData };
 export interface MainCard {
   meanScore: number | null;
   nextAiringEpisode: NextAiringEpisode;

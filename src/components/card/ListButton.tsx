@@ -5,7 +5,8 @@ import { useDispatchContext } from "../../utilities/Context/AppContext";
 const ListButton: FunctionComponent<{
   card: MainCard;
   focusHandler: (ref: HTMLButtonElement) => void;
-}> = ({ card, focusHandler }) => {
+  text?: string;
+}> = ({ card, focusHandler, text }) => {
   const dispatch = useDispatchContext();
   const buttonRef = useRef<null | HTMLButtonElement>(null);
   return (
@@ -20,7 +21,7 @@ const ListButton: FunctionComponent<{
       }}
       onFocus={() => focusHandler(buttonRef.current as HTMLButtonElement)}
     >
-      W.I.P
+      {(text && text) || "W.I.P"}
     </button>
   );
 };

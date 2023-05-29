@@ -1,15 +1,15 @@
 import { MouseEvent, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Formats, Season } from "../../interfaces/apiResponseTypes";
-import { ValidFormats } from "../../interfaces/initialConfigTypes";
+import { Formats, Season } from "../../../interfaces/apiResponseTypes";
+import { ValidFormats } from "../../../interfaces/initialConfigTypes";
 import {
   useDispatchContext,
   useStateContext,
-} from "../../utilities/Context/AppContext";
-import getCurrSeasonAndYear from "../../utilities/getCurrentSeasonAndYear";
+} from "../../../utilities/Context/AppContext";
+import getCurrSeasonAndYear from "../../../utilities/getCurrentSeasonAndYear";
 
-import CalendarSVG from "../../assets/calendar-svgrepo-com.svg";
-import MedalSVG from "../../assets/medal.svg";
+import CalendarSVG from "../../../assets/calendar-svgrepo-com.svg";
+import MedalSVG from "../../../assets/medal.svg";
 
 export default function ContainerPrefrences() {
   const { variables } = useStateContext();

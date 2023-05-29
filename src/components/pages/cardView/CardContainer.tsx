@@ -3,18 +3,18 @@ import {
   callNextPageOnScroll,
   checkIfCardsExist,
   handleCardContainerOnClick,
-} from "../../utilities/Cards/CardContainerUtils";
-import Card from "./Card";
+} from "../../../utilities/Cards/CardContainerUtils";
+import Card from "../../card/Card";
 import {
   requestAniListAPI,
   requestMockAPI,
-} from "../../utilities/API/requestCards_CardContainer";
-import SortCardsBy from "../../utilities/Cards/SortCardsBy";
-import { MainCard } from "../../interfaces/apiResponseTypes";
+} from "../../../utilities/API/requestCards_CardContainer";
+import SortCardsBy from "../../../utilities/Cards/SortCardsBy";
+import { MainCard } from "../../../interfaces/apiResponseTypes";
 import {
   useDispatchContext,
   useStateContext,
-} from "../../utilities/Context/AppContext";
+} from "../../../utilities/Context/AppContext";
 import ContainerPrefrences from "./ContainerPrefrences";
 
 const CardContainer: FunctionComponent = () => {
@@ -45,7 +45,10 @@ const CardContainer: FunctionComponent = () => {
   useEffect(() => {
     if (checkIfCardsExist(season, seasonYear, format, { cards })) {
       // IF cards are cached / re-use the  cached cards
-      const sorted = SortCardsBy(sort, cards[season][seasonYear][format]);
+      const sorted = SortCardsBy(
+        sort,
+        cards[season][seasonYear][format]
+      ) as MainCard[];
       setClientVisibleCards(sorted.slice(0, ammount));
     } else {
       //create new AbortController to cancel consecutive requests if new request is made
