@@ -1,8 +1,4 @@
-import {
-  ListDetails,
-  UserListDetails,
-  UserShowStatus,
-} from "./UserPreferencesTypes";
+import { ListDetails, UserShowStatus } from "./UserPreferencesTypes";
 import { ValidFormats } from "./initialConfigTypes";
 
 export interface APIPayload {
@@ -95,18 +91,6 @@ export interface NewEpisodeCards {
   status: ShowStatus;
   episodes: number | null;
   nextAiringEpisode: NextAiringEpisode;
-}
-export interface UserListCards {
-  id: number;
-  title: Titles;
-  status: ShowStatus;
-  episodes: number | null;
-  nextAiringEpisode: NextAiringEpisode;
-  coverImage: CoverImage;
-  format: string;
-  meanScore: number | null;
-  averageScore: number | null;
-  popularity: number | null;
 }
 type UserListData = {
   userListDetails: ListDetails;

@@ -4,7 +4,6 @@ import {
   APINewEpisodesVariables,
   APIVariables,
   NewEpisodeCards,
-  UserListCards,
 } from "../../interfaces/apiResponseTypes";
 import { MainCard, APIPayload } from "../../interfaces/apiResponseTypes";
 
@@ -41,7 +40,7 @@ export default async function HandleAPICall(
   accumulator: (MainCard | NewEpisodeCards)[] = [],
   query: string,
   signal?: AbortSignal
-): Promise<(MainCard | NewEpisodeCards | UserListCards)[]> {
+): Promise<(MainCard | NewEpisodeCards)[]> {
   const options: RequestInit = {
     method: "POST",
     headers: {

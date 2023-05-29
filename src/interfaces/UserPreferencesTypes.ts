@@ -1,10 +1,4 @@
-import {
-  MainCard,
-  Season,
-  ShowStatus,
-  Titles,
-  UserListCards,
-} from "./apiResponseTypes";
+import { MainCard, Season, ShowStatus, Titles } from "./apiResponseTypes";
 
 // NOTE: ShowListDetails & ListDetails may need to be reworked.
 
@@ -29,7 +23,6 @@ export type ShowListDetails<id extends number> = {
 export type UserListDetails<id extends number> = {
   [n in id]: {
     userListDetails: ListDetails;
-    // apiResults: UserListCards;
     apiResults: MainCard;
   };
 };

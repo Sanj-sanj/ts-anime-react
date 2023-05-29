@@ -1,14 +1,9 @@
 import {
-  UserListDetails,
   UserPreferences,
   UserShowStatus,
 } from "../../interfaces/UserPreferencesTypes";
 import { mainCardQuery } from "./QueryStrings/MainCardQuery";
-import {
-  MainCard,
-  UserListCards as UserListCard,
-  UserListParams,
-} from "../../interfaces/apiResponseTypes";
+import { MainCard, UserListParams } from "../../interfaces/apiResponseTypes";
 
 import HandleAPICall from "./HandleAPICall";
 
