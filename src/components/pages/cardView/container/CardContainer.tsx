@@ -3,19 +3,19 @@ import {
   callNextPageOnScroll,
   checkIfCardsExist,
   handleCardContainerOnClick,
-} from "../../../utilities/Cards/CardContainerUtils";
-import Card from "../../card/Card";
+} from "../../../../utilities/Cards/CardContainerUtils";
+import Card from "../../../card/Card";
 import {
   requestAniListAPI,
   requestMockAPI,
-} from "../../../utilities/API/requestCards_CardContainer";
-import SortCardsBy from "../../../utilities/Cards/SortCardsBy";
-import { MainCard } from "../../../interfaces/apiResponseTypes";
+} from "../../../../utilities/API/requestCards_CardContainer";
+import SortCardsBy from "../../../../utilities/Cards/SortCardsBy";
+import { MainCard } from "../../../../interfaces/apiResponseTypes";
 import {
   useDispatchContext,
   useStateContext,
-} from "../../../utilities/Context/AppContext";
-import ContainerPrefrences from "./ContainerPrefrences";
+} from "../../../../utilities/Context/AppContext";
+import ContainerPreferences from "../preferenceBar/ContainerPreferences";
 
 const CardContainer: FunctionComponent = () => {
   const { cards, client, variables, sort } = useStateContext();
@@ -77,7 +77,7 @@ const CardContainer: FunctionComponent = () => {
 
   return (
     <>
-      <ContainerPrefrences />
+      <ContainerPreferences />
       <div
         className="overflow-y-scroll w-screen p-2 flex flex-col items-center h-[85vh]"
         ref={containerRef}

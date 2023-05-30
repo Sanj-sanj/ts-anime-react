@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { Outlet } from "react-router-dom";
 import Navigation from "../navigation/Navigation";
 import Header from "../header/Header";
 import Modal from "../modal/Modal";
@@ -8,7 +9,6 @@ import {
   useDispatchContext,
   useStateContext,
 } from "../../utilities/Context/AppContext";
-import { Outlet } from "react-router-dom";
 import { UserPreferences } from "../../interfaces/UserPreferencesTypes";
 import requestNewEpisodesCheck from "../../utilities/API/requestNewEpisodesCheck";
 
@@ -85,7 +85,6 @@ const Layout = () => {
       <Navigation darkMode={{ isDarkMode, toggleDarkMode }} />
       <Header openNavigation={openNavigation} />
       <main className="min-h-[90vh] flex flex-col items-center bg-stone-200 dark:bg-neutral-800">
-        {/* {children} */}
         <Outlet />
       </main>
     </>

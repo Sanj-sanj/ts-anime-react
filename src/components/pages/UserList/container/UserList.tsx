@@ -1,16 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { useStateContext } from "../../../utilities/Context/AppContext";
+import { useStateContext } from "../../../../utilities/Context/AppContext";
 import {
   ListDetails,
   ShowListDetails,
   UserShowStatus,
-} from "../../../interfaces/UserPreferencesTypes";
-import { MainCard, UserListParams } from "../../../interfaces/apiResponseTypes";
-import requestUserListCards from "../../../utilities/API/requestUserListCards";
-import userListToJSXCards from "../../card/UserListCards";
-import SortCardsBy from "../../../utilities/Cards/SortCardsBy";
+} from "../../../../interfaces/UserPreferencesTypes";
+import {
+  MainCard,
+  UserListParams,
+} from "../../../../interfaces/apiResponseTypes";
+import requestUserListCards from "../../../../utilities/API/requestUserListCards";
+import userListToJSXCards from "../../../card/UserListCards";
+import SortCardsBy from "../../../../utilities/Cards/SortCardsBy";
+import UserListPreferences from "../preferenceBar/UserListPreference";
 
 const UserList = () => {
   const {
@@ -70,13 +74,12 @@ const UserList = () => {
   }, []);
 
   return (
-    <div className="w-full flex flex-col items-center p-6 overflow-y-scroll h-[90vh]">
-      <div className="w-full bg-stone-700">
-        {" "}
-        <Link to={"/"}>main page</Link>
-        {displayCards}
+    <>
+      <UserListPreferences />
+      <div className="w-full flex flex-col items-center p-6 overflow-y-scroll h-[90vh]">
+        <div className="w-full bg-stone-700"> {displayCards}</div>
       </div>
-    </div>
+    </>
   );
 };
 export default UserList;

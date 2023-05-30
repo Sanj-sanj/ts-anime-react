@@ -1,17 +1,18 @@
 import { MouseEvent, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Formats, Season } from "../../../interfaces/apiResponseTypes";
-import { ValidFormats } from "../../../interfaces/initialConfigTypes";
+import { Formats, Season } from "../../../../interfaces/apiResponseTypes";
+import { ValidFormats } from "../../../../interfaces/initialConfigTypes";
 import {
   useDispatchContext,
   useStateContext,
-} from "../../../utilities/Context/AppContext";
-import getCurrSeasonAndYear from "../../../utilities/getCurrentSeasonAndYear";
+} from "../../../../utilities/Context/AppContext";
+import getCurrSeasonAndYear from "../../../../utilities/getCurrentSeasonAndYear";
 
-import CalendarSVG from "../../../assets/calendar-svgrepo-com.svg";
-import MedalSVG from "../../../assets/medal.svg";
+import CalendarSVG from "../../../../assets/calendar-svgrepo-com.svg";
+import MedalSVG from "../../../../assets/medal.svg";
+import ResetSVG from "../../../../assets/reset-svgrepo-com.svg";
 
-export default function ContainerPrefrences() {
+export default function ContainerPreferences() {
   const { variables } = useStateContext();
   const dispatch = useDispatchContext();
   const { season, seasonYear } = variables;
@@ -76,6 +77,28 @@ export default function ContainerPrefrences() {
     <div className="w-full bg-slate-600 px-10 flex items-center min-h-[5vh] flex-col lg:flex-row">
       <div className="pl-1 text-2xl w-60 whitespace-nowrap flex justify-between">
         <button
+          className="w-6 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
+          title="Reset to nearest airing season"
+          onClick={() => {
+            const [currSeason, currYear] = getCurrSeasonAndYear();
+            if (
+              variables.season !== currSeason ||
+              variables.seasonYear !== currYear
+            ) {
+              dispatch({
+                type: "UPDATE_VARIABLES",
+                payload: {
+                  ...variables,
+                  season: currSeason,
+                  seasonYear: currYear,
+                },
+              });
+            }
+          }}
+        >
+          <img src={ResetSVG as string} alt="" className="w-6" />
+        </button>
+        <button
           className="px-2 focus:outline outline-2 rounded-sm outline-zinc-400 mr-1"
           onClick={() => changeSeason("down")}
           title="Previous season"
@@ -92,7 +115,7 @@ export default function ContainerPrefrences() {
         </button>
       </div>
 
-      <div>
+      <div className="w-auto flex flex-col lg:flex-row lg:w-full justify-center">
         <div className="pl-0 sm:pl-6 min-w-fit">
           <button
             className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400 thick-underline underline-offset-8"
@@ -121,28 +144,6 @@ export default function ContainerPrefrences() {
           </button>
         </div>
         <div className="w-full flex justify-center lg:justify-end">
-          <button
-            className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
-            title="Nearest Season"
-            onClick={() => {
-              const [currSeason, currYear] = getCurrSeasonAndYear();
-              if (
-                variables.season !== currSeason ||
-                variables.seasonYear !== currYear
-              ) {
-                dispatch({
-                  type: "UPDATE_VARIABLES",
-                  payload: {
-                    ...variables,
-                    season: currSeason,
-                    seasonYear: currYear,
-                  },
-                });
-              }
-            }}
-          >
-            Current Season
-          </button>
           <button
             className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
             title="Calendar view"
