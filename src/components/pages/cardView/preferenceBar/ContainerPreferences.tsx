@@ -75,39 +75,19 @@ export default function ContainerPreferences() {
 
   return (
     <div className="w-full bg-slate-600 px-10 flex items-center min-h-[5vh] flex-col lg:flex-row">
-      <div className="pl-1 text-2xl w-60 whitespace-nowrap flex justify-between">
+      <div className="pl-1 text-2xl w-72 whitespace-nowrap flex justify-between">
         <button
-          className="w-6 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
-          title="Reset to nearest airing season"
-          onClick={() => {
-            const [currSeason, currYear] = getCurrSeasonAndYear();
-            if (
-              variables.season !== currSeason ||
-              variables.seasonYear !== currYear
-            ) {
-              dispatch({
-                type: "UPDATE_VARIABLES",
-                payload: {
-                  ...variables,
-                  season: currSeason,
-                  seasonYear: currYear,
-                },
-              });
-            }
-          }}
-        >
-          <img src={ResetSVG as string} alt="" className="w-6" />
-        </button>
-        <button
-          className="px-2 focus:outline outline-2 rounded-sm outline-zinc-400 mr-1"
+          className="px-2 focus:outline outline-2 rounded-sm outline-zinc-400"
           onClick={() => changeSeason("down")}
           title="Previous season"
         >
           {"<"}
         </button>
-        {season} {seasonYear}
+        <span className="w-40 text-center">
+          {season} {seasonYear}
+        </span>
         <button
-          className="px-2 focus:outline outline-2 rounded-sm outline-zinc-400 ml-1"
+          className="px-2 focus:outline outline-2 rounded-sm outline-zinc-400"
           onClick={() => changeSeason("up")}
           title="Next season"
         >
@@ -146,16 +126,46 @@ export default function ContainerPreferences() {
         <div className="w-full flex justify-center lg:justify-end">
           <button
             className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
-            title="Calendar view"
+            title="Reset to nearest airing season"
+            onClick={() => {
+              const [currSeason, currYear] = getCurrSeasonAndYear();
+              if (
+                variables.season !== currSeason ||
+                variables.seasonYear !== currYear
+              ) {
+                dispatch({
+                  type: "UPDATE_VARIABLES",
+                  payload: {
+                    ...variables,
+                    season: currSeason,
+                    seasonYear: currYear,
+                  },
+                });
+              }
+            }}
           >
-            <img src={CalendarSVG as string} className="w-6" alt="" />
+            <img
+              src={ResetSVG as string}
+              alt="Reset to nearest airing season."
+              className="w-6"
+            />
+          </button>
+          <button
+            className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
+            title="Go to calendar view"
+          >
+            <img
+              src={CalendarSVG as string}
+              className="w-6"
+              alt="Calendar view."
+            />
           </button>
           <Link
             to="/list"
             className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
-            title="My list"
+            title="Go to my list"
           >
-            <img src={MedalSVG as string} className="w-6" alt="" />
+            <img src={MedalSVG as string} className="w-6" alt="My list" />
           </Link>
         </div>
       </div>
