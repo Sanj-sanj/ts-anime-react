@@ -73,7 +73,7 @@ const CardContainer: FunctionComponent = () => {
         if (abortMainCard.current) abortMainCard.current.abort();
       };
     }
-  }, [cards, sort, ammount, season, format]);
+  }, [cards, sort, ammount, season, seasonYear, format]);
 
   return (
     <>
