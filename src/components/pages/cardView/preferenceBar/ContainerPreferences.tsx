@@ -123,7 +123,7 @@ export default function ContainerPreferences() {
             OVA
           </button>
         </div>
-        <div className="w-full flex justify-center lg:justify-end">
+        <div className="w-full flex justify-center lg:justify-end py-2 lg:py-0">
           <button
             className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
             title="Reset to nearest airing season"

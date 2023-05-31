@@ -1,6 +1,7 @@
 import { FunctionComponent, useRef } from "react";
 import { MainCard } from "../../interfaces/apiResponseTypes";
 import { useDispatchContext } from "../../utilities/Context/AppContext";
+import ListButtonSVG from "../../assets/ribbon-svgrepo-com.svg";
 
 const ListButton: FunctionComponent<{
   card: MainCard;
@@ -11,7 +12,7 @@ const ListButton: FunctionComponent<{
   const buttonRef = useRef<null | HTMLButtonElement>(null);
   return (
     <button
-      className=" bg-red-700 rounded-lg focus:outline outline-blue-400"
+      className="w-6 rounded-xl focus:outline focus:outline-4 outline-blue-600 "
       ref={buttonRef}
       onClick={() => {
         dispatch({
@@ -20,8 +21,10 @@ const ListButton: FunctionComponent<{
         });
       }}
       onFocus={() => focusHandler(buttonRef.current as HTMLButtonElement)}
+      title="Show more details"
     >
-      {(text && text) || "W.I.P"}
+      {/* {(text && text) || "W.I.P"} */}
+      <img src={ListButtonSVG as string} alt="More Details" />
     </button>
   );
 };

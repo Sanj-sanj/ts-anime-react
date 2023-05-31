@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-
 import { useStateContext } from "../../../../utilities/Context/AppContext";
 import {
   ListDetails,
@@ -12,7 +10,7 @@ import {
   UserListParams,
 } from "../../../../interfaces/apiResponseTypes";
 import requestUserListCards from "../../../../utilities/API/requestUserListCards";
-import userListToJSXCards from "../../../card/UserListCards";
+import userListCards from "../../../card/UserListCards";
 import SortCardsBy from "../../../../utilities/Cards/SortCardsBy";
 import UserListPreferences from "../preferenceBar/UserListPreference";
 
@@ -54,7 +52,7 @@ const UserList = () => {
       }[];
       return { ...acc, [key]: newSortedList };
     }, {} as typeof usableList);
-    setDisplayCards(userListToJSXCards(newList, lastFocusedCard));
+    setDisplayCards(userListCards(newList, lastFocusedCard));
   }, [sort, usableList]);
 
   useEffect(() => {
@@ -76,8 +74,8 @@ const UserList = () => {
   return (
     <>
       <UserListPreferences />
-      <div className="w-full flex flex-col items-center p-6 overflow-y-scroll h-[90vh]">
-        <div className="w-full bg-stone-700"> {displayCards}</div>
+      <div className="w-full flex flex-col items-center md:p-6 overflow-y-scroll h-[90vh]">
+        <div className="md:w-full lg:w-9/12 xl:w-2/4"> {displayCards}</div>
       </div>
     </>
   );
