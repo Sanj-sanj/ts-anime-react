@@ -74,8 +74,10 @@ const UserList = () => {
   return (
     <>
       <UserListPreferences />
-      <div className="w-full flex flex-col items-center md:p-6 overflow-y-scroll h-[90vh]">
-        <div className="md:w-full lg:w-9/12 xl:w-2/4"> {displayCards}</div>
+      <div className="w-full flex flex-col items-center overflow-y-scroll h-[90vh]">
+        <div className="w-full sm:w-11/12 md:w-10/12 lg:w-2/3 xl:w-5/12">
+          {displayCards}
+        </div>
       </div>
     </>
   );

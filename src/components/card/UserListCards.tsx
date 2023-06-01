@@ -9,7 +9,7 @@ const userListCards = (
   Object.entries(userList).map(([key, userListDetail]) => (
     <div
       key={key}
-      className="dark:text-slate-300 bg-stone-400 dark:bg-slate-900 w-full pb-4 mt-4 text-center rounded"
+      className="dark:text-slate-300 bg-stone-400 dark:bg-slate-900 w-full pb-4 mt-4 text-center rounded px-6"
     >
       <h2 className="text-xl pt-2">{key}:</h2>
       <ul>
@@ -28,20 +28,26 @@ const userListCards = (
             return (
               <li
                 key={id}
-                className="md:px-4 py-0.5 flex w-full justify-center text-sm"
+                className="py-0.5 flex w-full justify-between text-xs md:text-base first:rounded-t-lg last:rounded-b-lg bg-stone-200 dark:bg-slate-800 mb-0.5"
               >
-                <div className="flex w-full items-center bg-stone-200 dark:bg-slate-800 p-2 rounded-lg">
+                <div className="flex w-full items-center p-2">
                   <img
                     src={coverImage.medium || ""}
                     alt={title.romaji || title.english || ""}
-                    className="max-w-[50px] max-h-[71px] sm:max-h-[142px] sm:max-w-[100px] rounded"
+                    className="max-w-[50px] max-h-[71px] sm:max-h-[106.5px] sm:max-w-[75px] md:max-h-[142px] md:max-w-[100px] rounded"
                   />
                   <div className="flex w-full items-center justify-between">
-                    <div className="w-1/3 flex flex-col justify-around text-left h-full sm:pt-2 pl-4">
+                    <div className="w-full flex flex-col justify-around text-left h-full sm:pt-2 md:pl-4 px-1">
                       <div>
-                        <p>{title?.romaji || title?.english}</p>
+                        <h3
+                          className="whitespace-break-spaces line-clamp-2 text-ellipsis overflow-hidden"
+                          style={{ contain: "inline-size" }}
+                        >
+                          {title?.romaji || title?.english}
+                        </h3>
                         <p>
-                          {status} · {format}
+                          <span className="text-blue-400">{status}</span> ·{" "}
+                          {format}
                         </p>
                       </div>
                       <div>
@@ -54,23 +60,24 @@ const userListCards = (
                         />
                       </div>
                     </div>
-                    <div className="w-1/4 h-full flex flex-col justify-evenly">
-                      My progress:{" "}
-                      <p>{`${currentEpisode || 0} / ${episodes || "?"}`}</p>
-                      My score: <p>{userScore || "?"} / 10</p>
-                    </div>
-                    <div className="w-1/4 h-full flex flex-col justify-evenly">
-                      Released:{" "}
-                      <p>
-                        {`${
-                          (nextAiringEpisode?.episode &&
-                            nextAiringEpisode.episode - 1) ||
-                          (status === "FINISHED" && episodes) ||
-                          "?"
-                        } / ${episodes || "?"}`}
-                      </p>
-                      Online score:{" "}
-                      <p>{(meanScore && meanScore / 10) || "?"} / 10</p>
+                    <div className="flex w-full flex-col min-w-fit max-w-[120px]">
+                      User:{" "}
+                      <div className=" h-full flex flex-row w-full justify-between">
+                        <p>{`${currentEpisode || 0} / ${episodes || "?"}`}</p>
+                        <p>{userScore || "?"} ⭐</p>
+                      </div>
+                      Online:{" "}
+                      <div className="h-full flex flex-row w-full justify-between">
+                        <p>
+                          {`${
+                            (nextAiringEpisode?.episode &&
+                              nextAiringEpisode.episode - 1) ||
+                            (status === "FINISHED" && episodes) ||
+                            "?"
+                          } / ${episodes || "?"}`}
+                        </p>
+                        <p>{(meanScore && meanScore / 10) || "?"} ⭐</p>
+                      </div>
                     </div>
                   </div>
                 </div>
