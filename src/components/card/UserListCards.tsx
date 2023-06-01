@@ -1,6 +1,7 @@
 import { MutableRefObject } from "react";
 import { UserListParams } from "../../interfaces/apiResponseTypes";
 import ListButton from "./ListButton";
+import StarSVG from "../../assets/five_pointed_star.svg";
 
 const userListCards = (
   userList: UserListParams,
@@ -42,6 +43,9 @@ const userListCards = (
                         <h3
                           className="whitespace-break-spaces line-clamp-2 text-ellipsis overflow-hidden"
                           style={{ contain: "inline-size" }}
+                          title={
+                            title?.romaji || title?.english || "Title not found"
+                          }
                         >
                           {title?.romaji || title?.english}
                         </h3>
@@ -62,12 +66,19 @@ const userListCards = (
                     </div>
                     <div className="flex w-full flex-col min-w-fit max-w-[120px]">
                       User:{" "}
-                      <div className=" h-full flex flex-row w-full justify-between">
+                      <div className="leading-none h-full flex flex-row w-full justify-between">
                         <p>{`${currentEpisode || 0} / ${episodes || "?"}`}</p>
-                        <p>{userScore || "?"} ⭐</p>
+                        <span className="flex w-8 justify-between">
+                          {userScore || "?"}{" "}
+                          <img
+                            src={StarSVG as string}
+                            alt=""
+                            className="w-3 sm:w-4"
+                          />
+                        </span>
                       </div>
                       Online:{" "}
-                      <div className="h-full flex flex-row w-full justify-between">
+                      <div className="leading-none h-full flex flex-row w-full justify-between">
                         <p>
                           {`${
                             (nextAiringEpisode?.episode &&
@@ -76,7 +87,14 @@ const userListCards = (
                             "?"
                           } / ${episodes || "?"}`}
                         </p>
-                        <p>{(meanScore && meanScore / 10) || "?"} ⭐</p>
+                        <span className="flex w-11 justify-between">
+                          <p>{(meanScore && meanScore / 10) || "?"}</p>{" "}
+                          <img
+                            src={StarSVG as string}
+                            alt=""
+                            className="w-3 sm:w-4"
+                          />
+                        </span>
                       </div>
                     </div>
                   </div>
