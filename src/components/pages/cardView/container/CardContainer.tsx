@@ -25,7 +25,8 @@ import ContainerPreferences from "../preferenceBar/ContainerPreferences";
 
 const CardContainer: FunctionComponent = () => {
   const { cards, client, variables, sort } = useStateContext();
-  const { season, seasonYear, format } = variables;
+  const { format } = variables;
+  const { season, seasonYear } = client;
   const dispatch = useDispatchContext();
 
   const [clientVisibleCards, setClientVisibleCards] = useState<MainCard[]>([]);
@@ -84,18 +85,18 @@ const CardContainer: FunctionComponent = () => {
 
   function searchPrefSelects(
     labelTitle: string,
-    coupler: string,
+    couple: string,
     selectValues: string[]
   ) {
     return (
       <div className="flex border border-slate-300 dark:border-slate-400 mr-2">
         <label
           className="bg-slate-100 dark:bg-zinc-500 h-full border-r border-slate-300 dark:border-slate-400 p-2 w-24 text-center"
-          htmlFor={coupler}
+          htmlFor={couple}
         >
           {labelTitle}
         </label>
-        <select name="" id={coupler} className="w-32 pl-1 dark:bg-zinc-200">
+        <select name="" id={couple} className="w-32 pl-1 dark:bg-zinc-200">
           {selectValues.map((item) => (
             <option value={item} key={item}>
               {item}

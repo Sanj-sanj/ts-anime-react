@@ -3,13 +3,14 @@ import { InitialConfig } from "../interfaces/initialConfigTypes";
 import { UserPreferences } from "../interfaces/UserPreferencesTypes";
 import getCurrSeasonAndYear from "./getCurrentSeasonAndYear";
 
-const [thisSeason, thisYear] = getCurrSeasonAndYear();
+const [season, seasonYear] = getCurrSeasonAndYear();
 
 const apiVariables: APIVariables = {
   page: 1,
   perPage: 50,
-  season: thisSeason,
-  seasonYear: thisYear,
+  season,
+  seasonYear,
+  // status_in: "RELEASING",
   hasNextPage: true,
   format_in: ["TV", "TV_SHORT"],
   format: "TV",
@@ -29,6 +30,8 @@ export const Initial: InitialConfig = {
     nextPageAvailable: true,
     startIndex: 0,
     perPage: 15,
+    season,
+    seasonYear,
     overlay: {
       modal: { active: false, entryPoint: undefined },
       navigation: { active: false },

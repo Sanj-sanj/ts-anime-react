@@ -21,6 +21,8 @@ export type ClientVariables = {
   nextPageAvailable: boolean;
   startIndex: number;
   perPage: number;
+  season: Season;
+  seasonYear: number;
   overlay: {
     modal: {
       entryPoint: ModalEntryPoint;
@@ -55,6 +57,10 @@ export type Actions =
   | {
       type: "UPDATE_VARIABLES";
       payload: APIVariables;
+    }
+  | {
+      type: "UPDATE_CLIENT";
+      payload: ClientVariables;
     }
   | {
       type: "UPDATE_IS_FETCHING";

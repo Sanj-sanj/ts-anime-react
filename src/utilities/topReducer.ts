@@ -15,6 +15,15 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
       }
       return state;
 
+    case "UPDATE_CLIENT":
+      if (
+        typeof action.payload === "object" &&
+        "seasonYear" in action.payload
+      ) {
+        return { ...state, client: action.payload };
+      }
+      return state;
+
     case "UPDATE_NEXT_PAGE_AVAILABLE": {
       if (action.payload) {
         const { season, year, format, displayClientAmmount } = action.payload;
@@ -31,7 +40,8 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
 
     case "UPDATE_CARDS":
       if (Array.isArray(action.payload)) {
-        const { season, seasonYear, format } = state.variables;
+        const { format } = state.variables;
+        const { season, seasonYear } = state.client;
         const previousCards = state.cards[season]?.[seasonYear]?.[format] || [];
         return {
           ...state,
@@ -39,7 +49,6 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
             ...state.cards,
             [season]: {
               ...state.cards[season],
-
               [seasonYear]: {
                 ...state.cards[season]?.[seasonYear],
                 [format]: [...previousCards, ...action.payload],

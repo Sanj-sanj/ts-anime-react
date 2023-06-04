@@ -4,7 +4,7 @@
 
 // // Storing it in a separate .graphql/.gql file is also possible
 export const mainCardQuery = `
-query ($id: Int, $id_in:[Int], $page: Int, $perPage: Int, $season: MediaSeason, $seasonYear: Int, $format_in: [MediaFormat]) {
+query ($id: Int, $id_in:[Int], $page: Int, $perPage: Int, $season: MediaSeason, $seasonYear: Int, $status_in: [MediaStatus], $format_in: [MediaFormat]) {
   Page(page: $page, perPage: $perPage) {
     pageInfo {
       total
@@ -13,7 +13,7 @@ query ($id: Int, $id_in:[Int], $page: Int, $perPage: Int, $season: MediaSeason, 
       hasNextPage
       perPage
     }
-    media(id: $id, id_in: $id_in, type: ANIME, season: $season, seasonYear: $seasonYear, format_in: $format_in) {
+    media(id: $id, id_in: $id_in, type: ANIME, season: $season, seasonYear: $seasonYear, format_in: $format_in, status_in: $status_in) {
       id
       type
       title {

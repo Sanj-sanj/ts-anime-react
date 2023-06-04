@@ -13,9 +13,9 @@ import MedalSVG from "../../../../assets/medal.svg";
 import ResetSVG from "../../../../assets/reset-svgrepo-com.svg";
 
 export default function ContainerPreferences() {
-  const { variables } = useStateContext();
+  const { client, variables } = useStateContext();
   const dispatch = useDispatchContext();
-  const { season, seasonYear } = variables;
+  const { season, seasonYear } = client;
   const currentlyActiveFormat = useRef<HTMLButtonElement | null>(null);
 
   function changeSeason(change: "up" | "down") {
@@ -34,6 +34,14 @@ export default function ContainerPreferences() {
       currIndex = 3;
       updatedYear--;
     }
+    dispatch({
+      type: "UPDATE_CLIENT",
+      payload: {
+        ...client,
+        season: seasons[currIndex],
+        seasonYear: updatedYear,
+      },
+    });
     dispatch({
       type: "UPDATE_VARIABLES",
       payload: {
@@ -130,13 +138,21 @@ export default function ContainerPreferences() {
             onClick={() => {
               const [currSeason, currYear] = getCurrSeasonAndYear();
               if (
-                variables.season !== currSeason ||
-                variables.seasonYear !== currYear
+                client.season !== currSeason ||
+                client.seasonYear !== currYear
               ) {
                 dispatch({
                   type: "UPDATE_VARIABLES",
                   payload: {
                     ...variables,
+                    season: currSeason,
+                    seasonYear: currYear,
+                  },
+                });
+                dispatch({
+                  type: "UPDATE_CLIENT",
+                  payload: {
+                    ...client,
                     season: currSeason,
                     seasonYear: currYear,
                   },
