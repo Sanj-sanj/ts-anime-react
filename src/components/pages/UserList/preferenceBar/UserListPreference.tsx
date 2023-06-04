@@ -6,7 +6,7 @@ import CardSVG from "../../../../assets/card-svgrepo-com.svg";
 const UserListPreferences = () => {
   return (
     <div className="w-full bg-slate-600 px-10 flex items-center min-h-[5vh] flex-row">
-      <div className="w-full flex justify-center md:justify-end h-7">
+      <div className="w-full flex justify-center items-center md:justify-end h-7">
         <Link
           to="/"
           className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"

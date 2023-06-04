@@ -1,4 +1,10 @@
-import React, { FunctionComponent, useEffect, useRef, useState } from "react";
+import React, {
+  FunctionComponent,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   callNextPageOnScroll,
   checkIfCardsExist,
@@ -38,9 +44,10 @@ const CardContainer: FunctionComponent = () => {
   }, [client.overlay.modal]);
 
   useEffect(() => {
-    containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    containerRef.current?.scroll({ top: 0, behavior: "smooth" });
+    // containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
     setAmmount(15);
-  }, [season, format]);
+  }, [season, seasonYear, format]);
 
   useEffect(() => {
     if (checkIfCardsExist(season, seasonYear, format, { cards })) {
@@ -75,6 +82,30 @@ const CardContainer: FunctionComponent = () => {
     }
   }, [cards, sort, ammount, season, seasonYear, format]);
 
+  function searchPrefSelects(
+    labelTitle: string,
+    coupler: string,
+    selectValues: string[]
+  ) {
+    return (
+      <div className="flex border border-slate-300 dark:border-slate-400 mr-2">
+        <label
+          className="bg-slate-100 dark:bg-zinc-500 h-full border-r border-slate-300 dark:border-slate-400 p-2 w-24 text-center"
+          htmlFor={coupler}
+        >
+          {labelTitle}
+        </label>
+        <select name="" id={coupler} className="w-32 pl-1 dark:bg-zinc-200">
+          {selectValues.map((item) => (
+            <option value={item} key={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }
+
   return (
     <>
       <ContainerPreferences />
@@ -95,6 +126,13 @@ const CardContainer: FunctionComponent = () => {
             : null;
         }}
       >
+        <div className="blockman flex w-full p-2 justify-center">
+          {searchPrefSelects("Ongoing", "show-ongoing", [
+            "Show ongoing",
+            "Hide ongoing",
+          ])}
+          {searchPrefSelects("Titles", "title-lang", ["English", "Romaji"])}
+        </div>
         {isCallingAPI.current == true ? (
           <div>calling api</div>
         ) : (
