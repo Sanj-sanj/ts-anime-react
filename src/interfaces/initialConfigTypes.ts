@@ -13,7 +13,6 @@ export type SeasonCards<Year extends number> = {
     MOVIE: MainCard[];
   };
 };
-
 export type SortableBy = "Rating" | "Popularity" | "Countdown";
 
 export type ModalEntryPoint = "card" | "new release" | undefined;
@@ -23,6 +22,7 @@ export type ClientVariables = {
   perPage: number;
   season: Season;
   seasonYear: number;
+  showOngoing: boolean;
   overlay: {
     modal: {
       entryPoint: ModalEntryPoint;
@@ -49,6 +49,11 @@ export type InitialConfig = {
     SPRING: SeasonCards<number>;
     SUMMER: SeasonCards<number>;
     FALL: SeasonCards<number>;
+    ONGOING: {
+      TV: MainCard[];
+      OVA: MainCard[];
+      MOVIE: MainCard[];
+    };
   };
   sort: SortableBy;
 };
@@ -77,7 +82,7 @@ export type Actions =
     }
   | {
       type: "UPDATE_CARDS";
-      payload: MainCard[];
+      payload: { cards: MainCard[]; ongoing: boolean };
     }
   | {
       type: "UPDATE_SORT";
@@ -117,4 +122,12 @@ export type Actions =
       // takes previous userPrefrences and loads them into state.
       type: "LOAD_LIST";
       payload: UserPreferences;
+    }
+  | {
+      type: "TOGGLE_ONGOING";
+      payload: {
+        client: ClientVariables;
+        variables: APIVariables;
+        forceMode?: boolean;
+      };
     };

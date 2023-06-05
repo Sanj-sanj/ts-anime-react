@@ -32,9 +32,14 @@ export function checkIfCardsExist(
   season: Season,
   year: number,
   format: ValidFormats,
+  ongoing: boolean,
   { cards }: Pick<InitialConfig, "cards">
 ) {
-  return cards[season]?.[year]?.[format] ? true : false;
+  if (!ongoing) {
+    return cards[season]?.[year]?.[format] ? true : false;
+  } else {
+    return cards.ONGOING[format].length ? true : false;
+  }
 }
 
 function clientLoadNextPage(
@@ -43,7 +48,8 @@ function clientLoadNextPage(
   updateDisplayNumber: React.Dispatch<React.SetStateAction<number>>,
   dispatch: React.Dispatch<Actions>
 ) {
-  const { format, season, seasonYear } = variables.api;
+  const { format } = variables.api;
+  const { season, seasonYear } = variables.client;
   dispatch({
     type: "UPDATE_NEXT_PAGE_AVAILABLE",
     payload: {

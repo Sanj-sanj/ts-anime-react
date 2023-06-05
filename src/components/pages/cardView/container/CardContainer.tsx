@@ -22,11 +22,12 @@ import {
   useStateContext,
 } from "../../../../utilities/Context/AppContext";
 import ContainerPreferences from "../preferenceBar/ContainerPreferences";
+import getCurrSeasonAndYear from "../../../../utilities/getCurrentSeasonAndYear";
 
 const CardContainer: FunctionComponent = () => {
   const { cards, client, variables, sort } = useStateContext();
   const { format } = variables;
-  const { season, seasonYear } = client;
+  const { season, seasonYear, showOngoing } = client;
   const dispatch = useDispatchContext();
 
   const [clientVisibleCards, setClientVisibleCards] = useState<MainCard[]>([]);
@@ -35,6 +36,8 @@ const CardContainer: FunctionComponent = () => {
   const abortMainCard = useRef<null | AbortController>(null);
   const containerRef = useRef<null | HTMLDivElement>(null);
   const lastFocusedCard = useRef<null | HTMLButtonElement>(null);
+  const ongoingRef = useRef<"hide" | "show">("show");
+  const [currSeason, currYear] = getCurrSeasonAndYear();
 
   useEffect(() => {
     if (
@@ -45,48 +48,70 @@ const CardContainer: FunctionComponent = () => {
   }, [client.overlay.modal]);
 
   useEffect(() => {
-    containerRef.current?.scroll({ top: 0, behavior: "smooth" });
-    // containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    if (season === currSeason && currYear === seasonYear) {
+      dispatch({
+        type: "TOGGLE_ONGOING",
+        payload: {
+          client,
+          variables,
+          forceMode: ongoingRef.current === "show" ? true : false,
+        },
+      });
+    } else {
+      dispatch({
+        type: "TOGGLE_ONGOING",
+        payload: { client, variables, forceMode: false },
+      });
+    }
+    containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
     setAmmount(15);
   }, [season, seasonYear, format]);
 
   useEffect(() => {
-    if (checkIfCardsExist(season, seasonYear, format, { cards })) {
+    if (checkIfCardsExist(season, seasonYear, format, showOngoing, { cards })) {
       // IF cards are cached / re-use the  cached cards
-      const sorted = SortCardsBy(
-        sort,
-        cards[season][seasonYear][format]
-      ) as MainCard[];
-      setClientVisibleCards(sorted.slice(0, ammount));
+      if (showOngoing) {
+        const sorted = SortCardsBy(sort, cards.ONGOING[format]) as MainCard[];
+        setClientVisibleCards(sorted.slice(0, ammount));
+      } else {
+        const sorted = SortCardsBy(
+          sort,
+          cards[season][seasonYear][format]
+        ) as MainCard[];
+        setClientVisibleCards(sorted.slice(0, ammount));
+      }
     } else {
+      // if (isFetchingOngoing) return; //one request already made, conditional guard to stop excess calls
       //create new AbortController to cancel consecutive requests if new request is made
       setClientVisibleCards([]);
       setAmmount(15);
       abortMainCard.current = new AbortController();
       // ****************** ANILIST API *********************
-      // void requestAniListAPI(
+      void requestAniListAPI(
+        variables,
+        dispatch,
+        isCallingAPI,
+        showOngoing,
+        abortMainCard.current.signal
+      );
+      // ****************** MOCK API ************************
+      // void requestMockAPI(
       //   variables,
       //   dispatch,
       //   isCallingAPI,
       //   abortMainCard.current.signal
       // );
-      // ****************** MOCK API ************************
-      void requestMockAPI(
-        variables,
-        dispatch,
-        isCallingAPI,
-        abortMainCard.current.signal
-      );
       return () => {
         if (abortMainCard.current) abortMainCard.current.abort();
       };
     }
-  }, [cards, sort, ammount, season, seasonYear, format]);
+  }, [cards, sort, ammount, season, seasonYear, format, showOngoing]);
 
   function searchPrefSelects(
     labelTitle: string,
     couple: string,
-    selectValues: string[]
+    selectValues: string[],
+    callback: () => void
   ) {
     return (
       <div className="flex border border-slate-300 dark:border-slate-400 mr-2">
@@ -96,7 +121,12 @@ const CardContainer: FunctionComponent = () => {
         >
           {labelTitle}
         </label>
-        <select name="" id={couple} className="w-32 pl-1 dark:bg-zinc-200">
+        <select
+          name=""
+          id={couple}
+          className="w-32 pl-1 dark:bg-zinc-200"
+          onChange={callback}
+        >
           {selectValues.map((item) => (
             <option value={item} key={item}>
               {item}
@@ -128,11 +158,46 @@ const CardContainer: FunctionComponent = () => {
         }}
       >
         <div className="blockman flex w-full p-2 justify-center">
-          {searchPrefSelects("Ongoing", "show-ongoing", [
-            "Show ongoing",
-            "Hide ongoing",
-          ])}
-          {searchPrefSelects("Titles", "title-lang", ["English", "Romaji"])}
+          <div className="flex border border-slate-300 dark:border-slate-400 mr-2">
+            <label
+              className="bg-slate-100 dark:bg-zinc-500 h-full border-r border-slate-300 dark:border-slate-400 p-2 w-24 text-center"
+              htmlFor="set-ongoing"
+            >
+              Ongoing
+            </label>
+            <select
+              id="set-ongoing"
+              className="w-32 pl-1 dark:bg-zinc-200"
+              onChange={(e) => {
+                const selection = e.target.value as "show" | "hide";
+                ongoingRef.current = selection;
+                if (
+                  selection === "show" &&
+                  currSeason === season &&
+                  currYear === currYear
+                ) {
+                  dispatch({
+                    type: "TOGGLE_ONGOING",
+                    payload: { client, variables, forceMode: true },
+                  });
+                } else {
+                  dispatch({
+                    type: "TOGGLE_ONGOING",
+                    payload: { client, variables, forceMode: false },
+                  });
+                }
+              }}
+            >
+              <option value="show">Show ongoing</option>
+              <option value="hide">Hide ongoing</option>
+            </select>
+          </div>
+          {searchPrefSelects(
+            "Titles",
+            "title-lang",
+            ["English", "Romaji"],
+            () => {}
+          )}
         </div>
         {isCallingAPI.current == true ? (
           <div>calling api</div>

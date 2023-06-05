@@ -1,8 +1,14 @@
-import { Actions, InitialConfig } from "../interfaces/initialConfigTypes";
+import { APIVariables, Formats } from "../interfaces/apiResponseTypes";
+import {
+  Actions,
+  InitialConfig,
+  ValidFormats,
+} from "../interfaces/initialConfigTypes";
 import {
   ShowListDetails,
   UserShowStatus,
 } from "../interfaces/UserPreferencesTypes";
+import getCurrSeasonAndYear from "./getCurrentSeasonAndYear";
 
 const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
   switch (action.type) {
@@ -39,25 +45,42 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
     }
 
     case "UPDATE_CARDS":
-      if (Array.isArray(action.payload)) {
+      {
+        // if (Array.isArray(action.payload)) {
         const { format } = state.variables;
         const { season, seasonYear } = state.client;
-        const previousCards = state.cards[season]?.[seasonYear]?.[format] || [];
-        return {
-          ...state,
-          cards: {
-            ...state.cards,
-            [season]: {
-              ...state.cards[season],
-              [seasonYear]: {
-                ...state.cards[season]?.[seasonYear],
-                [format]: [...previousCards, ...action.payload],
+        console.log(action.payload);
+        if (!action.payload.ongoing) {
+          const previousCards =
+            state.cards[season]?.[seasonYear]?.[format] || [];
+          return {
+            ...state,
+            cards: {
+              ...state.cards,
+              [season]: {
+                ...state.cards[season],
+                [seasonYear]: {
+                  ...state.cards[season]?.[seasonYear],
+                  [format]: [...previousCards, ...action.payload.cards],
+                },
               },
             },
-          },
-        };
+          };
+        } else if (action.payload.ongoing) {
+          return {
+            ...state,
+            cards: {
+              ...state.cards,
+              ONGOING: {
+                ...state.cards.ONGOING,
+                [format]: action.payload.cards,
+              },
+            },
+          };
+        }
       }
       return state;
+
     case "UPDATE_SORT": {
       if (action.payload) {
         const { sort } = action.payload;
@@ -168,6 +191,38 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
           lists: action.payload,
         },
       };
+    }
+
+    case "TOGGLE_ONGOING": {
+      const [s, y] = getCurrSeasonAndYear();
+      const { variables } = state;
+      if (action.payload.forceMode === true) {
+        return {
+          ...state,
+          client: { ...state.client, showOngoing: true },
+          variables: {
+            ...variables,
+            season: undefined,
+            seasonYear: undefined,
+            status_in: "RELEASING",
+          },
+        };
+      } else {
+        return {
+          ...state,
+          client: {
+            ...action.payload.client,
+            showOngoing: false,
+          },
+          variables: {
+            ...variables,
+            season: state.client.season,
+            seasonYear: state.client.seasonYear,
+            status_in: undefined,
+          },
+        };
+      }
+      return state;
     }
 
     default:
