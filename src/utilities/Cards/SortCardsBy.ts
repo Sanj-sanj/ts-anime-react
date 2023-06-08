@@ -12,7 +12,7 @@ function SortCardsBy(
     userListDetails: ListDetails;
     apiResults: MainCard;
   }[] = [];
-  if (isMainCard(cards)) {
+  if (cards.length && isMainCard(cards)) {
     switch (sort) {
       case "Rating":
         sortedMainCards = cards
@@ -46,6 +46,7 @@ function SortCardsBy(
     }
     return sortedMainCards;
   } else {
+    cards = cards as typeof sortedUserListCards;
     switch (sort) {
       case "Rating":
         sortedUserListCards = cards.sort(

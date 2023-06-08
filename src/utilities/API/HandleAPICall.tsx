@@ -63,7 +63,6 @@ export default async function HandleAPICall(
     payload instanceof Error;
 
   if (isError(results)) {
-    console.log(results);
     return [];
   }
 

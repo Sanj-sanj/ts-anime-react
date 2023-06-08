@@ -8,9 +8,9 @@ const [season, seasonYear] = getCurrSeasonAndYear();
 const apiVariables: APIVariables = {
   page: 1,
   perPage: 50,
-  season: undefined,
-  seasonYear: undefined,
-  status_in: "RELEASING",
+  season: season,
+  seasonYear: seasonYear,
+  status_in: undefined,
   hasNextPage: true,
   format_in: ["TV", "TV_SHORT"],
   format: "TV",
@@ -24,13 +24,9 @@ const UserPreferences: UserPreferences = {
   SKIPPED: {},
 };
 
-//tbc: work on APIVarialbe to accept the Ongoing type into variables without breakign anything
-
 export const Initial: InitialConfig = {
   variables: apiVariables,
   client: {
-    nextPageAvailable: true,
-    startIndex: 0,
     perPage: 15,
     season,
     seasonYear,
@@ -46,10 +42,10 @@ export const Initial: InitialConfig = {
     modalData: undefined,
   },
   cards: {
-    WINTER: [],
-    SPRING: [],
-    SUMMER: [],
-    FALL: [],
+    WINTER: {},
+    SPRING: {},
+    SUMMER: {},
+    FALL: {},
     ONGOING: { MOVIE: [], OVA: [], TV: [] },
   },
   sort: "Rating",

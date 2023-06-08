@@ -32,20 +32,8 @@ type OngoingSeason = {
   hasNextPage: boolean;
   format_in: Formats;
   format: ValidFormats;
-  status_in: ShowStatus;
+  status_in: ShowStatus[];
 };
-/*
-    APIVariable has distinct calls, for "Ongoing", or "nearest season"
-    if nearest, status_in is unsed thus can be stores here,
-    if ongoing , season and seasonyear are unused   
-   */
-// unused: | {
-//       season: Season | undefined;
-//       seasonYear: number | undefined;
-//     }
-//   | {
-//       status_in: ShowStatus;
-//     };
 export type APINewEpisodesVariables = {
   page: number;
   perPage: number;

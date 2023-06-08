@@ -1,14 +1,8 @@
-import { APIVariables, Formats } from "../interfaces/apiResponseTypes";
-import {
-  Actions,
-  InitialConfig,
-  ValidFormats,
-} from "../interfaces/initialConfigTypes";
+import { Actions, InitialConfig } from "../interfaces/initialConfigTypes";
 import {
   ShowListDetails,
   UserShowStatus,
 } from "../interfaces/UserPreferencesTypes";
-import getCurrSeasonAndYear from "./getCurrentSeasonAndYear";
 
 const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
   switch (action.type) {
@@ -30,29 +24,11 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
       }
       return state;
 
-    case "UPDATE_NEXT_PAGE_AVAILABLE": {
-      if (action.payload) {
-        const { season, year, format, displayClientAmmount } = action.payload;
-        const hasNextPage =
-          displayClientAmmount < state.cards[season]?.[year]?.[format]?.length;
-
-        return {
-          ...state,
-          client: { ...state.client, nextPageAvailable: hasNextPage },
-        };
-      }
-      return state;
-    }
-
     case "UPDATE_CARDS":
       {
-        // if (Array.isArray(action.payload)) {
         const { format } = state.variables;
         const { season, seasonYear } = state.client;
-        console.log(action.payload);
         if (!action.payload.ongoing) {
-          const previousCards =
-            state.cards[season]?.[seasonYear]?.[format] || [];
           return {
             ...state,
             cards: {
@@ -61,7 +37,7 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
                 ...state.cards[season],
                 [seasonYear]: {
                   ...state.cards[season]?.[seasonYear],
-                  [format]: [...previousCards, ...action.payload.cards],
+                  [format]: action.payload.cards,
                 },
               },
             },
@@ -194,37 +170,21 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
     }
 
     case "TOGGLE_ONGOING": {
-      const [s, y] = getCurrSeasonAndYear();
-      const { variables } = state;
       if (action.payload.forceMode === true) {
         return {
           ...state,
           client: { ...state.client, showOngoing: true },
-          variables: {
-            ...variables,
-            season: undefined,
-            seasonYear: undefined,
-            status_in: "RELEASING",
-          },
         };
       } else {
         return {
           ...state,
           client: {
-            ...action.payload.client,
+            ...state.client,
             showOngoing: false,
-          },
-          variables: {
-            ...variables,
-            season: state.client.season,
-            seasonYear: state.client.seasonYear,
-            status_in: undefined,
           },
         };
       }
-      return state;
     }
-
     default:
       return state;
   }

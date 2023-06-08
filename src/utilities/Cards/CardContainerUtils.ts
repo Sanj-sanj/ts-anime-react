@@ -1,7 +1,6 @@
 import React from "react";
 import { APIVariables, Season } from "../../interfaces/apiResponseTypes";
 import {
-  Actions,
   ClientVariables,
   InitialConfig,
   ValidFormats,
@@ -38,51 +37,34 @@ export function checkIfCardsExist(
   if (!ongoing) {
     return cards[season]?.[year]?.[format] ? true : false;
   } else {
-    return cards.ONGOING[format].length ? true : false;
+    return cards.ONGOING[format].length && cards[season]?.[year]?.[format]
+      ? true
+      : false;
   }
 }
 
 function clientLoadNextPage(
   variables: { client: ClientVariables; api: APIVariables },
   ammount: number,
-  updateDisplayNumber: React.Dispatch<React.SetStateAction<number>>,
-  dispatch: React.Dispatch<Actions>
+  updateDisplayNumber: React.Dispatch<React.SetStateAction<number>>
 ) {
-  const { format } = variables.api;
-  const { season, seasonYear } = variables.client;
-  dispatch({
-    type: "UPDATE_NEXT_PAGE_AVAILABLE",
-    payload: {
-      season: season,
-      year: seasonYear,
-      format: format,
-      displayClientAmmount: ammount + variables.client.perPage,
-    },
-  });
   updateDisplayNumber(ammount + variables.client.perPage);
 }
 
-export function handleCardContainerScroll([
-  currentTarget,
-  variables,
-  ammount,
-  dispatch,
-]: [
+export function handleCardContainerScroll([currentTarget, variables, ammount]: [
   HTMLDivElement & EventTarget,
   { client: ClientVariables; api: APIVariables },
   {
     currentAmmount: number;
     updateDisplayAmmount: React.Dispatch<React.SetStateAction<number>>;
-  },
-  React.Dispatch<Actions>
+  }
 ]) {
   const { scrollTop, scrollHeight, clientHeight } = currentTarget;
   if (isBottomOfPage(scrollTop, clientHeight, scrollHeight)) {
     clientLoadNextPage(
       variables,
       ammount.currentAmmount,
-      ammount.updateDisplayAmmount,
-      dispatch
+      ammount.updateDisplayAmmount
     );
   }
 }
@@ -91,14 +73,12 @@ export function handleCardContainerOnClick(
   ammount: {
     currentAmmount: number;
     updateDisplayAmmount: React.Dispatch<React.SetStateAction<number>>;
-  },
-  dispatch: React.Dispatch<Actions>
+  }
 ): void {
   clientLoadNextPage(
     variables,
     ammount.currentAmmount,
-    ammount.updateDisplayAmmount,
-    dispatch
+    ammount.updateDisplayAmmount
   );
 }
 export const callNextPageOnScroll = throttle<
@@ -108,7 +88,6 @@ export const callNextPageOnScroll = throttle<
     {
       currentAmmount: number;
       updateDisplayAmmount: React.Dispatch<React.SetStateAction<number>>;
-    },
-    React.Dispatch<Actions>
+    }
   ]
 >(handleCardContainerScroll);

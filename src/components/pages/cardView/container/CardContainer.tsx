@@ -1,10 +1,4 @@
-import React, {
-  FunctionComponent,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import {
   callNextPageOnScroll,
   checkIfCardsExist,
@@ -34,8 +28,10 @@ const CardContainer: FunctionComponent = () => {
   const [ammount, setAmmount] = useState(client.perPage);
   const isCallingAPI = useRef(false);
   const abortMainCard = useRef<null | AbortController>(null);
+  const abortOngoing = useRef<null | AbortController>(null);
   const containerRef = useRef<null | HTMLDivElement>(null);
   const lastFocusedCard = useRef<null | HTMLButtonElement>(null);
+  const isMoreCards = useRef<boolean>(true);
   const ongoingRef = useRef<"hide" | "show">("show");
   const [currSeason, currYear] = getCurrSeasonAndYear();
 
@@ -52,39 +48,43 @@ const CardContainer: FunctionComponent = () => {
       dispatch({
         type: "TOGGLE_ONGOING",
         payload: {
-          client,
-          variables,
           forceMode: ongoingRef.current === "show" ? true : false,
         },
       });
     } else {
       dispatch({
         type: "TOGGLE_ONGOING",
-        payload: { client, variables, forceMode: false },
+        payload: { forceMode: false },
       });
     }
     containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    isMoreCards.current = true;
     setAmmount(15);
-  }, [season, seasonYear, format]);
+  }, [season, seasonYear, format, showOngoing]);
 
   useEffect(() => {
     if (checkIfCardsExist(season, seasonYear, format, showOngoing, { cards })) {
       // IF cards are cached / re-use the  cached cards
       if (showOngoing) {
-        const sorted = SortCardsBy(sort, cards.ONGOING[format]) as MainCard[];
+        const filteredAiringList = cards[season][seasonYear][format].filter(
+          (sCard) =>
+            !cards.ONGOING[format].find((oCard) => oCard.id === sCard.id)
+        );
+        const airingAndOngoing =
+          cards.ONGOING[format]?.concat(filteredAiringList) || [];
+        const sorted = SortCardsBy(sort, airingAndOngoing) as MainCard[];
         setClientVisibleCards(sorted.slice(0, ammount));
+        if (ammount >= airingAndOngoing.length) isMoreCards.current = false;
       } else {
-        const sorted = SortCardsBy(
-          sort,
-          cards[season][seasonYear][format]
-        ) as MainCard[];
+        const targ = cards[season][seasonYear][format];
+        const sorted = SortCardsBy(sort, targ) as MainCard[];
         setClientVisibleCards(sorted.slice(0, ammount));
+        if (ammount >= targ.length) isMoreCards.current = false;
       }
     } else {
-      // if (isFetchingOngoing) return; //one request already made, conditional guard to stop excess calls
       //create new AbortController to cancel consecutive requests if new request is made
-      setClientVisibleCards([]);
-      setAmmount(15);
+      isMoreCards.current = true;
+      abortOngoing.current = new AbortController();
       abortMainCard.current = new AbortController();
       // ****************** ANILIST API *********************
       void requestAniListAPI(
@@ -92,7 +92,8 @@ const CardContainer: FunctionComponent = () => {
         dispatch,
         isCallingAPI,
         showOngoing,
-        abortMainCard.current.signal
+        abortMainCard.current.signal,
+        abortOngoing.current.signal
       );
       // ****************** MOCK API ************************
       // void requestMockAPI(
@@ -103,6 +104,7 @@ const CardContainer: FunctionComponent = () => {
       // );
       return () => {
         if (abortMainCard.current) abortMainCard.current.abort();
+        if (abortOngoing.current) abortOngoing.current.abort();
       };
     }
   }, [cards, sort, ammount, season, seasonYear, format, showOngoing]);
@@ -144,13 +146,11 @@ const CardContainer: FunctionComponent = () => {
         className="overflow-y-scroll w-screen p-2 flex flex-col items-center h-[85vh]"
         ref={containerRef}
         onScroll={(e) => {
-          clientVisibleCards.length <
-            cards?.[season]?.[seasonYear]?.[format]?.length &&
+          isMoreCards.current &&
             callNextPageOnScroll([
               e.currentTarget,
               { client, api: { ...variables } },
               { currentAmmount: ammount, updateDisplayAmmount: setAmmount },
-              dispatch,
             ]);
           lastFocusedCard.current !== null
             ? lastFocusedCard.current.focus()
@@ -178,12 +178,12 @@ const CardContainer: FunctionComponent = () => {
                 ) {
                   dispatch({
                     type: "TOGGLE_ONGOING",
-                    payload: { client, variables, forceMode: true },
+                    payload: { forceMode: true },
                   });
                 } else {
                   dispatch({
                     type: "TOGGLE_ONGOING",
-                    payload: { client, variables, forceMode: false },
+                    payload: { forceMode: false },
                   });
                 }
               }}
@@ -217,8 +217,7 @@ const CardContainer: FunctionComponent = () => {
               )}
             </ol>
             <div className="flex flex-col border rounded border-gray-900 w-full mb-4 pt-2 pb-4 items-center">
-              {clientVisibleCards.length <
-              cards[season]?.[seasonYear]?.[format]?.length ? (
+              {isMoreCards.current ? (
                 <>
                   <p>You&apos;ve reached the bottom!</p>
                   <button
@@ -229,8 +228,7 @@ const CardContainer: FunctionComponent = () => {
                         {
                           currentAmmount: ammount,
                           updateDisplayAmmount: setAmmount,
-                        },
-                        dispatch
+                        }
                       );
                       lastFocusedCard.current !== null
                         ? lastFocusedCard.current.focus()

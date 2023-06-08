@@ -17,8 +17,6 @@ export type SortableBy = "Rating" | "Popularity" | "Countdown";
 
 export type ModalEntryPoint = "card" | "new release" | undefined;
 export type ClientVariables = {
-  nextPageAvailable: boolean;
-  startIndex: number;
   perPage: number;
   season: Season;
   seasonYear: number;
@@ -72,15 +70,6 @@ export type Actions =
       payload: boolean;
     }
   | {
-      type: "UPDATE_NEXT_PAGE_AVAILABLE";
-      payload: {
-        season: Season;
-        year: number;
-        format: ValidFormats;
-        displayClientAmmount: number;
-      };
-    }
-  | {
       type: "UPDATE_CARDS";
       payload: { cards: MainCard[]; ongoing: boolean };
     }
@@ -126,8 +115,6 @@ export type Actions =
   | {
       type: "TOGGLE_ONGOING";
       payload: {
-        client: ClientVariables;
-        variables: APIVariables;
         forceMode?: boolean;
       };
     };
