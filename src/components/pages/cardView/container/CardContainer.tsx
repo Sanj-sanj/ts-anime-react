@@ -65,6 +65,7 @@ const CardContainer: FunctionComponent = () => {
   useEffect(() => {
     if (checkIfCardsExist(season, seasonYear, format, showOngoing, { cards })) {
       // IF cards are cached / re-use the  cached cards
+      let cardsToDisplay: MainCard[];
       if (showOngoing) {
         const filteredAiringList = cards[season][seasonYear][format].filter(
           (sCard) =>
@@ -72,20 +73,19 @@ const CardContainer: FunctionComponent = () => {
         );
         const airingAndOngoing =
           cards.ONGOING[format]?.concat(filteredAiringList) || [];
-        const sorted = SortCardsBy(sort, airingAndOngoing) as MainCard[];
-        setClientVisibleCards(sorted.slice(0, ammount));
-        if (ammount >= airingAndOngoing.length) isMoreCards.current = false;
+        cardsToDisplay = SortCardsBy(sort, airingAndOngoing) as MainCard[];
       } else {
         const targ = cards[season][seasonYear][format];
-        const sorted = SortCardsBy(sort, targ) as MainCard[];
-        setClientVisibleCards(sorted.slice(0, ammount));
+        cardsToDisplay = SortCardsBy(sort, targ) as MainCard[];
         if (ammount >= targ.length) isMoreCards.current = false;
       }
+      setClientVisibleCards(cardsToDisplay.slice(0, ammount));
     } else {
       //create new AbortController to cancel consecutive requests if new request is made
-      isMoreCards.current = true;
       abortOngoing.current = new AbortController();
       abortMainCard.current = new AbortController();
+      setClientVisibleCards([]); // prevents flickering on render
+      isMoreCards.current = true;
       // ****************** ANILIST API *********************
       void requestAniListAPI(
         variables,

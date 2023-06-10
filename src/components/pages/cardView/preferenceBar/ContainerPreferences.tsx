@@ -1,4 +1,4 @@
-import { MouseEvent, useRef } from "react";
+import { MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import { Formats, Season } from "../../../../interfaces/apiResponseTypes";
 import { ValidFormats } from "../../../../interfaces/initialConfigTypes";
@@ -14,9 +14,9 @@ import ResetSVG from "../../../../assets/reset-svgrepo-com.svg";
 
 export default function ContainerPreferences() {
   const { client, variables } = useStateContext();
+  const currFormat = variables.format;
   const dispatch = useDispatchContext();
   const { season, seasonYear } = client;
-  const currentlyActiveFormat = useRef<HTMLButtonElement | null>(null);
 
   function changeSeason(change: "up" | "down") {
     const seasons: Season[] = ["WINTER", "SPRING", "SUMMER", "FALL"];
@@ -59,12 +59,6 @@ export default function ContainerPreferences() {
     const target = e.currentTarget as HTMLButtonElement;
     const whichFormat = target.value;
     if (!isValidFormat(whichFormat)) return;
-    currentlyActiveFormat.current?.classList.remove(
-      "thick-underline",
-      "underline-offset-8"
-    );
-    target.classList.add("thick-underline", "underline-offset-8");
-    currentlyActiveFormat.current = target;
 
     const formats: { [k in ValidFormats]: Formats } = {
       TV: ["TV", "TV_SHORT"],
@@ -106,16 +100,19 @@ export default function ContainerPreferences() {
       <div className="w-auto flex flex-col lg:flex-row lg:w-full justify-center">
         <div className="pl-0 sm:pl-6 min-w-fit">
           <button
-            className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400 thick-underline underline-offset-8"
+            className={`px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400 ${
+              currFormat === "TV" ? "thick-underline underline-offset-8" : ""
+            }`}
             value="TV"
             onClick={(e) => changeFormat(e)}
             title="Tv / Tv shorts"
-            ref={currentlyActiveFormat}
           >
             TV
           </button>
           <button
-            className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
+            className={`px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400 ${
+              currFormat === "MOVIE" ? "thick-underline underline-offset-8" : ""
+            }`}
             value="MOVIE"
             onClick={(e) => changeFormat(e)}
             title="Movies"
@@ -123,7 +120,9 @@ export default function ContainerPreferences() {
             MOVIE
           </button>
           <button
-            className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
+            className={`px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400 ${
+              currFormat === "OVA" ? "thick-underline underline-offset-8" : ""
+            }`}
             value="OVA"
             onClick={(e) => changeFormat(e)}
             title="OVA / ONA"
