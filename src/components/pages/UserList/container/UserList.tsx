@@ -14,6 +14,8 @@ import userListCards from "../../../card/UserListCards";
 import SortCardsBy from "../../../../utilities/Cards/SortCardsBy";
 import UserListPreferences from "../preferenceBar/UserListPreference";
 
+// Bug in Component when opening modal view of a show, updating the current progress / score
+// does not update the component inside of UserList, Ex: curr Ep 7 => updates to 8, userList still displays 7
 const UserList = () => {
   const {
     user: { lists },
@@ -33,7 +35,6 @@ const UserList = () => {
     )
   );
 
-  console.log(lists);
   if (lastFocusedCard.current !== null && client.overlay.modal.active === false)
     lastFocusedCard.current.focus();
 
