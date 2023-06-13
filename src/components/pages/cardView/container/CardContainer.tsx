@@ -24,7 +24,7 @@ const CardContainer: FunctionComponent = () => {
   const { season, seasonYear, showOngoing } = client;
   const dispatch = useDispatchContext();
 
-  const [clientVisibleCards, setClientVisibleCards] = useState<MainCard[]>([]);
+  let clientVisibleCards: MainCard[] = [];
   const [ammount, setAmmount] = useState(client.perPage);
   const isCallingAPI = useRef(false);
   const abortMainCard = useRef<null | AbortController>(null);
@@ -35,15 +35,10 @@ const CardContainer: FunctionComponent = () => {
   const ongoingRef = useRef<"hide" | "show">("show");
   const [currSeason, currYear] = getCurrSeasonAndYear();
 
-  useEffect(() => {
-    if (
-      lastFocusedCard.current !== null &&
-      client.overlay.modal.active === false
-    )
-      lastFocusedCard.current.focus();
-  }, [client.overlay.modal]);
+  if (lastFocusedCard.current !== null && client.overlay.modal.active === false)
+    lastFocusedCard.current.focus();
 
-  useEffect(() => {
+  const onPreferenceChange = () => {
     if (season === currSeason && currYear === seasonYear) {
       dispatch({
         type: "TOGGLE_ONGOING",
@@ -58,34 +53,24 @@ const CardContainer: FunctionComponent = () => {
       });
     }
     containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-    isMoreCards.current = true;
     setAmmount(15);
-  }, [season, seasonYear, format, showOngoing]);
-
-  useEffect(() => {
-    if (checkIfCardsExist(season, seasonYear, format, showOngoing, { cards })) {
-      // IF cards are cached / re-use the  cached cards
-      let cardsToDisplay: MainCard[];
-      if (showOngoing) {
-        const filteredAiringList = cards[season][seasonYear][format].filter(
-          (sCard) =>
-            !cards.ONGOING[format].find((oCard) => oCard.id === sCard.id)
-        );
-        const airingAndOngoing =
-          cards.ONGOING[format]?.concat(filteredAiringList) || [];
-        cardsToDisplay = SortCardsBy(sort, airingAndOngoing) as MainCard[];
-      } else {
-        const targ = cards[season][seasonYear][format];
-        cardsToDisplay = SortCardsBy(sort, targ) as MainCard[];
-        if (ammount >= targ.length) isMoreCards.current = false;
-      }
-      setClientVisibleCards(cardsToDisplay.slice(0, ammount));
+  };
+  function requestNewCardsCardView(mockMode: boolean) {
+    //create new AbortController to cancel consecutive requests if new request is made
+    abortOngoing.current = new AbortController();
+    abortMainCard.current = new AbortController();
+    isMoreCards.current = true;
+    // ****************** MOCK API ************************
+    if (mockMode) {
+      void requestMockAPI(
+        variables,
+        dispatch,
+        isCallingAPI,
+        showOngoing,
+        abortMainCard.current.signal,
+        abortOngoing.current.signal
+      );
     } else {
-      //create new AbortController to cancel consecutive requests if new request is made
-      abortOngoing.current = new AbortController();
-      abortMainCard.current = new AbortController();
-      setClientVisibleCards([]); // prevents flickering on render
-      isMoreCards.current = true;
       // ****************** ANILIST API *********************
       void requestAniListAPI(
         variables,
@@ -95,19 +80,46 @@ const CardContainer: FunctionComponent = () => {
         abortMainCard.current.signal,
         abortOngoing.current.signal
       );
-      // ****************** MOCK API ************************
-      // void requestMockAPI(
-      //   variables,
-      //   dispatch,
-      //   isCallingAPI,
-      //   abortMainCard.current.signal
-      // );
-      return () => {
-        if (abortMainCard.current) abortMainCard.current.abort();
-        if (abortOngoing.current) abortOngoing.current.abort();
-      };
     }
-  }, [cards, sort, ammount, season, seasonYear, format, showOngoing]);
+  }
+  const sortAndFilterCardsForView = () => {
+    let cardsToDisplay: MainCard[];
+    if (showOngoing) {
+      const filteredAiringList = cards[season][seasonYear][format].filter(
+        (sCard) => !cards.ONGOING[format].find((oCard) => oCard.id === sCard.id)
+      );
+      const airingAndOngoing =
+        cards.ONGOING[format]?.concat(filteredAiringList) || [];
+      cardsToDisplay = SortCardsBy(sort, airingAndOngoing) as MainCard[];
+    } else {
+      const targ = cards[season][seasonYear][format];
+      cardsToDisplay = SortCardsBy(sort, targ) as MainCard[];
+    }
+    clientVisibleCards = cardsToDisplay.slice(0, ammount);
+  };
+
+  if (showOngoing) {
+    if (ammount >= cards.ONGOING[format].length) {
+      isMoreCards.current = false;
+    } else isMoreCards.current = true;
+  } else {
+    if (ammount >= cards[season]?.[seasonYear]?.[format]?.length) {
+      isMoreCards.current = false;
+    } else isMoreCards.current = true;
+  }
+  if (checkIfCardsExist(season, seasonYear, format, showOngoing, { cards })) {
+    sortAndFilterCardsForView();
+  }
+  useEffect(() => {
+    onPreferenceChange();
+    // IF cards are cached / re-use the  cached cards
+    const isMockOn = false;
+    void requestNewCardsCardView(isMockOn);
+    return () => {
+      if (abortMainCard.current) abortMainCard.current.abort();
+      if (abortOngoing.current) abortOngoing.current.abort();
+    };
+  }, [season, seasonYear, format]);
 
   function searchPrefSelects(
     labelTitle: string,
