@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useRef, useState } from "react";
+import { FunctionComponent, useRef, useState } from "react";
 import { MainCard } from "../../interfaces/apiResponseTypes";
 import { ModalEntryPoint } from "../../interfaces/initialConfigTypes";
 import {
@@ -38,12 +38,6 @@ const Modal: FunctionComponent<{
     null
   );
 
-  useEffect(() => {
-    modal.classList.replace("hidden", "flex");
-    return () => {
-      modal.classList.replace("flex", "hidden");
-    };
-  });
   useFocusEffect(modal, closeModal, unsavedChanges);
 
   const prefArray = Object.entries(lists) as [
@@ -65,7 +59,8 @@ const Modal: FunctionComponent<{
       : undefined;
   } else if (entryPoint === "new release" && newEpisodesAvailable) {
     newEpisodesAvailable.forEach((card) => {
-      airingEpisodesDetails[card.id] = lists.WATCHING[card.id];
+      airingEpisodesDetails[card.id] =
+        lists.WATCHING[card.id] || lists.INTERESTED[card.id];
     });
   }
 

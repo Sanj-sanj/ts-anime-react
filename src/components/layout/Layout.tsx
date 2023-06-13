@@ -28,24 +28,19 @@ const Layout = () => {
     setIsDarkMode(!isDarkMode);
   }
 
-  useEffect(() => {
-    if (
-      Object.entries(client.overlay).find(([, { active }]) => active) &&
-      overlayRef
-    )
-      overlayRef.current?.classList.replace("hidden", "block");
-    else overlayRef.current?.classList.replace("block", "hidden");
-  }, [client.overlay]);
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.querySelector("html")?.classList.add("dark");
-      localStorage.setItem("dark", "true");
-    } else {
-      document.querySelector("html")?.classList.remove("dark");
-      localStorage.setItem("dark", "false");
-    }
-  }, [isDarkMode]);
+  if (isDarkMode) {
+    document.querySelector("html")?.classList.add("dark");
+    localStorage.setItem("dark", "true");
+  } else {
+    document.querySelector("html")?.classList.remove("dark");
+    localStorage.setItem("dark", "false");
+  }
+  if (
+    Object.entries(client.overlay).find(([, { active }]) => active) &&
+    overlayRef
+  )
+    overlayRef.current?.classList.replace("hidden", "block");
+  else overlayRef.current?.classList.replace("block", "hidden");
 
   useEffect(() => {
     abortNewEpisode.current = new AbortController();

@@ -35,7 +35,7 @@ function hasShowFinishedAiringRecently(
 
 export default async function requestNewEpisodesCheck(
   ids: number[],
-  { WATCHING }: UserPreferences,
+  { WATCHING, INTERESTED }: UserPreferences,
   dispatch: Dispatch<Actions>,
   signal?: AbortSignal
 ) {
@@ -48,32 +48,34 @@ export default async function requestNewEpisodesCheck(
   ).then((val) => {
     if (!isNewEpisodeCards(val)) return;
     // WIll only check if inside of WATCHING , if there is an episode greater than the user's current progress on a specific show
-    const hasNewEpisodes = Object.values(WATCHING).reduce((acc, userList) => {
-      //Found represents a 'Found' entry inside of the newtwork request, matching the userList object.
-      const found = val.find((check) => check.id === userList.id);
-      if (
-        found &&
-        (userList.showAiringStatus === "RELEASING" ||
-          userList.showAiringStatus === "NOT_YET_RELEASED")
-      ) {
+    const hasNewEpisodes = Object.values(WATCHING)
+      .concat(Object.values(INTERESTED))
+      .reduce((acc, userList) => {
+        //Found represents a 'Found' entry inside of the newtwork request, matching the userList object.
+        const found = val.find((check) => check.id === userList.id);
         if (
-          isUserListEpisodeLessThanNextAiringEpisode(userList, found) ||
-          hasShowFinishedAiringRecently(userList, found)
+          found &&
+          (userList.showAiringStatus === "RELEASING" ||
+            userList.showAiringStatus === "NOT_YET_RELEASED")
         ) {
-          if (hasShowFinishedAiringRecently(userList, found)) {
-            dispatch({
-              type: "UPDATE_PREFERENCE",
-              payload: {
-                status: "WATCHING",
-                cardData: { ...userList, showAiringStatus: "FINISHED" },
-              },
-            });
+          if (
+            isUserListEpisodeLessThanNextAiringEpisode(userList, found) ||
+            hasShowFinishedAiringRecently(userList, found)
+          ) {
+            if (hasShowFinishedAiringRecently(userList, found)) {
+              dispatch({
+                type: "UPDATE_PREFERENCE",
+                payload: {
+                  status: "WATCHING",
+                  cardData: { ...userList, showAiringStatus: "FINISHED" },
+                },
+              });
+            }
+            acc = [...acc, found];
           }
-          acc = [...acc, found];
         }
-      }
-      return acc;
-    }, [] as NewEpisodeCards[]);
+        return acc;
+      }, [] as NewEpisodeCards[]);
 
     if (hasNewEpisodes.length) {
       dispatch({

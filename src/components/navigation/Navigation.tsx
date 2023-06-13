@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { SortableBy } from "../../interfaces/initialConfigTypes";
 import requestNewEpisodesCheck from "../../utilities/API/requestNewEpisodesCheck";
 import {
@@ -31,20 +31,18 @@ const Navigation = ({
     return <h3 className="dark:text-slate-300">{text}</h3>;
   }
 
-  useEffect(() => {
-    if (overlay.navigation.active === true) {
-      navigationRef.current?.classList.replace("hidden", "flex");
-      navigationRef.current?.classList.replace(
-        "animate-slide-out-left",
-        "animate-slide-in-left"
-      );
-    } else {
-      navigationRef.current?.classList.replace(
-        "animate-slide-in-left",
-        "animate-slide-out-left"
-      );
-    }
-  }, [overlay.navigation.active]);
+  if (overlay.navigation.active === true) {
+    navigationRef.current?.classList.replace("hidden", "flex");
+    navigationRef.current?.classList.replace(
+      "animate-slide-out-left",
+      "animate-slide-in-left"
+    );
+  } else {
+    navigationRef.current?.classList.replace(
+      "animate-slide-in-left",
+      "animate-slide-out-left"
+    );
+  }
 
   useFocusEffect(navigationRef.current, closeNavigation);
 

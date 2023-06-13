@@ -32,28 +32,21 @@ const UserList = () => {
       {} as UserListParams
     )
   );
-  const [displayCards, setDisplayCards] = useState<JSX.Element[]>();
 
-  useEffect(() => {
-    if (
-      lastFocusedCard.current !== null &&
-      client.overlay.modal.active === false
-    )
-      lastFocusedCard.current.focus();
-  }, [client.overlay.modal]);
+  console.log(lists);
+  if (lastFocusedCard.current !== null && client.overlay.modal.active === false)
+    lastFocusedCard.current.focus();
 
-  useEffect(() => {
-    const currList = Object.entries(usableList);
-    const newList = currList.reduce((acc, [key, list]) => {
-      const temp = Object.values(list);
-      const newSortedList = SortCardsBy(sort, temp) as {
-        apiResults: MainCard;
-        userListDetails: ListDetails;
-      }[];
-      return { ...acc, [key]: newSortedList };
-    }, {} as typeof usableList);
-    setDisplayCards(userListCards(newList, lastFocusedCard));
-  }, [sort, usableList]);
+  const currList = Object.entries(usableList);
+  const newList = currList.reduce((acc, [key, list]) => {
+    const temp = Object.values(list);
+    const newSortedList = SortCardsBy(sort, temp) as {
+      apiResults: MainCard;
+      userListDetails: ListDetails;
+    }[];
+    return { ...acc, [key]: newSortedList };
+  }, {} as typeof usableList);
+  const displayCards = userListCards(newList, lastFocusedCard);
 
   useEffect(() => {
     const ids = entries.reduce((acc, [userStatus, entries]) => {

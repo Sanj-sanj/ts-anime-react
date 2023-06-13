@@ -50,8 +50,12 @@ const userListCards = (
                           {title?.romaji || title?.english}
                         </h3>
                         <p>
-                          <span className="text-blue-400">{status}</span> ·{" "}
-                          {format}
+                          <span className="text-blue-400">
+                            {status === "NOT_YET_RELEASED"
+                              ? "UNRELEASED"
+                              : status}
+                          </span>{" "}
+                          · {format}
                         </p>
                       </div>
                       <div>
@@ -60,7 +64,6 @@ const userListCards = (
                           focusHandler={(ref) =>
                             (lastFocusedCard.current = ref)
                           }
-                          text="More details"
                         />
                       </div>
                     </div>

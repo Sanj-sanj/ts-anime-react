@@ -6,8 +6,7 @@ import ListButtonSVG from "../../assets/ribbon-svgrepo-com.svg";
 const ListButton: FunctionComponent<{
   card: MainCard;
   focusHandler: (ref: HTMLButtonElement) => void;
-  text?: string;
-}> = ({ card, focusHandler, text }) => {
+}> = ({ card, focusHandler }) => {
   const dispatch = useDispatchContext();
   const buttonRef = useRef<null | HTMLButtonElement>(null);
   return (
@@ -23,7 +22,6 @@ const ListButton: FunctionComponent<{
       onFocus={() => focusHandler(buttonRef.current as HTMLButtonElement)}
       title="Show more details"
     >
-      {/* {(text && text) || "W.I.P"} */}
       <img src={ListButtonSVG as string} alt="More Details" />
     </button>
   );

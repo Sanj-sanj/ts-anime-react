@@ -1,6 +1,10 @@
 import { FunctionComponent, useEffect, useRef, useState } from "react";
-import { NewEpisodeCards } from "../../interfaces/apiResponseTypes";
 import {
+  NewEpisodeCards,
+  NextAiringEpisode,
+} from "../../interfaces/apiResponseTypes";
+import {
+  ListDetails,
   ShowListDetails,
   UserShowStatus,
 } from "../../interfaces/UserPreferencesTypes";
@@ -18,23 +22,57 @@ const NewEpisodeModal: FunctionComponent<{
   >({ ...singelShowDetails });
   const listPrefDispatchIDs = useRef<number[]>([]);
 
-  useEffect(() => {
-    return () => {
-      listPrefDispatchIDs.current.forEach((id) => {
-        if (
-          statefulDetails[id].currentEpisode ===
-          singelShowDetails[id].currentEpisode
-        )
-          return;
-        dispatch({
-          type: "UPDATE_PREFERENCE",
-          payload: {
-            cardData: statefulDetails[id],
-            status: statefulDetails[id].userStatus as UserShowStatus,
-          },
-        });
+  const updateDetailsOnModalClose = () => {
+    listPrefDispatchIDs.current.forEach((id) => {
+      if (
+        statefulDetails[id].currentEpisode ===
+        singelShowDetails[id].currentEpisode
+      )
+        return;
+      dispatch({
+        type: "UPDATE_PREFERENCE",
+        payload: {
+          cardData: statefulDetails[id],
+          status: statefulDetails[id].userStatus as UserShowStatus,
+        },
       });
-    };
+    });
+  };
+  const adjustCurrentEpisodeCount = (
+    showDetails: ListDetails,
+    id: number,
+    nextAiringEpisode: NextAiringEpisode,
+    episodes: number | null,
+    adjustment: "+" | "-"
+  ) => {
+    const currEp = showDetails.currentEpisode;
+    if (typeof currEp !== "number") return;
+    let newCurr = currEp;
+    if (adjustment === "+") {
+      newCurr += 1;
+      if (
+        (episodes && newCurr > episodes) ||
+        (nextAiringEpisode?.episode && newCurr > nextAiringEpisode.episode - 1)
+      ) {
+        newCurr--;
+      }
+    } else if (adjustment === "-") {
+      newCurr -= 1;
+      if (newCurr < 0) newCurr = 0;
+    }
+    setStatefulDetails({
+      ...statefulDetails,
+      [id]: {
+        ...showDetails,
+        currentEpisode: newCurr,
+      },
+    });
+    if (!listPrefDispatchIDs.current.includes(id)) {
+      listPrefDispatchIDs.current.push(id);
+    }
+  };
+  useEffect(() => {
+    return updateDetailsOnModalClose();
   }, [statefulDetails]);
 
   return (
@@ -55,6 +93,12 @@ const NewEpisodeModal: FunctionComponent<{
               : status === "FINISHED"
               ? `${episodes || "?"} / ${episodes || "?"}`
               : "?";
+          if (
+            showDetails.userStatus === "INTERESTED" &&
+            nextAiringEpisode?.episode &&
+            nextAiringEpisode.episode > 2
+          )
+            return;
           return (
             <li key={id} className=" w-full px-3 mt-2">
               <div className="w-full flex flex-col justify-evenly items-center sm:flex-row">
@@ -66,50 +110,32 @@ const NewEpisodeModal: FunctionComponent<{
                   <p className="w-3/4 sm:w-full flex justify-between py-1 px-3 sm:p-0">
                     Progress:
                     <span className="flex ml-3">
-                      {showDetails.currentEpisode}
+                      {showDetails?.currentEpisode || "?"}
                       <button
                         className="border px-1 ml-2 rounded-sm"
-                        onClick={() => {
-                          const currEp = showDetails.currentEpisode;
-                          if (!currEp) return;
-                          let newCurr = currEp - 1;
-                          if (newCurr < 0) newCurr = 0;
-                          setStatefulDetails({
-                            ...statefulDetails,
-                            [id]: {
-                              ...showDetails,
-                              currentEpisode: newCurr,
-                            },
-                          });
-                          if (!listPrefDispatchIDs.current.includes(id)) {
-                            listPrefDispatchIDs.current.push(id);
-                          }
-                        }}
+                        onClick={() =>
+                          adjustCurrentEpisodeCount(
+                            showDetails,
+                            id,
+                            nextAiringEpisode,
+                            episodes,
+                            "-"
+                          )
+                        }
                       >
                         -
                       </button>
                       <button
                         className="border px-1 ml-2 rounded-sm"
-                        onClick={() => {
-                          const currEp = showDetails.currentEpisode;
-                          if (typeof currEp !== "number") return;
-                          let newCurr = currEp + 1;
-                          if (
-                            (episodes && newCurr > episodes) ||
-                            (nextAiringEpisode?.episode &&
-                              newCurr > nextAiringEpisode.episode - 1)
+                        onClick={() =>
+                          adjustCurrentEpisodeCount(
+                            showDetails,
+                            id,
+                            nextAiringEpisode,
+                            episodes,
+                            "+"
                           )
-                            newCurr--;
-                          setStatefulDetails({
-                            ...statefulDetails,
-                            [id]: {
-                              ...showDetails,
-                              currentEpisode: newCurr,
-                            },
-                          });
-                          if (!listPrefDispatchIDs.current.includes(id))
-                            listPrefDispatchIDs.current.push(id);
-                        }}
+                        }
                       >
                         +
                       </button>
