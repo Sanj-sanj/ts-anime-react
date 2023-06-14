@@ -51,27 +51,52 @@ async function requestAniListAPI(
           payload: { cards: currCards, ongoing: false },
         });
       }
-      isCallingAPI.current = false;
     })
     .catch((rej) => console.log(rej));
+  isCallingAPI.current = false;
 }
 // Mock API functions similary to acutal anilist API. only reducers "UPDATE_NEXT_PAGE_AVAILABLE" not called
 async function requestMockAPI(
   settings: APIVariables,
   dispatch: React.Dispatch<Actions>,
   isCallingAPI: MutableRefObject<boolean>,
-  fetchingOngoing: MutableRefObject<boolean>,
-  signal: AbortSignal
+  fetchingOngoing: boolean,
+  signal1: AbortSignal,
+  signal2: AbortSignal
 ) {
   //Sends a request with the variable settings, the API response will return a boolean hasNextPage, this will determine subsequent network request based on scroll position (currently)
   console.log("calling MOCK_API");
   isCallingAPI.current = true;
-  await HandleMockAPICall(settings).then((cards) => {
-    isCallingAPI.current = false;
-    if (signal.aborted) return;
-    dispatch({ type: "UPDATE_CARDS", payload: { cards, ongoing: false } });
-    console.log("done calling api"); //eslint-disable-line
-  });
+  const callsArr: Promise<(MainCard | NewEpisodeCards)[]>[] = [];
+  callsArr.push(HandleMockAPICall(settings, false));
+  if (fetchingOngoing) {
+    callsArr.push(HandleMockAPICall(settings, true));
+  }
+
+  await Promise.all(callsArr)
+    .then((arr) => {
+      if (signal1.aborted || signal2.aborted) return;
+
+      if (fetchingOngoing) {
+        const ongoingCards = arr[1];
+        if (isMainCard(ongoingCards)) {
+          dispatch({
+            type: "UPDATE_CARDS",
+            payload: { cards: ongoingCards, ongoing: true },
+          });
+        }
+      }
+      const seasonal = arr[0];
+      if (isMainCard(seasonal)) {
+        dispatch({
+          type: "UPDATE_CARDS",
+          payload: { cards: seasonal, ongoing: false },
+        });
+      }
+      console.log("done calling api"); //eslint-disable-line
+    })
+    .catch(console.log);
+  isCallingAPI.current = false;
 }
 
 export { requestAniListAPI, requestMockAPI };

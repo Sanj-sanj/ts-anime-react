@@ -3,13 +3,11 @@ import {
   callNextPageOnScroll,
   checkIfCardsExist,
   handleCardContainerOnClick,
+  onPreferenceChange,
+  requestNewCardsCardView,
+  sortAndFilterCardsForView,
 } from "../../../../utilities/Cards/CardContainerUtils";
 import Card from "../../../card/Card";
-import {
-  requestAniListAPI,
-  requestMockAPI,
-} from "../../../../utilities/API/requestCards_CardContainer";
-import SortCardsBy from "../../../../utilities/Cards/SortCardsBy";
 import { MainCard } from "../../../../interfaces/apiResponseTypes";
 import {
   useDispatchContext,
@@ -24,102 +22,18 @@ const CardContainer: FunctionComponent = () => {
   const { season, seasonYear, showOngoing } = client;
   const dispatch = useDispatchContext();
 
-  let clientVisibleCards: MainCard[] = [];
+  const clientVisibleCards: MainCard[] = [];
+  const isMockOn = true;
+
   const [ammount, setAmmount] = useState(client.perPage);
   const isCallingAPI = useRef(false);
   const abortMainCard = useRef<null | AbortController>(null);
   const abortOngoing = useRef<null | AbortController>(null);
   const containerRef = useRef<null | HTMLDivElement>(null);
-  const lastFocusedCard = useRef<null | HTMLButtonElement>(null);
+  const lastFocusedElement = useRef<null | HTMLButtonElement>(null);
   const isMoreCards = useRef<boolean>(true);
   const ongoingRef = useRef<"hide" | "show">("show");
   const [currSeason, currYear] = getCurrSeasonAndYear();
-
-  if (lastFocusedCard.current !== null && client.overlay.modal.active === false)
-    lastFocusedCard.current.focus();
-
-  const onPreferenceChange = () => {
-    if (season === currSeason && currYear === seasonYear) {
-      dispatch({
-        type: "TOGGLE_ONGOING",
-        payload: {
-          forceMode: ongoingRef.current === "show" ? true : false,
-        },
-      });
-    } else {
-      dispatch({
-        type: "TOGGLE_ONGOING",
-        payload: { forceMode: false },
-      });
-    }
-    containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-    setAmmount(15);
-  };
-  function requestNewCardsCardView(mockMode: boolean) {
-    //create new AbortController to cancel consecutive requests if new request is made
-    abortOngoing.current = new AbortController();
-    abortMainCard.current = new AbortController();
-    isMoreCards.current = true;
-    // ****************** MOCK API ************************
-    if (mockMode) {
-      void requestMockAPI(
-        variables,
-        dispatch,
-        isCallingAPI,
-        showOngoing,
-        abortMainCard.current.signal,
-        abortOngoing.current.signal
-      );
-    } else {
-      // ****************** ANILIST API *********************
-      void requestAniListAPI(
-        variables,
-        dispatch,
-        isCallingAPI,
-        showOngoing,
-        abortMainCard.current.signal,
-        abortOngoing.current.signal
-      );
-    }
-  }
-  const sortAndFilterCardsForView = () => {
-    let cardsToDisplay: MainCard[];
-    if (showOngoing) {
-      const filteredAiringList = cards[season][seasonYear][format].filter(
-        (sCard) => !cards.ONGOING[format].find((oCard) => oCard.id === sCard.id)
-      );
-      const airingAndOngoing =
-        cards.ONGOING[format]?.concat(filteredAiringList) || [];
-      cardsToDisplay = SortCardsBy(sort, airingAndOngoing) as MainCard[];
-    } else {
-      const targ = cards[season][seasonYear][format];
-      cardsToDisplay = SortCardsBy(sort, targ) as MainCard[];
-    }
-    clientVisibleCards = cardsToDisplay.slice(0, ammount);
-  };
-
-  if (showOngoing) {
-    if (ammount >= cards.ONGOING[format].length) {
-      isMoreCards.current = false;
-    } else isMoreCards.current = true;
-  } else {
-    if (ammount >= cards[season]?.[seasonYear]?.[format]?.length) {
-      isMoreCards.current = false;
-    } else isMoreCards.current = true;
-  }
-  if (checkIfCardsExist(season, seasonYear, format, showOngoing, { cards })) {
-    sortAndFilterCardsForView();
-  }
-  useEffect(() => {
-    onPreferenceChange();
-    // IF cards are cached / re-use the  cached cards
-    const isMockOn = false;
-    void requestNewCardsCardView(isMockOn);
-    return () => {
-      if (abortMainCard.current) abortMainCard.current.abort();
-      if (abortOngoing.current) abortOngoing.current.abort();
-    };
-  }, [season, seasonYear, format]);
 
   function searchPrefSelects(
     labelTitle: string,
@@ -150,6 +64,56 @@ const CardContainer: FunctionComponent = () => {
       </div>
     );
   }
+  if (
+    lastFocusedElement.current !== null &&
+    client.overlay.modal.active === false
+  )
+    lastFocusedElement.current.focus();
+
+  // if the ammount of cards shown is less than available to see, isMore = true : isMore = false
+  if (showOngoing) {
+    if (ammount >= cards.ONGOING[format].length) {
+      isMoreCards.current = false;
+    } else isMoreCards.current = true;
+  } else {
+    if (ammount >= cards[season]?.[seasonYear]?.[format]?.length) {
+      isMoreCards.current = false;
+    } else isMoreCards.current = true;
+  }
+
+  if (checkIfCardsExist(season, seasonYear, format, showOngoing, { cards }))
+    sortAndFilterCardsForView(
+      sort,
+      ammount,
+      { cards },
+      { season, format, seasonYear },
+      showOngoing
+    );
+
+  useEffect(() => {
+    onPreferenceChange(
+      season,
+      seasonYear,
+      dispatch,
+      ongoingRef,
+      containerRef,
+      setAmmount
+    );
+    if (
+      !checkIfCardsExist(season, seasonYear, format, showOngoing, { cards })
+    ) {
+      isMoreCards.current = true;
+      requestNewCardsCardView(
+        { abortOngoing, abortMainCard },
+        { variables, dispatch, isCallingAPI, showOngoing },
+        isMockOn
+      );
+    }
+    return () => {
+      if (abortMainCard.current) abortMainCard.current.abort();
+      if (abortOngoing.current) abortOngoing.current.abort();
+    };
+  }, [season, seasonYear, format]);
 
   return (
     <>
@@ -164,8 +128,8 @@ const CardContainer: FunctionComponent = () => {
               { client, api: { ...variables } },
               { currentAmmount: ammount, updateDisplayAmmount: setAmmount },
             ]);
-          lastFocusedCard.current !== null
-            ? lastFocusedCard.current.focus()
+          lastFocusedElement.current !== null
+            ? lastFocusedElement.current.focus()
             : null;
         }}
       >
@@ -221,7 +185,7 @@ const CardContainer: FunctionComponent = () => {
                   <Card
                     key={card.id || card.title.romaji}
                     card={card}
-                    focusRef={lastFocusedCard}
+                    focusRef={lastFocusedElement}
                   />
                 ))
               ) : (
@@ -242,8 +206,8 @@ const CardContainer: FunctionComponent = () => {
                           updateDisplayAmmount: setAmmount,
                         }
                       );
-                      lastFocusedCard.current !== null
-                        ? lastFocusedCard.current.focus()
+                      lastFocusedElement.current !== null
+                        ? lastFocusedElement.current.focus()
                         : null;
                     }}
                   >

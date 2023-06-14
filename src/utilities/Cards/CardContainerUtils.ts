@@ -1,10 +1,22 @@
-import React from "react";
-import { APIVariables, Season } from "../../interfaces/apiResponseTypes";
+import React, { Dispatch, MutableRefObject, SetStateAction } from "react";
 import {
+  APIVariables,
+  MainCard,
+  Season,
+} from "../../interfaces/apiResponseTypes";
+import {
+  Actions,
   ClientVariables,
   InitialConfig,
+  SortableBy,
   ValidFormats,
 } from "../../interfaces/initialConfigTypes";
+import SortCardsBy from "./SortCardsBy";
+import getCurrSeasonAndYear from "../getCurrentSeasonAndYear";
+import {
+  requestAniListAPI,
+  requestMockAPI,
+} from "../API/requestCards_CardContainer";
 
 export function throttle<fns>(callback: (params: fns) => void, delay = 250) {
   const timer: number[] = [];
@@ -91,3 +103,101 @@ export const callNextPageOnScroll = throttle<
     }
   ]
 >(handleCardContainerScroll);
+
+export const sortAndFilterCardsForView = (
+  sort: SortableBy,
+  ammount: number,
+  { cards }: Pick<InitialConfig, "cards">,
+  {
+    season,
+    format,
+    seasonYear,
+  }: { season: Season; format: ValidFormats; seasonYear: number },
+  showOngoing: boolean
+) => {
+  let cardsToDisplay: MainCard[];
+  if (showOngoing) {
+    const filteredAiringList = cards[season][seasonYear][format].filter(
+      (sCard) => !cards.ONGOING[format].find((oCard) => oCard.id === sCard.id)
+    );
+    const airingAndOngoing =
+      cards.ONGOING[format]?.concat(filteredAiringList) || [];
+    cardsToDisplay = SortCardsBy(sort, airingAndOngoing) as MainCard[];
+  } else {
+    const targ = cards[season][seasonYear][format];
+    cardsToDisplay = SortCardsBy(sort, targ) as MainCard[];
+  }
+  return cardsToDisplay.slice(0, ammount);
+};
+export const onPreferenceChange = (
+  season: Season,
+  seasonYear: number,
+  dispatch: Dispatch<Actions>,
+  ongoingRef: MutableRefObject<"show" | "hide">,
+  containerRef: MutableRefObject<HTMLDivElement | null>,
+  setAmmount: Dispatch<SetStateAction<number>>
+) => {
+  const [currSeason, currYear] = getCurrSeasonAndYear();
+  if (season === currSeason && currYear === seasonYear) {
+    dispatch({
+      type: "TOGGLE_ONGOING",
+      payload: {
+        forceMode: ongoingRef.current === "show" ? true : false,
+      },
+    });
+  } else {
+    dispatch({
+      type: "TOGGLE_ONGOING",
+      payload: { forceMode: false },
+    });
+  }
+  containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+  setAmmount(15);
+};
+
+export function requestNewCardsCardView(
+  {
+    abortOngoing,
+    abortMainCard,
+  }: {
+    abortOngoing: MutableRefObject<AbortController | null>;
+    abortMainCard: MutableRefObject<AbortController | null>;
+  },
+  {
+    variables,
+    dispatch,
+    isCallingAPI,
+    showOngoing,
+  }: {
+    variables: APIVariables;
+    dispatch: Dispatch<Actions>;
+    isCallingAPI: MutableRefObject<boolean>;
+    showOngoing: boolean;
+  },
+  mockMode: boolean
+) {
+  //create new AbortController to cancel consecutive requests if new request is made
+  abortOngoing.current = new AbortController();
+  abortMainCard.current = new AbortController();
+  // ****************** MOCK API ************************
+  if (mockMode) {
+    void requestMockAPI(
+      variables,
+      dispatch,
+      isCallingAPI,
+      showOngoing,
+      abortMainCard.current.signal,
+      abortOngoing.current.signal
+    );
+  } else {
+    // ****************** ANILIST API *********************
+    void requestAniListAPI(
+      variables,
+      dispatch,
+      isCallingAPI,
+      showOngoing,
+      abortMainCard.current.signal,
+      abortOngoing.current.signal
+    );
+  }
+}

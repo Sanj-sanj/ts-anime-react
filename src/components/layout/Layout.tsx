@@ -27,6 +27,22 @@ const Layout = () => {
   function toggleDarkMode() {
     setIsDarkMode(!isDarkMode);
   }
+  function userListLoadAndCheckForUpdates() {
+    abortNewEpisode.current = new AbortController();
+    const listHistory = localStorage.getItem("userList");
+    if (listHistory) {
+      const list = JSON.parse(listHistory) as UserPreferences;
+      dispatch({ type: "LOAD_LIST", payload: list });
+      void requestNewEpisodesCheck(
+        Object.keys(list.WATCHING)
+          .concat(Object.keys(list.INTERESTED))
+          .map((n) => +n),
+        list,
+        dispatch,
+        abortNewEpisode.current.signal
+      );
+    }
+  }
 
   if (isDarkMode) {
     document.querySelector("html")?.classList.add("dark");
@@ -43,20 +59,7 @@ const Layout = () => {
   else overlayRef.current?.classList.replace("block", "hidden");
 
   useEffect(() => {
-    abortNewEpisode.current = new AbortController();
-    const listHistory = localStorage.getItem("userList");
-    if (listHistory) {
-      const list = JSON.parse(listHistory) as UserPreferences;
-      dispatch({ type: "LOAD_LIST", payload: list });
-      void requestNewEpisodesCheck(
-        Object.keys(list.WATCHING)
-          .concat(Object.keys(list.INTERESTED))
-          .map((n) => +n),
-        list,
-        dispatch,
-        abortNewEpisode.current.signal
-      );
-    }
+    userListLoadAndCheckForUpdates();
     return () => {
       if (abortNewEpisode.current) abortNewEpisode.current.abort();
     };
