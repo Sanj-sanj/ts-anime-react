@@ -22,7 +22,7 @@ const CardContainer: FunctionComponent = () => {
   const { season, seasonYear, showOngoing } = client;
   const dispatch = useDispatchContext();
 
-  const clientVisibleCards: MainCard[] = [];
+  let clientVisibleCards: MainCard[] = [];
   const isMockOn = true;
 
   const [ammount, setAmmount] = useState(client.perPage);
@@ -82,7 +82,7 @@ const CardContainer: FunctionComponent = () => {
   }
 
   if (checkIfCardsExist(season, seasonYear, format, showOngoing, { cards }))
-    sortAndFilterCardsForView(
+    clientVisibleCards = sortAndFilterCardsForView(
       sort,
       ammount,
       { cards },
