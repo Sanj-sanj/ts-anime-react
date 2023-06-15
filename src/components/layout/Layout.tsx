@@ -16,7 +16,9 @@ const Layout = () => {
   const [isDarkMode, setIsDarkMode] = useState(setupDarkMode());
   const overlayRef = useRef<null | HTMLButtonElement>(null);
   const abortNewEpisode = useRef<null | AbortController>(null);
-  const { client } = useStateContext();
+  const {
+    client: { overlay },
+  } = useStateContext();
   const dispatch = useDispatchContext();
 
   const openNavigation = () =>
@@ -51,10 +53,7 @@ const Layout = () => {
     document.querySelector("html")?.classList.remove("dark");
     localStorage.setItem("dark", "false");
   }
-  if (
-    Object.entries(client.overlay).find(([, { active }]) => active) &&
-    overlayRef
-  )
+  if (Object.entries(overlay).find(([, { active }]) => active) && overlayRef)
     overlayRef.current?.classList.replace("hidden", "block");
   else overlayRef.current?.classList.replace("block", "hidden");
 
@@ -71,11 +70,11 @@ const Layout = () => {
         className="overlay w-screen h-screen bg-zinc-800 absolute opacity-70 z-20 hidden"
         ref={overlayRef}
       />
-      {client.overlay.modal.active
+      {overlay.modal.active
         ? createPortal(
             <Modal
               closeModal={closeModal}
-              entryPoint={client.overlay.modal.entryPoint}
+              entryPoint={overlay.modal.entryPoint}
             />,
             document.getElementById("modalRoot") as HTMLDivElement
           )

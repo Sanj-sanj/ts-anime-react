@@ -30,7 +30,13 @@ export const Initial: InitialConfig = {
     perPage: 15,
     season,
     seasonYear,
-    showOngoing: true,
+    titlesLang:
+      (localStorage.getItem("titlePref") as "english" | "romaji") || "english",
+    sort: "Rating",
+    showOngoing:
+      (localStorage.getItem("showOngoing") as "true" | "false") === "false"
+        ? false
+        : true,
     overlay: {
       modal: { active: false, entryPoint: undefined },
       navigation: { active: false },
@@ -48,5 +54,4 @@ export const Initial: InitialConfig = {
     FALL: {},
     ONGOING: { MOVIE: [], OVA: [], TV: [] },
   },
-  sort: "Rating",
 };

@@ -13,7 +13,8 @@ import { useDispatchContext } from "../../utilities/Context/AppContext";
 const NewEpisodeModal: FunctionComponent<{
   modalData: NewEpisodeCards[] | undefined;
   singelShowDetails: ShowListDetails<number> | undefined;
-}> = ({ modalData, singelShowDetails }) => {
+  titlePref: "english" | "romaji";
+}> = ({ modalData, singelShowDetails, titlePref }) => {
   if (!modalData || !singelShowDetails) return <></>;
 
   const dispatch = useDispatchContext();
@@ -103,7 +104,7 @@ const NewEpisodeModal: FunctionComponent<{
             <li key={id} className=" w-full px-3 mt-2">
               <div className="w-full flex flex-col justify-evenly items-center sm:flex-row">
                 <p className="sm:text-left sm:w-1/2 font-bold text-lg sm:mr-2">
-                  {title.romaji || title.english}:{" "}
+                  {title[titlePref] || title.romaji || title.english}:{" "}
                 </p>
                 <hr className="w-11/12 mb-2 sm:my-0 border-red-300 dark:border-white border-2 rounded" />
                 <div className="w-full sm:w-1/2 flex flex-col items-center sm:items-stretch sm:ml-4 border-x border-b sm:border-0 rounded-b ">

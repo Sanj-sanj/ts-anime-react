@@ -5,6 +5,7 @@ import StarSVG from "../../assets/five_pointed_star.svg";
 
 const userListCards = (
   userList: UserListParams,
+  titlePref: "english" | "romaji",
   lastFocusedCard: MutableRefObject<HTMLButtonElement | null>
 ) =>
   Object.entries(userList).map(([key, userListDetail]) => (
@@ -34,7 +35,9 @@ const userListCards = (
                 <div className="flex w-full items-center p-2">
                   <img
                     src={coverImage.medium || ""}
-                    alt={title.romaji || title.english || ""}
+                    alt={
+                      title[titlePref] || title.romaji || title.english || ""
+                    }
                     className="max-w-[50px] max-h-[71px] sm:max-h-[106.5px] sm:max-w-[75px] md:max-h-[142px] md:max-w-[100px] rounded"
                   />
                   <div className="flex w-full items-center justify-between">
@@ -44,10 +47,13 @@ const userListCards = (
                           className="whitespace-break-spaces line-clamp-2 text-ellipsis overflow-hidden"
                           style={{ contain: "inline-size" }}
                           title={
-                            title?.romaji || title?.english || "Title not found"
+                            title[titlePref] ||
+                            title?.romaji ||
+                            title?.english ||
+                            "Title not found"
                           }
                         >
-                          {title?.romaji || title?.english}
+                          {title[titlePref] || title?.romaji || title?.english}
                         </h3>
                         <p>
                           <span className="text-blue-400">

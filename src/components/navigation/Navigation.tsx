@@ -14,8 +14,7 @@ const Navigation = ({
   darkMode: { isDarkMode: boolean; toggleDarkMode: () => void };
 }) => {
   const {
-    sort,
-    client: { overlay },
+    client: { overlay, sort },
     user: { lists },
   } = useStateContext();
   const dispatch = useDispatchContext();

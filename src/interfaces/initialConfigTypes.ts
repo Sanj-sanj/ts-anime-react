@@ -21,6 +21,8 @@ export type ClientVariables = {
   season: Season;
   seasonYear: number;
   showOngoing: boolean;
+  titlesLang: "english" | "romaji";
+  sort: SortableBy;
   overlay: {
     modal: {
       entryPoint: ModalEntryPoint;
@@ -53,7 +55,6 @@ export type InitialConfig = {
       MOVIE: MainCard[];
     };
   };
-  sort: SortableBy;
 };
 
 export type Actions =
@@ -64,10 +65,6 @@ export type Actions =
   | {
       type: "UPDATE_CLIENT";
       payload: ClientVariables;
-    }
-  | {
-      type: "UPDATE_IS_FETCHING";
-      payload: boolean;
     }
   | {
       type: "UPDATE_CARDS";
@@ -117,4 +114,8 @@ export type Actions =
       payload: {
         forceMode?: boolean;
       };
+    }
+  | {
+      type: "TOGGLE_LANGUAGE";
+      payload: "english" | "romaji";
     };

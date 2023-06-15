@@ -60,7 +60,7 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
     case "UPDATE_SORT": {
       if (action.payload) {
         const { sort } = action.payload;
-        return { ...state, sort };
+        return { ...state, client: { ...state.client, sort } };
       }
       return state;
     }
@@ -171,11 +171,13 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
 
     case "TOGGLE_ONGOING": {
       if (action.payload.forceMode === true) {
+        localStorage.setItem("showOngoing", "true");
         return {
           ...state,
           client: { ...state.client, showOngoing: true },
         };
       } else {
+        localStorage.setItem("showOngoing", "false");
         return {
           ...state,
           client: {
@@ -183,6 +185,15 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
             showOngoing: false,
           },
         };
+      }
+    }
+    case "TOGGLE_LANGUAGE": {
+      if (action.payload === "english") {
+        localStorage.setItem("titlePref", "english");
+        return { ...state, client: { ...state.client, titlesLang: "english" } };
+      } else {
+        localStorage.setItem("titlePref", "romaji");
+        return { ...state, client: { ...state.client, titlesLang: "romaji" } };
       }
     }
     default:

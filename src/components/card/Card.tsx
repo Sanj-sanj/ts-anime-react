@@ -9,8 +9,9 @@ import {
 
 const Card: FunctionComponent<{
   card: MainCard;
+  titlePref: "english" | "romaji";
   focusRef: MutableRefObject<null | HTMLButtonElement>;
-}> = ({ card, focusRef }) => {
+}> = ({ card, titlePref, focusRef }) => {
   const {
     title,
     season,
@@ -44,7 +45,10 @@ const Card: FunctionComponent<{
           className="bg-slate-200 rounded-l-md w-full max-h-[143px] min-h-[143px] min-w-[100px] max-w-[100px]"
           src={coverImage?.medium || ""}
           alt={
-            title.english || title.romaji || title.romaji || "Title not found"
+            title[titlePref] ||
+            title.english ||
+            title.romaji ||
+            "Title not found"
           }
         />
         <span
@@ -64,9 +68,17 @@ const Card: FunctionComponent<{
         >
           <h2
             className="leading-none pl-0.5 text-lg whitespace-nowrap text-ellipsis overflow-hidden text-slate-300 [text-shadow:-1px_-1px_0_#000,_1px_-1px_0_#000,_-1px_1px_0_#000,_1px_1px_0_#000]"
-            title={title.english || title.romaji || "Title unknown"}
+            title={
+              title[titlePref] ||
+              title.english ||
+              title.romaji ||
+              "Title unknown"
+            }
           >
-            {title.english || title.romaji || "Title unknown"}
+            {title[titlePref] ||
+              title.english ||
+              title.romaji ||
+              "Title unknown"}
           </h2>
           <hr />
         </div>

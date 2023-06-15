@@ -31,6 +31,7 @@ const Modal: FunctionComponent<{
 }> = ({ closeModal, entryPoint }) => {
   const {
     user: { lists, modalData, newEpisodesAvailable },
+    client: { titlesLang },
   } = useStateContext();
   const unsavedChanges = useRef<boolean>(false);
   const modal = document.querySelector("#modalRoot") as HTMLDivElement;
@@ -102,6 +103,7 @@ const Modal: FunctionComponent<{
         <NewEpisodeModal
           modalData={newEpisodesAvailable}
           singelShowDetails={airingEpisodesDetails}
+          titlePref={titlesLang}
         />
       ) : null}
 

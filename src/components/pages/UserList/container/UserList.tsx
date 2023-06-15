@@ -20,7 +20,6 @@ const UserList = () => {
   const {
     user: { lists },
     client,
-    sort,
   } = useStateContext();
   const lastFocusedCard = useRef<null | HTMLButtonElement>(null);
   const abortListRequest = useRef<null | AbortController>(null);
@@ -41,13 +40,17 @@ const UserList = () => {
   const currList = Object.entries(usableList);
   const newList = currList.reduce((acc, [key, list]) => {
     const temp = Object.values(list);
-    const newSortedList = SortCardsBy(sort, temp) as {
+    const newSortedList = SortCardsBy(client.sort, temp) as {
       apiResults: MainCard;
       userListDetails: ListDetails;
     }[];
     return { ...acc, [key]: newSortedList };
   }, {} as typeof usableList);
-  const displayCards = userListCards(newList, lastFocusedCard);
+  const displayCards = userListCards(
+    newList,
+    client.titlesLang,
+    lastFocusedCard
+  );
 
   useEffect(() => {
     const ids = entries.reduce((acc, [userStatus, entries]) => {
