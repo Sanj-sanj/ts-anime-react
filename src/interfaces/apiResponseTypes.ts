@@ -100,7 +100,7 @@ export interface NewEpisodeCards {
   episodes: number | null;
   nextAiringEpisode: NextAiringEpisode;
 }
-type UserListData = {
+export type UserListData = {
   userListDetails: ListDetails;
   apiResults: MainCard;
 }[];

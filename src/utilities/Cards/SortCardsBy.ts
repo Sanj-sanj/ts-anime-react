@@ -1,18 +1,21 @@
-import { ListDetails } from "../../interfaces/UserPreferencesTypes";
-import { MainCard } from "../../interfaces/apiResponseTypes";
+import {
+  ListDetails,
+  UserShowStatus,
+} from "../../interfaces/UserPreferencesTypes";
+import { MainCard, UserListParams } from "../../interfaces/apiResponseTypes";
 import { SortableBy } from "../../interfaces/initialConfigTypes";
 import { isMainCard } from "./CheckCardType";
 
-function SortCardsBy(
-  sort: SortableBy,
-  cards: MainCard[] | { userListDetails: ListDetails; apiResults: MainCard }[]
-) {
+function SortCardsBy(sort: SortableBy, cards: MainCard[] | UserListParams) {
   let sortedMainCards: MainCard[] = [];
-  let sortedUserListCards: {
-    userListDetails: ListDetails;
-    apiResults: MainCard;
-  }[] = [];
-  if (cards.length && isMainCard(cards)) {
+  const sortedUserListCards: UserListParams = {
+    WATCHING: [],
+    INTERESTED: [],
+    SKIPPED: [],
+    COMPLETED: [],
+    DROPPED: [],
+  };
+  if (Array.isArray(cards) && cards.length && isMainCard(cards)) {
     switch (sort) {
       case "Rating":
         sortedMainCards = cards
@@ -47,42 +50,60 @@ function SortCardsBy(
     return sortedMainCards;
   } else {
     cards = cards as typeof sortedUserListCards;
+    const temp = Object.entries(cards);
+
     switch (sort) {
       case "Rating":
-        sortedUserListCards = cards.sort(
-          (a, b) =>
-            (b.apiResults.meanScore as number) -
-            (a.apiResults.meanScore as number)
-        );
+        temp.reduce((acc, [key, listData]) => {
+          listData.sort(
+            (a, b) =>
+              (b.apiResults.meanScore as number) -
+              (a.apiResults.meanScore as number)
+          );
+          return { ...acc, [key]: listData };
+        }, {});
         break;
       case "Popularity":
-        sortedUserListCards = cards
-          .filter(
-            ({ apiResults: { nextAiringEpisode } }) =>
-              nextAiringEpisode?.timeUntilAiring
-          )
-          .sort(
-            (a, b) =>
-              (a.apiResults.nextAiringEpisode?.timeUntilAiring as number) -
-              (b.apiResults.nextAiringEpisode?.timeUntilAiring as number)
-          )
-          .concat(
-            cards.filter(
-              ({ apiResults: { nextAiringEpisode } }) =>
-                !nextAiringEpisode?.timeUntilAiring
-            )
-          );
+        temp.reduce(
+          (acc, [key, cards]) => ({
+            ...acc,
+            [key]: cards
+              .filter(
+                ({ apiResults: { nextAiringEpisode } }) =>
+                  nextAiringEpisode?.timeUntilAiring
+              )
+              .sort(
+                (a, b) =>
+                  (b.apiResults.nextAiringEpisode?.timeUntilAiring as number) -
+                  (a.apiResults.nextAiringEpisode?.timeUntilAiring as number)
+              )
+              .concat(
+                cards.filter(
+                  ({ apiResults: { nextAiringEpisode } }) =>
+                    !nextAiringEpisode?.timeUntilAiring
+                )
+              ),
+          }),
+          {}
+        );
         break;
       case "Countdown":
-        sortedUserListCards = cards.sort(
-          (a, b) =>
-            (a.apiResults.nextAiringEpisode?.timeUntilAiring as number) -
-            (b.apiResults.nextAiringEpisode?.timeUntilAiring as number)
+        temp.reduce(
+          (acc, [key, cards]) => ({
+            ...acc,
+            [key]: cards.sort(
+              (a, b) =>
+                (a.apiResults.nextAiringEpisode?.timeUntilAiring as number) -
+                (b.apiResults.nextAiringEpisode?.timeUntilAiring as number)
+            ),
+          }),
+          {}
         );
         break;
       default:
         break;
     }
+    console.log(temp);
     return sortedUserListCards;
   }
 }

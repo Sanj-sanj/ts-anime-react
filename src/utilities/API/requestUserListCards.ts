@@ -48,7 +48,7 @@ export default async function requestUserListCards(
         }, {} as UserListParams);
         if (status[i] in userListDetailsByStatus)
           return { ...acc, ...userListDetailsByStatus };
-        return { ...acc, [status[i]]: {} };
+        return { ...acc, [status[i]]: [] };
       }, {} as UserListParams);
       setState(final);
     },

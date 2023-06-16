@@ -1,14 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useStateContext } from "../../../../utilities/Context/AppContext";
 import {
-  ListDetails,
   ShowListDetails,
   UserShowStatus,
 } from "../../../../interfaces/UserPreferencesTypes";
-import {
-  MainCard,
-  UserListParams,
-} from "../../../../interfaces/apiResponseTypes";
+import { UserListParams } from "../../../../interfaces/apiResponseTypes";
 import requestUserListCards from "../../../../utilities/API/requestUserListCards";
 import userListCards from "../../../card/UserListCards";
 import SortCardsBy from "../../../../utilities/Cards/SortCardsBy";
@@ -21,6 +17,7 @@ const UserList = () => {
     user: { lists },
     client,
   } = useStateContext();
+
   const lastFocusedCard = useRef<null | HTMLButtonElement>(null);
   const abortListRequest = useRef<null | AbortController>(null);
   const entries = Object.entries(lists) as [
@@ -33,30 +30,35 @@ const UserList = () => {
       {} as UserListParams
     )
   );
-
   if (lastFocusedCard.current !== null && client.overlay.modal.active === false)
     lastFocusedCard.current.focus();
 
-  const currList = Object.entries(usableList);
-  const newList = currList.reduce((acc, [key, list]) => {
-    const temp = Object.values(list);
-    const newSortedList = SortCardsBy(client.sort, temp) as {
-      apiResults: MainCard;
-      userListDetails: ListDetails;
-    }[];
-    return { ...acc, [key]: newSortedList };
-  }, {} as typeof usableList);
-  const displayCards = userListCards(
-    newList,
-    client.titlesLang,
-    lastFocusedCard
-  );
+  function updateListOnDetailChange() {
+    const itterableList = Object.entries(usableList);
+    return itterableList.reduce((acc, [key, data]) => {
+      key = key as UserShowStatus;
+      if (data)
+        return {
+          ...acc,
+          [key]: data.map(({ userListDetails, apiResults }) => ({
+            apiResults,
+            userListDetails:
+              lists[key as UserShowStatus][userListDetails.id as number],
+          })),
+        };
+      else return { ...acc, [key]: [] };
+    }, {} as UserListParams);
+  }
+
+  useEffect(() => {
+    setUsableList(updateListOnDetailChange());
+    console.log(SortCardsBy(client.sort, usableList));
+  }, [lists]);
 
   useEffect(() => {
     const ids = entries.reduce((acc, [userStatus, entries]) => {
       return { ...acc, [userStatus]: Object.keys(entries) };
     }, {} as { [x in UserShowStatus]: number[] });
-
     void requestUserListCards(
       ids,
       lists,
@@ -68,12 +70,59 @@ const UserList = () => {
     };
   }, []);
 
+  const CardContainer = ({
+    title,
+    children,
+  }: {
+    title: string;
+    children: JSX.Element[];
+  }) => (
+    <div className="dark:text-slate-300 bg-stone-400 dark:bg-slate-900 w-full pb-4 mt-4 text-center rounded px-6">
+      <h2 className="text-xl pt-2">{title}:</h2>
+      <ul>{children}</ul>
+    </div>
+  );
+  console.log(usableList);
   return (
     <>
       <UserListPreferences />
       <div className="w-full flex flex-col items-center overflow-y-scroll h-[90vh]">
         <div className="w-full sm:w-11/12 md:w-10/12 lg:w-2/3 xl:w-5/12">
-          {displayCards}
+          <CardContainer title="Watching">
+            {userListCards(
+              usableList.WATCHING,
+              client.titlesLang,
+              lastFocusedCard
+            )}
+          </CardContainer>
+          <CardContainer title="Interested">
+            {userListCards(
+              usableList.INTERESTED,
+              client.titlesLang,
+              lastFocusedCard
+            )}
+          </CardContainer>
+          <CardContainer title="Completed">
+            {userListCards(
+              usableList.COMPLETED,
+              client.titlesLang,
+              lastFocusedCard
+            )}
+          </CardContainer>
+          <CardContainer title="Skipped">
+            {userListCards(
+              usableList.SKIPPED,
+              client.titlesLang,
+              lastFocusedCard
+            )}
+          </CardContainer>
+          <CardContainer title="Dropped">
+            {userListCards(
+              usableList.DROPPED,
+              client.titlesLang,
+              lastFocusedCard
+            )}
+          </CardContainer>
         </div>
       </div>
     </>
