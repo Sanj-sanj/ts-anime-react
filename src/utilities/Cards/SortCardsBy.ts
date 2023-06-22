@@ -51,10 +51,10 @@ function SortCardsBy(sort: SortableBy, cards: MainCard[] | UserListParams) {
   } else {
     cards = cards as typeof sortedUserListCards;
     const temp = Object.entries(cards);
-
+    let sortedTemp;
     switch (sort) {
-      case "Rating":
-        temp.reduce((acc, [key, listData]) => {
+      case "Rating": {
+        return temp.reduce((acc, [key, listData]) => {
           listData.sort(
             (a, b) =>
               (b.apiResults.meanScore as number) -
@@ -62,9 +62,10 @@ function SortCardsBy(sort: SortableBy, cards: MainCard[] | UserListParams) {
           );
           return { ...acc, [key]: listData };
         }, {});
-        break;
-      case "Popularity":
-        temp.reduce(
+      }
+
+      case "Popularity": {
+        return temp.reduce(
           (acc, [key, cards]) => ({
             ...acc,
             [key]: cards
@@ -86,25 +87,42 @@ function SortCardsBy(sort: SortableBy, cards: MainCard[] | UserListParams) {
           }),
           {}
         );
-        break;
+      }
+
       case "Countdown":
-        temp.reduce(
-          (acc, [key, cards]) => ({
-            ...acc,
-            [key]: cards.sort(
+        return temp.reduce((acc, [key, cards]) => {
+          const ongoing = cards.filter(
+            ({ apiResults: { nextAiringEpisode } }) =>
+              nextAiringEpisode?.airingAt
+          );
+          const sortedCards = [...ongoing]
+            .sort(
               (a, b) =>
                 (a.apiResults.nextAiringEpisode?.timeUntilAiring as number) -
                 (b.apiResults.nextAiringEpisode?.timeUntilAiring as number)
-            ),
-          }),
-          {}
-        );
-        break;
+            )
+            .concat(
+              cards.filter(
+                ({ apiResults: { nextAiringEpisode } }) =>
+                  !nextAiringEpisode?.airingAt
+              )
+            );
+          return {
+            ...acc,
+            [key]: sortedCards,
+          };
+        }, {});
+
       default:
         break;
     }
-    console.log(temp);
-    return sortedUserListCards;
+
+    // console.log(temp);
+    // console.log(sort);
+    // temp.forEach(([key, data]) => {
+    //   sortedUserListCards[key as UserShowStatus] = data;
+    // });
+    // return sortedUserListCards;
   }
 }
 export default SortCardsBy;

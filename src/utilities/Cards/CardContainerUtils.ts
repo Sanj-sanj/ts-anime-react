@@ -151,7 +151,7 @@ export const onPreferenceChange = (
       payload: { forceMode: false },
     });
   }
-  containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+  containerRef.current?.scrollTo({ top: 0, behavior: "instant" });
   setAmmount(15);
 };
 

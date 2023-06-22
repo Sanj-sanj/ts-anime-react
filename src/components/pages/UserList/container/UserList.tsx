@@ -33,27 +33,9 @@ const UserList = () => {
   if (lastFocusedCard.current !== null && client.overlay.modal.active === false)
     lastFocusedCard.current.focus();
 
-  function updateListOnDetailChange() {
-    const itterableList = Object.entries(usableList);
-    return itterableList.reduce((acc, [key, data]) => {
-      key = key as UserShowStatus;
-      if (data)
-        return {
-          ...acc,
-          [key]: data.map(({ userListDetails, apiResults }) => ({
-            apiResults,
-            userListDetails:
-              lists[key as UserShowStatus][userListDetails.id as number],
-          })),
-        };
-      else return { ...acc, [key]: [] };
-    }, {} as UserListParams);
-  }
-
   useEffect(() => {
-    setUsableList(updateListOnDetailChange());
-    console.log(SortCardsBy(client.sort, usableList));
-  }, [lists]);
+    setUsableList(SortCardsBy(client.sort, usableList) as UserListParams);
+  }, [lists, client.sort]);
 
   useEffect(() => {
     const ids = entries.reduce((acc, [userStatus, entries]) => {
@@ -62,7 +44,8 @@ const UserList = () => {
     void requestUserListCards(
       ids,
       lists,
-      (newList: UserListParams) => setUsableList(newList),
+      (newList: UserListParams) =>
+        setUsableList(SortCardsBy(client.sort, newList) as UserListParams),
       abortListRequest.current?.signal
     );
     return () => {
@@ -82,7 +65,6 @@ const UserList = () => {
       <ul>{children}</ul>
     </div>
   );
-  console.log(usableList);
   return (
     <>
       <UserListPreferences />

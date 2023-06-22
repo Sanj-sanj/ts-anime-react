@@ -29,7 +29,7 @@ const CardContainer: FunctionComponent = () => {
   const dispatch = useDispatchContext();
 
   let clientVisibleCards: MainCard[] = [];
-  const isMockOn = true;
+  const isMockOn = false;
 
   const [ammount, setAmmount] = useState(client.perPage);
   const isCallingAPI = useRef(false);
@@ -167,7 +167,6 @@ const CardContainer: FunctionComponent = () => {
             "set-ongoing",
             ["Show ongoing", "Hide ongoing"],
             (e: ChangeEvent<HTMLSelectElement> | undefined) => {
-              console.log("somehow?");
               if (!e) return;
               const selection = e.target.value.split(" ")[0].toLowerCase() as
                 | "show"
