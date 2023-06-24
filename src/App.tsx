@@ -6,6 +6,7 @@ import AppProvider from "./utilities/Context/AppContext";
 import Layout from "./components/layout/Layout";
 import CardContainer from "./components/pages/cardView/container/CardContainer";
 import UserList from "./components/pages/UserList/container/UserList";
+import CalendarContainer from "./components/pages/Calendar/container/CalendarContainer";
 
 const root = createRoot(document.getElementById("root") as HTMLElement);
 
@@ -25,6 +26,7 @@ const App = () => {
       children: [
         { path: "/", element: <CardContainer /> },
         { path: "/list", element: <UserList /> },
+        { path: "/calendar", element: <CalendarContainer /> },
       ],
     },
   ]);

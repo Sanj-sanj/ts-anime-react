@@ -165,7 +165,8 @@ export default function ContainerPreferences() {
               className="w-6"
             />
           </button>
-          <button
+          <Link
+            to="/calendar"
             className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
             title="Go to calendar view"
           >
@@ -174,7 +175,7 @@ export default function ContainerPreferences() {
               className="w-6"
               alt="Calendar view."
             />
-          </button>
+          </Link>
           <Link
             to="/list"
             className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"

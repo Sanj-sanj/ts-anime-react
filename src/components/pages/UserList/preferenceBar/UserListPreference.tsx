@@ -14,12 +14,13 @@ const UserListPreferences = () => {
         >
           <img src={CardSVG as string} className="w-6" alt="" />
         </Link>
-        <button
+        <Link
+          to="/calendar"
           className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
           title="Calendar view"
         >
           <img src={CalendarSVG as string} className="w-6" alt="" />
-        </button>
+        </Link>
         <Link
           to="/list"
           className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
