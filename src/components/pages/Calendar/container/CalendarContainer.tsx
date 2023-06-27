@@ -1,8 +1,14 @@
 import dayjs from "dayjs";
 import UserListPreferences from "../../UserList/preferenceBar/UserListPreference";
 import { useStateContext } from "../../../../utilities/Context/AppContext";
-import { MainCard } from "../../../../interfaces/apiResponseTypes";
+import {
+  MainCard,
+  NextAiringEpisode,
+  ShowStatus,
+} from "../../../../interfaces/apiResponseTypes";
 import { sortAndFilterCardsForView } from "../../../../utilities/Cards/CardContainerUtils";
+import setCountdownText from "../../../../utilities/Cards/setCountdownText";
+import { useState } from "react";
 
 const CalendarContainer = () => {
   // make a function to generate a array of 7 calendar dates for timetable view:
@@ -67,19 +73,42 @@ const CalendarContainer = () => {
       }[]
     );
   };
+  const somethjan = (
+    nextAiringEpisode: NextAiringEpisode,
+    status: ShowStatus
+  ) => {
+    type FAULTY = "FINISHED" | "CANCELED" | "HIATUS";
+    const faultyStatus: FAULTY[] = ["FINISHED", "CANCELED", "HIATUS"];
+    const found = faultyStatus.find((e) => e === status);
+    if (found) {
+      return found;
+    }
+    const now = dayjs();
+    const then2 = dayjs(
+      nextAiringEpisode?.airingAt && nextAiringEpisode.airingAt * 1000
+    );
+    const days = then2.diff(now, "d"),
+      hours = then2.diff(now, "h") % 24,
+      mins = then2.diff(now, "m") % 60,
+      secs = then2.diff(now, "s") % 60;
+    return `Ep: ${nextAiringEpisode?.episode || "?"} - ${days}d ${hours}h ${
+      mins <= 9 ? "0".concat(mins.toString()) : mins
+    }m ${secs <= 9 ? "0".concat(secs.toString()) : secs}s`;
+  };
 
   const slotFramework = ongoingToGroupedByDay();
-
+  console.log(slotFramework);
   const calendarByTimeline = (slots: typeof slotFramework) => {
     return (
       <div className="w-full bg-slate-800 flex justify-between">
-        {slots.map(({ day, entries }) => {
+        {slots.map(({ day, entries }, i) => {
           return (
             <div
-              key={day}
+              key={`${day + i}`}
               className="text-center w-full border-x border-t border-slate-500"
             >
-              {Object.entries(entries).map(([str, { shows }]) => {
+              {Object.entries(entries).map(([str, { shows }], i) => {
+                if (i !== 0) return <></>;
                 return (
                   <>
                     <h2
@@ -92,24 +121,49 @@ const CalendarContainer = () => {
                     >
                       {str}
                     </h2>
-
-                    {shows.map(({ title, id, coverImage }) => (
-                      <div key={id} className="bg-slate-300 w-full">
-                        <div className="w-full flex">
-                          <div className="w-2 bg-gray-400 flex items-center"></div>
+                    {shows.map(
+                      ({
+                        title,
+                        id,
+                        coverImage,
+                        status,
+                        nextAiringEpisode,
+                      }) => (
+                        <div key={id} className="bg-slate-300 w-full">
                           <div className="w-full flex">
-                            <img
-                              src={coverImage.medium || ""}
-                              alt=""
-                              className="w-12 h-[72px]"
-                            />
-                            <h3 className="text-center w-full text-ellipsis line-clamp-3 overflow-hidden">
-                              {title[titlesLang] || title.romaji}
-                            </h3>
+                            <div className="w-2 bg-gray-400 flex items-center"></div>
+                            <div className="w-full">
+                              <div className="">
+                                {dayjs(
+                                  (nextAiringEpisode?.airingAt as number) * 1000
+                                ).format("h:mm a")}
+                              </div>
+                              <div className="flex">
+                                <img
+                                  src={coverImage.medium || ""}
+                                  alt=""
+                                  className="w-12 h-[72px]"
+                                />
+                                <h3
+                                  className="text-center w-full text-ellipsis line-clamp-3 overflow-hidden"
+                                  title={
+                                    title[titlesLang] ||
+                                    title.romaji ||
+                                    title.english ||
+                                    ""
+                                  }
+                                >
+                                  {title[titlesLang] ||
+                                    title.romaji ||
+                                    title.english ||
+                                    ""}
+                                </h3>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      )
+                    )}
                   </>
                 );
               })}
