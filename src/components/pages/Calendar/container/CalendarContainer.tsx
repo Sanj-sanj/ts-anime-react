@@ -1,14 +1,10 @@
 import dayjs from "dayjs";
 import UserListPreferences from "../../UserList/preferenceBar/UserListPreference";
 import { useStateContext } from "../../../../utilities/Context/AppContext";
-import {
-  MainCard,
-  NextAiringEpisode,
-  ShowStatus,
-} from "../../../../interfaces/apiResponseTypes";
+import { MainCard } from "../../../../interfaces/apiResponseTypes";
 import { sortAndFilterCardsForView } from "../../../../utilities/Cards/CardContainerUtils";
-import setCountdownText from "../../../../utilities/Cards/setCountdownText";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { airingTodayQuery } from "../../../../utilities/API/QueryStrings/CalendarAiringToday";
 
 const CalendarContainer = () => {
   // make a function to generate a array of 7 calendar dates for timetable view:
@@ -41,16 +37,19 @@ const CalendarContainer = () => {
               ...acc[cardDate.day()].entries,
               [cardDate.format("ddd MMM DD")]: {
                 ...acc[cardDate.day()].entries[cardDate.format("ddd MMM DD")],
-                // date: cardDate,
-                shows: [
+                shows: {
                   ...(acc[cardDate.day()].entries?.[
                     cardDate.format("ddd MMM DD")
-                  ]?.shows || []),
-                  card,
-                ],
+                  ]?.shows || {}),
+                  [cardDate.format("h:mm a")]: [
+                    ...(acc[cardDate.day()].entries?.[
+                      cardDate.format("ddd MMM DD")
+                    ]?.shows[cardDate.format("h:mm a")] || []),
+                    card,
+                  ],
+                },
               },
             },
-            // shows: [...acc[cardDate.day()].shows, card],
             day: cardDate.get("day"),
           };
         }
@@ -67,52 +66,113 @@ const CalendarContainer = () => {
         { entries: {}, day: 6 },
       ] as {
         entries: {
-          [day in string]: { shows: MainCard[] };
+          [day in string]: { shows: { [t in string]: MainCard[] } };
         };
         day: number;
       }[]
     );
   };
-  const somethjan = (
-    nextAiringEpisode: NextAiringEpisode,
-    status: ShowStatus
-  ) => {
-    type FAULTY = "FINISHED" | "CANCELED" | "HIATUS";
-    const faultyStatus: FAULTY[] = ["FINISHED", "CANCELED", "HIATUS"];
-    const found = faultyStatus.find((e) => e === status);
-    if (found) {
-      return found;
-    }
-    const now = dayjs();
-    const then2 = dayjs(
-      nextAiringEpisode?.airingAt && nextAiringEpisode.airingAt * 1000
-    );
-    const days = then2.diff(now, "d"),
-      hours = then2.diff(now, "h") % 24,
-      mins = then2.diff(now, "m") % 60,
-      secs = then2.diff(now, "s") % 60;
-    return `Ep: ${nextAiringEpisode?.episode || "?"} - ${days}d ${hours}h ${
-      mins <= 9 ? "0".concat(mins.toString()) : mins
-    }m ${secs <= 9 ? "0".concat(secs.toString()) : secs}s`;
-  };
+  const [slotFramework, setSlotFramework] = useState(ongoingToGroupedByDay());
 
-  const slotFramework = ongoingToGroupedByDay();
-  console.log(slotFramework);
+  useEffect(() => {
+    // Define our query variables and values that will be used in the query request
+    // Define the config we'll need for our Api request
+    const url = "https://graphql.anilist.co",
+      options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          query: airingTodayQuery,
+          variables: {
+            page: 0,
+            perPage: 50,
+            airingAt_greater: Math.floor(Date.now() / 1000) - 86400,
+            airingAt_lesser: Math.floor(Date.now() / 1000),
+          },
+        }),
+      };
+
+    interface something {
+      data: {
+        Page: {
+          pageInfo: {
+            currentPage: number;
+            hasNextPage: boolean;
+            lastPage: number;
+            perPage: number;
+            total: number;
+          };
+          airingSchedules: {
+            airingAt: number;
+            id: number;
+            media: MainCard;
+            episode: number;
+          }[];
+        };
+      };
+    }
+    // Make the HTTP Api request
+    fetch(url, options)
+      .then((res) => res.json() as Promise<something>)
+      .then((v) => {
+        return v.data.Page.airingSchedules.filter(
+          ({ media }) => media.format === "TV"
+        );
+      })
+      .then((v) => {
+        v.forEach(({ airingAt, media, episode }) => {
+          if (media.nextAiringEpisode === null) {
+            media.nextAiringEpisode = { airingAt, episode, timeUntilAiring: 0 };
+          }
+
+          const date = dayjs(airingAt * 1000);
+          const strDate = date.format("ddd MMM DD");
+          const copy = [...slotFramework];
+          console.log(copy);
+          const temp = {
+            [strDate]: {
+              shows: {
+                ...(copy[date.day()].entries[strDate]?.shows || {}),
+                [date.format("h:mm a")]: [
+                  media,
+                  ...(copy[date.day()].entries?.[strDate]?.shows?.[
+                    date.format("h:mm a")
+                  ] || []),
+                ],
+              },
+            },
+          };
+          console.log(temp);
+
+          copy[date.day()].entries = {
+            ...temp,
+            ...copy[date.day()].entries,
+          };
+          console.log(copy);
+          setSlotFramework(copy);
+        });
+      })
+      .catch(console.log); //eslint-disable-line
+  }, []);
+
+  console.log("1", slotFramework);
   const calendarByTimeline = (slots: typeof slotFramework) => {
     return (
       <div className="w-full bg-slate-800 flex justify-between">
-        {slots.map(({ day, entries }, i) => {
+        {slots.map(({ day, entries }) => {
           return (
             <div
-              key={`${day + i}`}
+              key={day}
               className="text-center w-full border-x border-t border-slate-500"
             >
               {Object.entries(entries).map(([str, { shows }], i) => {
-                if (i !== 0) return <></>;
+                if (i > 0) return <></>;
                 return (
-                  <>
+                  <div key={`${str}-${i}`}>
                     <h2
-                      key={str}
                       className={`text-3xl text-blue-400 ${
                         dayjs().format("ddd MMM DD") === str
                           ? "bg-teal-600 text-pink-50"
@@ -121,50 +181,67 @@ const CalendarContainer = () => {
                     >
                       {str}
                     </h2>
-                    {shows.map(
-                      ({
-                        title,
-                        id,
-                        coverImage,
-                        status,
-                        nextAiringEpisode,
-                      }) => (
-                        <div key={id} className="bg-slate-300 w-full">
-                          <div className="w-full flex">
-                            <div className="w-2 bg-gray-400 flex items-center"></div>
-                            <div className="w-full">
-                              <div className="">
-                                {dayjs(
-                                  (nextAiringEpisode?.airingAt as number) * 1000
-                                ).format("h:mm a")}
-                              </div>
-                              <div className="flex">
-                                <img
-                                  src={coverImage.medium || ""}
-                                  alt=""
-                                  className="w-12 h-[72px]"
-                                />
-                                <h3
-                                  className="text-center w-full text-ellipsis line-clamp-3 overflow-hidden"
-                                  title={
-                                    title[titlesLang] ||
-                                    title.romaji ||
-                                    title.english ||
-                                    ""
-                                  }
-                                >
-                                  {title[titlesLang] ||
-                                    title.romaji ||
-                                    title.english ||
-                                    ""}
-                                </h3>
+                    <div className="flex w-full">
+                      <div className="w-2 min-w-[0.5rem] max-w-[0.5rem] bg-gray-400 flex items-center"></div>
+                      <div className="bg-slate-300 py-6 w-full">
+                        {Object.entries(shows).map(([hour, shows]) => {
+                          return (
+                            <div key={`${day}-${hour}`} className="w-full">
+                              <div className="w-full flex">
+                                <div className="w-full">
+                                  <div className="">{hour}</div>
+                                  {shows.map(
+                                    ({
+                                      id,
+                                      coverImage,
+                                      title,
+                                      episodes,
+                                      status,
+                                      nextAiringEpisode,
+                                    }) => (
+                                      <div key={id} className="flex w-full">
+                                        <img
+                                          src={coverImage.medium || ""}
+                                          alt=""
+                                          className="w-12 h-[72px]"
+                                        />
+                                        <div className="w-full">
+                                          <h3
+                                            className="text-left w-full  text-ellipsis line-clamp-2 overflow-hidden"
+                                            style={{ wordBreak: "break-word" }}
+                                            title={
+                                              title[titlesLang] ||
+                                              title.romaji ||
+                                              title.english ||
+                                              ""
+                                            }
+                                          >
+                                            {title[titlesLang] ||
+                                              title.romaji ||
+                                              title.english ||
+                                              ""}
+                                          </h3>
+                                          <p className="text-right text-sm font-bold mr-2 text-teal-900">
+                                            Ep:{" "}
+                                            {status === "FINISHED"
+                                              ? episodes
+                                              : `${
+                                                  nextAiringEpisode?.episode ||
+                                                  "???"
+                                                }`}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    )
+                                  )}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      )
-                    )}
-                  </>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
                 );
               })}
             </div>

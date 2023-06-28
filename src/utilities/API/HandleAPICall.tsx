@@ -16,9 +16,11 @@ const url = "https://graphql.anilist.co";
 
 async function handleResponse(response: Response) {
   const json = (await response.json()) as APIPayload;
+  console.log(json);
   if (response.ok) {
     return json;
   } else {
+    console.log("error: ", json.errors);
     return Promise.reject(json);
   }
 }
