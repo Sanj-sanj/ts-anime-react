@@ -1,5 +1,6 @@
 import {
   APIVariables,
+  AiringSchedule,
   MainCard,
   NewEpisodeCards,
 } from "../../interfaces/apiResponseTypes";
@@ -21,7 +22,8 @@ async function requestAniListAPI(
 ) {
   console.log("calling ANILIST_API");
   isCallingAPI.current = true;
-  const callsArr: Promise<(MainCard | NewEpisodeCards)[]>[] = [];
+  const callsArr: Promise<(MainCard | NewEpisodeCards | AiringSchedule)[]>[] =
+    [];
   callsArr.push(HandleAPICall(variables, [], mainCardQuery, signal1));
   if (fetchingOngoing) {
     const ongoingVariables: APIVariables = {

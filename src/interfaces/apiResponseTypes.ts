@@ -12,8 +12,14 @@ export interface APIPayload {
         perPage: number;
         total: number;
       };
+      airingSchedules?: AiringSchedule[];
     };
   };
+  errors?: {
+    locations: { line: number; column: number }[];
+    message: string;
+    status: number;
+  }[];
 }
 
 export type APIVariables = NearestSeason | OngoingSeason;
@@ -33,6 +39,12 @@ type OngoingSeason = {
   format_in: Formats;
   format: ValidFormats;
   status_in: ShowStatus[];
+};
+export type APICalendarLast24Hours = {
+  page: number;
+  perPage: number;
+  airingAt_greater: number;
+  airingAt_lesser: number;
 };
 export type APINewEpisodesVariables = {
   page: number;
@@ -105,6 +117,12 @@ export type UserListData = {
   apiResults: MainCard;
 }[];
 export type UserListParams = { [x in UserShowStatus]: UserListData };
+export type AiringSchedule = {
+  airingAt: number;
+  id: number;
+  media: MainCard;
+  episode: number;
+};
 export interface MainCard {
   meanScore: number | null;
   nextAiringEpisode: NextAiringEpisode;

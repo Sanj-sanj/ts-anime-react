@@ -1,4 +1,4 @@
-export const airingTodayQuery = `
+export const calendarAiringTodayQuery = `
 query ($airingAt_greater: Int, $airingAt_lesser: Int $page: Int, $perPage: Int) {
     Page (page: $page, perPage: $perPage) {
         pageInfo {

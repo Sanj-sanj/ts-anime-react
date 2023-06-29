@@ -1,8 +1,10 @@
 // // Here we define our query as a multi-line string
 
 import {
+  APICalendarLast24Hours,
   APINewEpisodesVariables,
   APIVariables,
+  AiringSchedule,
   NewEpisodeCards,
 } from "../../interfaces/apiResponseTypes";
 import { MainCard, APIPayload } from "../../interfaces/apiResponseTypes";
@@ -16,7 +18,6 @@ const url = "https://graphql.anilist.co";
 
 async function handleResponse(response: Response) {
   const json = (await response.json()) as APIPayload;
-  console.log(json);
   if (response.ok) {
     return json;
   } else {
@@ -38,11 +39,11 @@ function handleError(error: Error) {
 }
 
 export default async function HandleAPICall(
-  settings: APIVariables | APINewEpisodesVariables,
+  settings: APIVariables | APINewEpisodesVariables | APICalendarLast24Hours,
   accumulator: (MainCard | NewEpisodeCards)[] = [],
   query: string,
   signal?: AbortSignal
-): Promise<(MainCard | NewEpisodeCards)[]> {
+): Promise<(MainCard | NewEpisodeCards | AiringSchedule)[]> {
   const options: RequestInit = {
     method: "POST",
     headers: {
@@ -66,6 +67,9 @@ export default async function HandleAPICall(
 
   if (isError(results)) {
     return [];
+  }
+  if (results.data.Page.airingSchedules) {
+    return results.data.Page.airingSchedules;
   }
 
   const cards = results.data.Page.media;
