@@ -11,7 +11,6 @@ import {
   handleCardContainerOnClick,
   onPreferenceChange,
   requestNewCardsCardView,
-  sortAndFilterCardsForView,
 } from "../../../../utilities/Cards/CardContainerUtils";
 import Card from "../../../card/Card";
 import { MainCard } from "../../../../interfaces/apiResponseTypes";
@@ -21,6 +20,7 @@ import {
 } from "../../../../utilities/Context/AppContext";
 import ContainerPreferences from "../preferenceBar/ContainerPreferences";
 import getCurrSeasonAndYear from "../../../../utilities/getCurrentSeasonAndYear";
+import sortAndFilterCardsForView from "../../../../utilities/Cards/SortAndFilterCardsView";
 
 const CardContainer: FunctionComponent = () => {
   const { cards, client, variables } = useStateContext();

@@ -4,92 +4,89 @@ import { MainCard } from "../../../interfaces/apiResponseTypes";
 const CalendarByTimeline = (
   slots: {
     entries: {
-      [x: string]: {
-        shows: {
-          [x: string]: MainCard[];
-        };
-      };
-    };
+      date: string;
+      slots: { [x in string]: MainCard[] }[];
+    }[];
     day: number;
   }[],
   titlesLang: "english" | "romaji"
 ) => {
+  console.log(slots);
   return (
     <div className="w-full bg-slate-800 flex justify-between">
-      {slots.map(({ day, entries }) => {
+      {slots.map(({ entries, day }) => {
+        // console.log(dateString, entries);
         return (
           <div
             key={day}
             className="text-center w-full border-x border-t border-slate-500"
           >
-            {Object.entries(entries).map(([str, { shows }], i) => {
+            {entries.map(({ date, slots }, i) => {
+              console.log(date, slots);
               if (i > 0) return <></>;
               return (
-                <div key={`${str}-${i}`}>
+                <div key={date}>
                   <h2
                     className={`text-3xl text-blue-400 ${
-                      dayjs().format("ddd MMM DD") === str
+                      dayjs().format("ddd MMM DD") === date
                         ? "bg-teal-600 text-pink-50"
                         : ""
                     }`}
                   >
-                    {str}
+                    {date}
                   </h2>
                   <div className="flex w-full">
                     <div className="w-2 min-w-[0.5rem] max-w-[0.5rem] bg-gray-400 flex items-center"></div>
                     <div className="bg-slate-300 py-6 w-full">
-                      {Object.entries(shows).map(([hour, shows]) => {
+                      {slots.map((timeSlot) => {
+                        const time = Object.keys(timeSlot)[0];
+                        const cards = timeSlot[time];
                         return (
-                          <div key={`${day}-${hour}`} className="w-full">
-                            <div className="w-full flex">
-                              <div className="w-full">
-                                <div className="">{hour}</div>
-                                {shows.map(
-                                  ({
-                                    id,
-                                    coverImage,
-                                    title,
-                                    episodes,
-                                    status,
-                                    nextAiringEpisode,
-                                  }) => (
-                                    <div key={id} className="flex w-full">
-                                      <img
-                                        src={coverImage.medium || ""}
-                                        alt=""
-                                        className="w-12 h-[72px]"
-                                      />
-                                      <div className="w-full">
-                                        <h3
-                                          className="text-left w-full  text-ellipsis line-clamp-2 overflow-hidden"
-                                          style={{ wordBreak: "break-word" }}
-                                          title={
-                                            title[titlesLang] ||
-                                            title.romaji ||
-                                            title.english ||
-                                            ""
-                                          }
-                                        >
-                                          {title[titlesLang] ||
-                                            title.romaji ||
-                                            title.english ||
-                                            ""}
-                                        </h3>
-                                        <p className="text-right text-sm font-bold mr-2 text-teal-900">
-                                          Ep:{" "}
-                                          {status === "FINISHED"
-                                            ? episodes
-                                            : `${
-                                                nextAiringEpisode?.episode ||
-                                                "???"
-                                              }`}
-                                        </p>
-                                      </div>
-                                    </div>
-                                  )
-                                )}
-                              </div>
-                            </div>
+                          <div key={time}>
+                            <h2>{time}</h2>
+                            {cards.map(
+                              ({
+                                nextAiringEpisode,
+                                episodes,
+                                title,
+                                id,
+                                status,
+                                coverImage,
+                              }) => (
+                                <div key={id} className="flex w-full">
+                                  <img
+                                    src={coverImage.medium || ""}
+                                    alt=""
+                                    className="w-12 h-[72px]"
+                                  />
+                                  <div className="w-full">
+                                    <h3
+                                      className="text-left w-full  text-ellipsis line-clamp-2 overflow-hidden"
+                                      style={{ wordBreak: "break-word" }}
+                                      title={
+                                        title[titlesLang] ||
+                                        title.romaji ||
+                                        title.english ||
+                                        ""
+                                      }
+                                    >
+                                      {title[titlesLang] ||
+                                        title.romaji ||
+                                        title.english ||
+                                        ""}
+                                    </h3>
+                                    <p className="text-right text-sm font-bold mr-2 text-teal-900">
+                                      Ep:{" "}
+                                      {status === "FINISHED"
+                                        ? episodes
+                                        : `${
+                                            nextAiringEpisode?.episode || "???"
+                                          }`}
+                                    </p>
+                                  </div>
+                                </div>
+                              )
+                            )}
                           </div>
                         );
                       })}

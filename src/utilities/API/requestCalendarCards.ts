@@ -33,17 +33,16 @@ async function requestCalendarCards(
     })
     .then((airingSchedule) => {
       if (!airingSchedule) return;
+      console.log(airingSchedule);
       const copy = [...slotFramework];
 
       const newTemp = airingSchedule.reduce(
         (acc, { airingAt, media, episode }) => {
-          if (media.nextAiringEpisode === null) {
-            media.nextAiringEpisode = {
-              airingAt,
-              episode,
-              timeUntilAiring: 0,
-            };
-          }
+          media.nextAiringEpisode = {
+            airingAt,
+            episode,
+            timeUntilAiring: media.nextAiringEpisode?.timeUntilAiring || 0,
+          };
           const date = dayjs(airingAt * 1000);
           const strDate = date.format("ddd MMM DD");
 
@@ -71,10 +70,25 @@ async function requestCalendarCards(
       );
 
       Object.entries(newTemp).forEach(([dateString, { shows, day }]) => {
-        copy[day].entries = {
-          [dateString]: { ...copy[day].entries[dateString], shows },
+        const temp = {
+          [dateString]: { ...(copy[day].entries[dateString] || { shows: {} }) },
           ...copy[day].entries,
+          // ...{ shows: {} as { [x in string]: MainCard[] } },
         };
+        console.log("1", temp);
+        // console.log(copy[day].entries);
+        Object.entries(shows).map(([timeString, cards]) => {
+          if (!temp[dateString].shows) {
+            console.log("hi", dateString);
+          }
+          temp[dateString].shows[timeString] = [
+            ...(temp[dateString].shows?.[timeString] || []),
+            ...cards,
+          ];
+          // console.log(temp);
+        });
+        console.log(copy[day].entries[dateString].shows);
+        // temp[dateString].shows = { ...copy[day].entries[dateString].shows };
       });
 
       return setSlotFramework(copy);

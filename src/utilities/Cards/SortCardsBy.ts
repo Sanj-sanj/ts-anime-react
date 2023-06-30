@@ -1,7 +1,3 @@
-import {
-  ListDetails,
-  UserShowStatus,
-} from "../../interfaces/UserPreferencesTypes";
 import { MainCard, UserListParams } from "../../interfaces/apiResponseTypes";
 import { SortableBy } from "../../interfaces/initialConfigTypes";
 import { isMainCard } from "./CheckCardType";
@@ -51,7 +47,6 @@ function SortCardsBy(sort: SortableBy, cards: MainCard[] | UserListParams) {
   } else {
     cards = cards as typeof sortedUserListCards;
     const temp = Object.entries(cards);
-    let sortedTemp;
     switch (sort) {
       case "Rating": {
         return temp.reduce((acc, [key, listData]) => {
@@ -116,13 +111,6 @@ function SortCardsBy(sort: SortableBy, cards: MainCard[] | UserListParams) {
       default:
         break;
     }
-
-    // console.log(temp);
-    // console.log(sort);
-    // temp.forEach(([key, data]) => {
-    //   sortedUserListCards[key as UserShowStatus] = data;
-    // });
-    // return sortedUserListCards;
   }
 }
 export default SortCardsBy;
