@@ -11,19 +11,15 @@ const CalendarByTimeline = (
   }[],
   titlesLang: "english" | "romaji"
 ) => {
-  console.log(slots);
   return (
     <div className="w-full bg-slate-800 flex justify-between">
       {slots.map(({ entries, day }) => {
-        // console.log(dateString, entries);
         return (
           <div
             key={day}
             className="text-center w-full border-x border-t border-slate-500"
           >
-            {entries.map(({ date, slots }, i) => {
-              console.log(date, slots);
-              if (i > 0) return <></>;
+            {entries.map(({ date, slots }) => {
               return (
                 <div key={date}>
                   <h2
@@ -42,7 +38,7 @@ const CalendarByTimeline = (
                         const time = Object.keys(timeSlot)[0];
                         const cards = timeSlot[time];
                         return (
-                          <div key={time}>
+                          <div key={`${time}-${day}`}>
                             <h2>{time}</h2>
                             {cards.map(
                               ({

@@ -81,7 +81,7 @@ const Layout = () => {
         : null}
       <Navigation darkMode={{ isDarkMode, toggleDarkMode }} />
       <Header openNavigation={openNavigation} />
-      <main className="min-h-[90vh] flex flex-col items-center bg-stone-200 dark:bg-neutral-800">
+      <main className="min-h-[85vh] flex flex-col items-center bg-stone-200 dark:bg-neutral-800">
         <Outlet />
       </main>
     </>

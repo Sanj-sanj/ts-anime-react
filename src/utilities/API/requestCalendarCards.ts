@@ -8,12 +8,11 @@ import { Dispatch, SetStateAction } from "react";
 async function requestCalendarCards(
   slotFramework: {
     entries: {
-      [x: string]: {
-        shows: {
-          [x: string]: MainCard[];
-        };
-      };
-    };
+      date: string;
+      slots: {
+        [x: string]: MainCard[];
+      }[];
+    }[];
     day: number;
   }[],
   setSlotFramework: Dispatch<SetStateAction<typeof slotFramework>>,
@@ -33,62 +32,56 @@ async function requestCalendarCards(
     })
     .then((airingSchedule) => {
       if (!airingSchedule) return;
-      console.log(airingSchedule);
       const copy = [...slotFramework];
 
-      const newTemp = airingSchedule.reduce(
-        (acc, { airingAt, media, episode }) => {
+      const newEntries = airingSchedule.reduce(
+        (acc, { airingAt, media, episode }, i) => {
           media.nextAiringEpisode = {
             airingAt,
             episode,
             timeUntilAiring: media.nextAiringEpisode?.timeUntilAiring || 0,
           };
           const date = dayjs(airingAt * 1000);
-          const strDate = date.format("ddd MMM DD");
+          const strDate = date.format("ddd MMM DD YYYY");
+          const strTime = date.format("h:mm a");
 
-          acc = {
+          const timeSlot = acc[i]?.slots?.find((slot) => strTime in slot) || {
+            [strTime]: [],
+          };
+          const timeSlotIndex = acc[i]?.slots?.findIndex(
+            (slot) => strTime in slot
+          );
+
+          return (acc = [
             ...acc,
-            [strDate]: {
-              shows: {
-                ...(acc?.[strDate]?.shows || {}),
-                [date.format("h:mm a")]: [
-                  media,
-                  ...(acc?.[strDate]?.shows?.[date.format("h:mm a")] || []),
-                ],
-              },
-              day: date.day(),
+            {
+              date: strDate,
+              dayInd: date.day(),
+              slots: [
+                ...(acc[i]?.slots || []),
+                {
+                  ...timeSlot,
+                  [strTime]: [
+                    ...(acc[i]?.slots?.[timeSlotIndex]?.[strTime] || []),
+                    media,
+                  ],
+                },
+              ],
             },
-          };
-          return acc;
+          ]);
         },
-        {} as {
-          [x in string]: {
-            shows: { [y in string]: MainCard[] };
-            day: number;
-          };
-        }
+        [] as {
+          date: string;
+          dayInd: number;
+          slots: { [time in string]: MainCard[] }[];
+        }[]
       );
 
-      Object.entries(newTemp).forEach(([dateString, { shows, day }]) => {
-        const temp = {
-          [dateString]: { ...(copy[day].entries[dateString] || { shows: {} }) },
-          ...copy[day].entries,
-          // ...{ shows: {} as { [x in string]: MainCard[] } },
-        };
-        console.log("1", temp);
-        // console.log(copy[day].entries);
-        Object.entries(shows).map(([timeString, cards]) => {
-          if (!temp[dateString].shows) {
-            console.log("hi", dateString);
-          }
-          temp[dateString].shows[timeString] = [
-            ...(temp[dateString].shows?.[timeString] || []),
-            ...cards,
-          ];
-          // console.log(temp);
-        });
-        console.log(copy[day].entries[dateString].shows);
-        // temp[dateString].shows = { ...copy[day].entries[dateString].shows };
+      newEntries.forEach(({ date, dayInd, slots }) => {
+        copy[dayInd].entries = [
+          { date: date.slice(0, -5), slots },
+          ...copy[dayInd].entries,
+        ];
       });
 
       return setSlotFramework(copy);

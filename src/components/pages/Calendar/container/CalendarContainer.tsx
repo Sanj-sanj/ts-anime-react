@@ -1,7 +1,7 @@
 import UserListPreferences from "../../UserList/preferenceBar/UserListPreference";
 import { useStateContext } from "../../../../utilities/Context/AppContext";
 import { useEffect, useRef, useState } from "react";
-// import requestCalendarCards from "../../../../utilities/API/requestCalendarCards";
+import requestCalendarCards from "../../../../utilities/API/requestCalendarCards";
 import OngoingToGroupedByDay from "../OngoingGroupedByDay";
 import CalendarByTimeline from "../Timeline";
 
@@ -21,11 +21,11 @@ const CalendarContainer = () => {
     abortCalendar.current = new AbortController();
     // requests anilist api for shows released in the last 24 hours
     // groups and sets them into state
-    // void requestCalendarCards(
-    //   slotFramework,
-    //   setSlotFramework,
-    //   abortCalendar.current.signal
-    // );
+    void requestCalendarCards(
+      slotFramework,
+      setSlotFramework,
+      abortCalendar.current.signal
+    );
     return () => abortCalendar.current?.abort();
   }, []);
   console.log(slotFramework);
@@ -33,7 +33,7 @@ const CalendarContainer = () => {
   return (
     <>
       <UserListPreferences />
-      <div className="w-full flex flex-col items-center overflow-y-auto h-[90vh]">
+      <div className="w-full flex flex-col items-center overflow-y-auto h-[85vh]">
         {CalendarByTimeline(slotFramework, titlesLang)}
       </div>
     </>
