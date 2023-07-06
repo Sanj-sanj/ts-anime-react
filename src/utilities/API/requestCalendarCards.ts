@@ -52,6 +52,26 @@ async function requestCalendarCards(
             (slot) => strTime in slot
           );
 
+          const hasEntryByDate = acc?.find((entry) => entry.date === strDate);
+          if (hasEntryByDate) {
+            //if current entry has a date that already exists in the accumulator, reuse that entry and append media to slot.
+            const entryIndex = acc.findIndex(
+              (entry) => entry.dayInd === hasEntryByDate.dayInd
+            );
+            acc[entryIndex].slots = [
+              ...hasEntryByDate.slots,
+              {
+                [strTime]: [
+                  ...(hasEntryByDate.slots.find(
+                    (timeslot) => strTime in timeslot
+                  )?.[strTime] || []),
+                  media,
+                ],
+              },
+            ];
+            return acc;
+          }
+
           return (acc = [
             ...acc,
             {
