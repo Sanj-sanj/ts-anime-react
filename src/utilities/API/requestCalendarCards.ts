@@ -27,13 +27,16 @@ async function requestCalendarCards(
   await HandleAPICall(variables, [], calendarAiringTodayQuery, signal)
     .then((airingSchedule) => {
       if (isAiringSchedule(airingSchedule)) {
-        return airingSchedule.filter(({ media }) => media.format === "TV");
+        return airingSchedule.filter(
+          ({ media }) => media.format === "TV" || media.format === "TV_SHORT"
+        );
       }
     })
     .then((airingSchedule) => {
       if (!airingSchedule) return;
       const copy = [...slotFramework];
 
+      console.log(airingSchedule);
       const newEntries = airingSchedule.reduce(
         (acc, { airingAt, media, episode }, i) => {
           media.nextAiringEpisode = {
@@ -98,8 +101,22 @@ async function requestCalendarCards(
       );
 
       newEntries.forEach(({ date, dayInd, slots }) => {
+        const previousEntryInd = copy[dayInd].entries.findIndex(
+          (entry) => date.slice(0, -5) === entry.date
+        );
+        if (previousEntryInd >= 0) {
+          // if a show aired while there are unaired shows in the same date range, appends previous entries to the current entry container
+          copy[dayInd].entries[previousEntryInd].slots = [
+            ...slots,
+            ...(copy[dayInd].entries[previousEntryInd]?.slots || []),
+          ];
+          return;
+        }
         copy[dayInd].entries = [
-          { date: date.slice(0, -5), slots },
+          {
+            date: date.slice(0, -5),
+            slots,
+          },
           ...copy[dayInd].entries,
         ];
       });
