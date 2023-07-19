@@ -15,29 +15,28 @@ import UserListPreferences from "../preferenceBar/UserListPreference";
 const UserList = () => {
   const {
     user: { lists },
-    client,
+    client: { overlay, sort, titlesLang },
   } = useStateContext();
 
   const lastFocusedCard = useRef<null | HTMLButtonElement>(null);
   const abortListRequest = useRef<null | AbortController>(null);
+
   const entries = Object.entries(lists) as [
     UserShowStatus,
     ShowListDetails<number>
   ][];
+
   const [usableList, setUsableList] = useState(
     entries.reduce(
       (acc, [status]) => ({ ...acc, [status]: [] }),
       {} as UserListParams
     )
   );
-  if (lastFocusedCard.current !== null && client.overlay.modal.active === false)
+  if (lastFocusedCard.current !== null && overlay.modal.active === false)
     lastFocusedCard.current.focus();
 
   useEffect(() => {
-    setUsableList(SortCardsBy(client.sort, usableList) as UserListParams);
-  }, [lists, client.sort]);
-
-  useEffect(() => {
+    // on page load and when user updates list entry, rebuild the cards and make the necessarry network request.
     const ids = entries.reduce((acc, [userStatus, entries]) => {
       return { ...acc, [userStatus]: Object.keys(entries) };
     }, {} as { [x in UserShowStatus]: number[] });
@@ -45,13 +44,13 @@ const UserList = () => {
       ids,
       lists,
       (newList: UserListParams) =>
-        setUsableList(SortCardsBy(client.sort, newList) as UserListParams),
+        setUsableList(SortCardsBy(sort, newList) as UserListParams),
       abortListRequest.current?.signal
     );
     return () => {
       abortListRequest.current?.abort();
     };
-  }, []);
+  }, [lists, sort]);
 
   const CardContainer = ({
     title,
@@ -65,45 +64,26 @@ const UserList = () => {
       <ul>{children}</ul>
     </div>
   );
+
   return (
     <>
       <UserListPreferences />
       <div className="w-full flex flex-col items-center overflow-y-scroll h-[90vh]">
         <div className="w-full sm:w-11/12 md:w-10/12 lg:w-2/3 xl:w-5/12">
           <CardContainer title="Watching">
-            {userListCards(
-              usableList.WATCHING,
-              client.titlesLang,
-              lastFocusedCard
-            )}
+            {userListCards(usableList.WATCHING, titlesLang, lastFocusedCard)}
           </CardContainer>
           <CardContainer title="Interested">
-            {userListCards(
-              usableList.INTERESTED,
-              client.titlesLang,
-              lastFocusedCard
-            )}
+            {userListCards(usableList.INTERESTED, titlesLang, lastFocusedCard)}
           </CardContainer>
           <CardContainer title="Completed">
-            {userListCards(
-              usableList.COMPLETED,
-              client.titlesLang,
-              lastFocusedCard
-            )}
+            {userListCards(usableList.COMPLETED, titlesLang, lastFocusedCard)}
           </CardContainer>
           <CardContainer title="Skipped">
-            {userListCards(
-              usableList.SKIPPED,
-              client.titlesLang,
-              lastFocusedCard
-            )}
+            {userListCards(usableList.SKIPPED, titlesLang, lastFocusedCard)}
           </CardContainer>
           <CardContainer title="Dropped">
-            {userListCards(
-              usableList.DROPPED,
-              client.titlesLang,
-              lastFocusedCard
-            )}
+            {userListCards(usableList.DROPPED, titlesLang, lastFocusedCard)}
           </CardContainer>
         </div>
       </div>

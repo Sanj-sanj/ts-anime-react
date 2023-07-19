@@ -34,7 +34,7 @@ async function requestCalendarCards(
     })
     .then((airingSchedule) => {
       if (!airingSchedule) return;
-      const copy = [...slotFramework];
+      const slotFrameCopy = [...slotFramework];
 
       console.log(airingSchedule);
       const newEntries = airingSchedule.reduce(
@@ -101,27 +101,27 @@ async function requestCalendarCards(
       );
 
       newEntries.forEach(({ date, dayInd, slots }) => {
-        const previousEntryInd = copy[dayInd].entries.findIndex(
+        const previousEntryInd = slotFrameCopy[dayInd].entries.findIndex(
           (entry) => date.slice(0, -5) === entry.date
         );
         if (previousEntryInd >= 0) {
           // if a show aired while there are unaired shows in the same date range, appends previous entries to the current entry container
-          copy[dayInd].entries[previousEntryInd].slots = [
+          slotFrameCopy[dayInd].entries[previousEntryInd].slots = [
             ...slots,
-            ...(copy[dayInd].entries[previousEntryInd]?.slots || []),
+            ...(slotFrameCopy[dayInd].entries[previousEntryInd]?.slots || []),
           ];
           return;
         }
-        copy[dayInd].entries = [
+        slotFrameCopy[dayInd].entries = [
           {
             date: date.slice(0, -5),
             slots,
           },
-          ...copy[dayInd].entries,
+          ...slotFrameCopy[dayInd].entries,
         ];
       });
 
-      return setSlotFramework(copy);
+      return setSlotFramework(slotFrameCopy);
     })
     .catch(console.log);
 }
