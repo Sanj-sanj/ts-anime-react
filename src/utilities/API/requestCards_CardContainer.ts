@@ -70,15 +70,13 @@ async function requestMockAPI(
   console.log("calling MOCK_API");
   isCallingAPI.current = true;
   const callsArr: Promise<(MainCard | NewEpisodeCards)[]>[] = [];
-  callsArr.push(HandleMockAPICall(settings, false));
-  if (fetchingOngoing) {
-    callsArr.push(HandleMockAPICall(settings, true));
-  }
+    const a = HandleMockAPICall(settings, fetchingOngoing)
+    console.log(a)
+  callsArr.push(a);
 
   await Promise.all(callsArr)
     .then((arr) => {
       if (signal1.aborted || signal2.aborted) return;
-
       if (fetchingOngoing) {
         const ongoingCards = arr[1];
         if (isMainCard(ongoingCards)) {
@@ -90,6 +88,7 @@ async function requestMockAPI(
       }
       const seasonal = arr[0];
       if (isMainCard(seasonal)) {
+
         dispatch({
           type: "UPDATE_CARDS",
           payload: { cards: seasonal, ongoing: false },

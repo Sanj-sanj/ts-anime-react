@@ -43,7 +43,7 @@ const Card: FunctionComponent<{
       <div className="relative">
         <img
           className="bg-slate-200 rounded-l-md w-full max-h-[143px] min-h-[143px] min-w-[100px] max-w-[100px]"
-          src={coverImage?.medium || ""}
+          src={coverImage?.large || ""}
           alt={
             title[titlePref] ||
             title.english ||
@@ -63,7 +63,7 @@ const Card: FunctionComponent<{
         <div
           className="p-2 rounded-tr-md"
           style={{
-            backgroundColor: coverImage.color || "#44248321",
+            background: `linear-gradient(180deg, ${coverImage.color || "#44248321"}, rgba(0,0,0,0)`
           }}
         >
           <h2

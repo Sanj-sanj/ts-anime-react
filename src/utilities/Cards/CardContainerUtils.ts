@@ -148,6 +148,7 @@ export function requestNewCardsCardView(
   //create new AbortController to cancel consecutive requests if new request is made
   abortOngoing.current = new AbortController();
   abortMainCard.current = new AbortController();
+    console.log(mockMode)
   // ****************** MOCK API ************************
   if (mockMode) {
     void requestMockAPI(
