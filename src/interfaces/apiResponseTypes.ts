@@ -27,10 +27,9 @@ type NearestSeason = {
   page: number;
   perPage: number;
   hasNextPage: boolean;
-  format_in: Formats;
-  format: ValidFormats;
   season: Season;
   seasonYear: number;
+  format: ValidFormats;
 };
 type OngoingSeason = {
   page: number;

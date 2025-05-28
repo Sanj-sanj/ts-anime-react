@@ -25,7 +25,7 @@ const UserPreferences: UserPreferences = {
 };
 
 export const Initial: InitialConfig = {
-  variables: apiVariables,
+  variables: apiVariables, // THIS MUTATES LIKE CRAZY OH MY GOD WHY HAVE I DONE THIS
   client: {
     perPage: 15,
     season,
