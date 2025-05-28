@@ -26,11 +26,11 @@ export type APIVariables = NearestSeason | OngoingSeason;
 type NearestSeason = {
   page: number;
   perPage: number;
-  season: Season;
-  seasonYear: number;
   hasNextPage: boolean;
   format_in: Formats;
   format: ValidFormats;
+  season: Season;
+  seasonYear: number;
 };
 type OngoingSeason = {
   page: number;

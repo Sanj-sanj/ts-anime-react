@@ -16,6 +16,7 @@ const Navigation = ({
   const {
     client: { overlay, sort },
     user: { lists },
+    cards 
   } = useStateContext();
   const dispatch = useDispatchContext();
   const SortableBy: SortableBy[] = ["Rating", "Popularity", "Countdown"];
@@ -66,6 +67,16 @@ const Navigation = ({
         }}
       >
         <h3>{isDarkMode ? "Light" : "Dark"} Mode</h3>
+      </button>
+
+      <button
+        className="bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 active:bg-slate-500 focus:outline focus:outline-zinc-700 dark:text-slate-300"
+        onClick={() => {
+          //update layout state
+            console.log(JSON.stringify(cards))
+        }}
+      >
+        <h3>somethign</h3>
       </button>
 
       {navItemLabel("Sort By:")}
