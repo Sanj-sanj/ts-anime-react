@@ -57,7 +57,8 @@ async function requestAniListAPI(
     .catch((rej) => console.log(rej));
     isCallingAPI.current = false;
 }
-// Mock API functions similary to acutal anilist API. only reducers "UPDATE_NEXT_PAGE_AVAILABLE" not called
+// Mock API functions similary to acutal anilist API. only reducers 
+// "UPDATE_NEXT_PAGE_AVAILABLE" not called
 async function requestMockAPI(
     settings: APIVariables,
     dispatch: React.Dispatch<Actions>,
@@ -66,7 +67,9 @@ async function requestMockAPI(
     signal1: AbortSignal,
     signal2: AbortSignal
 ) {
-    //Sends a request with the variable settings, the API response will return a boolean hasNextPage, this will determine subsequent network request based on scroll position (currently)
+    //Sends a request with the variable settings, the API response will return 
+    //a boolean hasNextPage, this will determine subsequent network request 
+    //based on scroll position (currently)
     console.log("calling MOCK_API");
     isCallingAPI.current = true;
     const callsArr: Promise<(MainCard | NewEpisodeCards)[]>[] = [];
