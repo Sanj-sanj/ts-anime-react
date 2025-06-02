@@ -68,15 +68,18 @@ const Navigation = ({
       >
         <h3>{isDarkMode ? "Light" : "Dark"} Mode</h3>
       </button>
-
       <button
-        className="bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 active:bg-slate-500 focus:outline focus:outline-zinc-700 dark:text-slate-300"
+        className="mt-2 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 active:bg-slate-500 focus:outline focus:outline-zinc-700 dark:text-slate-300"
         onClick={() => {
           //update layout state
-            console.log(JSON.stringify(cards))
+            const copiedMockData = new ClipboardItem({
+                'text/plain': JSON.stringify(cards)
+            })
+            navigator.clipboard.write([copiedMockData]).catch(console.log)
         }}
+        title="Only when calling from api."
       >
-        <h3>somethign</h3>
+        <h3>Copy Mock</h3>
       </button>
 
       {navItemLabel("Sort By:")}

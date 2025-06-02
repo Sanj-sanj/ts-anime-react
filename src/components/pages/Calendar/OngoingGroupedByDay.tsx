@@ -21,11 +21,9 @@ const OngoingToGroupedByDay = (
     { season, format, seasonYear },
     true
   );
-  return sortedByCountdown.reduce(
-    (acc, card) => {
-      const cardDate =
-        card.nextAiringEpisode?.airingAt &&
-        dayjs(card.nextAiringEpisode?.airingAt * 1000);
+  return sortedByCountdown.reduce((acc, show) => {
+      const cardDate = show.nextAiringEpisode?.airingAt &&
+        dayjs(show.nextAiringEpisode?.airingAt * 1000);
 
       if (cardDate) {
         const dateString = cardDate.format("ddd MMM DD");
@@ -47,14 +45,14 @@ const OngoingToGroupedByDay = (
               ...acc[cardDate.day()].entries[slotIndexByDay].slots[
                 slotIndexByTime
               ][timeString],
-              card,
+              show,
             ];
             return acc;
           }
 
           acc[cardDate.day()].entries[slotIndexByDay].slots = [
             ...acc[cardDate.day()].entries[slotIndexByDay].slots,
-            { [timeString]: [card] },
+            { [timeString]: [show] },
           ];
           return acc;
         }
@@ -66,7 +64,7 @@ const OngoingToGroupedByDay = (
               date: dateString,
               slots: [
                 {
-                  [timeString]: [card],
+                  [timeString]: [show],
                 },
               ],
             },

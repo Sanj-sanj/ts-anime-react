@@ -28,7 +28,6 @@ const CalendarContainer = () => {
     );
     return () => abortCalendar.current?.abort();
   }, []);
-  console.log(slotFramework);
 
   return (
     <>
