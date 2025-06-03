@@ -33,10 +33,7 @@ export const Initial: InitialConfig = {
     titlesLang:
       (localStorage.getItem("titlePref") as "english" | "romaji") || "english",
     sort: "Rating",
-    showOngoing:
-      (localStorage.getItem("showOngoing") as "true" | "false") === "false"
-        ? false
-        : true,
+    showOngoing: true,
     overlay: {
       modal: { active: false, entryPoint: undefined },
       navigation: { active: false },

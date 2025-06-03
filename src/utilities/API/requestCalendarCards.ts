@@ -9,7 +9,7 @@ async function requestCalendarCards(
   slotFramework: {
     entries: {
       date: string;
-      slots: {
+      shows: {
         [x: string]: MainCard[];
       }[];
     }[];
@@ -21,8 +21,8 @@ async function requestCalendarCards(
   const variables = {
     page: 0,
     perPage: 50,
-    airingAt_greater: dayjs().startOf('day').unix() / 1000,
-    airingAt_lesser: dayjs().add(-1, 'day').startOf('day').unix()
+    airingAt_greater: Math.floor(Date.now() / 1000 - 86400),
+    airingAt_lesser: Math.floor(dayjs().add(-1, 'day').startOf('day').unix())
   };
   await HandleAPICall(variables, [], calendarAiringTodayQuery, signal)
     .then((airingSchedule) => {
@@ -34,7 +34,7 @@ async function requestCalendarCards(
     })
     .then((airingSchedule) => {
       if (!airingSchedule) return;
-      const slotFrameCopy = [...slotFramework];
+      const timeslotFrameworkCopy = [...slotFramework];
 
       const showsAiredPriorToToday = airingSchedule.reduce(
         (acc, { airingAt, media, episode }, i) => {
@@ -47,10 +47,10 @@ async function requestCalendarCards(
           const strDate = date.format("ddd MMM DD YYYY");
           const strTime = date.format("h:mm a");
 
-          const timeSlot = acc[i]?.slots?.find((slot) => strTime in slot) || {
+          const timeSlot = acc[i]?.shows?.find((slot) => strTime in slot) || {
             [strTime]: [],
           };
-          const timeSlotIndex = acc[i]?.slots?.findIndex(
+          const dayIndex = acc[i]?.shows?.findIndex(
             (slot) => strTime in slot
           );
 
@@ -63,17 +63,17 @@ async function requestCalendarCards(
             
             //resuableSlot exist for when multiple shows air at the same time 
             //ex: 9:00 AM 3 shows, they all get pushed into the correct slot
-            const reusableSlot = hasEntryByDate.slots.find((slot) => 
+            const reusableSlot = hasEntryByDate.shows.find((slot) => 
                 strTime in slot
             )
             if (reusableSlot) {
                 reusableSlot[strTime].push(media)
             } else {
-                acc[entryIndex].slots = [
-                    ...hasEntryByDate.slots,
+                acc[entryIndex].shows = [
+                    ...hasEntryByDate.shows,
                     {
                         [strTime]: [
-                            ...(hasEntryByDate.slots.find(
+                            ...(hasEntryByDate.shows.find(
                                 (timeslot) => strTime in timeslot
                             )?.[strTime] || []),
                             media,
@@ -90,12 +90,12 @@ async function requestCalendarCards(
             {
               date: strDate,
               dayInd: date.day(),
-              slots: [
-                ...(acc[i]?.slots || []),
+              shows: [
+                ...(acc[i]?.shows || []),
                 {
                   ...timeSlot,
                   [strTime]: [
-                    ...(acc[i]?.slots?.[timeSlotIndex]?.[strTime] || []),
+                    ...(acc[i]?.shows?.[dayIndex]?.[strTime] || []),
                     media,
                   ],
                 },
@@ -106,33 +106,33 @@ async function requestCalendarCards(
         [] as {
           date: string;
           dayInd: number;
-          slots: { [time in string]: MainCard[] }[];
+          shows: { [time in string]: MainCard[] }[];
         }[]
       );
 
-      showsAiredPriorToToday.forEach(({ date, dayInd, slots }) => {
-        const previousEntryInd = slotFrameCopy[dayInd].entries.findIndex(
+      showsAiredPriorToToday.forEach(({ date, dayInd, shows }) => {
+        const previousEntryInd = timeslotFrameworkCopy[dayInd].entries.findIndex(
           (entry) => date.slice(0, -5) === entry.date
         );
         if (previousEntryInd >= 0) {
           // if a show aired while there are unaired shows in the same date range,
           // appends previous entries to the current entry container
-          slotFrameCopy[dayInd].entries[previousEntryInd].slots = [
-            ...slots,
-            ...(slotFrameCopy[dayInd].entries[previousEntryInd]?.slots || []),
+          timeslotFrameworkCopy[dayInd].entries[previousEntryInd].shows = [
+            ...shows,
+            ...(timeslotFrameworkCopy[dayInd].entries[previousEntryInd]?.shows || []),
           ];
           return;
         }
-        slotFrameCopy[dayInd].entries = [
+        timeslotFrameworkCopy[dayInd].entries = [
           {
             date: date.slice(0, -5),
-            slots,
+            shows,
           },
-          ...slotFrameCopy[dayInd].entries,
+          ...timeslotFrameworkCopy[dayInd].entries,
         ];
       });
 
-      return setSlotFramework(slotFrameCopy);
+      return setSlotFramework(timeslotFrameworkCopy);
     })
     .catch(console.log);
 }

@@ -2,10 +2,10 @@ import dayjs from "dayjs";
 import { MainCard } from "../../../interfaces/apiResponseTypes";
 
 const CalendarByTimeline = (
-  slots: {
+  shows: {
     entries: {
       date: string;
-      slots: { [x in string]: MainCard[] }[];
+      shows: { [x in string]: MainCard[] }[];
     }[];
     day: number;
   }[],
@@ -13,13 +13,13 @@ const CalendarByTimeline = (
 ) => {
   return (
     <div className="w-full bg-slate-800 flex justify-between">
-      {slots.map(({ entries, day }) => {
+      {shows.map(({ entries, day }) => {
         return (
           <div
             key={day}
             className="text-center w-full border-x border-t border-slate-500"
           >
-            {entries.map(({ date, slots }) => {
+            {entries.map(({ date, shows }) => {
               return (
                 <div key={date}>
                   <h2
@@ -34,7 +34,7 @@ const CalendarByTimeline = (
                   <div className="flex w-full">
                     <div className="w-2 min-w-[0.5rem] max-w-[0.5rem] bg-gray-400 flex items-center"></div>
                     <div className="bg-slate-300 py-6 w-full">
-                      {slots.map((timeSlot) => {
+                      {shows.map((timeSlot) => {
                         const time = Object.keys(timeSlot)[0];
                         const cards = timeSlot[time];
                         return (

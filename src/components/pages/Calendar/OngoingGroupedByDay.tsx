@@ -36,13 +36,13 @@ const OngoingToGroupedByDay = (
         if (slotIndexByDay >= 0) {
           slotIndexByTime = acc[cardDate.day()].entries[
             slotIndexByDay
-          ].slots.findIndex((slot) => timeString in slot);
+          ].shows.findIndex((slot) => timeString in slot);
 
           if (slotIndexByTime >= 0) {
-            acc[cardDate.day()].entries[slotIndexByDay].slots[slotIndexByTime][
+            acc[cardDate.day()].entries[slotIndexByDay].shows[slotIndexByTime][
               timeString
             ] = [
-              ...acc[cardDate.day()].entries[slotIndexByDay].slots[
+              ...acc[cardDate.day()].entries[slotIndexByDay].shows[
                 slotIndexByTime
               ][timeString],
               show,
@@ -50,8 +50,8 @@ const OngoingToGroupedByDay = (
             return acc;
           }
 
-          acc[cardDate.day()].entries[slotIndexByDay].slots = [
-            ...acc[cardDate.day()].entries[slotIndexByDay].slots,
+          acc[cardDate.day()].entries[slotIndexByDay].shows = [
+            ...acc[cardDate.day()].entries[slotIndexByDay].shows,
             { [timeString]: [show] },
           ];
           return acc;
@@ -62,7 +62,7 @@ const OngoingToGroupedByDay = (
             ...acc[cardDate.day()].entries,
             {
               date: dateString,
-              slots: [
+              shows: [
                 {
                   [timeString]: [show],
                 },
@@ -84,7 +84,7 @@ const OngoingToGroupedByDay = (
       { entries: [], day: 5 },
       { entries: [], day: 6 },
     ] as {
-      entries: { date: string; slots: { [time in string]: MainCard[] }[] }[];
+      entries: { date: string; shows: { [time in string]: MainCard[] }[] }[];
       day: number;
     }[]
   );
