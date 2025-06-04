@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { isAiringSchedule } from "../Cards/CheckCardType";
 import HandleAPICall from "./HandleAPICall";
 import { calendarAiringTodayQuery } from "./QueryStrings/CalendarAiringToday";
-import { MainCard } from "../../interfaces/apiResponseTypes";
+import { Formats, MainCard } from "../../interfaces/apiResponseTypes";
 import { Dispatch, SetStateAction } from "react";
 
 async function requestCalendarCards(
@@ -16,19 +16,23 @@ async function requestCalendarCards(
     day: number;
   }[],
   setSlotFramework: Dispatch<SetStateAction<typeof slotFramework>>,
-  signal: AbortSignal
+  signal: AbortSignal,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  format: Formats
 ) {
   const variables = {
     page: 0,
     perPage: 50,
-    airingAt_greater: Math.floor(Date.now() / 1000 - 86400),
-    airingAt_lesser: Math.floor(dayjs().add(-1, 'day').startOf('day').unix())
+    airingAt_greater: Math.floor(dayjs().add(-dayjs().day(), 'day').startOf('day').unix()),
+    airingAt_lesser: Math.floor(dayjs().startOf('day').unix())
   };
   await HandleAPICall(variables, [], calendarAiringTodayQuery, signal)
     .then((airingSchedule) => {
       if (isAiringSchedule(airingSchedule)) {
         return airingSchedule.filter(
-          ({ media }) => media.format === "TV" || media.format === "TV_SHORT"
+                //i hate this solution but the way the type is made implies
+                //that arr[0] should === the [0] of the union type Formats
+          ({ media }) => format[0] === media.format
         );
       }
     })
@@ -132,6 +136,7 @@ async function requestCalendarCards(
         ];
       });
 
+      setIsLoading(false)
       return setSlotFramework(timeslotFrameworkCopy);
     })
     .catch(console.log);

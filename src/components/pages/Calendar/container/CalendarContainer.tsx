@@ -1,4 +1,4 @@
-import UserListPreferences from "../../UserList/preferenceBar/UserListPreference";
+import CalendarPreferenceBar from "../preferenceBar/CalendarPreferenceBar";
 import { useStateContext } from "../../../../utilities/Context/AppContext";
 import { useEffect, useRef, useState } from "react";
 import requestCalendarCards from "../../../../utilities/API/requestCalendarCards";
@@ -9,13 +9,14 @@ const CalendarContainer = () => {
   const {
     cards,
     client: { season, seasonYear, titlesLang },
-    variables: { format },
+    variables: { format, format_in}
   } = useStateContext();
 
   const abortCalendar = useRef<null | AbortController>(null);
   const [slotFramework, setSlotFramework] = useState(
     OngoingToGroupedByDay({ cards }, { season, seasonYear, format })
   );
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     abortCalendar.current = new AbortController();
@@ -24,16 +25,18 @@ const CalendarContainer = () => {
     void requestCalendarCards(
       slotFramework,
       setSlotFramework,
-      abortCalendar.current.signal
+      abortCalendar.current.signal,
+      setIsLoading,
+      format_in
     );
     return () => abortCalendar.current?.abort();
   }, []);
 
   return (
     <>
-      <UserListPreferences />
+      <CalendarPreferenceBar />
       <div className="w-full flex flex-col items-center overflow-y-auto h-[85vh]">
-        {CalendarByTimeline(slotFramework, titlesLang)}
+        {isLoading ? 'loading...' : <CalendarByTimeline airingByWeek={slotFramework} titlesLang={titlesLang} />}
       </div>
     </>
   );

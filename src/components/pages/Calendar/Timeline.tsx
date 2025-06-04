@@ -1,19 +1,21 @@
 import dayjs from "dayjs";
 import { MainCard } from "../../../interfaces/apiResponseTypes";
 
-const CalendarByTimeline = (
-  shows: {
+type AiringByWeek = {
     entries: {
       date: string;
       shows: { [x in string]: MainCard[] }[];
     }[];
     day: number;
-  }[],
-  titlesLang: "english" | "romaji"
-) => {
+  }[]
+const CalendarByTimeline = ({
+  airingByWeek,
+  titlesLang
+} : {airingByWeek: AiringByWeek, titlesLang: "romaji" | "english"}) => {
+
   return (
     <div className="w-full bg-slate-800 flex justify-between">
-      {shows.map(({ entries, day }) => {
+      {airingByWeek.map(({ entries, day }) => {
         return (
           <div
             key={day}
@@ -39,7 +41,7 @@ const CalendarByTimeline = (
                         const cards = timeSlot[time];
                         return (
                           <div key={`${time}-${day}`}>
-                            <h2>{time}</h2>
+                            <h3 className='bg-amber-100'>{time}</h3>
                             {cards.map(
                               ({
                                 nextAiringEpisode,
@@ -56,7 +58,7 @@ const CalendarByTimeline = (
                                     className="w-12 h-[72px]"
                                   />
                                   <div className="w-full">
-                                    <h3
+                                    <h4
                                       className="text-left w-full  text-ellipsis line-clamp-2 overflow-hidden"
                                       style={{ wordBreak: "break-word" }}
                                       title={
@@ -70,7 +72,7 @@ const CalendarByTimeline = (
                                         title.romaji ||
                                         title.english ||
                                         ""}
-                                    </h3>
+                                    </h4>
                                     <p className="text-right text-sm font-bold mr-2 text-teal-900">
                                       Ep:{" "}
                                       {status === "FINISHED"

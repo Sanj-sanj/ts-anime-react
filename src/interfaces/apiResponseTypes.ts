@@ -30,6 +30,7 @@ type NearestSeason = {
   season: Season;
   seasonYear: number;
   format: ValidFormats;
+  format_in: Formats;
 };
 type OngoingSeason = {
   page: number;
@@ -51,10 +52,11 @@ export type APINewEpisodesVariables = {
   id_in: number[];
 };
 
-export type Formats =
-  | ["TV", "TV_SHORT"]
-  | ["MOVIE", "SPECIAL"]
-  | ["ONA", "OVA"];
+const TVformat = ["TV", "TV_SHORT"] as const
+const MOVIEformat = ["MOVIE", "SPECIAL"] as const
+const OVAformat = ["ONA", "OVA"] as const
+
+export type Formats = (typeof TVformat) | (typeof MOVIEformat) | (typeof OVAformat)
 
 export type StudioNode = {
   name: string;
@@ -135,7 +137,7 @@ export interface MainCard {
   coverImage: CoverImage;
   title: Titles;
   studios: { nodes: StudioNode[] | null };
-  format?: string;
+  format: Formats[0];
   popularity?: number;
   episodes?: number;
   duration?: number;
