@@ -1,16 +1,14 @@
-import { MouseEvent } from "react";
 import { Link } from "react-router-dom";
-import { Season } from "../../../../interfaces/apiResponseTypes";
 import {
   useDispatchContext,
   useStateContext,
 } from "../../../../utilities/Context/AppContext";
-import getCurrSeasonAndYear from "../../../../utilities/getCurrentSeasonAndYear";
-
 import CalendarSVG from "../../../../assets/calendar-svgrepo-com.svg";
 import MedalSVG from "../../../../assets/medal.svg";
 import ResetSVG from "../../../../assets/reset-svgrepo-com.svg";
 import changeFormat from "../../../../utilities/changeFormat";
+import changeSeason from "../../../../utilities/changeSeason";
+import getCurrSeasonAndYear from "../../../../utilities/getCurrentSeasonAndYear";
 
 export default function ContainerPreferences() {
   const { client, variables } = useStateContext();
@@ -18,46 +16,16 @@ export default function ContainerPreferences() {
   const dispatch = useDispatchContext();
   const { season, seasonYear } = client;
 
-  function changeSeason(change: "up" | "down") {
-    const seasons: Season[] = ["WINTER", "SPRING", "SUMMER", "FALL"];
-    let currIndex = seasons.findIndex((v) => v === season);
-    let updatedYear = seasonYear;
-    if (change === "up") {
-      currIndex++;
-    } else {
-      currIndex--;
-    }
-    if (currIndex === 4) {
-      currIndex = 0;
-      updatedYear++;
-    } else if (currIndex === -1) {
-      currIndex = 3;
-      updatedYear--;
-    }
-    dispatch({
-      type: "UPDATE_CLIENT",
-      payload: {
-        ...client,
-        season: seasons[currIndex],
-        seasonYear: updatedYear,
-      },
-    });
-    dispatch({
-      type: "UPDATE_VARIABLES",
-      payload: {
-        ...variables,
-        season: seasons[currIndex],
-        seasonYear: updatedYear,
-      },
-    });
-  }
-
+    //nice clean up bro, now extract the dispatch f calls in changeSeason to 
+    //wrap around changeSeasonCall and use its return value to dispatch change 
+    //here, that way u explicitly pass the shit u need and no more big params.
+    
   return (
     <div className="w-full bg-slate-600 px-10 flex items-center min-h-[5vh] flex-col lg:flex-row">
       <div className="pl-1 text-2xl w-72 whitespace-nowrap flex justify-between">
         <button
           className="px-2 focus:outline outline-2 rounded-sm outline-zinc-400"
-          onClick={() => changeSeason("down")}
+          onClick={() => changeSeason("down", dispatch, client, variables)}
           title="Previous season"
         >
           {"<"}
@@ -67,7 +35,7 @@ export default function ContainerPreferences() {
         </span>
         <button
           className="px-2 focus:outline outline-2 rounded-sm outline-zinc-400"
-          onClick={() => changeSeason("up")}
+          onClick={() => changeSeason("up", dispatch, client, variables)}
           title="Next season"
         >
           {">"}
