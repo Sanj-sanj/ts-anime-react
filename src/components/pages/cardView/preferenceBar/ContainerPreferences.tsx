@@ -1,7 +1,6 @@
 import { MouseEvent } from "react";
 import { Link } from "react-router-dom";
-import { Formats, Season } from "../../../../interfaces/apiResponseTypes";
-import { ValidFormats } from "../../../../interfaces/initialConfigTypes";
+import { Season } from "../../../../interfaces/apiResponseTypes";
 import {
   useDispatchContext,
   useStateContext,
@@ -11,6 +10,7 @@ import getCurrSeasonAndYear from "../../../../utilities/getCurrentSeasonAndYear"
 import CalendarSVG from "../../../../assets/calendar-svgrepo-com.svg";
 import MedalSVG from "../../../../assets/medal.svg";
 import ResetSVG from "../../../../assets/reset-svgrepo-com.svg";
+import changeFormat from "../../../../utilities/changeFormat";
 
 export default function ContainerPreferences() {
   const { client, variables } = useStateContext();
@@ -52,29 +52,6 @@ export default function ContainerPreferences() {
     });
   }
 
-  function isValidFormat(format: string): format is ValidFormats {
-    return ["TV", "MOVIE", "OVA"].includes(format);
-  }
-  function changeFormat(e: MouseEvent) {
-    const target = e.currentTarget as HTMLButtonElement;
-    const whichFormat = target.value;
-    if (!isValidFormat(whichFormat)) return;
-
-    const formats: { [k in ValidFormats]: Formats } = {
-      TV: ["TV", "TV_SHORT"],
-      MOVIE: ["MOVIE", "SPECIAL"],
-      OVA: ["ONA", "OVA"],
-    };
-    dispatch({
-      type: "UPDATE_VARIABLES",
-      payload: {
-        ...variables,
-        format_in: formats[whichFormat],
-        format: whichFormat,
-      },
-    });
-  }
-
   return (
     <div className="w-full bg-slate-600 px-10 flex items-center min-h-[5vh] flex-col lg:flex-row">
       <div className="pl-1 text-2xl w-72 whitespace-nowrap flex justify-between">
@@ -104,7 +81,7 @@ export default function ContainerPreferences() {
               currFormat === "TV" ? "thick-underline underline-offset-8" : ""
             }`}
             value="TV"
-            onClick={(e) => changeFormat(e)}
+            onClick={(e) => changeFormat(e, variables, dispatch)}
             title="Tv / Tv shorts"
           >
             TV
@@ -114,7 +91,7 @@ export default function ContainerPreferences() {
               currFormat === "MOVIE" ? "thick-underline underline-offset-8" : ""
             }`}
             value="MOVIE"
-            onClick={(e) => changeFormat(e)}
+            onClick={(e) => changeFormat(e, variables, dispatch)}
             title="Movies"
           >
             MOVIE
@@ -124,7 +101,7 @@ export default function ContainerPreferences() {
               currFormat === "OVA" ? "thick-underline underline-offset-8" : ""
             }`}
             value="OVA"
-            onClick={(e) => changeFormat(e)}
+            onClick={(e) => changeFormat(e, variables, dispatch)}
             title="OVA / ONA"
           >
             OVA
