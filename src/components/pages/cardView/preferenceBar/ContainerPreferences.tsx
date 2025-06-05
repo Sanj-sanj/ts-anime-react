@@ -16,10 +16,6 @@ export default function ContainerPreferences() {
   const dispatch = useDispatchContext();
   const { season, seasonYear } = client;
 
-    //nice clean up bro, now extract the dispatch f calls in changeSeason to 
-    //wrap around changeSeasonCall and use its return value to dispatch change 
-    //here, that way u explicitly pass the shit u need and no more big params.
-    
   return (
     <div className="w-full bg-slate-600 px-10 flex items-center min-h-[5vh] flex-col lg:flex-row">
       <div className="pl-1 text-2xl w-72 whitespace-nowrap flex justify-between">
