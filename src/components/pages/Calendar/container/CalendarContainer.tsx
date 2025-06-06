@@ -17,12 +17,12 @@ import CalendarByTimeline from "../Timeline";
 // a set of API calls encapsulated into a provider funct that handles all api
 // calls so we do not crash our view pages.
 
+const CalendarContainer = () => {
   const {
     cards,
     client: { season, seasonYear, titlesLang },
     variables: { format, format_in}
   } = useStateContext();
-
   const abortCalendar = useRef<null | AbortController>(null);
   const [slotFramework, setSlotFramework] = useState(
    OngoingToGroupedByDay({ cards }, { season, seasonYear, format })
