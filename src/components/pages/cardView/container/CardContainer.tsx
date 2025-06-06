@@ -29,7 +29,7 @@ const CardContainer: FunctionComponent = () => {
   const dispatch = useDispatchContext();
 
   let clientVisibleCards: MainCard[] = [];
-  const isMockOn = true;
+  const isMockOn = false;
 
   const [ammount, setAmmount] = useState(client.perPage);
   const isCallingAPI = useRef(false);

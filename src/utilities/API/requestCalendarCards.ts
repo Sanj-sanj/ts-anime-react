@@ -24,8 +24,9 @@ async function requestCalendarCards(
     page: 0,
     perPage: 50,
     airingAt_greater: Math.floor(dayjs().add(-dayjs().day(), 'day').startOf('day').unix()),
-    airingAt_lesser: Math.floor(dayjs().startOf('day').unix())
+    airingAt_lesser: Math.floor(dayjs().unix())
   };
+
   await HandleAPICall(variables, [], calendarAiringTodayQuery, signal)
     .then((airingSchedule) => {
       if (isAiringSchedule(airingSchedule)) {
