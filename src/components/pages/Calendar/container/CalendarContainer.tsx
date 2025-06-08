@@ -30,7 +30,7 @@ const CalendarContainer = () => {
   const [isLoading, setIsLoading] = useState(true);
  
   useEffect(() => {
-    // isMockOn needs to be set to on for the entire component to behave
+    // isMockOn needs to be set to FALSE for the entire component to behave
     // as expected... our mock is not constantly up to date therefor the 
     // onGoing results end up out of date and we get multiple list items 
     // in the timeline component causing straight up mystery bugs...

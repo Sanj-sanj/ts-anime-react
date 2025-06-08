@@ -27,6 +27,17 @@ async function requestCalendarCards(
     airingAt_lesser: Math.floor(dayjs().unix())
   };
 
+    // This thing is still busted, if a bunch of shows aired earlier this day
+    // the API does not always return a list of those shows...
+    // maybe the API simply has not placed the already aired shows into the 
+    // already aired category...
+
+    //todo! change api call to request shows from before today till the start of 2 weeks ago
+    //request shows from the start of today till the end of the day
+    //request shows from the tomorrow onwards
+
+    //for some reason it just doesnt work the way i expect but it works the above way.
+
   await HandleAPICall(variables, [], calendarAiringTodayQuery, signal)
     .then((airingSchedule) => {
       if (isAiringSchedule(airingSchedule)) {
