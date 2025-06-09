@@ -51,7 +51,6 @@ const CardContainer: FunctionComponent = () => {
       { season, format, seasonYear },
       showOngoing
     );
-console.count()
 
   return (
     <>
