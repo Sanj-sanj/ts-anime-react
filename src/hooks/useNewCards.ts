@@ -6,7 +6,7 @@ import { useStateContext } from "../utilities/Context/AppContext";
 export default function useNewCards(dispatch: React.Dispatch<Actions>) {
     const { cards, client, variables } = useStateContext();
     const { season, seasonYear, showOngoing } = client;
-    const {format } = variables
+    const { format } = variables
 
     //used to move the clients container's view to the top of the page
     const containerRef = useRef<null | HTMLDivElement>(null);

@@ -38,15 +38,10 @@ const CardContainer: FunctionComponent = () => {
     lastFocusedElement.current.focus();
 
   // if the ammount of cards shown is less than available to see, isMore = true : isMore = false
-  if (showOngoing) {
-    if (ammount >= cards.ONGOING[format].length) {
-      isMoreCards.current = false;
+    if (showOngoing && ammount >= cards.ONGOING[format].length || 
+       !showOngoing && ammount >= cards[season]?.[seasonYear]?.[format]?.length) {
+        isMoreCards.current = false;
     } else isMoreCards.current = true;
-  } else {
-    if (ammount >= cards[season]?.[seasonYear]?.[format]?.length) {
-      isMoreCards.current = false;
-    } else isMoreCards.current = true;
-  }
 
   if (checkIfCardsExist(season, seasonYear, format, showOngoing, { cards }))
     clientVisibleCards = sortAndFilterCardsForView(
@@ -56,7 +51,7 @@ const CardContainer: FunctionComponent = () => {
       { season, format, seasonYear },
       showOngoing
     );
-
+console.count()
 
   return (
     <>
