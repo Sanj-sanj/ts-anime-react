@@ -102,7 +102,7 @@ export const onPreferenceChange = (
   season: Season,
   seasonYear: number,
   dispatch: Dispatch<Actions>,
-  ongoingRef: MutableRefObject<"show" | "hide">,
+  showOngoing: boolean,
   containerRef: MutableRefObject<HTMLDivElement | null>,
   setAmmount: Dispatch<SetStateAction<number>>
 ) => {
@@ -111,7 +111,7 @@ export const onPreferenceChange = (
     dispatch({
       type: "TOGGLE_ONGOING",
       payload: {
-        forceMode: ongoingRef.current === "show" ? true : false,
+        forceMode: showOngoing
       },
     });
   } else {

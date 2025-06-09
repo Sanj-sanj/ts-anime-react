@@ -1,16 +1,12 @@
 import React, {
   ChangeEvent,
   FunctionComponent,
-  useEffect,
   useRef,
-  useState,
 } from "react";
 import {
   callNextPageOnScroll,
   checkIfCardsExist,
   handleCardContainerOnClick,
-  onPreferenceChange,
-  requestNewCardsCardView,
 } from "../../../../utilities/Cards/CardContainerUtils";
 import Card from "../../../card/Card";
 import { MainCard } from "../../../../interfaces/apiResponseTypes";
@@ -21,65 +17,20 @@ import {
 import ContainerPreferences from "../preferenceBar/ContainerPreferences";
 import getCurrSeasonAndYear from "../../../../utilities/getCurrentSeasonAndYear";
 import sortAndFilterCardsForView from "../../../../utilities/Cards/SortAndFilterCardsView";
+import useNewCards from "../../../../hooks/useNewCards";
+import ClientPreferenceSelections from "../../../clientPreferenceSelections/ClientPreferenceSlections";
 
 const CardContainer: FunctionComponent = () => {
+  const dispatch = useDispatchContext();
+  const {cardView: { ammount, setAmmount, containerRef }, isCallingAPI, isMoreCards} = useNewCards(dispatch)
   const { cards, client, variables } = useStateContext();
   const { format } = variables;
   const { season, seasonYear, showOngoing, sort, titlesLang } = client;
-  const dispatch = useDispatchContext();
 
   let clientVisibleCards: MainCard[] = [];
-  const isMockOn = false;
-
-  const [ammount, setAmmount] = useState(client.perPage);
-  const isCallingAPI = useRef(false);
-  const abortMainCard = useRef<null | AbortController>(null);
-  const abortOngoing = useRef<null | AbortController>(null);
-  const containerRef = useRef<null | HTMLDivElement>(null);
   const lastFocusedElement = useRef<null | HTMLButtonElement>(null);
-  const isMoreCards = useRef<boolean>(true);
-  const ongoingRef = useRef<"hide" | "show">(showOngoing ? "show" : "hide");
   const [currSeason, currYear] = getCurrSeasonAndYear();
-
-  function searchPrefSelects(
-    labelTitle: string,
-    couple: string,
-    selectValues: string[],
-    callback: (e?: ChangeEvent<HTMLSelectElement>) => void
-  ) {
-    return (
-      <div className="flex border border-slate-300 dark:border-slate-400 mr-2">
-        <label
-          className="bg-slate-100 dark:bg-zinc-500 h-full border-r border-slate-300 dark:border-slate-400 p-2 w-24 text-center"
-          htmlFor={couple}
-        >
-          {labelTitle}
-        </label>
-        <select
-          name=""
-          id={couple}
-          className="w-32 pl-1 dark:bg-zinc-200"
-          onChange={callback}
-          defaultValue={
-            couple === "title-lang"
-              ? `${titlesLang
-                  .slice(0, 1)
-                  .toUpperCase()
-                  .concat(titlesLang.slice(1))}`
-              : showOngoing
-              ? "Show ongoing"
-              : "Hide ongoing"
-          }
-        >
-          {selectValues.map((item) => (
-            <option value={item} key={item}>
-              {item}
-            </option>
-          ))}
-        </select>
-      </div>
-    );
-  }
+    
   if (
     lastFocusedElement.current !== null &&
     client.overlay.modal.active === false
@@ -106,30 +57,6 @@ const CardContainer: FunctionComponent = () => {
       showOngoing
     );
 
-  useEffect(() => {
-    onPreferenceChange(
-      season,
-      seasonYear,
-      dispatch,
-      ongoingRef,
-      containerRef,
-      setAmmount
-    );
-    if (
-      !checkIfCardsExist(season, seasonYear, format, showOngoing, { cards })
-    ) {
-      isMoreCards.current = true;
-      requestNewCardsCardView(
-        { abortOngoing, abortMainCard },
-        { variables, dispatch, isCallingAPI, showOngoing },
-        isMockOn
-      );
-    }
-    return () => {
-      if (abortMainCard.current) abortMainCard.current.abort();
-      if (abortOngoing.current) abortOngoing.current.abort();
-    };
-  }, [season, seasonYear, format, showOngoing]);
 
   return (
     <>
@@ -150,10 +77,12 @@ const CardContainer: FunctionComponent = () => {
         }}
       >
         <div className="flex w-full p-2 justify-center">
-          {searchPrefSelects(
+          {ClientPreferenceSelections(
             "Titles",
             "title-lang",
             ["English", "Romaji"],
+            titlesLang,
+            showOngoing,
             (e: ChangeEvent<HTMLSelectElement> | undefined) => {
               if (!e) return;
               const selection = e.target.value.toLowerCase() as
@@ -162,16 +91,18 @@ const CardContainer: FunctionComponent = () => {
               dispatch({ type: "TOGGLE_LANGUAGE", payload: selection });
             }
           )}
-          {searchPrefSelects(
+          {ClientPreferenceSelections(
             "Ongoing",
             "set-ongoing",
             ["Show ongoing", "Hide ongoing"],
+            titlesLang,
+            showOngoing,
             (e: ChangeEvent<HTMLSelectElement> | undefined) => {
               if (!e) return;
               const selection = e.target.value.split(" ")[0].toLowerCase() as
                 | "show"
                 | "hide";
-              ongoingRef.current = selection;
+              //ongoingRef.current = selection;
               if (
                 selection === "show" &&
                 currSeason === season &&
