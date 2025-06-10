@@ -7,7 +7,7 @@ import { ValidFormats } from "../interfaces/initialConfigTypes";
 export default function useNewCalendarCards(initialSlots: CalendarTimeSlots, {format, format_in}: {format: ValidFormats, format_in: Formats}) {
   const abortCalendar = useRef<null | AbortController>(null);
   const [slotFramework, setSlotFramework] = useState(initialSlots);
-  const [isLoading, setIsLoading] = useState(true);
+  const isLoading = useRef(true)
   useEffect(() => {
     // isMockOn needs to be set to FALSE for the entire component to behave
     // as expected... our mock is not constantly up to date therefor the 
@@ -21,7 +21,7 @@ export default function useNewCalendarCards(initialSlots: CalendarTimeSlots, {fo
       initialSlots,
       setSlotFramework,
       abortCalendar.current.signal,
-      setIsLoading,
+      isLoading,
       format_in
     );
     return () => abortCalendar.current?.abort();

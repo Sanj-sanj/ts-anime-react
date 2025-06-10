@@ -15,8 +15,6 @@ const BuildAndFillTimeslots = (
     seasonYear,
   }: { season: Season; format: ValidFormats; seasonYear: number }
 ) => {
-    console.log('a',cards)
-    console.log('b',format)
   const sortedByCountdown = sortAndFilterCardsForView(
     "Countdown",
     200,
@@ -24,8 +22,8 @@ const BuildAndFillTimeslots = (
     { season, format, seasonYear },
     true
   );
-    console.log(sortedByCountdown)
-  const foo = sortedByCountdown.reduce((acc, show) => {
+
+  return sortedByCountdown.reduce((acc, show) => {
       const cardDate = show.nextAiringEpisode?.airingAt &&
         dayjs(show.nextAiringEpisode?.airingAt * 1000);
 
@@ -89,7 +87,5 @@ const BuildAndFillTimeslots = (
       { entries: [], day: 6 },
     ] as CalendarTimeSlots
   );
-    console.log(foo)
-    return foo
 };
 export default BuildAndFillTimeslots;

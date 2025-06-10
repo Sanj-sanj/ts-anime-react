@@ -3,14 +3,13 @@ import { isAiringSchedule } from "../Cards/CheckCardType";
 import HandleAPICall from "./HandleAPICall";
 import { calendarAiringTodayQuery } from "./QueryStrings/CalendarAiringToday";
 import { Formats, MainCard } from "../../interfaces/apiResponseTypes";
-import { Dispatch, SetStateAction } from "react";
 import { CalendarTimeSlots } from "../../interfaces/CalendarTypes";
 
 async function requestCalendarCards(
   slotFramework: CalendarTimeSlots,
-  setSlotFramework: Dispatch<SetStateAction<typeof slotFramework>>,
+  setSlotFrameWork: React.Dispatch<React.SetStateAction<CalendarTimeSlots>>,
   signal: AbortSignal,
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  isLoading: React.MutableRefObject<boolean>,
   format: Formats
 ) {
   const variables = {
@@ -29,7 +28,8 @@ async function requestCalendarCards(
     //request shows from the tomorrow onwards
 
     //for some reason it just doesnt work the way i expect but it works the above way.
-
+  isLoading.current = true;
+    console.log('calling anilist API for previously aired')
   await HandleAPICall(variables, [], calendarAiringTodayQuery, signal)
     .then((airingSchedule) => {
       if (isAiringSchedule(airingSchedule)) {
@@ -140,12 +140,10 @@ async function requestCalendarCards(
         ];
       });
 
-      setIsLoading(false)
-      return setSlotFramework((j) => {
-          return timeslotFrameworkCopy
-        });
+      setSlotFrameWork(timeslotFrameworkCopy)
     })
     .catch(console.log);
+    isLoading.current = false;
 }
 
 export default requestCalendarCards;

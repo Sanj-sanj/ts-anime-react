@@ -1,21 +1,14 @@
 import dayjs from "dayjs";
-import { MainCard } from "../../../interfaces/apiResponseTypes";
+import { CalendarTimeSlots } from "../../../interfaces/CalendarTypes";
 
-type AiringByWeek = {
-    entries: {
-      date: string;
-      shows: { [x in string]: MainCard[] }[];
-    }[];
-    day: number;
-  }[]
 const CalendarByTimeline = ({
-  airingByWeek,
+  calendarSlots,
   titlesLang
-} : {airingByWeek: AiringByWeek, titlesLang: "romaji" | "english"}) => {
+} : {calendarSlots: CalendarTimeSlots, titlesLang: "romaji" | "english"}) => {
 
   return (
     <div className="w-full bg-slate-800 flex justify-between">
-      {airingByWeek.map(({ entries, day }) => {
+      {calendarSlots.map(({ entries, day }) => {
         return (
           <div
             key={day}
