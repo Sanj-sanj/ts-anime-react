@@ -19,7 +19,7 @@ export default function useNewCards(dispatch: React.Dispatch<Actions>) {
 
     //Ammount of cars to display on CardContainer at once
     const [ammount, setAmmount] = useState(client.perPage);
-    const isMockOn = true;
+    const isMockOn = false;
 
     useEffect(() => {
         onPreferenceChange(
@@ -33,6 +33,7 @@ export default function useNewCards(dispatch: React.Dispatch<Actions>) {
         if (
             !checkIfCardsExist(season, seasonYear, format, showOngoing, { cards })
         ) {
+            console.log('cards dont exist', format)
             isMoreCards.current = true;
             requestNewCardsCardView(
                 { abortOngoing, abortMainCard },

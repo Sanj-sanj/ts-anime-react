@@ -1,12 +1,13 @@
 import dayjs from "dayjs";
-import { MainCard, Season } from "../../../interfaces/apiResponseTypes";
+import { Season } from "../../../interfaces/apiResponseTypes";
 import {
   InitialConfig,
   ValidFormats,
 } from "../../../interfaces/initialConfigTypes";
 import sortAndFilterCardsForView from "../../../utilities/Cards/SortAndFilterCardsView";
+import { CalendarTimeSlots } from "../../../interfaces/CalendarTypes";
 
-const OngoingToGroupedByDay = (
+const BuildAndFillTimeslots = (
   { cards }: Pick<InitialConfig, "cards">,
   {
     season,
@@ -14,6 +15,8 @@ const OngoingToGroupedByDay = (
     seasonYear,
   }: { season: Season; format: ValidFormats; seasonYear: number }
 ) => {
+    console.log('a',cards)
+    console.log('b',format)
   const sortedByCountdown = sortAndFilterCardsForView(
     "Countdown",
     200,
@@ -21,7 +24,8 @@ const OngoingToGroupedByDay = (
     { season, format, seasonYear },
     true
   );
-  return sortedByCountdown.reduce((acc, show) => {
+    console.log(sortedByCountdown)
+  const foo = sortedByCountdown.reduce((acc, show) => {
       const cardDate = show.nextAiringEpisode?.airingAt &&
         dayjs(show.nextAiringEpisode?.airingAt * 1000);
 
@@ -83,10 +87,9 @@ const OngoingToGroupedByDay = (
       { entries: [], day: 4 },
       { entries: [], day: 5 },
       { entries: [], day: 6 },
-    ] as {
-      entries: { date: string; shows: { [time in string]: MainCard[] }[] }[];
-      day: number;
-    }[]
+    ] as CalendarTimeSlots
   );
+    console.log(foo)
+    return foo
 };
-export default OngoingToGroupedByDay;
+export default BuildAndFillTimeslots;

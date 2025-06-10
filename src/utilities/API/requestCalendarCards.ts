@@ -4,17 +4,10 @@ import HandleAPICall from "./HandleAPICall";
 import { calendarAiringTodayQuery } from "./QueryStrings/CalendarAiringToday";
 import { Formats, MainCard } from "../../interfaces/apiResponseTypes";
 import { Dispatch, SetStateAction } from "react";
+import { CalendarTimeSlots } from "../../interfaces/CalendarTypes";
 
 async function requestCalendarCards(
-  slotFramework: {
-    entries: {
-      date: string;
-      shows: {
-        [x: string]: MainCard[];
-      }[];
-    }[];
-    day: number;
-  }[],
+  slotFramework: CalendarTimeSlots,
   setSlotFramework: Dispatch<SetStateAction<typeof slotFramework>>,
   signal: AbortSignal,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -25,8 +18,7 @@ async function requestCalendarCards(
     perPage: 50,
     airingAt_greater: Math.floor(dayjs().add(-dayjs().day(), 'day').startOf('day').unix()),
     airingAt_lesser: Math.floor(dayjs().unix())
-  };
-
+  }
     // This thing is still busted, if a bunch of shows aired earlier this day
     // the API does not always return a list of those shows...
     // maybe the API simply has not placed the already aired shows into the 
@@ -149,7 +141,9 @@ async function requestCalendarCards(
       });
 
       setIsLoading(false)
-      return setSlotFramework(timeslotFrameworkCopy);
+      return setSlotFramework((j) => {
+          return timeslotFrameworkCopy
+        });
     })
     .catch(console.log);
 }

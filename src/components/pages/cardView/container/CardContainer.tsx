@@ -38,7 +38,7 @@ const CardContainer: FunctionComponent = () => {
     lastFocusedElement.current.focus();
 
   // if the ammount of cards shown is less than available to see, isMore = true : isMore = false
-    if (showOngoing && ammount >= cards.ONGOING[format].length || 
+    if (showOngoing && ammount >= cards?.ONGOING?.[format]?.length || 
        !showOngoing && ammount >= cards[season]?.[seasonYear]?.[format]?.length) {
         isMoreCards.current = false;
     } else isMoreCards.current = true;
