@@ -3,7 +3,11 @@ import { CalendarTimeSlots } from "../../interfaces/CalendarTypes";
 import { AiringSchedule, Format_In, MainCard } from "../../interfaces/apiResponseTypes";
 import { ValidFormats } from "../../interfaces/initialConfigTypes";
 
-export default function buildInitialTimeSlots(airingSchedule: AiringSchedule[], slotFramework: CalendarTimeSlots, format: ValidFormats) {
+export default function buildInitialTimeSlots(
+    airingSchedule: AiringSchedule[],
+    slotFramework: CalendarTimeSlots,
+    format: ValidFormats
+) {
     //take the initial API call or the stuff saved in context 
     const timeslotFrameworkCopy = [...slotFramework];
     const formats: { [k in ValidFormats]: Format_In } = {

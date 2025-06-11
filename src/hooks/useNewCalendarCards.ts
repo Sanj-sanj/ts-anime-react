@@ -11,7 +11,10 @@ export default function useNewCalendarCards(format: ValidFormats, dispatch: Reac
     // isMockOn needs to be set to FALSE for the entire component to behave
     abortCalendar.current = new AbortController();
     
-    if(!calendar.SHOWS.length || calendar.SHOWS.length && dayjs().diff(calendar.LAST_CALLED, 'minutes') >= 5) {
+    if(
+      !calendar.SHOWS.length || 
+      calendar.SHOWS.length && dayjs().diff(calendar.LAST_CALLED, 'minutes') >= 5
+      ) {
       // requests anilist api for shows released in the last 24 hours
       //saves into context's Cards.Calendar
       void requestCalendarCards(

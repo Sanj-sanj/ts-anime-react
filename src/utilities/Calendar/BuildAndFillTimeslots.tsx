@@ -1,11 +1,8 @@
 import dayjs from "dayjs";
-import { Season } from "../../../interfaces/apiResponseTypes";
-import {
-  InitialConfig,
-  ValidFormats,
-} from "../../../interfaces/initialConfigTypes";
-import sortAndFilterCardsForView from "../../../utilities/Cards/SortAndFilterCardsView";
-import { CalendarTimeSlots } from "../../../interfaces/CalendarTypes";
+import { InitialConfig, ValidFormats } from "../../interfaces/initialConfigTypes";
+import { Season } from "../../interfaces/apiResponseTypes";
+import sortAndFilterCardsForView from "../Cards/SortAndFilterCardsView";
+import { CalendarTimeSlots } from "../../interfaces/CalendarTypes";
 
 const BuildAndFillTimeslots = (
   { cards }: Pick<InitialConfig, "cards">,

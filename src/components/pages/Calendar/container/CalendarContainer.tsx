@@ -1,13 +1,13 @@
 import CalendarPreferenceBar from "../preferenceBar/CalendarPreferenceBar";
 import CalendarByTimeline from "../Timeline";
-import BuildAndFillTimeslots from "../BuildAndFillTimeslots";
 import { CalendarTimeSlots } from "../../../../interfaces/CalendarTypes";
 import { useDispatchContext, useStateContext } from "../../../../utilities/Context/AppContext";
 import useNewCalendarCards from "../../../../hooks/useNewCalendarCards";
 import useNewCards from "../../../../hooks/useNewCards";
 import { checkIfCardsExist } from "../../../../utilities/Cards/CardContainerUtils";
-import mergePreviousAndCurrentTimeslots from "../mergePreviousAndCurrentTimeslots";
 import buildInitialTimeSlots from "../../../../utilities/Calendar/BuildInitialTimeSlots";
+import BuildAndFillTimeslots from "../../../../utilities/Calendar/BuildAndFillTimeslots";
+import mergePreviousAndCurrentTimeslots from "../../../../utilities/Calendar/mergePreviousAndCurrentTimeslots";
 
 const CalendarContainer = () => {
   const dispatch = useDispatchContext()
