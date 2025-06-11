@@ -10,27 +10,28 @@ import mergePreviousAndCurrentTimeslots from "../mergePreviousAndCurrentTimeslot
 
 const CalendarContainer = () => {
   const dispatch = useDispatchContext()
-  const {cardView: { ammount, setAmmount, containerRef }, isCallingAPI, isMoreCards } = useNewCards(dispatch)
+  const { isCallingAPI } = useNewCards(dispatch)
   const {
     cards,
-    client: { season, seasonYear, titlesLang, showOngoing, sort },
+    client: { season, seasonYear, titlesLang, showOngoing },
     variables: { format }
   } = useStateContext();
-  const initialCards: CalendarTimeSlots = [
-      { entries: [], day: 0 },
-      { entries: [], day: 1 },
-      { entries: [], day: 2 },
-      { entries: [], day: 3 },
-      { entries: [], day: 4 },
-      { entries: [], day: 5 },
-      { entries: [], day: 6 },
-    ]
-  const { slotFramework, isLoading } = useNewCalendarCards([...initialCards], format)
+
   let finalizedSlots: CalendarTimeSlots = []
+  const initialCards: CalendarTimeSlots = [
+    { entries: [], day: 0 },
+    { entries: [], day: 1 },
+    { entries: [], day: 2 },
+    { entries: [], day: 3 },
+    { entries: [], day: 4 },
+    { entries: [], day: 5 },
+    { entries: [], day: 6 },
+  ]
+  const { slotFramework, isLoading } = useNewCalendarCards([...initialCards], format)
 
   if (checkIfCardsExist(season, seasonYear, format, showOngoing, { cards })) {
     //merge the result of previous aired API call with the result of our main API network call
-    finalizedSlots  = BuildAndFillTimeslots({ cards }, { season, seasonYear, format })
+    finalizedSlots = BuildAndFillTimeslots({ cards }, { season, seasonYear, format })
     mergePreviousAndCurrentTimeslots(slotFramework, finalizedSlots)
   }
  

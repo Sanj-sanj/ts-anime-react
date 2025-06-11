@@ -52,7 +52,11 @@ export type APINewEpisodesVariables = {
   id_in: number[];
 };
 
-export type Format_In = ["TV", "TV_SHORT"] | ["MOVIE", "SPECIAL"] | ["ONA", "OVA"]
+type Format_TV = ["TV", "TV_SHORT"]
+type Format_MOVIE = ["MOVIE", "SPECIAL"]
+type Format_OVA = ["ONA", "OVA"]
+
+export type Format_In = Format_TV | Format_MOVIE | Format_OVA
 export type Formats = "TV"| "TV_SHORT" |"MOVIE"| "SPECIAL"|"ONA"| "OVA"
 
 export type StudioNode = {

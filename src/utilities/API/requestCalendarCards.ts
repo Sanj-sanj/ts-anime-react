@@ -2,12 +2,14 @@ import dayjs from "dayjs";
 import { isAiringSchedule } from "../Cards/CheckCardType";
 import HandleAPICall from "./HandleAPICall";
 import { calendarAiringTodayQuery } from "./QueryStrings/CalendarAiringToday";
-import { Formats, MainCard } from "../../interfaces/apiResponseTypes";
+import { Format_In, MainCard } from "../../interfaces/apiResponseTypes";
 import { CalendarTimeSlots } from "../../interfaces/CalendarTypes";
+import { ValidFormats } from "../../interfaces/initialConfigTypes";
 
 async function requestCalendarCards(
   slotFramework: CalendarTimeSlots,
   setSlotFrameWork: React.Dispatch<React.SetStateAction<CalendarTimeSlots>>,
+  format: ValidFormats,
   signal: AbortSignal,
   isLoading: React.MutableRefObject<boolean>,
 ) {
@@ -18,22 +20,25 @@ async function requestCalendarCards(
     airingAt_lesser: Math.floor(dayjs().unix())
   }
 
+    const formats: { [k in ValidFormats]: Format_In } = {
+        TV: ["TV", "TV_SHORT"],
+        MOVIE: ["MOVIE", "SPECIAL"],
+        OVA: ["ONA", "OVA"],
+    };
+        
   isLoading.current = true;
   console.log('calling anilist API for previously aired')
 
-  function isValidFormat(media: MainCard, format: string): format is Formats {
-      return media.format.includes(format);
-  }
   await HandleAPICall(variables, [], calendarAiringTodayQuery, signal)
     .then((airingSchedule) => {
       if (isAiringSchedule(airingSchedule)) {
-        return airingSchedule.filter(
-          ({ media }) => isValidFormat(media, media.format)
-        );
+        return airingSchedule.filter( ({ media }) => {
+          return formats[format].some((v) => v === media.format)
+        });
       }
     })
     .then((airingSchedule) => {
-      if (!airingSchedule) return;
+      if (!airingSchedule) return slotFramework;
       const timeslotFrameworkCopy = [...slotFramework];
 
       const showsAiredPriorToToday = airingSchedule.reduce(

@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import requestCalendarCards from "../utilities/API/requestCalendarCards";
-import { CalendarTimeSlots } from "../interfaces/CalendarTypes";
-import { Formats } from "../interfaces/apiResponseTypes";
+// @format
+import { useEffect, useRef, useState } from "react"; import requestCalendarCards from "../utilities/API/requestCalendarCards"; import { CalendarTimeSlots } from "../interfaces/CalendarTypes";
+import { ValidFormats } from "../interfaces/initialConfigTypes";
 
-export default function useNewCalendarCards(initialSlots: CalendarTimeSlots, format: Formats) {
+export default function useNewCalendarCards(initialSlots: CalendarTimeSlots, format: ValidFormats) {
   const abortCalendar = useRef<null | AbortController>(null);
   const [slotFramework, setSlotFramework] = useState(initialSlots);
   const isLoading = useRef(true)
@@ -16,6 +15,7 @@ export default function useNewCalendarCards(initialSlots: CalendarTimeSlots, for
     void requestCalendarCards(
       initialSlots,
       setSlotFramework,
+      format,
       abortCalendar.current.signal,
       isLoading,
     );
