@@ -10,7 +10,6 @@ async function requestCalendarCards(
   setSlotFrameWork: React.Dispatch<React.SetStateAction<CalendarTimeSlots>>,
   signal: AbortSignal,
   isLoading: React.MutableRefObject<boolean>,
-  format: Formats
 ) {
   const variables = {
     page: 0,
@@ -18,25 +17,18 @@ async function requestCalendarCards(
     airingAt_greater: Math.floor(dayjs().add(-dayjs().day(), 'day').startOf('day').unix()),
     airingAt_lesser: Math.floor(dayjs().unix())
   }
-    // This thing is still busted, if a bunch of shows aired earlier this day
-    // the API does not always return a list of those shows...
-    // maybe the API simply has not placed the already aired shows into the 
-    // already aired category...
 
-    //todo! change api call to request shows from before today till the start of 2 weeks ago
-    //request shows from the start of today till the end of the day
-    //request shows from the tomorrow onwards
-
-    //for some reason it just doesnt work the way i expect but it works the above way.
   isLoading.current = true;
-    console.log('calling anilist API for previously aired')
+  console.log('calling anilist API for previously aired')
+
+  function isValidFormat(media: MainCard, format: string): format is Formats {
+      return media.format.includes(format);
+  }
   await HandleAPICall(variables, [], calendarAiringTodayQuery, signal)
     .then((airingSchedule) => {
       if (isAiringSchedule(airingSchedule)) {
         return airingSchedule.filter(
-                //i hate this solution but the way the type is made implies
-                //that arr[0] should === the [0] of the union type Formats
-          ({ media }) => format[0] === media.format
+          ({ media }) => isValidFormat(media, media.format)
         );
       }
     })

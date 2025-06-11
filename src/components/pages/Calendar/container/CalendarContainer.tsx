@@ -14,7 +14,7 @@ const CalendarContainer = () => {
   const {
     cards,
     client: { season, seasonYear, titlesLang, showOngoing, sort },
-    variables: { format, format_in}
+    variables: { format }
   } = useStateContext();
   const initialCards: CalendarTimeSlots = [
       { entries: [], day: 0 },
@@ -25,13 +25,13 @@ const CalendarContainer = () => {
       { entries: [], day: 5 },
       { entries: [], day: 6 },
     ]
-  const { slotFramework, isLoading } = useNewCalendarCards([...initialCards], {format, format_in})
-  let temp: CalendarTimeSlots = []
+  const { slotFramework, isLoading } = useNewCalendarCards([...initialCards], format)
+  let finalizedSlots: CalendarTimeSlots = []
 
   if (checkIfCardsExist(season, seasonYear, format, showOngoing, { cards })) {
-        //merge the result of previous aired API call with the result of our main API network call
-    temp  = BuildAndFillTimeslots({ cards }, { season, seasonYear, format })
-    mergePreviousAndCurrentTimeslots(slotFramework, temp)
+    //merge the result of previous aired API call with the result of our main API network call
+    finalizedSlots  = BuildAndFillTimeslots({ cards }, { season, seasonYear, format })
+    mergePreviousAndCurrentTimeslots(slotFramework, finalizedSlots)
   }
  
   return (
@@ -40,8 +40,8 @@ const CalendarContainer = () => {
       <div className="w-full flex flex-col items-center overflow-y-auto h-[85vh]">
          {isLoading.current || isCallingAPI.current ? 
            <div>loading...</div> : 
-           temp.length ? 
-           <CalendarByTimeline calendarSlots={temp} titlesLang={titlesLang} /> : 
+           finalizedSlots.length ? 
+           <CalendarByTimeline calendarSlots={finalizedSlots} titlesLang={titlesLang} /> : 
            <div>no results</div>
          }
       </div>

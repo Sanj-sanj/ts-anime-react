@@ -1,4 +1,4 @@
-import { APIVariables, Formats } from "../interfaces/apiResponseTypes";
+import { APIVariables, Format_In } from "../interfaces/apiResponseTypes";
 import { Actions, ValidFormats } from "../interfaces/initialConfigTypes";
 
 type FormatTypeButton = React.BaseSyntheticEvent<globalThis.MouseEvent, EventTarget & HTMLButtonElement, EventTarget>
@@ -11,7 +11,7 @@ export default function changeFormat(e: FormatTypeButton, variables: APIVariable
     const whichFormat = target.value;
     if (!isValidFormat(whichFormat)) return;
 
-    const formats: { [k in ValidFormats]: Formats } = {
+    const formats: { [k in ValidFormats]: Format_In } = {
         TV: ["TV", "TV_SHORT"],
         MOVIE: ["MOVIE", "SPECIAL"],
         OVA: ["ONA", "OVA"],

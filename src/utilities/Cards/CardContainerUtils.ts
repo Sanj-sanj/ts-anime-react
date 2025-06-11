@@ -40,6 +40,7 @@ export function checkIfCardsExist(
   ongoing: boolean,
   { cards }: Pick<InitialConfig, "cards">
 ) {
+    //format here refrences the format we store in client
   if (!ongoing) {
     return cards[season]?.[year]?.[format] ? true : false;
   } else {

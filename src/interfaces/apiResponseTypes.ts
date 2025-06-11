@@ -30,13 +30,13 @@ type NearestSeason = {
   season: Season;
   seasonYear: number;
   format: ValidFormats;
-  format_in: Formats;
+  format_in: Format_In;
 };
 type OngoingSeason = {
   page: number;
   perPage: number;
   hasNextPage: boolean;
-  format_in: Formats;
+  format_in: Format_In;
   format: ValidFormats;
   status_in: ShowStatus[];
 };
@@ -52,11 +52,8 @@ export type APINewEpisodesVariables = {
   id_in: number[];
 };
 
-const TVformat = ["TV", "TV_SHORT"] as const
-const MOVIEformat = ["MOVIE", "SPECIAL"] as const
-const OVAformat = ["ONA", "OVA"] as const
-
-export type Formats = (typeof TVformat) | (typeof MOVIEformat) | (typeof OVAformat)
+export type Format_In = ["TV", "TV_SHORT"] | ["MOVIE", "SPECIAL"] | ["ONA", "OVA"]
+export type Formats = "TV"| "TV_SHORT" |"MOVIE"| "SPECIAL"|"ONA"| "OVA"
 
 export type StudioNode = {
   name: string;
@@ -137,7 +134,7 @@ export interface MainCard {
   coverImage: CoverImage;
   title: Titles;
   studios: { nodes: StudioNode[] | null };
-  format: Formats[0];
+  format: Formats;
   popularity?: number;
   episodes?: number;
   duration?: number;
