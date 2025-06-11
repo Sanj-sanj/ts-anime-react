@@ -7,6 +7,7 @@ import useNewCalendarCards from "../../../../hooks/useNewCalendarCards";
 import useNewCards from "../../../../hooks/useNewCards";
 import { checkIfCardsExist } from "../../../../utilities/Cards/CardContainerUtils";
 import mergePreviousAndCurrentTimeslots from "../mergePreviousAndCurrentTimeslots";
+import buildInitialTimeSlots from "../../../../utilities/Calendar/BuildInitialTimeSlots";
 
 const CalendarContainer = () => {
   const dispatch = useDispatchContext()
@@ -16,6 +17,7 @@ const CalendarContainer = () => {
     client: { season, seasonYear, titlesLang, showOngoing },
     variables: { format }
   } = useStateContext();
+  const { isCallingCardsAPI } = useNewCalendarCards(format, dispatch, cards.CALENDAR)
 
   let finalizedSlots: CalendarTimeSlots = []
   const initialCards: CalendarTimeSlots = [
@@ -27,19 +29,19 @@ const CalendarContainer = () => {
     { entries: [], day: 5 },
     { entries: [], day: 6 },
   ]
-  const { slotFramework, isLoading } = useNewCalendarCards([...initialCards], format)
 
   if (checkIfCardsExist(season, seasonYear, format, showOngoing, { cards })) {
     //merge the result of previous aired API call with the result of our main API network call
+    const cardsFromContextOrAPI = buildInitialTimeSlots(cards.CALENDAR.SHOWS, initialCards, format)
     finalizedSlots = BuildAndFillTimeslots({ cards }, { season, seasonYear, format })
-    mergePreviousAndCurrentTimeslots(slotFramework, finalizedSlots)
+    mergePreviousAndCurrentTimeslots(cardsFromContextOrAPI, finalizedSlots)
   }
  
   return (
     <>
       <CalendarPreferenceBar />
       <div className="w-full flex flex-col items-center overflow-y-auto h-[85vh]">
-         {isLoading.current || isCallingAPI.current ? 
+         {isCallingCardsAPI.current || isCallingAPI.current ? 
            <div>loading...</div> : 
            finalizedSlots.length ? 
            <CalendarByTimeline calendarSlots={finalizedSlots} titlesLang={titlesLang} /> : 

@@ -1,26 +1,27 @@
-// @format
-import { useEffect, useRef, useState } from "react"; import requestCalendarCards from "../utilities/API/requestCalendarCards"; import { CalendarTimeSlots } from "../interfaces/CalendarTypes";
-import { ValidFormats } from "../interfaces/initialConfigTypes";
+import { useEffect, useRef } from "react";
+import requestCalendarCards from "../utilities/API/requestCalendarCards";
+import { Actions, ValidFormats } from "../interfaces/initialConfigTypes";
+import dayjs, { Dayjs } from "dayjs";
+import { AiringSchedule } from "../interfaces/apiResponseTypes";
 
-export default function useNewCalendarCards(initialSlots: CalendarTimeSlots, format: ValidFormats) {
+export default function useNewCalendarCards(format: ValidFormats, dispatch: React.Dispatch<Actions>, calendar: { SHOWS: AiringSchedule[], LAST_CALLED: Dayjs}) {
   const abortCalendar = useRef<null | AbortController>(null);
-  const [slotFramework, setSlotFramework] = useState(initialSlots);
-  const isLoading = useRef(true)
+  const isCallingCardsAPI = useRef(false)
   useEffect(() => {
     // isMockOn needs to be set to FALSE for the entire component to behave
-    //todo: cache the results of the network call for the duration user remains in calendar 
     abortCalendar.current = new AbortController();
-    // requests anilist api for shows released in the last 24 hours
-    // groups and sets them into state
-    void requestCalendarCards(
-      initialSlots,
-      setSlotFramework,
-      format,
-      abortCalendar.current.signal,
-      isLoading,
-    );
+    
+    if(!calendar.SHOWS.length || calendar.SHOWS.length && dayjs().diff(calendar.LAST_CALLED, 'minutes') >= 5) {
+      // requests anilist api for shows released in the last 24 hours
+      //saves into context's Cards.Calendar
+      void requestCalendarCards(
+        dispatch,
+        abortCalendar.current.signal,
+        isCallingCardsAPI,
+      );
+    }
     return () => abortCalendar.current?.abort();
   }, [format]);
 
-    return {isLoading, slotFramework}
+    return { isCallingCardsAPI }
 }

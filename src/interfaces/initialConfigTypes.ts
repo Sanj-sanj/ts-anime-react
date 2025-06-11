@@ -1,4 +1,5 @@
-import { APIVariables, NewEpisodeCards, Season } from "./apiResponseTypes";
+import { Dayjs } from "dayjs";
+import { AiringSchedule, APIVariables, NewEpisodeCards, Season } from "./apiResponseTypes";
 import { MainCard } from "./apiResponseTypes";
 import {
   ListDetails,
@@ -54,6 +55,10 @@ export type InitialConfig = {
       OVA: MainCard[];
       MOVIE: MainCard[];
     };
+    CALENDAR: {
+      LAST_CALLED: Dayjs;
+      SHOWS: AiringSchedule[];
+    };
   };
 };
 
@@ -69,6 +74,10 @@ export type Actions =
   | {
       type: "UPDATE_CARDS";
       payload: { cards: MainCard[]; ongoing: boolean };
+    }
+  | {
+      type: "UPDATE_CALENDAR";
+      payload: { calendar: AiringSchedule[], last_called: Dayjs};
     }
   | {
       type: "UPDATE_SORT";

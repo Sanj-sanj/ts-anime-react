@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { APIVariables } from "../interfaces/apiResponseTypes";
 import { InitialConfig } from "../interfaces/initialConfigTypes";
 import { UserPreferences } from "../interfaces/UserPreferencesTypes";
@@ -50,5 +51,9 @@ export const Initial: InitialConfig = {
     SUMMER: {},
     FALL: {},
     ONGOING: { MOVIE: [], OVA: [], TV: [] },
+    CALENDAR: {
+      SHOWS: [],
+      LAST_CALLED: dayjs()
+    }
   },
 };

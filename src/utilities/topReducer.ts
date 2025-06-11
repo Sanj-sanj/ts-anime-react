@@ -24,6 +24,21 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
       }
       return state;
 
+    case "UPDATE_CALENDAR": {
+      if(Array.isArray(action.payload.calendar)) {
+        return { ...state, 
+          cards: {
+            ...state.cards,
+            CALENDAR: {
+              SHOWS: action.payload.calendar,
+              LAST_CALLED: action.payload.last_called
+            }
+          }
+        }
+      }
+    }
+    return state;
+
     case "UPDATE_CARDS":
       {
         const { format } = state.variables;
