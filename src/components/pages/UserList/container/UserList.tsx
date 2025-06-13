@@ -18,6 +18,7 @@ const UserList = () => {
     client: { overlay, sort, titlesLang },
   } = useStateContext();
 
+        console.log(lists);
   const lastFocusedCard = useRef<null | HTMLButtonElement>(null);
   const abortListRequest = useRef<null | AbortController>(null);
 
@@ -35,18 +36,28 @@ const UserList = () => {
   if (lastFocusedCard.current !== null && overlay.modal.active === false)
     lastFocusedCard.current.focus();
 
+    //todo - remove this useEffect to its own file as a hook. 
+    //limit the network calls
+    //cache the results
+    //perhaps rethink the way network calls are being made here to limit the req
+    //being sent to the API to prevent user rate limiting 
+    //(maybe use placeholder data thats already available in lists 
   useEffect(() => {
     // on page load and when user updates list entry, rebuild the cards and make the necessarry network request.
+    let numberOfShowsToRequest = 0;
     const ids = entries.reduce((acc, [userStatus, entries]) => {
-      return { ...acc, [userStatus]: Object.keys(entries) };
+      const showIds = Object.keys(entries);
+      numberOfShowsToRequest += showIds.length;
+      return { ...acc, [userStatus]: showIds };
     }, {} as { [x in UserShowStatus]: number[] });
-    void requestUserListCards(
-      ids,
-      lists,
-      (newList: UserListParams) =>
-        setUsableList(SortCardsBy(sort, newList) as UserListParams),
-      abortListRequest.current?.signal
-    );
+    if(numberOfShowsToRequest > 0)
+      void requestUserListCards(
+        ids,
+        lists,
+        (newList: UserListParams) =>
+          setUsableList(SortCardsBy(sort, newList) as UserListParams),
+        abortListRequest.current?.signal
+      );
     return () => {
       abortListRequest.current?.abort();
     };
