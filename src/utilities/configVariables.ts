@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { APIVariables } from "../interfaces/apiResponseTypes";
+import { APIVariables, AiringSchedule } from "../interfaces/apiResponseTypes";
 import { InitialConfig } from "../interfaces/initialConfigTypes";
 import { UserPreferences } from "../interfaces/UserPreferencesTypes";
 import getCurrSeasonAndYear from "./getCurrentSeasonAndYear";
@@ -24,6 +24,15 @@ const UserPreferences: UserPreferences = {
   DROPPED: {},
   SKIPPED: {},
 };
+const prevCalendarStored = localStorage.getItem('calendarShows')
+const prevCalledStored = localStorage.getItem('calendarLastCalled')
+let prevCalendarItems: AiringSchedule[] = [] 
+let prevCalendarCalled = undefined;
+
+if(prevCalendarStored)
+    prevCalendarItems = JSON.parse(prevCalendarStored) as AiringSchedule[]
+if(prevCalledStored) 
+    prevCalendarCalled = dayjs(prevCalledStored)
 
 export const Initial: InitialConfig = {
   variables: apiVariables, // THIS MUTATES LIKE CRAZY OH MY GOD WHY HAVE I DONE THIS
@@ -52,8 +61,8 @@ export const Initial: InitialConfig = {
     FALL: {},
     ONGOING: { MOVIE: [], OVA: [], TV: [] },
     CALENDAR: {
-      SHOWS: [],
-      LAST_CALLED: dayjs()
+      SHOWS: prevCalendarItems,
+      LAST_CALLED: prevCalendarCalled || dayjs(),
     }
   },
 };

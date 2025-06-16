@@ -9,7 +9,6 @@ async function requestCalendarCards(
   signal: AbortSignal,
   isCallingCardsAPI: React.MutableRefObject<boolean>,
 ) {
-    console.log('req', isCallingCardsAPI)
   const variables = {
     page: 0,
     perPage: 50,
@@ -17,13 +16,16 @@ async function requestCalendarCards(
     airingAt_lesser: Math.floor(dayjs().unix())
   }
   isCallingCardsAPI.current = true;
+
   console.log('calling anilist API for previously aired')
- 
   await HandleAPICall(variables, [], calendarAiringTodayQuery, signal)
     .then((airingSchedule) => {
       if (!airingSchedule) return;
-      if (isAiringSchedule(airingSchedule)) 
+      if (isAiringSchedule(airingSchedule)) {
         dispatch({type: "UPDATE_CALENDAR", payload: {calendar: airingSchedule, last_called: dayjs()}} )
+        localStorage.setItem('calendarShows', JSON.stringify(airingSchedule))
+        localStorage.setItem('calendarLastCalled', dayjs().toString())
+      }
       return airingSchedule
     })
     .catch(console.log);

@@ -19,7 +19,7 @@ export default function useNewCards(dispatch: React.Dispatch<Actions>) {
 
     //Ammount of cars to display on CardContainer at once
     const [ammount, setAmmount] = useState(client.perPage);
-    const isMockOn = false;
+    const isMockOn = true;
 
     useEffect(() => {
         onPreferenceChange(
