@@ -24,7 +24,7 @@ async function requestCalendarCards(
       if (isAiringSchedule(airingSchedule)) {
         dispatch({type: "UPDATE_CALENDAR", payload: {calendar: airingSchedule, last_called: dayjs()}} )
         localStorage.setItem('calendarShows', JSON.stringify(airingSchedule))
-        localStorage.setItem('calendarLastCalled', dayjs().toString())
+        localStorage.setItem('calendarLastCalled', dayjs().toDate().toString())
       }
       return airingSchedule
     })
