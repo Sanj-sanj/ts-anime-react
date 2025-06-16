@@ -1,7 +1,6 @@
 import React, {
   ChangeEvent,
   FunctionComponent,
-  useRef,
 } from "react";
 import {
   callNextPageOnScroll,
@@ -19,6 +18,7 @@ import getCurrSeasonAndYear from "../../../../utilities/getCurrentSeasonAndYear"
 import sortAndFilterCardsForView from "../../../../utilities/Cards/SortAndFilterCardsView";
 import useNewCards from "../../../../hooks/useNewCards";
 import ClientPreferenceSelections from "../../../clientPreferenceSelections/ClientPreferenceSlections";
+import useFocus from "../../../../hooks/useFocus";
 
 const CardContainer: FunctionComponent = () => {
   const dispatch = useDispatchContext();
@@ -26,16 +26,10 @@ const CardContainer: FunctionComponent = () => {
   const { cards, client, variables } = useStateContext();
   const { format } = variables;
   const { season, seasonYear, showOngoing, sort, titlesLang } = client;
+  const { lastFocusedElement } = useFocus(client)
 
   let clientVisibleCards: MainCard[] = [];
-  const lastFocusedElement = useRef<null | HTMLButtonElement>(null);
   const [currSeason, currYear] = getCurrSeasonAndYear();
-    
-  if (
-    lastFocusedElement.current !== null &&
-    client.overlay.modal.active === false
-  )
-    lastFocusedElement.current.focus();
 
   // if the ammount of cards shown is less than available to see, isMore = true : isMore = false
     if (showOngoing && ammount >= cards?.ONGOING?.[format]?.length || 

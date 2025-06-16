@@ -1,10 +1,16 @@
 import dayjs from "dayjs";
 import { CalendarTimeSlots } from "../../../interfaces/CalendarTypes";
+import ListButton from "../../card/ListButton";
 
 const CalendarByTimeline = ({
   calendarSlots,
-  titlesLang
-} : {calendarSlots: CalendarTimeSlots, titlesLang: "romaji" | "english"}) => {
+  titlesLang,
+  focusRef
+}: {
+  calendarSlots: CalendarTimeSlots,
+  titlesLang: "romaji" | "english",
+  focusRef: React.MutableRefObject<HTMLButtonElement | null>
+}) => {
 
   return (
     <div className="w-full bg-slate-800 flex justify-between">
@@ -43,8 +49,16 @@ const CalendarByTimeline = ({
                                 id,
                                 status,
                                 coverImage,
-                              }) => (
-                                <div key={id} className="flex w-full">
+                              }, i, cards) => (
+                                <div key={id} className="flex w-full relative">
+                                  <span className="absolute -left-2 -top-3">
+                                    <ListButton
+                                      card={cards[i]}
+                                      focusHandler={(ref: HTMLButtonElement) => {
+                                        focusRef.current = ref;
+                                      }}
+                                    />
+                                  </span>
                                   <img
                                     src={coverImage.medium || ""}
                                     alt=""

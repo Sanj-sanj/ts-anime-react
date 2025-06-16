@@ -9,7 +9,7 @@ export default function buildInitialTimeSlots(
     format: ValidFormats
 ) {
     //take the initial API call or the stuff saved in context 
-    const timeslotFrameworkCopy = [...slotFramework];
+    const timeslotFrameworkCopy = [...slotFramework] as CalendarTimeSlots;
     const formats: { [k in ValidFormats]: Format_In } = {
       TV: ["TV", "TV_SHORT"],
       MOVIE: ["MOVIE", "SPECIAL"],

@@ -4,14 +4,14 @@ import { Season } from "../../interfaces/apiResponseTypes";
 import sortAndFilterCardsForView from "../Cards/SortAndFilterCardsView";
 import { CalendarTimeSlots } from "../../interfaces/CalendarTypes";
 
-const BuildAndFillTimeslots = (
+export default function buildAndFillTimeslots(
   { cards }: Pick<InitialConfig, "cards">,
   {
     season,
     format,
     seasonYear,
   }: { season: Season; format: ValidFormats; seasonYear: number }
-) => {
+) {
   const sortedByCountdown = sortAndFilterCardsForView(
     "Countdown",
     200,
@@ -85,4 +85,4 @@ const BuildAndFillTimeslots = (
     ] as CalendarTimeSlots
   );
 };
-export default BuildAndFillTimeslots;
+

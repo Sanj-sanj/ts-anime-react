@@ -5,9 +5,10 @@ import { useDispatchContext, useStateContext } from "../../../../utilities/Conte
 import useNewCalendarCards from "../../../../hooks/useNewCalendarCards";
 import useNewCards from "../../../../hooks/useNewCards";
 import { checkIfCardsExist } from "../../../../utilities/Cards/CardContainerUtils";
-import buildInitialTimeSlots from "../../../../utilities/Calendar/BuildInitialTimeSlots";
-import BuildAndFillTimeslots from "../../../../utilities/Calendar/BuildAndFillTimeslots";
+import buildInitialTimeSlots from "../../../../utilities/Calendar/buildInitialTimeSlots";
+import buildAndFillTimeslots from "../../../../utilities/Calendar/buildAndFillTimeslots";
 import mergePreviousAndCurrentTimeslots from "../../../../utilities/Calendar/mergePreviousAndCurrentTimeslots";
+import useFocus from "../../../../hooks/useFocus";
 
 const CalendarContainer = () => {
   const dispatch = useDispatchContext()
@@ -15,9 +16,11 @@ const CalendarContainer = () => {
   const {
     cards,
     client: { season, seasonYear, titlesLang, showOngoing },
-    variables: { format }
+    variables: { format },
+    client
   } = useStateContext();
   const { isCallingCardsAPI } = useNewCalendarCards(format, dispatch, cards.CALENDAR)
+  const {lastFocusedElement} = useFocus(client);
 
   let finalizedSlots: CalendarTimeSlots = []
   const initialCards: CalendarTimeSlots = [
@@ -33,7 +36,7 @@ const CalendarContainer = () => {
   if (checkIfCardsExist(season, seasonYear, format, showOngoing, { cards })) {
     //merge the result of previous aired API call with the result of our main API network call
     const cardsFromContextOrAPI = buildInitialTimeSlots(cards.CALENDAR.SHOWS, initialCards, format)
-    finalizedSlots = BuildAndFillTimeslots({ cards }, { season, seasonYear, format })
+    finalizedSlots = buildAndFillTimeslots({ cards }, { season, seasonYear, format })
     mergePreviousAndCurrentTimeslots(cardsFromContextOrAPI, finalizedSlots)
   }
  
@@ -44,7 +47,7 @@ const CalendarContainer = () => {
          {isCallingCardsAPI.current || isCallingAPI.current ? 
            <div>loading...</div> : 
            finalizedSlots.length ? 
-           <CalendarByTimeline calendarSlots={finalizedSlots} titlesLang={titlesLang} /> : 
+           <CalendarByTimeline calendarSlots={finalizedSlots} titlesLang={titlesLang} focusRef={lastFocusedElement} /> : 
            <div>no results</div>
          }
       </div>
