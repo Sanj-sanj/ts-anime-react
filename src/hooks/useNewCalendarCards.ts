@@ -4,7 +4,11 @@ import { Actions, ValidFormats } from "../interfaces/initialConfigTypes";
 import dayjs, { Dayjs } from "dayjs";
 import { AiringSchedule } from "../interfaces/apiResponseTypes";
 
-export default function useNewCalendarCards(format: ValidFormats, dispatch: React.Dispatch<Actions>, calendar: { SHOWS: AiringSchedule[], LAST_CALLED: Dayjs}) {
+export default function useNewCalendarCards(
+    format: ValidFormats, 
+    dispatch: React.Dispatch<Actions>, 
+    calendar: { SHOWS: AiringSchedule[], LAST_CALLED: Dayjs}
+) {
   const abortCalendar = useRef<null | AbortController>(null);
   const isCallingCardsAPI = useRef(false)
   useEffect(() => {
@@ -13,7 +17,7 @@ export default function useNewCalendarCards(format: ValidFormats, dispatch: Reac
 
     if(
       !calendar.SHOWS.length || 
-      calendar.SHOWS.length && dayjs().diff(calendar.LAST_CALLED, 'minutes') >= 45
+      calendar.SHOWS.length && dayjs().diff(calendar.LAST_CALLED.toDate(), 'minutes') >= 45
       ) {
       // requests anilist api for shows released in the last 24 hours
       //saves into context's Cards.Calendar
