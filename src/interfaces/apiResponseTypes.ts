@@ -119,7 +119,10 @@ export type UserListData = {
   userListDetails: ListDetails;
   apiResults: MainCard;
 }[];
-export type UserListParams = { [x in UserShowStatus]: UserListData };
+export type UserListParams = { [x in UserShowStatus]: UserShowStatus };
+export type UserListMainCard = { 
+    [x in UserShowStatus]: UserShowStatus
+};
 export type UserListKeys = UserShowStatus[]
 
 export type AiringSchedule = {

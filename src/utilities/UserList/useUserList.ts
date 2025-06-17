@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import requestUserListCards from "../API/requestUserListCards";
-import { ShowListDetails, UserPreferences, UserShowStatus } from "../../interfaces/UserPreferencesTypes";
+import { ShowListDetails, UserListDetails, UserListWithResults, UserPreferences, UserShowStatus } from "../../interfaces/UserPreferencesTypes";
 import { Format_In, UserListParams } from "../../interfaces/apiResponseTypes";
 import SortCardsBy from "../Cards/SortCardsBy";
 import { InitialConfig, SortableBy, ValidFormats } from "../../interfaces/initialConfigTypes";
@@ -15,7 +15,7 @@ export default function useUserList(
     UserShowStatus,
     ShowListDetails<number>
   ][];
-
+  let doNotRequestIDs = {} as {[id in string]: boolean}
   const formats: { [k in ValidFormats]: Format_In } = {
       TV: ["TV", "TV_SHORT"],
       MOVIE: ["MOVIE", "SPECIAL"],
@@ -23,41 +23,38 @@ export default function useUserList(
   };
   
   const test = entries.reduce((acc, [status, showInUserListDetails]) => {
-        console.log(1, showInUserListDetails)
       const shows = Object.values(showInUserListDetails)
-        console.log(2, shows)
-      if(!shows.length) return acc
+      if(!shows.length) return { ...acc, [status]: [] }
 
-      const mainCards = shows.map((show) => {
-        const {season, year, format} = show
+      const reusableList = shows.reduce((acc, userShowDetails) => {
+        const {season, year, format} = userShowDetails
         let formatKey: ValidFormats
         if(season && year) {
           const foundFormat = Object.entries(formats).find(([key,val]) => {
-              return val.some(f_in => f_in === format) ? key : undefined;
+            return val.some(f_in => f_in === format) ? key : undefined;
           })
-
           if(foundFormat?.length) {
             formatKey = foundFormat[0] as ValidFormats
-             //find out if shows is ongoing or of the curr season
             const match = cards?.[season]?.[year]?.[formatKey]?.find(
-              (thisShow) => thisShow.id === show.id
-            ) 
-            const match2 = cards?.ONGOING?.[formatKey]?.find( 
-              thisShow => thisShow.id === show.id
+              (thisShow) => thisShow.id === userShowDetails.id
+            ) || cards?.ONGOING?.[formatKey]?.find( 
+              thisShow => thisShow.id === userShowDetails.id
             )
-            return match || match2 || []
+            if(match && userShowDetails.id) {
+              doNotRequestIDs = {...doNotRequestIDs, [userShowDetails.id]: true}
+              return { 
+                apiResults: match, 
+                userListDetails: userShowDetails
+              } 
+            } 
           }
-          return []
         }
-        return []
-      })
-      return { ...acc, [status]: mainCards }
-  }, {} as UserListParams)
+        return acc
+      }, {} as UserListWithResults ) 
 
-    //test returns a UserListLike with maincards to be used in the
-    //userList component 
-    //todo implement this :w
-
+      const previous = acc[status] || []
+      return { ...acc, [status]: [...previous, reusableList] }
+  }, {} as UserListDetails)
     console.log(test)
 
   const [usableList, setUsableList] = useState(
@@ -66,29 +63,37 @@ export default function useUserList(
       {} as UserListParams
     )
   );
-
-    //cache the results
-    //perhaps rethink the way network calls are being made here to limit the req
-    //being sent to the API to prevent user rate limiting 
-    //(maybe use placeholder data thats already available in lists 
+    
+    function mergeLists() {
+      const itter = Object.entries(test)  
+      const foo = itter.reduce((acc, [key, val]) => {
+        const repl = [...usableList[key as UserShowStatus], ...val]
+        return {...acc, [key]:repl}
+      },{} as UserListParams)
+      return foo
+    }
 
   useEffect(() => {
-        //we should check our userList object for each entries season and year
-        //then we can probably find the entries that are already saved in context and reuse data
-        //and then request the rest.
+    //we should check our userList object for each entries season and year
+    //then we can probably find the entries that are already saved in context 
+    //and reuse data and then request the rest.
        
     // on page load and when user updates list entry, rebuild the cards and
     // make the necessarry network request.
     let numberOfShowsToRequest = 0;
-    const ids = entries.reduce((acc, [userStatus, entries]) => {
+    const showIDsForRequest = entries.reduce((acc, [userStatus, entries]) => {
       const showIds = Object.keys(entries);
-      numberOfShowsToRequest += showIds.length;
-      return { ...acc, [userStatus]: showIds };
+      const requestIds = showIds.reduce((acc,curr) => {
+        return doNotRequestIDs[curr] ? acc : [...acc, curr]
+      }, [] as string[])
+      numberOfShowsToRequest += requestIds.length;
+      return { ...acc, [userStatus]: requestIds };
     }, {} as { [x in UserShowStatus]: number[] });
 
-    if(numberOfShowsToRequest > 100)
+        console.log('shows for api req', showIDsForRequest)
+    if(numberOfShowsToRequest > 0)
       void requestUserListCards(
-        ids,
+        showIDsForRequest,
         lists,
         (newList: UserListParams) =>
           setUsableList(SortCardsBy(sort, newList) as UserListParams),
@@ -99,5 +104,8 @@ export default function useUserList(
     };
   }, [lists, sort]);
 
- return { usableList };
+    console.log('hi', usableList)
+    console.log('final?', mergeLists())
+    const a = mergeLists()
+ return { usableList: a};
 }

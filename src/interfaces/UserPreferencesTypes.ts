@@ -21,13 +21,13 @@ export type ListDetails = {
 export type ShowListDetails<id extends number> = {
   [n in id]: ListDetails;
 };
-export type UserListDetails<id extends number> = {
-  [n in id]: {
+export type UserListDetails = {
+  [name in UserShowStatus]?: UserListWithResults[];
+};
+export type UserListWithResults = {
     userListDetails: ListDetails;
     apiResults: MainCard;
-  };
-};
-
+  }
 export type UserShowStatus =
   | "WATCHING"
   | "INTERESTED"
