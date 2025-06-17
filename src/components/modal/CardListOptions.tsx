@@ -37,6 +37,7 @@ const CardListOptions: FunctionComponent<{
       year: modalData.seasonYear,
       title: modalData.title,
       showAiringStatus: modalData.status,
+      format: modalData.format,
       currentEpisode: 0,
       userScore: 0,
       rewatches: 0,

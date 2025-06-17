@@ -45,14 +45,15 @@ export default async function requestNewEpisodesCheck(
     [],
     newEpisodesCheckQuery,
     signal
-  ).then((val) => {
-    if (!isNewEpisodeCards(val)) return;
+  ).then((userListCards) => {
+    if (!isNewEpisodeCards(userListCards)) return;
+    console.log('newEpQuery', userListCards)
     // WIll only check if inside of WATCHING , if there is an episode greater than the user's current progress on a specific show
     const hasNewEpisodes = Object.values(WATCHING)
       .concat(Object.values(INTERESTED))
       .reduce((acc, userList) => {
         //Found represents a 'Found' entry inside of the newtwork request, matching the userList object.
-        const found = val.find((check) => check.id === userList.id);
+        const found = userListCards.find((check) => check.id === userList.id);
         if (
           found &&
           (userList.showAiringStatus === "RELEASING" ||

@@ -3,7 +3,7 @@ import {
   UserShowStatus,
 } from "../../interfaces/UserPreferencesTypes";
 import { mainCardQuery } from "./QueryStrings/MainCardQuery";
-import { MainCard, UserListParams } from "../../interfaces/apiResponseTypes";
+import { MainCard, UserListKeys, UserListParams } from "../../interfaces/apiResponseTypes";
 
 import HandleAPICall from "./HandleAPICall";
 
@@ -14,7 +14,7 @@ export default async function requestUserListCards(
   signal?: AbortSignal
 ) {
   console.log("callingANILIST_API: checking user List"); //eslint-disable-line
-  const status = ["WATCHING", "INTERESTED", "COMPLETED", "DROPPED", "SKIPPED"];
+  const status = ["WATCHING", "INTERESTED", "COMPLETED", "DROPPED", "SKIPPED"] as UserListKeys
 
   const apiPromiseArr = Object.entries(ids).map(([showStatus, idsArr]) => {
     const apiCall = HandleAPICall(
@@ -26,22 +26,23 @@ export default async function requestUserListCards(
     return [showStatus, apiCall as Promise<MainCard[]>];
   }) as [UserShowStatus, Promise<MainCard[]>][];
 
-  await Promise.all(apiPromiseArr.map(([, p]) => p)).then(
-    (apiCardListArr) => {
+  await Promise
+    .all(apiPromiseArr.map(([, p]) => p))
+    .then( (apiCardListArr) => {
       const final = apiCardListArr.reduce((acc, list, i) => {
-        const userListDetailsByStatus = list.reduce((acc, show: MainCard) => {
+        const userListDetailsByStatus = list.reduce((acc, show) => {
           const prevInThisStatus =
-            (acc[status[i] as UserShowStatus] && [
-              ...acc[status[i] as UserShowStatus],
+            (acc[status[i] ] && [
+              ...acc[status[i] ],
             ]) ||
             [];
           return {
             ...acc,
-            [status[i] as UserShowStatus]: [
+            [status[i] ]: [
               ...prevInThisStatus,
               {
                 apiResults: show,
-                userListDetails: lists[status[i] as UserShowStatus][show.id],
+                userListDetails: lists[status[i] ][show.id],
               },
             ],
           };

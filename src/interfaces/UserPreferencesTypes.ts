@@ -1,4 +1,4 @@
-import { MainCard, Season, ShowStatus, Titles } from "./apiResponseTypes";
+import { Formats, MainCard, Season, ShowStatus, Titles } from "./apiResponseTypes";
 
 // NOTE: ShowListDetails & ListDetails may need to be reworked.
 
@@ -15,6 +15,7 @@ export type ListDetails = {
   notes: string | undefined;
   showAiringStatus: ShowStatus;
   userStatus: UserShowStatus | "";
+  format: Formats;
 };
 
 export type ShowListDetails<id extends number> = {

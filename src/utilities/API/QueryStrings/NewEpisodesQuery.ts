@@ -22,6 +22,7 @@ query ($id_in: [Int], $page: Int, $perPage: Int,) {
                 timeUntilAiring
                 episode
             }
+            format
         }
     }
 }`;

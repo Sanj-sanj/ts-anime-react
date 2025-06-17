@@ -113,12 +113,15 @@ export interface NewEpisodeCards {
   status: ShowStatus;
   episodes: number | null;
   nextAiringEpisode: NextAiringEpisode;
+  format: Formats;
 }
 export type UserListData = {
   userListDetails: ListDetails;
   apiResults: MainCard;
 }[];
 export type UserListParams = { [x in UserShowStatus]: UserListData };
+export type UserListKeys = UserShowStatus[]
+
 export type AiringSchedule = {
   airingAt: number;
   id: number;
