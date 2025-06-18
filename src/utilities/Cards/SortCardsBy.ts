@@ -1,10 +1,11 @@
-import { MainCard, UserListParams } from "../../interfaces/apiResponseTypes";
+import { UserListDetails } from "../../interfaces/UserPreferencesTypes";
+import { MainCard } from "../../interfaces/apiResponseTypes";
 import { SortableBy } from "../../interfaces/initialConfigTypes";
 import { isMainCard } from "./CheckCardType";
 
-function SortCardsBy(sort: SortableBy, cards: MainCard[] | UserListParams) {
+function SortCardsBy(sort: SortableBy, cards: MainCard[] | UserListDetails) {
   let sortedMainCards: MainCard[] = [];
-  const sortedUserListCards: UserListParams = {
+  const sortedUserListCards: UserListDetails = {
     WATCHING: [],
     INTERESTED: [],
     SKIPPED: [],

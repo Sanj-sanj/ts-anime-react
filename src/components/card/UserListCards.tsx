@@ -1,10 +1,10 @@
 import { MutableRefObject } from "react";
-import { UserListData } from "../../interfaces/apiResponseTypes";
 import ListButton from "./ListButton";
 import StarSVG from "../../assets/five_pointed_star.svg";
+import { UserListWithResults } from "../../interfaces/UserPreferencesTypes";
 
 const userListCards = (
-  userList: UserListData,
+  userList: UserListWithResults[],
   titlePref: "english" | "romaji",
   lastFocusedCard: MutableRefObject<HTMLButtonElement | null>
 ) =>

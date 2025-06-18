@@ -1,4 +1,3 @@
-import { ListDetails, UserShowStatus } from "./UserPreferencesTypes";
 import { ValidFormats } from "./initialConfigTypes";
 
 export interface APIPayload {
@@ -23,6 +22,7 @@ export interface APIPayload {
 }
 
 export type APIVariables = NearestSeason | OngoingSeason;
+
 type NearestSeason = {
   page: number;
   perPage: number;
@@ -40,12 +40,14 @@ type OngoingSeason = {
   format: ValidFormats;
   status_in: ShowStatus[];
 };
+
 export type APICalendarLast24Hours = {
   page: number;
   perPage: number;
   airingAt_greater: number;
   airingAt_lesser: number;
 };
+
 export type APINewEpisodesVariables = {
   page: number;
   perPage: number;
@@ -76,12 +78,15 @@ export type Titles = {
   english: string | null;
   native: string | null;
 };
+
 export type CoverImage = {
   color: string | null;
   large: string | null;
   medium: string | null;
 };
+
 export type Season = "WINTER" | "SPRING" | "SUMMER" | "FALL";
+
 export type ShowStatus =
   | "FINISHED"
   | "RELEASING"
@@ -115,15 +120,6 @@ export interface NewEpisodeCards {
   nextAiringEpisode: NextAiringEpisode;
   format: Formats;
 }
-export type UserListData = {
-  userListDetails: ListDetails;
-  apiResults: MainCard;
-}[];
-export type UserListParams = { [x in UserShowStatus]: UserShowStatus };
-export type UserListMainCard = { 
-    [x in UserShowStatus]: UserShowStatus
-};
-export type UserListKeys = UserShowStatus[]
 
 export type AiringSchedule = {
   airingAt: number;
@@ -131,6 +127,7 @@ export type AiringSchedule = {
   media: MainCard;
   episode: number;
 };
+
 export interface MainCard {
   meanScore: number | null;
   nextAiringEpisode: NextAiringEpisode;

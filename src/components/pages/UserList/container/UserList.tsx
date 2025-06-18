@@ -1,9 +1,9 @@
 import { useStateContext } from "../../../../utilities/Context/AppContext";
-import { UserListKeys } from "../../../../interfaces/apiResponseTypes";
 import userListCards from "../../../card/UserListCards";
 import UserListPreferences from "../preferenceBar/UserListPreference";
 import useFocus from "../../../../hooks/useFocus";
 import useUserList from "../../../../utilities/UserList/useUserList";
+import { UserShowStatus } from "../../../../interfaces/UserPreferencesTypes";
 
 // Bug in Component when opening modal view of a show, updating the current progress / score
 // does not update the component inside of UserList, Ex: curr Ep 7 => updates to 8, userList still displays 7
@@ -15,7 +15,7 @@ const UserList = () => {
     client
   } = useStateContext();
 
-  const status = ["WATCHING", "INTERESTED", "COMPLETED", "DROPPED", "SKIPPED"] as UserListKeys
+  const status = ["WATCHING", "INTERESTED", "COMPLETED", "DROPPED", "SKIPPED"] as UserShowStatus[]
   const { lastFocusedElement } = useFocus(client)
   const { usableList } = useUserList(lists, {cards}, sort);
 

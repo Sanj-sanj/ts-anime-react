@@ -1,20 +1,20 @@
 import {
+  UserListDetails,
   UserPreferences,
   UserShowStatus,
 } from "../../interfaces/UserPreferencesTypes";
+import { MainCard } from "../../interfaces/apiResponseTypes";
 import { mainCardQuery } from "./QueryStrings/MainCardQuery";
-import { MainCard, UserListKeys, UserListParams } from "../../interfaces/apiResponseTypes";
-
 import HandleAPICall from "./HandleAPICall";
 
 export default async function requestUserListCards(
   ids: { [x in UserShowStatus]: number[] },
   lists: UserPreferences,
-  setState: (newList: UserListParams) => void,
+  setState: (newList: UserListDetails) => void,
   signal?: AbortSignal
 ) {
   console.log("callingANILIST_API: checking user List"); //eslint-disable-line
-  const status = ["WATCHING", "INTERESTED", "COMPLETED", "DROPPED", "SKIPPED"] as UserListKeys
+  const status = ["WATCHING", "INTERESTED", "COMPLETED", "DROPPED", "SKIPPED"] as UserShowStatus[]
 
   const apiPromiseArr = Object.entries(ids).map(([showStatus, idsArr]) => {
     const apiCall = HandleAPICall(
@@ -46,11 +46,11 @@ export default async function requestUserListCards(
               },
             ],
           };
-        }, {} as UserListParams);
+        }, {} as UserListDetails);
         if (status[i] in userListDetailsByStatus)
           return { ...acc, ...userListDetailsByStatus };
         return { ...acc, [status[i]]: [] };
-      }, {} as UserListParams);
+      }, {} as UserListDetails);
       setState(final);
     },
     (rej) => console.log(rej)
