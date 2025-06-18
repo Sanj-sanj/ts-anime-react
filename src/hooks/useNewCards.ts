@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { checkIfCardsExist, onPreferenceChange, requestNewCardsCardView } from "../utilities/Cards/CardContainerUtils";
 import { Actions } from "../interfaces/initialConfigTypes";
 import { useStateContext } from "../utilities/Context/AppContext";
 
-export default function useNewCards(dispatch: React.Dispatch<Actions>) {
+export default function useNewCards(dispatch: React.Dispatch<Actions>, ongoingRef?: MutableRefObject<'show'|'hide'>) {
     const { cards, client, variables } = useStateContext();
     const { season, seasonYear, showOngoing } = client;
     const { format } = variables
@@ -19,15 +19,15 @@ export default function useNewCards(dispatch: React.Dispatch<Actions>) {
 
     //Ammount of cars to display on CardContainer at once
     const [ammount, setAmmount] = useState(client.perPage);
-    const isMockOn = true;
+    const isMockOn = false;
 
     useEffect(() => {
         onPreferenceChange(
             season,
             seasonYear,
             dispatch,
-            showOngoing,
             containerRef,
+            ongoingRef as MutableRefObject<'show'|'hide'>,
             setAmmount
         );
         if (

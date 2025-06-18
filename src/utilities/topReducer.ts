@@ -186,19 +186,14 @@ const appReducer = (state: InitialConfig, action: Actions): InitialConfig => {
 
     case "TOGGLE_ONGOING": {
       if (action.payload.forceMode === true) {
-        localStorage.setItem("showOngoing", "true");
         return {
           ...state,
           client: { ...state.client, showOngoing: true },
         };
       } else {
-        localStorage.setItem("showOngoing", "false");
         return {
           ...state,
-          client: {
-            ...state.client,
-            showOngoing: false,
-          },
+          client: { ...state.client, showOngoing: false },
         };
       }
     }

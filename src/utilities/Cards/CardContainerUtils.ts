@@ -40,7 +40,6 @@ export function checkIfCardsExist(
   ongoing: boolean,
   { cards }: Pick<InitialConfig, "cards">
 ) {
-    //format here refrences the format we store in client
   if (!ongoing) {
     return cards[season]?.[year]?.[format] ? true : false;
   } else {
@@ -103,8 +102,8 @@ export const onPreferenceChange = (
   season: Season,
   seasonYear: number,
   dispatch: Dispatch<Actions>,
-  showOngoing: boolean,
   containerRef: MutableRefObject<HTMLDivElement | null>,
+  ongoingRef: MutableRefObject<"show" | "hide">,
   setAmmount: Dispatch<SetStateAction<number>>
 ) => {
   const [currSeason, currYear] = getCurrSeasonAndYear();
@@ -112,7 +111,7 @@ export const onPreferenceChange = (
     dispatch({
       type: "TOGGLE_ONGOING",
       payload: {
-        forceMode: showOngoing
+        forceMode: ongoingRef.current === "show" ? true : false,
       },
     });
   } else {

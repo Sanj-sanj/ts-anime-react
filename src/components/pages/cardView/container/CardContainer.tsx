@@ -1,6 +1,7 @@
 import React, {
   ChangeEvent,
   FunctionComponent,
+  useRef,
 } from "react";
 import {
   callNextPageOnScroll,
@@ -22,7 +23,15 @@ import useFocus from "../../../../hooks/useFocus";
 
 const CardContainer: FunctionComponent = () => {
   const dispatch = useDispatchContext();
-  const {cardView: { ammount, setAmmount, containerRef }, isCallingAPI, isMoreCards} = useNewCards(dispatch)
+    //this ref checks the visible client ongoing status and updates the 
+    //view when we change pages accordingly
+  const ongoingRef = useRef<'show'|'hide'>('show')
+  const {
+    cardView:
+    { ammount, setAmmount, containerRef },
+    isCallingAPI,
+    isMoreCards
+  } = useNewCards(dispatch, ongoingRef)
   const { cards, client, variables } = useStateContext();
   const { format } = variables;
   const { season, seasonYear, showOngoing, sort, titlesLang } = client;
@@ -90,7 +99,7 @@ const CardContainer: FunctionComponent = () => {
               const selection = e.target.value.split(" ")[0].toLowerCase() as
                 | "show"
                 | "hide";
-              //ongoingRef.current = selection;
+              ongoingRef.current = selection;
               if (
                 selection === "show" &&
                 currSeason === season &&
