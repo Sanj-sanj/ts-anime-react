@@ -33,6 +33,11 @@ function hasShowFinishedAiringRecently(
 }
 // HELPER FUNCTIONS END
 
+//todo ! implement some form of caching of these results
+//recall after [N] number of mins pass 
+//check if user updated their list so we dont list shows
+//a user has caught up on before the [N] time has passed.
+
 export default async function requestNewEpisodesCheck(
   ids: number[],
   { WATCHING, INTERESTED }: UserPreferences,
