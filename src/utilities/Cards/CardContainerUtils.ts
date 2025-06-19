@@ -97,15 +97,17 @@ export const callNextPageOnScroll = throttle<
     }
   ]
 >(handleCardContainerScroll);
-
-export const onPreferenceChange = (
-  season: Season,
-  seasonYear: number,
-  dispatch: Dispatch<Actions>,
-  containerRef: MutableRefObject<HTMLDivElement | null>,
-  ongoingRef: MutableRefObject<"show" | "hide">,
-  setAmmount: Dispatch<SetStateAction<number>>
-) => {
+/** 
+ * Handles reorganizing Cards in CardContainer between season changes to reset the viewport to its default state
+ */
+export function onPreferenceChange(
+    season: Season,
+    seasonYear: number,
+    dispatch: Dispatch<Actions>,
+    containerRef: MutableRefObject<HTMLDivElement | null>,
+    ongoingRef: MutableRefObject<"show" | "hide">,
+    setAmmount: Dispatch<SetStateAction<number>>
+) {
   const [currSeason, currYear] = getCurrSeasonAndYear();
   if (season === currSeason && currYear === seasonYear) {
     dispatch({
@@ -122,7 +124,7 @@ export const onPreferenceChange = (
   }
   containerRef.current?.scrollTo({ top: 0, behavior: "instant" });
   setAmmount(15);
-};
+}
 
 export function requestNewCardsCardView(
   {

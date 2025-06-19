@@ -19,17 +19,19 @@ export default function useNewCards(dispatch: React.Dispatch<Actions>, ongoingRe
 
     //Ammount of cars to display on CardContainer at once
     const [ammount, setAmmount] = useState(client.perPage);
-    const isMockOn = false;
+    const isMockOn = true;
 
     useEffect(() => {
-        onPreferenceChange(
-            season,
-            seasonYear,
-            dispatch,
-            containerRef,
-            ongoingRef as MutableRefObject<'show'|'hide'>,
-            setAmmount
-        );
+        if(ongoingRef)
+          onPreferenceChange(
+              season,
+              seasonYear,
+              dispatch,
+              containerRef,
+              ongoingRef,
+              setAmmount
+          );
+
         if (
             !checkIfCardsExist(season, seasonYear, format, showOngoing, { cards })
         ) {
