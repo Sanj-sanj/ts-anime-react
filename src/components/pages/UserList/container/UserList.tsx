@@ -1,18 +1,14 @@
-import { useDispatchContext, useStateContext } from "../../../../utilities/Context/AppContext";
+import { useStateContext } from "../../../../utilities/Context/AppContext";
 import userListCards from "../../../card/UserListCards";
 import UserListPreferences from "../preferenceBar/UserListPreference";
 import useFocus from "../../../../hooks/useFocus";
 import useUserList from "../../../../utilities/UserList/useUserList";
 import { UserShowStatus } from "../../../../interfaces/UserPreferencesTypes";
-import useNewCards from "../../../../hooks/useNewCards";
 
 // Bug in Component when opening modal view of a show, updating the current progress / score
 // does not update the component inside of UserList, Ex: curr Ep 7 => updates to 8, userList still displays 7
 const UserList = () => {
-  const dispatch = useDispatchContext()
-  const { isCallingAPI } = useNewCards(dispatch)
   const {
-    cards,
     user: { lists },
     client: { sort, titlesLang },
     client
@@ -20,11 +16,7 @@ const UserList = () => {
 
   const status = ["WATCHING", "INTERESTED", "COMPLETED", "DROPPED", "SKIPPED"] as UserShowStatus[]
   const { lastFocusedElement } = useFocus(client)
-  const { usableList } = useUserList(lists, {cards}, sort);
-
-  if(isCallingAPI.current) {
-    return <div>Loading Cards...</div>
-  }
+  const { usableList, isCallingAPI } = useUserList(lists, sort);
 
   return (
     <>
@@ -34,7 +26,10 @@ const UserList = () => {
           {status.map(showStatus => (
             <div key={showStatus} className="dark:text-slate-300 bg-stone-400 dark:bg-slate-900 w-full pb-4 mt-4 text-center rounded px-6">
               <h2 className="text-xl pt-2">{showStatus}:</h2>
-                <ul>{userListCards(usableList[showStatus], titlesLang, lastFocusedElement)}</ul> 
+                { isCallingAPI.current ? 
+                  <div> Loading Cards... </div> :
+                  <ul>{userListCards(usableList[showStatus], titlesLang, lastFocusedElement)}</ul> 
+                }
             </div>
           ))}
         </div>

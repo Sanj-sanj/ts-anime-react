@@ -11,7 +11,8 @@ export default async function requestUserListCards(
   ids: { [x in UserShowStatus]: number[] },
   lists: UserPreferences,
   setState: (newList: UserListDetails) => void,
-  signal?: AbortSignal
+  isCallingAPI: React.MutableRefObject<boolean>,
+  signal?: AbortSignal,
 ) {
   console.log("callingANILIST_API: checking user List"); //eslint-disable-line
   const status = ["WATCHING", "INTERESTED", "COMPLETED", "DROPPED", "SKIPPED"] as UserShowStatus[]
@@ -56,5 +57,5 @@ export default async function requestUserListCards(
       setState(final);
     },
     (rej) => console.log(rej)
-  );
+  ).then(() => isCallingAPI.current = false );
 }
