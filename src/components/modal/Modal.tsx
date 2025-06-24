@@ -59,7 +59,7 @@ const Modal: FunctionComponent<{
       ? [inList[0], inList[1][modalData.id]]
       : undefined;
   } else if (entryPoint === "new release" && newEpisodesAvailable) {
-    newEpisodesAvailable.forEach((card) => {
+    newEpisodesAvailable.available?.forEach((card) => {
       airingEpisodesDetails[card.id] =
         lists.WATCHING[card.id] || lists.INTERESTED[card.id];
     });
@@ -101,7 +101,7 @@ const Modal: FunctionComponent<{
         </div>
       ) : entryPoint === "new release" ? (
         <NewEpisodeModal
-          modalData={newEpisodesAvailable}
+          modalData={newEpisodesAvailable.available}
           singelShowDetails={airingEpisodesDetails}
           titlePref={titlesLang}
         />

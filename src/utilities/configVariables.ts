@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { APIVariables, AiringSchedule } from "../interfaces/apiResponseTypes";
+import { APIVariables, AiringSchedule, NewEpisodeCards } from "../interfaces/apiResponseTypes";
 import { InitialConfig } from "../interfaces/initialConfigTypes";
 import { UserPreferences } from "../interfaces/UserPreferencesTypes";
 import getCurrSeasonAndYear from "./getCurrentSeasonAndYear";
@@ -26,8 +26,22 @@ const UserPreferences: UserPreferences = {
 };
 const prevCalendarStored = localStorage.getItem('calendarShows')
 const prevCalledStored = localStorage.getItem('calendarLastCalled')
+const prevUserListStored = localStorage.getItem('userList')
+
+const prevNewEpisodesCalled = localStorage.getItem('newEpisodesLastCalled')
+const prevNewEpisodesStored = localStorage.getItem('newEpisodes')
+
+
 let prevCalendarItems: AiringSchedule[] = [] 
 let prevCalendarCalled = undefined;
+let prevNewEpisodes = undefined;
+let prevUserList = undefined;
+
+if(prevUserListStored)
+  prevUserList = JSON.parse(prevUserListStored) as UserPreferences
+
+if(prevNewEpisodesStored)
+  prevNewEpisodes = JSON.parse(prevNewEpisodesStored) as NewEpisodeCards[]
 
 if(prevCalendarStored)
     prevCalendarItems = JSON.parse(prevCalendarStored) as AiringSchedule[]
@@ -50,8 +64,11 @@ export const Initial: InitialConfig = {
     },
   },
   user: {
-    lists: UserPreferences,
-    newEpisodesAvailable: [],
+    lists: prevUserList || UserPreferences,
+    newEpisodesAvailable: {
+      available: prevNewEpisodes,
+      last_called: dayjs(prevNewEpisodesCalled) //undefined calls function normally as expected
+    },
     modalData: undefined,
   },
   cards: {

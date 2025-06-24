@@ -95,7 +95,7 @@ const NewEpisodeModal: FunctionComponent<{
               ? `${episodes || "?"} / ${episodes || "?"}`
               : "?";
           if (
-            showDetails.userStatus === "INTERESTED" &&
+            showDetails?.userStatus === "INTERESTED" &&
             nextAiringEpisode?.episode &&
             nextAiringEpisode.episode > 2
           )

@@ -17,13 +17,15 @@ export default async function requestUserListCards(
   const status = ["WATCHING", "INTERESTED", "COMPLETED", "DROPPED", "SKIPPED"] as UserShowStatus[]
 
   const apiPromiseArr = Object.entries(ids).map(([showStatus, idsArr]) => {
-    const apiCall = HandleAPICall(
-      { id_in: idsArr, page: 1, perPage: 50 },
-      [],
-      mainCardQuery,
-      signal
-    );
-    return [showStatus, apiCall as Promise<MainCard[]>];
+    if(idsArr.length) {
+      const apiCall = HandleAPICall(
+        { id_in: idsArr, page: 1, perPage: 50 },
+        [],
+        mainCardQuery,
+        signal
+      );
+      return [showStatus, apiCall as Promise<MainCard[]>];
+    } else return [showStatus, []]
   }) as [UserShowStatus, Promise<MainCard[]>][];
 
   await Promise

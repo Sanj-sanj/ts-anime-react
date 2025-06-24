@@ -98,8 +98,8 @@ async function requestMockAPI(
       }
       console.log("done calling api"); //eslint-disable-line
     })
+    .then(() => isCallingAPI.current = false)
     .catch(console.log);
-  isCallingAPI.current = false;
 }
 
 export { requestAniListAPI, requestMockAPI };

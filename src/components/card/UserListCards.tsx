@@ -7,8 +7,8 @@ const userListCards = (
   userList: UserListWithResults[],
   titlePref: "english" | "romaji",
   lastFocusedCard: MutableRefObject<HTMLButtonElement | null>
-) =>
-  Object.values(userList).map(
+) => {
+ return Object.values(userList).map(
     ({ apiResults, userListDetails: { currentEpisode, userScore } }) => {
       const {
         id,
@@ -99,4 +99,5 @@ const userListCards = (
       );
     }
   );
+}
 export default userListCards;

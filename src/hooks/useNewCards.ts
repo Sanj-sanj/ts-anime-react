@@ -22,7 +22,7 @@ export default function useNewCards(dispatch: React.Dispatch<Actions>, ongoingRe
     const isMockOn = true;
 
     useEffect(() => {
-        if(ongoingRef)
+        if(ongoingRef) {
           onPreferenceChange(
               season,
               seasonYear,
@@ -31,6 +31,7 @@ export default function useNewCards(dispatch: React.Dispatch<Actions>, ongoingRe
               ongoingRef,
               setAmmount
           );
+        }
 
         if (
             !checkIfCardsExist(season, seasonYear, format, showOngoing, { cards })

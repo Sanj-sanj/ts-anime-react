@@ -8,6 +8,7 @@ import {
 import { isNewEpisodeCards } from "../Cards/CheckCardType";
 import HandleAPICall from "./HandleAPICall";
 import { newEpisodesCheckQuery } from "./QueryStrings/NewEpisodesQuery";
+import dayjs from "dayjs";
 
 // HELPER FUNCTIONS BEGIN
 function isUserListEpisodeLessThanNextAiringEpisode(
@@ -36,7 +37,7 @@ function hasShowFinishedAiringRecently(
 //todo ! implement some form of caching of these results
 //recall after [N] number of mins pass 
 //check if user updated their list so we dont list shows
-//a user has caught up on before the [N] time has passed.
+//a user has caught up on before the [N] time has passed.)
 
 export default async function requestNewEpisodesCheck(
   ids: number[],
@@ -52,7 +53,6 @@ export default async function requestNewEpisodesCheck(
     signal
   ).then((userListCards) => {
     if (!isNewEpisodeCards(userListCards)) return;
-    console.log('newEpQuery', userListCards)
     // WIll only check if inside of WATCHING , if there is an episode greater than the user's current progress on a specific show
     const hasNewEpisodes = Object.values(WATCHING)
       .concat(Object.values(INTERESTED))
@@ -62,6 +62,7 @@ export default async function requestNewEpisodesCheck(
         if (
           found &&
           (userList.showAiringStatus === "RELEASING" ||
+            userList.showAiringStatus === "FINISHED" ||
             userList.showAiringStatus === "NOT_YET_RELEASED")
         ) {
           if (
@@ -84,12 +85,18 @@ export default async function requestNewEpisodesCheck(
       }, [] as NewEpisodeCards[]);
 
     if (hasNewEpisodes.length) {
+      const last_called = dayjs();
+      localStorage.setItem('newEpisodeCards', JSON.stringify(hasNewEpisodes))
+      localStorage.setItem('newEpisodesLastCalled', dayjs().toDate().toString())
       dispatch({
         type: "TOGGLE_MODAL",
         payload: {
           action: "OPEN",
           entryPoint: "new release",
-          data: hasNewEpisodes,
+          data: {
+            available: hasNewEpisodes,
+            last_called
+          }
         },
       });
     }

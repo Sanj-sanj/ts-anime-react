@@ -42,7 +42,10 @@ export type InitialConfig = {
   client: ClientVariables;
   user: {
     lists: UserPreferences;
-    newEpisodesAvailable: NewEpisodeCards[] | undefined;
+    newEpisodesAvailable: {
+      available: NewEpisodeCards[] | undefined;
+      last_called: Dayjs;
+    };
     modalData: MainCard | undefined;
   };
   cards: {
@@ -96,7 +99,10 @@ export type Actions =
         | {
             action: "OPEN";
             entryPoint: "new release";
-            data?: NewEpisodeCards[];
+            data: {
+              available: NewEpisodeCards[];
+              last_called: Dayjs;
+            };
           }
         | {
             action: "CLOSE";
