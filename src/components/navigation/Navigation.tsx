@@ -7,6 +7,8 @@ import {
 } from "../../utilities/Context/AppContext";
 import useFocusEffect from "../../utilities/Focus/FocusUtil";
 import InputSearchAnime from "./InputSearchAnime";
+import useCheckUserList from "../../hooks/useCheckUserList";
+import modalNewEpisodesRequest from "../../utilities/UserList/modalNewEpisodesRequest";
 
 const Navigation = ({
   darkMode,
@@ -20,9 +22,10 @@ const Navigation = ({
   } = useStateContext();
   const dispatch = useDispatchContext();
   const SortableBy: SortableBy[] = ["Rating", "Popularity", "Countdown"];
-  const abortNewEpisode = useRef<null | AbortController>();
+  const abortNewEpisode = useRef<null | AbortController>(null);
   const { isDarkMode, toggleDarkMode } = darkMode;
   const navigationRef = useRef<HTMLElement | null>(null);
+
 
   const closeNavigation = () => {
     dispatch({ type: "TOGGLE_NAVIGATION", payload: "CLOSE" });
@@ -109,14 +112,7 @@ const Navigation = ({
         className="bg-slate-300 dark:bg-slate-700"
         onClick={() => {
           closeNavigation();
-          void requestNewEpisodesCheck(
-            Object.keys(lists.WATCHING)
-              .concat(Object.keys(lists.INTERESTED))
-              .map((n) => +n),
-            lists,
-            dispatch,
-            abortNewEpisode.current?.signal
-          );
+          modalNewEpisodesRequest(dispatch, abortNewEpisode)
         }}
       >
         click

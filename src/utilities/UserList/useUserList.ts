@@ -20,6 +20,8 @@ export default function useUserList(
       {} as UserListDetails
     )
   );
+ 
+    //todo - does not cache - implement caching
 
   useEffect(() => {
     let numberOfShowsToRequest = 0;
