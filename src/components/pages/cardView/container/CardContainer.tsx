@@ -1,41 +1,31 @@
-import React, {
-  ChangeEvent,
-  FunctionComponent,
-  useRef,
-} from "react";
+import React, { ChangeEvent, FunctionComponent } from "react";
+import { MainCard } from "../../../../interfaces/apiResponseTypes";
 import {
   callNextPageOnScroll,
   checkIfCardsExist,
   handleCardContainerOnClick,
 } from "../../../../utilities/Cards/CardContainerUtils";
-import Card from "../../../card/Card";
-import { MainCard } from "../../../../interfaces/apiResponseTypes";
-import {
-  useDispatchContext,
-  useStateContext,
-} from "../../../../utilities/Context/AppContext";
-import ContainerPreferences from "../preferenceBar/ContainerPreferences";
+import { useDispatchContext, useStateContext, } from "../../../../utilities/Context/AppContext";
 import getCurrSeasonAndYear from "../../../../utilities/getCurrentSeasonAndYear";
 import sortAndFilterCardsForView from "../../../../utilities/Cards/SortAndFilterCardsView";
-import useNewCards from "../../../../hooks/useNewCards";
+import ContainerPreferences from "../preferenceBar/ContainerPreferences";
 import ClientPreferenceSelections from "../../../clientPreferenceSelections/ClientPreferenceSlections";
+import Card from "../../../card/Card";
 import useFocus from "../../../../hooks/useFocus";
+import useCardViewportHanlder from "../../../../hooks/cards/useCardViewportHandler";
 
 const CardContainer: FunctionComponent = () => {
   const dispatch = useDispatchContext();
-    //this ref checks the visible client ongoing status and updates the 
-    //view when we change pages accordingly
-  const ongoingRef = useRef<'show'|'hide'>('show')
-  const {
-    cardView:
-    { ammount, setAmmount, containerRef },
-    isCallingAPI,
-    isMoreCards
-  } = useNewCards(dispatch, ongoingRef)
   const { cards, client, variables } = useStateContext();
   const { format } = variables;
   const { season, seasonYear, showOngoing, sort, titlesLang } = client;
   const { lastFocusedElement } = useFocus(client)
+  const {
+        isMoreCards, 
+        ongoingRef, 
+        containerRef,
+        cardView : { ammount, setAmmount }
+    } = useCardViewportHanlder(client, dispatch)
 
   let clientVisibleCards: MainCard[] = [];
   const [currSeason, currYear] = getCurrSeasonAndYear();
@@ -118,9 +108,6 @@ const CardContainer: FunctionComponent = () => {
             }
           )}
         </div>
-        {isCallingAPI.current == true ? (
-          <div>calling api</div>
-        ) : (
           <>
             <ol className="flex flex-wrap whitespace-pre w-full flex-auto justify-center">
               {clientVisibleCards.length ? (
@@ -163,7 +150,6 @@ const CardContainer: FunctionComponent = () => {
               )}
             </div>
           </>
-        )}
       </div>
     </>
   );

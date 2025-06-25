@@ -100,7 +100,7 @@ export const callNextPageOnScroll = throttle<
 /** 
  * Handles reorganizing Cards in CardContainer between season changes to reset the viewport to its default state
  */
-export function onPreferenceChange(
+export function onSeasonChange(
     season: Season,
     seasonYear: number,
     dispatch: Dispatch<Actions>,
@@ -126,7 +126,7 @@ export function onPreferenceChange(
   setAmmount(15);
 }
 
-export function requestNewCardsCardView(
+export function handleCardAPICall(
   {
     abortOngoing,
     abortMainCard,
