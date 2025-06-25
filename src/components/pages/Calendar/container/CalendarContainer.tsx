@@ -3,7 +3,6 @@ import CalendarByTimeline from "../Timeline";
 import { CalendarTimeSlots } from "../../../../interfaces/CalendarTypes";
 import { useDispatchContext, useStateContext } from "../../../../utilities/Context/AppContext";
 import useNewCalendarCards from "../../../../hooks/useNewCalendarCards";
-import useNewCards from "../../../../hooks/useNewCards";
 import { checkIfCardsExist } from "../../../../utilities/Cards/CardContainerUtils";
 import buildInitialTimeSlots from "../../../../utilities/Calendar/buildInitialTimeSlots";
 import buildAndFillTimeslots from "../../../../utilities/Calendar/buildAndFillTimeslots";
@@ -12,7 +11,6 @@ import useFocus from "../../../../hooks/useFocus";
 
 const CalendarContainer = () => {
   const dispatch = useDispatchContext()
-  const { isCallingAPI } = useNewCards(dispatch)
   const {
     cards,
     client: { season, seasonYear, titlesLang, showOngoing },
@@ -44,7 +42,7 @@ const CalendarContainer = () => {
     <>
       <CalendarPreferenceBar />
       <div className="w-full flex flex-col items-center overflow-y-auto h-[85vh]">
-         {isCallingCardsAPI.current || isCallingAPI.current ? 
+         {isCallingCardsAPI.current ?
            <div>loading...</div> : 
            finalizedSlots.length ? 
            <CalendarByTimeline calendarSlots={finalizedSlots} titlesLang={titlesLang} focusRef={lastFocusedElement} /> : 
