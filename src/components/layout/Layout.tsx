@@ -37,7 +37,7 @@ const Layout = () => {
     document.querySelector("html")?.classList.remove("dark");
     localStorage.setItem("dark", "false");
   }
-  if (Object.entries(overlay).find(([, { active }]) => active) && overlayRef)
+  if (Object.values(overlay).find(({ active }) => active) && overlayRef)
     overlayRef.current?.classList.replace("hidden", "block");
   else overlayRef.current?.classList.replace("block", "hidden");
 
