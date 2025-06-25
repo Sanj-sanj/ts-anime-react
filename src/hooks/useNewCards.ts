@@ -15,9 +15,7 @@ export default function useNewCards(
     const abortOngoing = useRef<null | AbortController>(null);
 
     const isCallingAPI = useRef(false);
-
-    //Ammount of cars to display on CardContainer at once
-    const isMockOn = true;
+    const isMockOn = false;
 
     useEffect(() => {
     if (

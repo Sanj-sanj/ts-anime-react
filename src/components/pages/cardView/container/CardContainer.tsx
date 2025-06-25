@@ -1,4 +1,5 @@
-import React, { ChangeEvent, FunctionComponent } from "react";
+import React, { ChangeEvent, FunctionComponent, MutableRefObject } from "react";
+import { useOutletContext } from "react-router-dom";
 import { MainCard } from "../../../../interfaces/apiResponseTypes";
 import {
   callNextPageOnScroll,
@@ -26,7 +27,7 @@ const CardContainer: FunctionComponent = () => {
         containerRef,
         cardView : { ammount, setAmmount }
     } = useCardViewportHanlder(client, dispatch)
-
+  const isCallingAPI = useOutletContext<MutableRefObject<boolean>>()
   let clientVisibleCards: MainCard[] = [];
   const [currSeason, currYear] = getCurrSeasonAndYear();
 
@@ -108,6 +109,8 @@ const CardContainer: FunctionComponent = () => {
             }
           )}
         </div>
+        { isCallingAPI.current ?
+          <div> Retrieving results... </div> :
           <>
             <ol className="flex flex-wrap whitespace-pre w-full flex-auto justify-center">
               {clientVisibleCards.length ? (
@@ -150,6 +153,7 @@ const CardContainer: FunctionComponent = () => {
               )}
             </div>
           </>
+        }
       </div>
     </>
   );

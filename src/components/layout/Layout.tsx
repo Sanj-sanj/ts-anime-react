@@ -64,11 +64,7 @@ const Layout = () => {
         </button>
       </header>
       <main className="min-h-[85vh] flex flex-col items-center bg-stone-200 dark:bg-neutral-800">
-        {isCallingAPI.current ? 
-          <div>Loading data...</div> :
           <Outlet context={isCallingAPI} />
-        }
-
       </main>
     </>
   );
