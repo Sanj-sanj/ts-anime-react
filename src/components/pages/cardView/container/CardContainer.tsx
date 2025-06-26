@@ -7,7 +7,7 @@ import {
   handleCardContainerOnClick,
 } from "../../../../utilities/Cards/CardContainerUtils";
 import { useDispatchContext, useStateContext, } from "../../../../utilities/Context/AppContext";
-import getCurrSeasonAndYear from "../../../../utilities/getCurrentSeasonAndYear";
+import { getCurrSeasonAndYear } from "../../../../utilities/changeSeason";
 import sortAndFilterCardsForView from "../../../../utilities/Cards/SortAndFilterCardsView";
 import ContainerPreferences from "../preferenceBar/ContainerPreferences";
 import ClientPreferenceSelections from "../../../clientPreferenceSelections/ClientPreferenceSlections";

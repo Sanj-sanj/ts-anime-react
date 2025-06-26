@@ -7,8 +7,7 @@ import CalendarSVG from "../../../../assets/calendar-svgrepo-com.svg";
 import MedalSVG from "../../../../assets/medal.svg";
 import ResetSVG from "../../../../assets/reset-svgrepo-com.svg";
 import changeFormat from "../../../../utilities/changeFormat";
-import changeSeason from "../../../../utilities/changeSeason";
-import getCurrSeasonAndYear from "../../../../utilities/getCurrentSeasonAndYear";
+import { changeSeason, resetToNearestSeason } from "../../../../utilities/changeSeason";
 
 export default function ContainerPreferences() {
   const { client, variables } = useStateContext();
@@ -75,30 +74,7 @@ export default function ContainerPreferences() {
           <button
             className="px-3 text-lg focus:outline outline-2 rounded-sm outline-zinc-400"
             title="Reset to nearest airing season"
-            onClick={() => {
-              const [currSeason, currYear] = getCurrSeasonAndYear();
-              if (
-                client.season !== currSeason ||
-                client.seasonYear !== currYear
-              ) {
-                dispatch({
-                  type: "UPDATE_VARIABLES",
-                  payload: {
-                    ...variables,
-                    season: currSeason,
-                    seasonYear: currYear,
-                  },
-                });
-                dispatch({
-                  type: "UPDATE_CLIENT",
-                  payload: {
-                    ...client,
-                    season: currSeason,
-                    seasonYear: currYear,
-                  },
-                });
-              }
-            }}
+            onClick={() => resetToNearestSeason(dispatch, client, variables)}
           >
             <img
               src={ResetSVG as string}

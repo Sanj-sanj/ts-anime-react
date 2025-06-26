@@ -2,12 +2,13 @@ import CalendarPreferenceBar from "../preferenceBar/CalendarPreferenceBar";
 import CalendarByTimeline from "../Timeline";
 import { CalendarTimeSlots } from "../../../../interfaces/CalendarTypes";
 import { useDispatchContext, useStateContext } from "../../../../utilities/Context/AppContext";
-import useNewCalendarCards from "../../../../hooks/useNewCalendarCards";
 import { checkIfCardsExist } from "../../../../utilities/Cards/CardContainerUtils";
 import buildInitialTimeSlots from "../../../../utilities/Calendar/buildInitialTimeSlots";
 import buildAndFillTimeslots from "../../../../utilities/Calendar/buildAndFillTimeslots";
 import mergePreviousAndCurrentTimeslots from "../../../../utilities/Calendar/mergePreviousAndCurrentTimeslots";
+import useNewCalendarCards from "../../../../hooks/useNewCalendarCards";
 import useFocus from "../../../../hooks/useFocus";
+import { resetToNearestSeason } from "../../../../utilities/changeSeason";
 
 const CalendarContainer = () => {
   const dispatch = useDispatchContext()
@@ -15,8 +16,10 @@ const CalendarContainer = () => {
     cards,
     client: { season, seasonYear, titlesLang, showOngoing },
     variables: { format },
+    variables,
     client
   } = useStateContext();
+  resetToNearestSeason(dispatch, client, variables)
   const { isCallingCardsAPI } = useNewCalendarCards(format, dispatch, cards.CALENDAR)
   const {lastFocusedElement} = useFocus(client);
 

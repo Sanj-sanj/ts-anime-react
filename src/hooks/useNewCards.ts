@@ -15,7 +15,7 @@ export default function useNewCards(
     const abortOngoing = useRef<null | AbortController>(null);
 
     const isCallingAPI = useRef(false);
-    const isMockOn = false;
+    const isMockOn = true;
 
     useEffect(() => {
     if (

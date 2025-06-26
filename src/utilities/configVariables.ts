@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { APIVariables, AiringSchedule, NewEpisodeCards } from "../interfaces/apiResponseTypes";
 import { InitialConfig } from "../interfaces/initialConfigTypes";
 import { UserPreferences } from "../interfaces/UserPreferencesTypes";
-import getCurrSeasonAndYear from "./getCurrentSeasonAndYear";
+import { getCurrSeasonAndYear } from "./changeSeason";
 
 const [season, seasonYear] = getCurrSeasonAndYear();
 

@@ -6,7 +6,7 @@ import {
   InitialConfig,
   ValidFormats,
 } from "../../interfaces/initialConfigTypes";
-import getCurrSeasonAndYear from "../getCurrentSeasonAndYear";
+import { getCurrSeasonAndYear } from "../changeSeason";
 import {
   requestAniListAPI,
   requestMockAPI,
