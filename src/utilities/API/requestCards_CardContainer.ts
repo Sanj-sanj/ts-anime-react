@@ -7,7 +7,7 @@ import {
 import { Actions } from "../../interfaces/initialConfigTypes";
 import HandleMockAPICall from "./HandleMockAPICall";
 import HandleAPICall from "./HandleAPICall";
-import { MutableRefObject } from "react";
+import { SetStateAction } from "react";
 import { mainCardQuery } from "./QueryStrings/MainCardQuery";
 import { isMainCard } from "../Cards/CheckCardType";
 
@@ -15,13 +15,12 @@ import { isMainCard } from "../Cards/CheckCardType";
 async function requestAniListAPI(
   variables: APIVariables,
   dispatch: React.Dispatch<Actions>,
-  isCallingAPI: MutableRefObject<boolean>,
+  setIsCallingAPI: React.Dispatch<SetStateAction<boolean>>,
   fetchingOngoing: boolean,
   signal1: AbortSignal,
   signal2: AbortSignal
 ) {
   console.log("calling ANILIST_API");
-  isCallingAPI.current = true;
   const callsArr: Promise<(MainCard | NewEpisodeCards | AiringSchedule)[]>[] =
     [];
   callsArr.push(HandleAPICall(variables, [], mainCardQuery, signal1));
@@ -54,21 +53,20 @@ async function requestAniListAPI(
         });
       }
     })
+    .then(() => setIsCallingAPI(false))
     .catch((rej) => console.log(rej));
-  isCallingAPI.current = false;
 }
 // Mock API functions similary to acutal anilist API. only reducers "UPDATE_NEXT_PAGE_AVAILABLE" not called
 async function requestMockAPI(
   settings: APIVariables,
   dispatch: React.Dispatch<Actions>,
-  isCallingAPI: MutableRefObject<boolean>,
+  setIsCallingAPI: React.Dispatch<SetStateAction<boolean>>,
   fetchingOngoing: boolean,
   signal1: AbortSignal,
   signal2: AbortSignal
 ) {
   //Sends a request with the variable settings, the API response will return a boolean hasNextPage, this will determine subsequent network request based on scroll position (currently)
   console.log("calling MOCK_API");
-  isCallingAPI.current = true;
 
   const callsArr: Promise<(MainCard | NewEpisodeCards)[]>[] = [];
   callsArr.push(HandleMockAPICall(settings, false));
@@ -98,7 +96,7 @@ async function requestMockAPI(
       }
       console.log("done calling api"); //eslint-disable-line
     })
-    .then(() => isCallingAPI.current = false)
+    .then(() => setIsCallingAPI(false))
     .catch(console.log);
 }
 

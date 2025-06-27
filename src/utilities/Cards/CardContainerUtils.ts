@@ -137,12 +137,12 @@ export function handleCardAPICall(
   {
     variables,
     dispatch,
-    isCallingAPI,
+    setIsCallingAPI,
     showOngoing,
   }: {
     variables: APIVariables;
     dispatch: Dispatch<Actions>;
-    isCallingAPI: MutableRefObject<boolean>;
+    setIsCallingAPI: Dispatch<SetStateAction<boolean>>,
     showOngoing: boolean;
   },
   mockMode: boolean
@@ -150,12 +150,13 @@ export function handleCardAPICall(
   //create new AbortController to cancel consecutive requests if new request is made
   abortOngoing.current = new AbortController();
   abortMainCard.current = new AbortController();
+  setIsCallingAPI(true)
   // ****************** MOCK API ************************
   if (mockMode) {
     void requestMockAPI(
       variables,
       dispatch,
-      isCallingAPI,
+      setIsCallingAPI,
       showOngoing,
       abortMainCard.current.signal,
       abortOngoing.current.signal
@@ -165,7 +166,7 @@ export function handleCardAPICall(
     void requestAniListAPI(
       variables,
       dispatch,
-      isCallingAPI,
+      setIsCallingAPI,
       showOngoing,
       abortMainCard.current.signal,
       abortOngoing.current.signal

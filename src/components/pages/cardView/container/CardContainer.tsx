@@ -27,7 +27,7 @@ const CardContainer: FunctionComponent = () => {
         containerRef,
         cardView : { ammount, setAmmount }
     } = useCardViewportHanlder(client, dispatch)
-  const isCallingAPI = useOutletContext<MutableRefObject<boolean>>()
+  const isCallingAPI = useOutletContext<boolean>()
   let clientVisibleCards: MainCard[] = [];
   const [currSeason, currYear] = getCurrSeasonAndYear();
 
@@ -109,50 +109,51 @@ const CardContainer: FunctionComponent = () => {
             }
           )}
         </div>
-        { isCallingAPI.current ?
-          <div> Retrieving results... </div> :
-          <>
-            <ol className="flex flex-wrap whitespace-pre w-full flex-auto justify-center">
-              {clientVisibleCards.length ? (
-                clientVisibleCards.map((card) => (
-                  <Card
-                    key={card.id || card.title.romaji}
-                    card={card}
-                    titlePref={client.titlesLang}
-                    focusRef={lastFocusedElement}
-                  />
-                ))
-              ) : (
-                <li>No results found.</li>
-              )}
-            </ol>
-            <div className="flex flex-col border rounded border-gray-900 w-full mb-4 pt-2 pb-4 items-center">
-              {isMoreCards.current ? (
-                <>
-                  <p>You&apos;ve reached the bottom!</p>
-                  <button
-                    className="border-2 bg-slate-200 border-blue-800 p-2 w-fit"
-                    onClick={() => {
-                      handleCardContainerOnClick(
-                        { client, api: { ...variables } },
-                        {
-                          currentAmmount: ammount,
-                          updateDisplayAmmount: setAmmount,
-                        }
-                      );
-                      lastFocusedElement.current !== null
-                        ? lastFocusedElement.current.focus()
-                        : null;
-                    }}
-                  >
-                    Click here for more results.
-                  </button>
-                </>
-              ) : (
-                <aside>You&apos;ve reached the end!</aside>
-              )}
-            </div>
-          </>
+            {
+              isCallingAPI ?
+              <div> Retrieving results... </div> :
+              <>
+                <ol className="flex flex-wrap whitespace-pre w-full flex-auto justify-center">
+                  {clientVisibleCards.length ? (
+                    clientVisibleCards.map((card) => (
+                      <Card
+                        key={card.id || card.title.romaji}
+                        card={card}
+                        titlePref={client.titlesLang}
+                        focusRef={lastFocusedElement}
+                      />
+                    ))
+                  ) : (
+                    <li>No results found.</li>
+                  )}
+                </ol>
+                <div className="flex flex-col border rounded border-gray-900 w-full mb-4 pt-2 pb-4 items-center">
+                  {isMoreCards.current ? (
+                    <>
+                      <p>You&apos;ve reached the bottom!</p>
+                      <button
+                        className="border-2 bg-slate-200 border-blue-800 p-2 w-fit"
+                        onClick={() => {
+                          handleCardContainerOnClick(
+                            { client, api: { ...variables } },
+                            {
+                              currentAmmount: ammount,
+                              updateDisplayAmmount: setAmmount,
+                            }
+                          );
+                          lastFocusedElement.current !== null
+                            ? lastFocusedElement.current.focus()
+                            : null;
+                        }}
+                      >
+                        Click here for more results.
+                      </button>
+                    </>
+                  ) : (
+                    <aside>You&apos;ve reached the end!</aside>
+                  )}
+                </div>
+              </>
         }
       </div>
     </>

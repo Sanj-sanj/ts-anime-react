@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Actions, InitialConfig } from "../interfaces/initialConfigTypes";
 import { useStateContext } from "../utilities/Context/AppContext";
 import { checkIfCardsExist, handleCardAPICall } from "../utilities/Cards/CardContainerUtils";
@@ -14,7 +14,7 @@ export default function useNewCards(
     const abortMainCard = useRef<null | AbortController>(null);
     const abortOngoing = useRef<null | AbortController>(null);
 
-    const isCallingAPI = useRef(false);
+    const [isCallingAPI, setIsCallingAPI] = useState(false);
     const isMockOn = true;
 
     useEffect(() => {
@@ -24,7 +24,7 @@ export default function useNewCards(
       console.log('cards dont exist', format)
       handleCardAPICall(
           { abortOngoing, abortMainCard },
-          { variables, dispatch, isCallingAPI, showOngoing },
+          { variables, dispatch, setIsCallingAPI, showOngoing },
           isMockOn
       );
     }
