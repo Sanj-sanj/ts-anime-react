@@ -1,6 +1,6 @@
 import { MutableRefObject } from "react";
 import ListButton from "./ListButton";
-import StarSVG from "../../assets/five_pointed_star.svg";
+import StarSVG from "url:../../assets/five_pointed_star.svg";
 import { UserListWithResults } from "../../interfaces/UserPreferencesTypes";
 
 const userListCards = (

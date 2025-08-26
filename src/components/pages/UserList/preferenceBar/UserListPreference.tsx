@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import CalendarSVG from "../../../../assets/calendar-svgrepo-com.svg";
-import MedalSVG from "../../../../assets/medal.svg";
-import CardSVG from "../../../../assets/card-svgrepo-com.svg";
+import CalendarSVG from "url:../../../../assets/calendar-svgrepo-com.svg";
+import MedalSVG from "url:../../../../assets/medal.svg";
+import CardSVG from "url:../../../../assets/card-svgrepo-com.svg";
 
 const UserListPreferences = () => {
   return (

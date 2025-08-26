@@ -3,9 +3,9 @@ import {
   useDispatchContext,
   useStateContext,
 } from "../../../../utilities/Context/AppContext";
-import CalendarSVG from "../../../../assets/calendar-svgrepo-com.svg";
-import MedalSVG from "../../../../assets/medal.svg";
-import ResetSVG from "../../../../assets/reset-svgrepo-com.svg";
+import CalendarSVG from "url:../../../../assets/calendar-svgrepo-com.svg";
+import MedalSVG from "url:../../../../assets/medal.svg";
+import ResetSVG from "url:../../../../assets/reset-svgrepo-com.svg";
 import changeFormat from "../../../../utilities/changeFormat";
 import { changeSeason, resetToNearestSeason } from "../../../../utilities/changeSeason";
 

@@ -1,7 +1,7 @@
 import { FunctionComponent, useRef } from "react";
 import { MainCard } from "../../interfaces/apiResponseTypes";
 import { useDispatchContext } from "../../utilities/Context/AppContext";
-import ListButtonSVG from "../../assets/ribbon-svgrepo-com.svg";
+import ListButtonSVG from "url:../../assets/ribbon-svgrepo-com.svg";
 
 const ListButton: FunctionComponent<{
   card: MainCard;
